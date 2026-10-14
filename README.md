@@ -13,7 +13,7 @@ Taiga UI already has [internal Playwright Element Objects](https://github.com/ta
 Requires Node.js 20+.
 
 ~~~bash
-npm install
+npm ci
 npx playwright install chromium
 npm run verify
 ~~~
