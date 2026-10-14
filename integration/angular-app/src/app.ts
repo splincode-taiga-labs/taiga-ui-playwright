@@ -36,6 +36,20 @@ import {TuiChevron, TuiComboBox, TuiDataListWrapper, TuiSelect} from '@taiga-ui/
                 </section>
 
                 <section>
+                    <label for="country-secondary">Secondary country</label>
+                    <tui-textfield data-testid="secondary-country-field" tuiChevron>
+                        <input
+                            id="country-secondary"
+                            aria-label="Secondary country"
+                            tuiSelect
+                            [formControl]="secondaryCountry"
+                        />
+                        <tui-data-list-wrapper *tuiDropdown [items]="countries" />
+                    </tui-textfield>
+                    <output data-testid="secondary-country-model">{{ secondaryCountry.value ?? 'null' }}</output>
+                </section>
+
+                <section>
                     <label for="city">City</label>
                     <tui-textfield data-testid="city-field" tuiChevron>
                         <input
@@ -67,6 +81,7 @@ export class FixtureApp {
     protected readonly cities = ['Tallinn', 'Tartu', 'Vienna'];
 
     protected readonly country = new FormControl<string | null>(null);
+    protected readonly secondaryCountry = new FormControl<string | null>(null);
     protected readonly city = new FormControl<string | null>(null);
     protected readonly dialogState = signal('closed');
 

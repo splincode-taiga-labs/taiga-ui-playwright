@@ -2,9 +2,10 @@ import {expect, type Locator} from '@playwright/test';
 
 /**
  * Taiga UI renders dropdowns in a portal, outside the field's DOM subtree.
- * When more than one overlay is visible, pass an explicit overlay Locator.
+ * Prefer the real input's aria-controls association over a page-wide search.
  */
 export interface TuiOptionsFieldOptions {
+    /** Explicit overlay Locator for custom/unsupported dropdown implementations. */
     readonly overlay?: Locator;
     /** Override when an app renders custom option content. */
     readonly optionSelector?: string;
@@ -13,14 +14,27 @@ export interface TuiOptionsFieldOptions {
 const OVERLAY_SELECTOR =
     'tui-dropdown:visible, tui-dropdown-mobile:visible, tui-sheet-dialog:visible';
 const DEFAULT_OPTION_SELECTOR = 'tui-data-list [tuiOption]';
+const AMBIGUOUS_OVERLAY =
+    'Cannot identify this field\'s Taiga UI dropdown: multiple overlays are visible. ' +
+    'Use an input with aria-controls or pass {overlay: page.locator(...)}.';
+const UNOWNED_OVERLAY =
+    'Cannot associate the visible Taiga UI dropdown with this field (missing aria-controls). ' +
+    'Pass {overlay: page.locator(...)} to scope the interaction.';
 
 function exactText(text: string): RegExp {
     const escaped = text.replace(/[.*+?^$()|[\]{}\\]/g, '\\$&');
     return new RegExp('^\\s*' + escaped + '\\s*$');
 }
 
+/** Restrict id lookups to exact attribute matches, not CSS id parsing. */
+function idSelector(id: string): string {
+    return `[id=${JSON.stringify(id)}]`;
+}
+
 /** Base for interactive Taiga UI textfields that expose a data-list. */
 export abstract class TuiOptionsField {
+    private linkedOverlayId: string | null = null;
+
     protected constructor(
         public readonly host: Locator,
         private readonly inputSelector: string,
@@ -31,9 +45,20 @@ export abstract class TuiOptionsField {
         return this.host.locator(this.inputSelector);
     }
 
-    /** Lazily resolved; only an open overlay matches by default. */
+    /**
+     * Lazy Locator for the last resolved overlay. Call open() or getOverlay()
+     * before accessing it when multiple portals can be visible.
+     */
     public get overlay(): Locator {
-        return this.config.overlay ?? this.host.page().locator(OVERLAY_SELECTOR);
+        if (this.config.overlay) {
+            return this.config.overlay;
+        }
+
+        const portals = this.host.page().locator(OVERLAY_SELECTOR);
+
+        return this.linkedOverlayId
+            ? portals.and(this.host.page().locator(idSelector(this.linkedOverlayId)))
+            : portals;
     }
 
     public get options(): Locator {
@@ -45,20 +70,83 @@ export abstract class TuiOptionsField {
         return this.options.filter({hasText: exactText(label)});
     }
 
-    /** Avoid clicking if already open: another click could toggle the dropdown closed. */
-    public async open(): Promise<void> {
-        if (!(await this.overlay.isVisible())) {
-            await this.input.click();
+    /** Re-read aria-controls on every operation; the overlay may be recreated. */
+    public async getOverlay(): Promise<Locator> {
+        if (this.config.overlay) {
+            return this.config.overlay;
         }
 
-        await expect(this.overlay).toBeVisible();
+        const ids = (await this.input.getAttribute('aria-controls'))?.trim().split(/\s+/);
+
+        if (ids && ids.length > 1) {
+            throw new Error('Taiga UI input references multiple overlays in aria-controls. Pass {overlay} explicitly.');
+        }
+
+        this.linkedOverlayId = ids?.[0] || null;
+
+        return this.overlay;
+    }
+
+    private async assertUnambiguous(overlay: Locator): Promise<void> {
+        if (!this.config.overlay && !this.linkedOverlayId && (await overlay.count()) > 1) {
+            throw new Error(AMBIGUOUS_OVERLAY);
+        }
+
+        await expect(overlay).toBeVisible();
+    }
+
+    /** Waits for a portal to mount. Never toggles an already expanded field closed. */
+    public async open(): Promise<void> {
+        const overlay = await this.getOverlay();
+        const expanded = await this.input.getAttribute('aria-expanded');
+
+        if (expanded === 'true' || (this.config.overlay && await overlay.isVisible())) {
+            await this.assertUnambiguous(overlay);
+            return;
+        }
+
+        if (!this.config.overlay && !this.linkedOverlayId) {
+            const visibleCount = await overlay.count();
+
+            if (visibleCount > 1) {
+                throw new Error(AMBIGUOUS_OVERLAY);
+            }
+
+            if (visibleCount === 1) {
+                if (!(await this.input.isFocused())) {
+                    throw new Error(UNOWNED_OVERLAY);
+                }
+
+                await expect(overlay).toBeVisible();
+                return;
+            }
+        }
+
+        await this.input.click();
+        await this.assertUnambiguous(await this.getOverlay());
     }
 
     public async close(): Promise<void> {
-        if (await this.overlay.isVisible()) {
-            await this.input.press('Escape');
-            await expect(this.overlay).toBeHidden();
+        const overlay = await this.getOverlay();
+
+        if (!this.config.overlay && !this.linkedOverlayId) {
+            const visibleCount = await overlay.count();
+
+            if (visibleCount > 1) {
+                throw new Error(AMBIGUOUS_OVERLAY);
+            }
+
+            if (visibleCount > 0 && !(await this.input.isFocused())) {
+                throw new Error(UNOWNED_OVERLAY);
+            }
         }
+
+        if (!(await overlay.isVisible())) {
+            return;
+        }
+
+        await this.input.press('Escape');
+        await expect(overlay).toBeHidden();
     }
 
     public async selectOption(label: string): Promise<void> {

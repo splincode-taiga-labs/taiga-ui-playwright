@@ -52,9 +52,9 @@ test('select country and confirm', async ({page}) => {
 
 ## Overlay scoping
 
-Taiga UI renders dropdowns outside the textfield DOM subtree. The default overlay targets a **visible** `tui-dropdown`, `tui-dropdown-mobile`, or `tui-sheet-dialog`. If several overlays are visible, Playwright strictness intentionally fails instead of silently choosing the first.
+Taiga UI v5 supplies an `aria-controls` relationship between the textfield input and the dynamically rendered portal. The helpers **follow that relationship**, re-reading its ID on each operation to avoid selecting another field's dropdown. This works across detached/recreated portals and supported `tui-dropdown`, `tui-dropdown-mobile` and `tui-sheet-dialog` elements. If your markup does not provide `aria-controls`, a single focused field with one visible overlay can still work, but multiple or unowned overlays fail clearly; supply an explicit `overlay` instead.
 
-Pass an explicit overlay when needed:
+Pass an explicit overlay when a custom component does not expose `aria-controls`:
 
 ~~~ts
 const select = tuiSelect(page.getByTestId('country-field'), {
@@ -62,11 +62,13 @@ const select = tuiSelect(page.getByTestId('country-field'), {
 });
 ~~~
 
+Call `await select.getOverlay()` to resolve the current owned overlay after dynamic DOM changes. The existing `select.overlay` property remains a synchronous lazy Locator, scoped to the most recently resolved `aria-controls` ID. After an `open()` or `close()` call it is up to date.
+
 For custom option markup, pass `optionSelector` (default: `tui-data-list [tuiOption]`). `selectOption` performs an exact, case-sensitive text match.
 
 | Object | API |
 | --- | --- |
-| `tuiSelect(host)` | `host`, `input`, `overlay`, `options`, `option(label)`, `open()`, `close()`, `selectOption(label)`, `getOptionLabels()`, `getValue()` |
+| `tuiSelect(host)` | `host`, `input`, `overlay`, `options`, `option(label)`, `open()`, `close()`, `getOverlay()`, `selectOption(label)`, `getOptionLabels()`, `getValue()` |
 | `tuiComboBox(host)` | Select's API plus `fill(text)` |
 | `tuiDialog(host)` | `host`, `title`, `closeButton`, `button(name)`, `clickButton(name)`, `close()` |
 
