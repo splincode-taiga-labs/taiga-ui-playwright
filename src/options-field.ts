@@ -87,6 +87,10 @@ export abstract class TuiOptionsField {
         return this.overlay;
     }
 
+    private async isInputFocused(): Promise<boolean> {
+        return this.input.evaluate((element) => element === element.ownerDocument.activeElement);
+    }
+
     private async assertUnambiguous(overlay: Locator): Promise<void> {
         if (!this.config.overlay && !this.linkedOverlayId && (await overlay.count()) > 1) {
             throw new Error(AMBIGUOUS_OVERLAY);
@@ -113,7 +117,7 @@ export abstract class TuiOptionsField {
             }
 
             if (visibleCount === 1) {
-                if (!(await this.input.isFocused())) {
+                if (!(await this.isInputFocused())) {
                     throw new Error(UNOWNED_OVERLAY);
                 }
 
@@ -136,7 +140,7 @@ export abstract class TuiOptionsField {
                 throw new Error(AMBIGUOUS_OVERLAY);
             }
 
-            if (visibleCount > 0 && !(await this.input.isFocused())) {
+            if (visibleCount > 0 && !(await this.isInputFocused())) {
                 throw new Error(UNOWNED_OVERLAY);
             }
         }
