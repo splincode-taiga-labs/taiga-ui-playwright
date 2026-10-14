@@ -18,6 +18,13 @@ npx playwright install chromium
 npm run verify
 ~~~
 
+### Real Angular integration fixture
+
+`integration/angular-app/` is a minimal Angular 20 application using **real Taiga UI 5.28.0 components**. Run `npm run test:integration` for live Angular E2E and `npm run test:dom` for synthetic DOM regression tests. Playwright starts the fixture automatically on `127.0.0.1:4201`; it does not depend on taiga-ui.dev or any live external website. CI additionally executes `npm run build:fixture`.
+
+Tests assert reactive form model output for Select and ComboBox and the dialog lifecycle after interacting through the exported helper functions. Node.js 24 is used by CI.
+
+
 No npm publishing workflow exists. The package is intentionally marked private until integration tests with an actual Angular/Taiga UI app are ready.
 
 ## Example
@@ -67,13 +74,13 @@ No arbitrary timeouts, global singleton state, or custom Playwright runner.
 
 ## Quality gates and limitations
 
-CI runs strict TypeScript typechecking, ESM declaration build, and Chromium Playwright tests using **synthetic DOM fixtures**. These tests verify the helpers' behavior but **do not prove integration with a real compiled Taiga UI application**. An Angular v5 demo integration test and mobile overlays are required before any npm release.
+CI runs strict TypeScript typechecking, ESM declaration build, Angular fixture build, synthetic DOM tests and Chromium E2E tests against a **real Angular/Taiga UI application**. Mobile overlay and broader browser/Angular version checks are follow-ups before a release.
 
 ## Roadmap
 
 - [x] Locator-first Select, ComboBox, Dialog PoC
 - [x] DOM-based behavior tests and CI
-- [ ] Validate against a real Angular app using the current Taiga UI v5
+- [x] Validate against a real Angular 20 app using Taiga UI 5.28.0
 - [ ] Check mobile overlays, repeated fields and virtualized options
 - [ ] Compare to upstream Element Objects and propose improvements
 - [ ] Decide whether a separate npm package is warranted at all
