@@ -1,4 +1,5 @@
 import {Component, inject, signal} from '@angular/core';
+import {HarnessControls} from './controls';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {TuiButton, TuiDialogService, TuiFilterByInputPipe, TuiRoot, TuiTextfield} from '@taiga-ui/core';
 import {TuiChevron, TuiComboBox, TuiDataListWrapper, TuiSelect} from '@taiga-ui/kit';
@@ -16,6 +17,7 @@ import {map, timer} from 'rxjs';
         TuiComboBox,
         TuiDataListWrapper,
         TuiSelect,
+        HarnessControls,
     ],
     template: `
         <tui-root>
@@ -129,6 +131,7 @@ import {map, timer} from 'rxjs';
                     <button tuiButton type="button" (click)="openGuardedDialog()">Open guarded dialog</button>
                     <output data-testid="dialog-model">{{ dialogState() }}</output>
                 </section>
+                <app-harness-controls />
             </main>
         </tui-root>
     `,

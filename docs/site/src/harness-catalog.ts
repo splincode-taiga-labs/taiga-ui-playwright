@@ -43,7 +43,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "button",
     "path": "projects/core/components/button",
     "id": "core/button",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Core",
@@ -71,7 +71,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "checkbox",
     "path": "projects/core/components/checkbox",
     "id": "core/checkbox",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Core",
@@ -106,7 +106,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "input",
     "path": "projects/core/components/input",
     "id": "core/input",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Core",
@@ -141,7 +141,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "radio",
     "path": "projects/core/components/radio",
     "id": "core/radio",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Core",
@@ -190,7 +190,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "accordion",
     "path": "projects/kit/components/accordion",
     "id": "kit/accordion",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -526,7 +526,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "pagination",
     "path": "projects/kit/components/pagination",
     "id": "kit/pagination",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -603,7 +603,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "segmented",
     "path": "projects/kit/components/segmented",
     "id": "kit/segmented",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -631,28 +631,28 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "stepper",
     "path": "projects/kit/components/stepper",
     "id": "kit/stepper",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
     "name": "switch",
     "path": "projects/kit/components/switch",
     "id": "kit/switch",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
     "name": "tabs",
     "path": "projects/kit/components/tabs",
     "id": "kit/tabs",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
     "name": "textarea",
     "path": "projects/kit/components/textarea",
     "id": "kit/textarea",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -954,4 +954,15 @@ export const IMPLEMENTATIONS: Readonly<Record<string, string>> = {
     'kit/select': 'tuiSelect',
     'kit/combo-box': 'tuiComboBox',
     'portals/dialog': 'tuiDialog',
+    'core/button': 'tuiButton',
+    'core/checkbox': 'tuiCheckbox',
+    'core/radio': 'tuiRadio',
+    'core/input': 'tuiInput',
+    'kit/switch': 'tuiSwitch',
+    'kit/textarea': 'tuiTextarea',
+    'kit/tabs': 'tuiTabs',
+    'kit/segmented': 'tuiSegmented',
+    'kit/accordion': 'tuiAccordion',
+    'kit/pagination': 'tuiPagination',
+    'kit/stepper': 'tuiStepper',
 };
