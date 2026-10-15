@@ -139,3 +139,10 @@ GitHub Pages requires repository Settings → Pages → Source: **GitHub Actions
 Related: [Taiga UI issue #476](https://github.com/taiga-family/taiga-ui/issues/476) and [PR #14584](https://github.com/taiga-family/taiga-ui/pull/14584).
 
 MIT license.
+
+
+## Calendar and date/time element objects
+
+Five helper APIs are tested with the real Taiga UI v5 calendars: `tuiCalendar` (scoped current-month day selection), `tuiCalendarMonth` (month selection), `tuiInputDate` (owns an aria-controls-linked calendar portal), `tuiInputYear` (numeric form value), and `tuiInputTime` (24-hour HH:MM form value). Integration tests assert TuiDay/TuiMonth/TuiTime or form models, not just displayed input strings.
+
+Calendar day selection requires a uniquely visible **in-month** cell and rejects invalid day numbers. CalendarMonth takes a zero-based month index rather than a localized label. More complex range/multi-date calendars need their own specialized helpers.

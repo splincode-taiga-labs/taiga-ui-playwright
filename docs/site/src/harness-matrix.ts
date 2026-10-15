@@ -157,7 +157,7 @@ export class HarnessMatrixPage {
         if (!name) {
             return null;
         }
-        const file = id === 'kit/combo-box' ? 'combo-box.ts' : id === 'kit/select' ? 'select.ts' : id === 'portals/dialog' ? 'dialog.ts' : id === 'kit/input-number' || id === 'kit/input-phone' || id === 'kit/input-pin' || id === 'kit/input-color' || id === 'kit/input-slider' || id === 'core/slider' ? 'specialized-inputs.ts' : 'basic-harnesses.ts';
+        const file = id === 'kit/combo-box' ? 'combo-box.ts' : id === 'kit/select' ? 'select.ts' : id === 'portals/dialog' ? 'dialog.ts' : id === 'kit/input-number' || id === 'kit/input-phone' || id === 'kit/input-pin' || id === 'kit/input-color' || id === 'kit/input-slider' || id === 'core/slider' ? 'specialized-inputs.ts' : id === 'core/calendar' || id === 'kit/calendar-month' || id === 'kit/input-date' || id === 'kit/input-year' || id === 'kit/input-time' ? 'date-harnesses.ts' : 'basic-harnesses.ts';
         return {name, file};
     }
 

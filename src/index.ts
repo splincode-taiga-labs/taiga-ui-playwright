@@ -27,3 +27,4 @@ export {
     tuiTextarea,
 } from './basic-harnesses.js';
 export {TuiTypedFieldHarness, TuiSliderHarness, tuiInputColor, tuiInputNumber, tuiInputPhone, tuiInputPin, tuiInputSlider, tuiSlider} from './specialized-inputs.js';
+export {TuiCalendarHarness, TuiCalendarMonthHarness, TuiInputDateHarness, TuiInputYearHarness, TuiInputTimeHarness, tuiCalendar, tuiCalendarMonth, tuiInputDate, tuiInputYear, tuiInputTime} from './date-harnesses.js';
