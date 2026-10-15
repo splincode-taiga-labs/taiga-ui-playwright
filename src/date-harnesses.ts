@@ -29,13 +29,18 @@ export class TuiCalendarHarness {
 export class TuiCalendarMonthHarness {
     public constructor(public readonly host: Locator) {}
 
-    public month(name: string): Locator {
-        return this.host.locator('.t-cell:not(.t-cell_disabled)').filter({hasText: exactLabel(name)});
+    /** Zero-based month index (0 = January); independent of UI localization. */
+    public month(index: number): Locator {
+        if (!Number.isInteger(index) || index < 0 || index > 11) {
+            throw new RangeError('CalendarMonth index must be an integer from 0 through 11.');
+        }
+        return this.host.locator('.t-row > .t-cell').nth(index);
     }
 
-    public async selectMonth(name: string): Promise<void> {
-        const month = this.month(name);
-        await expect(month).toHaveCount(1);
+    public async selectMonth(index: number): Promise<void> {
+        const month = this.month(index);
+        await expect(month).toBeVisible();
+        await expect(month).not.toHaveClass(/t-cell_disabled/);
         await month.click();
     }
 }

@@ -11,13 +11,14 @@ test('Calendar chooses an in-month day, emits TuiDay, and ignores adjacent month
     await calendar.selectDay(20);
     await expect(page.getByTestId('calendar-model')).toContainText('2026-0-20');
     await expect(calendar.day(20)).toHaveAttribute('data-range', 'active');
-    await expect(calendar.day(0)).rejects.toThrow(/1 through 31/);
+    expect(() => calendar.day(0)).toThrow(/1 through 31/);
 });
 
 test('CalendarMonth selects an actual month and emits TuiMonth', async ({page}) => {
     const calendar = tuiCalendarMonth(page.getByTestId('standalone-month-calendar'));
-    await calendar.selectMonth('March');
+    await calendar.selectMonth(2);
     await expect(page.getByTestId('month-model')).toContainText('2026-2');
+    expect(() => calendar.month(12)).toThrow(/0 through 11/);
 });
 
 test('InputDate opens its own portaled calendar and updates FormControl', async ({page}) => {

@@ -145,4 +145,4 @@ MIT license.
 
 Five helper APIs are tested with the real Taiga UI v5 calendars: `tuiCalendar` (scoped current-month day selection), `tuiCalendarMonth` (month selection), `tuiInputDate` (owns an aria-controls-linked calendar portal), `tuiInputYear` (numeric form value), and `tuiInputTime` (24-hour HH:MM form value). Integration tests assert TuiDay/TuiMonth/TuiTime or form models, not just displayed input strings.
 
-Calendar day selection requires a uniquely visible **in-month** cell and rejects invalid day numbers. Month labels depend on the application's locale. More complex range/multi-date calendars need their own specialized helpers.
+Calendar day selection requires a uniquely visible **in-month** cell and rejects invalid day numbers. CalendarMonth takes a zero-based month index rather than a localized label. More complex range/multi-date calendars need their own specialized helpers.
