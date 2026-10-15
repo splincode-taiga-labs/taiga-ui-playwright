@@ -48,9 +48,16 @@ export class TuiInputDateRangeHarness {
     }
 
     public async selectRange(startDay: number, endDay: number): Promise<void> {
+        if (startDay > endDay) {
+            throw new RangeError('Start day must be no later than end day within the same month.');
+        }
         const portal = await ownedPortal(this.input);
         const range = new TuiCalendarRangeHarness(portal.locator('tui-calendar-range'));
-        await range.selectRange(startDay, endDay);
+        await range.day(startDay).click();
+        await range.day(endDay).click();
+        // InputDateRange closes its portal as soon as the range is complete.
+        // Do not inspect detached calendar cells after the second click.
+        await expect(this.input).not.toHaveValue('');
     }
 }
 
