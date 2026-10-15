@@ -1,4 +1,4 @@
-import {provideZonelessChangeDetection} from '@angular/core';
+import {provideZonelessChangeDetection, signal} from '@angular/core';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {provideRouter, withHashLocation} from '@angular/router';
 import {
@@ -24,7 +24,7 @@ bootstrapApplication(DocsApp, {
         ], withHashLocation()),
         {provide: TUI_DOC_TITLE, useValue: 'Taiga UI Playwright · '},
         {provide: TUI_DOC_VERSION, useValue: '5.28.0'},
-        {provide: TUI_DOC_SEARCH_ENABLED, useValue: false},
+        {provide: TUI_DOC_SEARCH_ENABLED, useValue: signal(false)},
         {
             provide: TUI_DOC_PAGES,
             useValue: [
