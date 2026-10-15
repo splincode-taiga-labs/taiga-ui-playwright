@@ -66,6 +66,61 @@ import {TuiChevron, TuiComboBox, TuiDataListWrapper, TuiSelect} from '@taiga-ui/
                     <output data-testid="city-model">{{ city.value ?? 'null' }}</output>
                 </section>
 
+
+                <section>
+                    <label for="country-disabled">Country with disabled option</label>
+                    <tui-textfield
+                        data-testid="disabled-country-field"
+                        tuiChevron
+                        [disabledItemHandler]="isCountryDisabled"
+                    >
+                        <input
+                            id="country-disabled"
+                            aria-label="Country with disabled option"
+                            tuiSelect
+                            [formControl]="disabledCountry"
+                        />
+                        <tui-data-list-wrapper *tuiDropdown [items]="countries" />
+                    </tui-textfield>
+                    <output data-testid="disabled-country-model">{{ disabledCountry.value ?? 'null' }}</output>
+                </section>
+
+                <section>
+                    <label for="city-free">City (non-strict)</label>
+                    <tui-textfield data-testid="free-city-field" tuiChevron>
+                        <input
+                            id="city-free"
+                            aria-label="City (non-strict)"
+                            tuiComboBox
+                            [strict]="false"
+                            [formControl]="freeCity"
+                        />
+                        <tui-data-list-wrapper
+                            *tuiDropdown
+                            [items]="cities | tuiFilterByInput"
+                        />
+                    </tui-textfield>
+                    <output data-testid="free-city-model">{{ freeCity.value ?? 'null' }}</output>
+                </section>
+
+                <section>
+                    <label for="city-async">City (async)</label>
+                    <tui-textfield data-testid="async-city-field" tuiChevron>
+                        <input
+                            id="city-async"
+                            aria-label="City (async)"
+                            tuiComboBox
+                            [formControl]="asyncCity"
+                            (input)="loadAsyncCities()"
+                        />
+                        <tui-data-list-wrapper
+                            *tuiDropdown
+                            [items]="asyncCities() | tuiFilterByInput"
+                        />
+                    </tui-textfield>
+                    <output data-testid="async-city-model">{{ asyncCity.value ?? 'null' }}</output>
+                </section>
+
                 <section>
                     <button tuiButton type="button" (click)="openDialog()">Open dialog</button>
                     <output data-testid="dialog-model">{{ dialogState() }}</output>
@@ -77,12 +132,27 @@ import {TuiChevron, TuiComboBox, TuiDataListWrapper, TuiSelect} from '@taiga-ui/
 export class FixtureApp {
     private readonly dialogs = inject(TuiDialogService);
 
-    protected readonly countries = ['Austria', 'Estonia', 'United Arab Emirates'];
+    protected readonly countries = ['Austria', 'Estonia', 'United Arab Emirates', 'C++'];
     protected readonly cities = ['Tallinn', 'Tartu', 'Vienna'];
 
     protected readonly country = new FormControl<string | null>(null);
     protected readonly secondaryCountry = new FormControl<string | null>(null);
     protected readonly city = new FormControl<string | null>(null);
+    protected readonly disabledCountry = new FormControl<string | null>(null);
+    protected readonly freeCity = new FormControl<string | null>(null);
+    protected readonly asyncCity = new FormControl<string | null>(null);
+    protected readonly asyncCities = signal<string[]>([]);
+    protected readonly isCountryDisabled = (country: string): boolean => country === 'Austria';
+
+    protected loadAsyncCities(): void {
+        if (this.asyncCities().length) {
+            return;
+        }
+
+        // Emulates an asynchronous API response; tests use Playwright assertions, not sleeps.
+        setTimeout(() => this.asyncCities.set(['Oslo', 'Odense']), 200);
+    }
+
     protected readonly dialogState = signal('closed');
 
     protected openDialog(): void {

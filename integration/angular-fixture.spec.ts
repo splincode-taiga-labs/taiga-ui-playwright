@@ -102,3 +102,82 @@ test('Select ignores an unrelated visible portal with a duplicate option', async
     await expect(page.getByTestId('country-model')).toHaveText('Estonia');
     await expect(page.getByTestId('unrelated-overlay')).toBeVisible();
 });
+
+test('Select handles exact labels with regexp characters in a real Taiga UI data list', async ({page}) => {
+    const select = tuiSelect(page.getByTestId('country-field'));
+    await select.selectOption('C++');
+
+    await expect(select.input).toHaveValue('C++');
+    await expect(page.getByTestId('country-model')).toHaveText('C++');
+});
+
+test('Select refuses a disabled option and preserves Angular FormControl', async ({page}) => {
+    const select = tuiSelect(page.getByTestId('disabled-country-field'));
+
+    await select.open();
+    await expect(select.option('Austria')).toBeDisabled();
+    await expect(select.selectOption('Austria')).rejects.toThrow(/must be enabled/);
+
+    await expect(page.getByTestId('disabled-country-model')).toHaveText('null');
+    await select.selectOption('Estonia');
+    await expect(page.getByTestId('disabled-country-model')).toHaveText('Estonia');
+});
+
+test('Select keyboard navigation can select an option via native Playwright keys', async ({page}) => {
+    const select = tuiSelect(page.getByTestId('country-field'));
+
+    await select.open();
+    await select.input.press('ArrowDown');
+    await expect(select.option('Austria')).toBeFocused();
+    await page.keyboard.press('Enter');
+
+    await expect(page.getByTestId('country-model')).toHaveText('Austria');
+});
+
+test('ComboBox handles empty filtering without selecting any option', async ({page}) => {
+    const combo = tuiComboBox(page.getByTestId('city-field'));
+    await combo.fill('unmatched city');
+
+    await expect(combo.options).toHaveCount(0);
+    await expect(page.getByTestId('city-model')).toHaveText('null');
+    await combo.close();
+});
+
+test('ComboBox strict mode does not commit unmatched custom text on blur', async ({page}) => {
+    const combo = tuiComboBox(page.getByTestId('city-field'));
+    await combo.fill('Atlantis');
+    await page.getByRole('heading', {name: 'Taiga UI Playwright integration fixture'}).click();
+
+    await expect(page.getByTestId('city-model')).toHaveText('null');
+});
+
+test('ComboBox non-strict mode accepts text not present in the list', async ({page}) => {
+    const combo = tuiComboBox(page.getByTestId('free-city-field'));
+    await combo.fill('Atlantis');
+    await page.getByRole('heading', {name: 'Taiga UI Playwright integration fixture'}).click();
+
+    await expect(page.getByTestId('free-city-model')).toHaveText('Atlantis');
+});
+
+test('ComboBox waits for asynchronously loaded options before choosing', async ({page}) => {
+    const combo = tuiComboBox(page.getByTestId('async-city-field'));
+    await combo.fill('Os');
+
+    await combo.selectOption('Oslo');
+
+    await expect(combo.input).toHaveValue('Oslo');
+    await expect(page.getByTestId('async-city-model')).toHaveText('Oslo');
+});
+
+test('Select Escape closes the real Taiga UI dropdown without changing the model', async ({page}) => {
+    const select = tuiSelect(page.getByTestId('country-field'));
+
+    await select.open();
+    await select.input.press('Escape');
+
+    await expect(select.overlay).toBeHidden();
+    await expect(page.getByTestId('country-model')).toHaveText('null');
+
+    await select.selectOption('Estonia');
+    await expect(page.getByTestId('country-model')).toHaveText('Estonia');
+});
