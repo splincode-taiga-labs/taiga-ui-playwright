@@ -260,7 +260,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "calendar-range",
     "path": "projects/kit/components/calendar-range",
     "id": "kit/calendar-range",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -379,14 +379,14 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "input-date-range",
     "path": "projects/kit/components/input-date-range",
     "id": "kit/input-date-range",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
     "name": "input-date-time",
     "path": "projects/kit/components/input-date-time",
     "id": "kit/input-date-time",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -400,7 +400,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "input-month",
     "path": "projects/kit/components/input-month",
     "id": "kit/input-month",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -954,6 +954,10 @@ export const IMPLEMENTATIONS: Readonly<Record<string, string>> = {
     'kit/select': 'tuiSelect',
     'kit/combo-box': 'tuiComboBox',
     'portals/dialog': 'tuiDialog',
+    'kit/calendar-range': 'tuiCalendarRange',
+    'kit/input-date-range': 'tuiInputDateRange',
+    'kit/input-date-time': 'tuiInputDateTime',
+    'kit/input-month': 'tuiInputMonth',
     'core/calendar': 'tuiCalendar',
     'kit/calendar-month': 'tuiCalendarMonth',
     'kit/input-date': 'tuiInputDate',
