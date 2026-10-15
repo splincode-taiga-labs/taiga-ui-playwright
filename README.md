@@ -84,6 +84,18 @@ No arbitrary timeouts, global singleton state, or custom Playwright runner.
 
 CI runs strict TypeScript typechecking, ESM declaration build, Angular fixture build, synthetic DOM tests and Chromium E2E tests against a **real Angular/Taiga UI application**. Mobile overlay and broader browser/Angular version checks are follow-ups before a release.
 
+## Harness coverage documentation
+
+The community coverage matrix is a real Angular documentation app powered by `@taiga-ui/addon-doc`, with the Taiga UI navigation, theme, and components.
+
+- Local docs: `npm run start:docs`
+- Production Pages build: `npm run build:docs:pages`
+- Published URL after enabling GitHub Pages / merging the docs PR: [Harness coverage](https://splincode-taiga-labs.github.io/taiga-ui-playwright/)
+- Coverage data: `docs/site/src/harness-catalog.ts` (based on upstream Taiga UI v5.28 component directories). This is a component inventory, **not** a claim that every component already has a Playwright helper.
+- Each completed row must map to a real exported helper and have tests. Planned work remains TODO until implemented.
+
+GitHub Pages requires repository Settings → Pages → Source: **GitHub Actions**. After this is enabled, the deploy workflow publishes `dist/docs/browser` on pushes to `main`.
+
 ## Roadmap
 
 - [x] Locator-first Select, ComboBox, Dialog PoC
