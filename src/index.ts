@@ -26,3 +26,4 @@ export {
     tuiTabs,
     tuiTextarea,
 } from './basic-harnesses.js';
+export {TuiTypedFieldHarness, TuiSliderHarness, tuiInputColor, tuiInputNumber, tuiInputPhone, tuiInputPin, tuiInputSlider, tuiSlider} from './specialized-inputs.js';

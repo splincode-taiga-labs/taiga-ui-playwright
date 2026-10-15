@@ -106,6 +106,10 @@ await tuiCheckbox(page.getByTestId('basic-checkbox')).check();
 These are native Playwright-based helpers, not Angular CDK ComponentHarnesses.
 Coverage is marked Done only after verified browser integration.
 
+## Specialized input harnesses
+
+`tuiInputNumber`, `tuiInputPhone`, `tuiInputPin`, `tuiInputColor`, `tuiInputSlider` and `tuiSlider` wrap real Taiga UI input directives. Values and keyboard events are tested against Angular `FormControl`, including phone masking and the native range slider. A field helper takes the containing `tui-textfield` Locator; the range slider accepts the `input[tuiSlider]` Locator.
+
 ## Quality gates and limitations
 
 CI runs strict TypeScript typechecking, ESM declaration build, Angular fixture build, synthetic DOM tests and Chromium E2E tests against a **real Angular/Taiga UI application**. Mobile overlay and broader browser/Angular version checks are follow-ups before a release.
