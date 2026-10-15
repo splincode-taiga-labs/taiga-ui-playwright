@@ -44,3 +44,45 @@ test('navigates to Getting started using GitHub Pages compatible hash routing', 
     await expect(page.getByRole('heading', {name: 'Getting started'})).toBeVisible();
     await expect(page.locator('getting-started')).toBeVisible();
 });
+
+test('the addon-doc logo is loaded and visible on both routes', async ({page}) => {
+    await page.goto('/#/');
+    await expect(page).toHaveURL(/#\/matrix$/);
+    const logo = page.locator('header[tuiDocHeader] img.t-img');
+
+    await expect(logo).toBeVisible();
+    await expect(logo).toHaveAttribute('src', /assets\/brand\.svg$/);
+    await expect.poll(() => logo.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
+
+    await page.getByRole('link', {name: 'Guide', exact: true}).click();
+    await expect(logo).toBeVisible();
+});
+
+test('only the selected documentation item is active in the left navigation', async ({page}) => {
+    await page.goto('/#/');
+    const nav = page.locator('tui-doc-main > tui-root tui-doc-navigation').first();
+    const active = nav.locator('a.t-sublink_active');
+
+    await expect(page).toHaveURL(/#\/matrix$/);
+    await expect(active).toHaveCount(1);
+    await expect(active).toContainText('Coverage matrix');
+
+    await page.getByRole('link', {name: 'Guide', exact: true}).click();
+    await expect(active).toHaveCount(1);
+    await expect(active).toContainText('Getting started');
+
+    await page.getByRole('link', {name: 'Matrix', exact: true}).click();
+    await expect(active).toHaveCount(1);
+    await expect(active).toContainText('Coverage matrix');
+});
+
+test('Current harnesses uses highlighted TypeScript in native addon-doc code component', async ({page}) => {
+    await page.goto('/#/guide');
+    const code = page.locator('getting-started tui-doc-code');
+
+    await expect(code).toBeVisible();
+    await expect(code.getByText('playwright.spec.ts')).toBeVisible();
+    await expect(code.locator('code.hljs')).toContainText('tuiSelect');
+    await expect(code.locator('.hljs-keyword').first()).toBeVisible();
+    await expect(code.locator('.hljs-string').first()).toBeVisible();
+});
