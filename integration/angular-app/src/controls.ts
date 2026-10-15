@@ -43,11 +43,11 @@ import {
             <output data-testid="basic-checkbox-model">{{ checkbox.value }}</output>
 
             <label>
-                <input data-testid="basic-radio-a" tuiRadio type="radio" value="A" [formControl]="radio" />
+                <input data-testid="basic-radio-a" tuiRadio type="radio" name="basic-radio" value="A" [formControl]="radio" />
                 Option A
             </label>
             <label>
-                <input data-testid="basic-radio-b" tuiRadio type="radio" value="B" [formControl]="radio" />
+                <input data-testid="basic-radio-b" tuiRadio type="radio" name="basic-radio" value="B" [formControl]="radio" />
                 Option B
             </label>
             <output data-testid="basic-radio-model">{{ radio.value }}</output>

@@ -64,7 +64,7 @@ test('Switch toggles model state in both directions', async ({page}) => {
 
 test('Textarea supports multiline input and clearing', async ({page}) => {
     const textarea = tuiTextarea(page.getByTestId('basic-textarea-field'));
-    await textarea.fill('first line\\nsecond line');
+    await textarea.fill('first line\nsecond line');
     await expect(page.getByTestId('basic-textarea-model')).toContainText('first line');
     await textarea.fill('');
     await expect(page.getByTestId('basic-textarea-model')).toHaveText('');

@@ -145,7 +145,7 @@ export class TuiPaginationHarness {
 
     public page(number: number): Locator {
         return this.host.locator('button[automation-id="tui-pagination__element"]').filter({
-            hasText: new RegExp('^\\\\s*' + number + '\\\\s*$'),
+            hasText: new RegExp('^\\s*' + number + '\\s*$'),
         });
     }
 
