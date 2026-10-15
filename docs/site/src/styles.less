@@ -1,0 +1,49 @@
+@import '@taiga-ui/styles/taiga-ui-theme.less';
+@import '@taiga-ui/styles/taiga-ui-fonts.less';
+
+html { scroll-behavior: smooth; }
+body { margin: 0; font: var(--tui-typography-body-m); color: var(--tui-text-primary); background: var(--tui-background-base); }
+.docs-links { display: flex; gap: 1.5rem; align-items: center; padding-inline: 1rem; }
+.matrix-page, .guide-page { max-width: 1060px; margin: 0 auto; padding: 1.5rem 2rem 4rem; }
+.intro { padding: 2rem 0 1.5rem; }
+.eyebrow { font-size: .72rem; font-weight: 800; letter-spacing: .16em; color: var(--tui-text-tertiary); }
+.intro h2 { font-size: clamp(1.75rem, 3vw, 2.7rem); line-height: 1.14; margin: 1rem 0; letter-spacing: -.025em; }
+.intro p { max-width: 700px; color: var(--tui-text-secondary); line-height: 1.6; }
+.intro-links { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.4rem; }
+.metrics { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 1rem; margin: 1.7rem 0 .8rem; }
+.metric { border: 1px solid var(--tui-border-normal); border-radius: var(--tui-radius-l); padding: 1.4rem; background: var(--tui-background-base-alt); display: flex; flex-direction: column; gap: .5rem; }
+.metric strong { font-size: 2.1rem; font-weight: 750; letter-spacing: -.04em; }
+.metric span { font-size: .8rem; color: var(--tui-text-secondary); }
+.progress { height: 8px; border-radius: 10px; overflow: hidden; background: var(--tui-background-neutral-1); }
+.progress > div { background: var(--tui-status-positive); height: 100%; border-radius: inherit; }
+.summary, .footnote { color: var(--tui-text-secondary); font-size: .8rem; margin-block: .65rem 1.2rem; }
+.section-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-top: 2.5rem; }
+.section-heading h2 { margin-bottom: .3rem; }
+.section-heading p { color: var(--tui-text-secondary); margin-top: 0; }
+.result-count { white-space: nowrap; color: var(--tui-text-secondary); font-size: .8rem; }
+.filters { display: flex; gap: 1rem; align-items: flex-end; }
+.search { flex: 1; min-width: 14rem; }
+.select-label { font-size: .8rem; font-weight: 600; display: flex; flex-direction: column; gap: .2rem; }
+.select-label select { font: inherit; color: inherit; padding: .65rem .9rem; border: 1px solid var(--tui-border-normal); border-radius: var(--tui-radius-m); background: var(--tui-background-base); min-width: 10rem; }
+.status-control { display: inline-flex; margin-block: 1rem; max-width: 100%; }
+.table-scroll { overflow-x: auto; border: 1px solid var(--tui-border-normal); border-radius: var(--tui-radius-l); }
+.coverage-table { border-collapse: collapse; width: 100%; min-width: 680px; }
+.coverage-table th { text-align: left; font-size: .75rem; font-weight: 700; color: var(--tui-text-secondary); background: var(--tui-background-base-alt); }
+.coverage-table th, .coverage-table td { padding: .95rem 1rem; border-bottom: 1px solid var(--tui-border-normal); vertical-align: middle; }
+.coverage-table td { font-size: .87rem; }
+.coverage-table td strong { display: block; font-weight: 650; }
+.coverage-table td small { display: block; margin-top: .15rem; color: var(--tui-text-tertiary); }
+.coverage-table tr:last-child td { border-bottom: 0; }
+.coverage-table tbody tr:hover { background: var(--tui-background-base-alt); }
+.coverage-table .source-link { display: inline-block; margin-inline-start: 1rem; color: var(--tui-text-secondary); text-decoration: none; font-size: .8rem; }
+.coverage-table .no-results { color: var(--tui-text-secondary); text-align: center; padding-block: 3rem; }
+.guide-page { line-height: 1.65; }
+.guide-page pre { overflow: auto; padding: 1.2rem; border-radius: var(--tui-radius-l); background: var(--tui-background-neutral-1); }
+.guide-page h2 { margin-top: 2rem; }
+@media(max-width:750px) {
+    .docs-links { gap: .65rem; padding-inline: 0; font-size: .75rem; }
+    .matrix-page, .guide-page { padding: 1rem 1rem 3rem; }
+    .metrics { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .filters { flex-direction: column; align-items: stretch; }
+    .status-control { width: 100%; }
+}

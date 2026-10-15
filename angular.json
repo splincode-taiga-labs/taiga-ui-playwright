@@ -42,6 +42,54 @@
           }
         }
       }
+    },
+    "docs": {
+      "projectType": "application",
+      "root": "docs/site",
+      "sourceRoot": "docs/site/src",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "outputPath": "dist/docs",
+            "index": "docs/site/src/index.html",
+            "browser": "docs/site/src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "docs/site/tsconfig.app.json",
+            "assets": [],
+            "styles": [
+              "docs/site/src/styles.less"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "3mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "outputHashing": "none"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "buildTarget": "docs:build:development"
+          }
+        }
+      }
     }
   }
 }
