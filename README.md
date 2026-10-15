@@ -93,6 +93,7 @@ The community coverage matrix is a real Angular documentation app powered by `@t
 - Local docs: `npm run start:docs`
 - Production Pages build: `npm run build:docs:pages`
 - Published URL after enabling GitHub Pages / merging the docs PR: [Harness coverage](https://splincode-taiga-labs.github.io/taiga-ui-playwright/)
+- Logo: `docs/site/public/assets/brand.svg` (provided via `TUI_DOC_LOGO`); navigation uses `/matrix` and `/guide`, with `/#/` redirecting to `/matrix`. Code samples use Taiga UI `TuiDocCode` with TypeScript syntax highlighting.
 - Coverage data: `docs/site/src/harness-catalog.ts` (based on upstream Taiga UI v5.28 component directories). This is a component inventory, **not** a claim that every component already has a Playwright helper.
 - Each completed row must map to a real exported helper and have tests. Planned work remains TODO until implemented.
 

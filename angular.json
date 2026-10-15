@@ -58,7 +58,13 @@
               "zone.js"
             ],
             "tsConfig": "docs/site/tsconfig.app.json",
-            "assets": [],
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "docs/site/public",
+                "output": "/"
+              }
+            ],
             "styles": [
               "docs/site/src/styles.less"
             ]

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="44" viewBox="0 0 240 44" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Taiga UI Playwright</title>
+  <desc id="desc">Angular brackets and a connected Playwright test route next to Taiga UI Playwright wordmark</desc>
+  <rect x="1" y="1" width="42" height="42" rx="13" fill="#FFF0E9"/>
+  <path d="M17 14L9 22L17 30" stroke="#E76436" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M26 14L34 22L26 30" stroke="#E76436" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M19.5 28L24.5 16" stroke="#E76436" stroke-width="2.8" stroke-linecap="round"/>
+  <circle cx="11" cy="9" r="3.5" fill="#F4AB88" stroke="white" stroke-width="1.5"/>
+  <circle cx="33" cy="36" r="3.5" fill="#F4AB88" stroke="white" stroke-width="1.5"/>
+  <text x="53" y="17" fill="#717D90" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="700" letter-spacing="1.6">TAIGA UI</text>
+  <text x="53" y="35" fill="#E76436" font-family="Arial,Helvetica,sans-serif" font-size="19" font-weight="800" letter-spacing="0.1">Playwright</text>
+</svg>

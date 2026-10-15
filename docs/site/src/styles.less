@@ -38,7 +38,8 @@ body { margin: 0; font: var(--tui-typography-body-m); color: var(--tui-text-prim
 .coverage-table .source-link { display: inline-block; margin-inline-start: 1rem; color: var(--tui-text-secondary); text-decoration: none; font-size: .8rem; }
 .coverage-table .no-results { color: var(--tui-text-secondary); text-align: center; padding-block: 3rem; }
 .guide-page { line-height: 1.65; }
-.guide-page pre { overflow: auto; padding: 1.2rem; border-radius: var(--tui-radius-l); background: var(--tui-background-neutral-1); }
+.guide-page tui-doc-code { display: block; max-width: 100%; margin-block: 1.25rem 2rem; }
+.guide-page tui-doc-code .hljs { overflow-x: auto; overflow-wrap: normal; white-space: pre; }
 .guide-page h2 { margin-top: 2rem; }
 @media(max-width:750px) {
     .docs-links { gap: .65rem; padding-inline: 0; font-size: .75rem; }
