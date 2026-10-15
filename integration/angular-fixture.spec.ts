@@ -168,3 +168,16 @@ test('ComboBox waits for asynchronously loaded options before choosing', async (
     await expect(combo.input).toHaveValue('Oslo');
     await expect(page.getByTestId('async-city-model')).toHaveText('Oslo');
 });
+
+test('Select Escape closes the real Taiga UI dropdown without changing the model', async ({page}) => {
+    const select = tuiSelect(page.getByTestId('country-field'));
+
+    await select.open();
+    await select.input.press('Escape');
+
+    await expect(select.overlay).toBeHidden();
+    await expect(page.getByTestId('country-model')).toHaveText('null');
+
+    await select.selectOption('Estonia');
+    await expect(page.getByTestId('country-model')).toHaveText('Estonia');
+});

@@ -66,7 +66,7 @@ Call `await select.getOverlay()` to resolve the current owned overlay after dyna
 
 For custom option markup, pass `optionSelector` (default: `tui-data-list [tuiOption]`). `selectOption` matches the **full visible label, case-sensitively**, escapes regexp characters, waits for an async option to appear, rejects ambiguous labels and verifies that the option is enabled before clicking. Disabled and hidden options are never silently selected. If two visible options have the same label, use `select.options` and your own scoped Locator to disambiguate.
 
-Keyboard actions intentionally remain Playwright-native: `await select.input.press('ArrowDown')`, `await page.keyboard.press('Enter')`, or `await select.close()` for Escape.
+The visible-option Locator filter requires Playwright **1.51 or newer**. Keyboard actions intentionally remain Playwright-native: `await select.input.press('ArrowDown')`, `await page.keyboard.press('Enter')`, or `await select.close()` for Escape.
 
 For a virtualized data list, only DOM-mounted options are selectable. Scroll the virtual viewport to mount an offscreen item before calling `selectOption()`; the helper does not attempt to search the entire virtual data source or scroll arbitrary containers.
 
