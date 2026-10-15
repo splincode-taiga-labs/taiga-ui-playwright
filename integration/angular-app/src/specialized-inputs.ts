@@ -1,13 +1,12 @@
 import {Component} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {TuiTextfield} from '@taiga-ui/core';
+import {TuiSlider, TuiTextfield} from '@taiga-ui/core';
 import {
     TuiInputColor,
     TuiInputNumber,
     TuiInputPhone,
     TuiInputPin,
     TuiInputSlider,
-    TuiSlider,
 } from '@taiga-ui/kit';
 
 @Component({
