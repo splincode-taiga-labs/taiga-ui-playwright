@@ -32,7 +32,7 @@ import {
         <section data-testid="harness-controls">
             <h2>Additional real Taiga UI harnesses</h2>
 
-            <button data-testid="basic-button" tuiButton type="button" (click)="clicks.update(n => n + 1)">Save</button>
+            <button data-testid="basic-button" tuiButton type="button" (click)="incrementClicks()">Save</button>
             <output data-testid="basic-button-model">{{ clicks() }}</output>
             <button data-testid="disabled-button" tuiButton type="button" disabled>Disabled</button>
 
@@ -103,6 +103,10 @@ import {
 })
 export class HarnessControls {
     protected readonly clicks = signal(0);
+
+    protected incrementClicks(): void {
+        this.clicks.update((count) => count + 1);
+    }
     protected readonly checkbox = new FormControl(false, {nonNullable: true});
     protected readonly radio = new FormControl('A', {nonNullable: true});
     protected readonly text = new FormControl('', {nonNullable: true});
