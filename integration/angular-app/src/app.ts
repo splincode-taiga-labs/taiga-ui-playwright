@@ -2,6 +2,7 @@ import {Component, inject, signal} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {TuiButton, TuiDialogService, TuiFilterByInputPipe, TuiRoot, TuiTextfield} from '@taiga-ui/core';
 import {TuiChevron, TuiComboBox, TuiDataListWrapper, TuiSelect} from '@taiga-ui/kit';
+import {map, timer} from 'rxjs';
 
 @Component({
     selector: 'app-fixture',
@@ -123,6 +124,9 @@ import {TuiChevron, TuiComboBox, TuiDataListWrapper, TuiSelect} from '@taiga-ui/
 
                 <section>
                     <button tuiButton type="button" (click)="openDialog()">Open dialog</button>
+                    <button tuiButton type="button" (click)="openLockedDialog()">Open locked dialog</button>
+                    <button tuiButton type="button" (click)="openDismissibleDialog()">Open dismissible dialog</button>
+                    <button tuiButton type="button" (click)="openGuardedDialog()">Open guarded dialog</button>
                     <output data-testid="dialog-model">{{ dialogState() }}</output>
                 </section>
             </main>
@@ -160,6 +164,44 @@ export class FixtureApp {
 
         this.dialogs
             .open('Please confirm your action', {label: 'Review changes', size: 's', data: 'Confirm'})
+            .subscribe({complete: () => this.dialogState.set('closed')});
+    }
+
+    protected openLockedDialog(): void {
+        this.dialogState.set('open');
+
+        this.dialogs
+            .open('This dialog cannot be closed by the user.', {
+                label: 'Locked dialog',
+                size: 's',
+                closable: false,
+                dismissible: false,
+            })
+            .subscribe({complete: () => this.dialogState.set('closed')});
+    }
+
+    protected openDismissibleDialog(): void {
+        this.dialogState.set('open');
+
+        this.dialogs
+            .open('Escape should dismiss this dialog.', {
+                label: 'Dismissible dialog',
+                size: 's',
+                closable: false,
+                dismissible: true,
+            })
+            .subscribe({complete: () => this.dialogState.set('closed')});
+    }
+
+    protected openGuardedDialog(): void {
+        this.dialogState.set('open');
+
+        this.dialogs
+            .open('Closing waits for the asynchronous guard.', {
+                label: 'Guarded dialog',
+                size: 's',
+                closable: timer(200).pipe(map(() => true)),
+            })
             .subscribe({complete: () => this.dialogState.set('closed')});
     }
 }
