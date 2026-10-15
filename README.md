@@ -64,7 +64,13 @@ const select = tuiSelect(page.getByTestId('country-field'), {
 
 Call `await select.getOverlay()` to resolve the current owned overlay after dynamic DOM changes. The existing `select.overlay` property remains a synchronous lazy Locator, scoped to the most recently resolved `aria-controls` ID. After an `open()` or `close()` call it is up to date.
 
-For custom option markup, pass `optionSelector` (default: `tui-data-list [tuiOption]`). `selectOption` performs an exact, case-sensitive text match.
+For custom option markup, pass `optionSelector` (default: `tui-data-list [tuiOption]`). `selectOption` matches the **full visible label, case-sensitively**, escapes regexp characters, waits for an async option to appear, rejects ambiguous labels and verifies that the option is enabled before clicking. Disabled and hidden options are never silently selected. If two visible options have the same label, use `select.options` and your own scoped Locator to disambiguate.
+
+Keyboard actions intentionally remain Playwright-native: `await select.input.press('ArrowDown')`, `await page.keyboard.press('Enter')`, or `await select.close()` for Escape.
+
+For a virtualized data list, only DOM-mounted options are selectable. Scroll the virtual viewport to mount an offscreen item before calling `selectOption()`; the helper does not attempt to search the entire virtual data source or scroll arbitrary containers.
+
+The real Angular fixture covers strict ComboBox (unmatched text not committed), non-strict ComboBox (custom text allowed), disabled Select options, no matches and asynchronously loaded ComboBox options.
 
 | Object | API |
 | --- | --- |

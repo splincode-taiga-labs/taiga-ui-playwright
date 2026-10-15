@@ -64,3 +64,42 @@ test('custom option selector supports application-specific markup', async ({page
     await select.selectOption('Estonia');
     await expect(select.input).toHaveValue('Estonia');
 });
+
+test('duplicate visible labels produce an actionable error', async ({page}) => {
+    const select = tuiSelect(page.getByTestId('country-field'));
+    await page.locator('[data-testid="country-overlay"] tui-data-list').evaluate((element) => {
+        const duplicate = element.querySelector('[tuiOption]')?.cloneNode(true);
+
+        if (duplicate) {
+            element.appendChild(duplicate);
+        }
+    });
+
+    await expect(select.selectOption('Austria')).rejects.toThrow(/Multiple visible Taiga UI options match "Austria"/);
+    await expect(select.input).toHaveValue('');
+});
+
+test('hidden duplicates are ignored when choosing a visible option', async ({page}) => {
+    const select = tuiSelect(page.getByTestId('country-field'));
+    await page.locator('[data-testid="country-overlay"] tui-data-list').evaluate((element) => {
+        const duplicate = element.querySelector('[tuiOption]')?.cloneNode(true);
+
+        if (duplicate instanceof HTMLElement) {
+            duplicate.hidden = true;
+            element.appendChild(duplicate);
+        }
+    });
+
+    await select.selectOption('Austria');
+    await expect(select.input).toHaveValue('Austria');
+});
+
+test('non-rendered virtual-scroll items are not mistaken for mounted options', async ({page}) => {
+    const select = tuiSelect(page.getByTestId('country-field'));
+
+    // Virtual scrolling only renders a window. Consumers should scroll the
+    // virtual viewport to mount offscreen items before calling selectOption.
+    await select.open();
+    await expect(select.option('Offscreen virtual item')).toHaveCount(0);
+    await expect(select.option('Austria')).toBeVisible();
+});

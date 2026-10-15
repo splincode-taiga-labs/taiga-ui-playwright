@@ -65,9 +65,9 @@ export abstract class TuiOptionsField {
         return this.overlay.locator(this.config.optionSelector ?? DEFAULT_OPTION_SELECTOR);
     }
 
-    /** Exact, case-sensitive match, escaping regexp metacharacters. */
+    /** Exact case-sensitive visible option, with regexp metacharacters escaped. */
     public option(label: string): Locator {
-        return this.options.filter({hasText: exactText(label)});
+        return this.options.filter({hasText: exactText(label)}).filter({visible: true});
     }
 
     /** Re-read aria-controls on every operation; the overlay may be recreated. */
@@ -153,9 +153,24 @@ export abstract class TuiOptionsField {
         await expect(overlay).toBeHidden();
     }
 
+    /**
+     * Choose exactly one visible and enabled item by its full displayed label.
+     * Playwright retries while asynchronous items arrive, without fixed sleeps.
+     * Duplicate labels fail instead of silently selecting an arbitrary item.
+     */
     public async selectOption(label: string): Promise<void> {
         await this.open();
-        await this.option(label).click();
+
+        const option = this.option(label);
+        const matches = await option.count();
+
+        if (matches > 1) {
+            throw new Error(`Multiple visible Taiga UI options match "${label}" (${matches}). Scope the option or use its Locator directly.`);
+        }
+
+        await expect(option, `Expected a single visible option named "${label}"`).toHaveCount(1);
+        await expect(option, `Taiga UI option "${label}" must be enabled`).toBeEnabled();
+        await option.click();
     }
 
     public async getOptionLabels(): Promise<string[]> {
