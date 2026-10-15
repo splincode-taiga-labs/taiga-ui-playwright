@@ -10,7 +10,7 @@ import {TuiLink} from '@taiga-ui/core';
             <article class="guide-page">
                 <p>This experimental library provides Locator-first element objects for Taiga UI. Not yet published to npm.</p>
                 <h2>Current harnesses</h2>
-                <pre><code>import {tuiSelect, tuiComboBox, tuiDialog} from '@taiga-ui-labs/playwright';
+                <pre><code>import &#123;tuiSelect, tuiComboBox, tuiDialog&#125; from '@taiga-ui-labs/playwright';
 
 const country = tuiSelect(page.getByTestId('country-field'));
 await country.selectOption('Estonia');
