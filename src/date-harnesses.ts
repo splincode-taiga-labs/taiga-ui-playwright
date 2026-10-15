@@ -63,10 +63,10 @@ export class TuiInputDateHarness {
 
     public async selectDay(day: number): Promise<void> {
         const calendar = await this.calendar();
-        await calendar.selectDay(day);
-        await expect(this.host.page().locator('tui-dropdown:visible').filter({
-            has: calendar.host,
-        })).toHaveCount(0);
+        const cell = calendar.day(day);
+        await expect(cell).toHaveCount(1);
+        await cell.click();
+        await expect(this.input).not.toHaveValue('');
     }
 }
 

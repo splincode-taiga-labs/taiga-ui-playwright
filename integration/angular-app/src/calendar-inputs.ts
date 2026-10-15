@@ -1,6 +1,6 @@
 import {Component, signal} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {TuiDay, TuiMonth, TuiYear} from '@taiga-ui/cdk';
+import {TuiDay, TuiMonth, TuiTime, TuiYear} from '@taiga-ui/cdk';
 import {TuiCalendar, TuiTextfield} from '@taiga-ui/core';
 import {TuiCalendarMonth, TuiInputDate, TuiInputTime, TuiInputYear} from '@taiga-ui/kit';
 
@@ -63,5 +63,5 @@ export class CalendarInputs {
     protected readonly monthValue = signal<TuiMonth | null>(new TuiMonth(2026, 0));
     protected readonly date = new FormControl<TuiDay | null>(new TuiDay(2026, 0, 15));
     protected readonly year = new FormControl<number | null>(null);
-    protected readonly time = new FormControl(null);
+    protected readonly time = new FormControl<TuiTime | null>(null);
 }
