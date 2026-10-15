@@ -1,5 +1,6 @@
 import {Component, inject, signal} from '@angular/core';
 import {HarnessControls} from './controls';
+import {SpecializedInputs} from './specialized-inputs';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {TuiButton, TuiDialogService, TuiFilterByInputPipe, TuiRoot, TuiTextfield} from '@taiga-ui/core';
 import {TuiChevron, TuiComboBox, TuiDataListWrapper, TuiSelect} from '@taiga-ui/kit';
@@ -18,6 +19,7 @@ import {map, timer} from 'rxjs';
         TuiDataListWrapper,
         TuiSelect,
         HarnessControls,
+        SpecializedInputs,
     ],
     template: `
         <tui-root>
@@ -132,6 +134,7 @@ import {map, timer} from 'rxjs';
                     <output data-testid="dialog-model">{{ dialogState() }}</output>
                 </section>
                 <app-harness-controls />
+                <app-specialized-inputs />
             </main>
         </tui-root>
     `,

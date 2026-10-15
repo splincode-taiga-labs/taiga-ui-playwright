@@ -162,7 +162,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "slider",
     "path": "projects/core/components/slider",
     "id": "core/slider",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Core",
@@ -358,7 +358,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "input-color",
     "path": "projects/kit/components/input-color",
     "id": "kit/input-color",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -414,14 +414,14 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "input-number",
     "path": "projects/kit/components/input-number",
     "id": "kit/input-number",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
     "name": "input-phone",
     "path": "projects/kit/components/input-phone",
     "id": "kit/input-phone",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -435,7 +435,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "input-pin",
     "path": "projects/kit/components/input-pin",
     "id": "kit/input-pin",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -449,7 +449,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "input-slider",
     "path": "projects/kit/components/input-slider",
     "id": "kit/input-slider",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -954,6 +954,12 @@ export const IMPLEMENTATIONS: Readonly<Record<string, string>> = {
     'kit/select': 'tuiSelect',
     'kit/combo-box': 'tuiComboBox',
     'portals/dialog': 'tuiDialog',
+    'kit/input-number': 'tuiInputNumber',
+    'kit/input-phone': 'tuiInputPhone',
+    'kit/input-pin': 'tuiInputPin',
+    'kit/input-color': 'tuiInputColor',
+    'kit/input-slider': 'tuiInputSlider',
+    'core/slider': 'tuiSlider',
     'core/button': 'tuiButton',
     'core/checkbox': 'tuiCheckbox',
     'core/radio': 'tuiRadio',

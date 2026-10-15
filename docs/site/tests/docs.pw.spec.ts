@@ -7,9 +7,9 @@ test('renders the real addon-doc shell and the upstream coverage inventory', asy
     await expect(page.locator('tui-doc-page')).toBeVisible();
     await expect(page.getByRole('heading', {name: 'Playwright harness matrix'})).toBeVisible();
     await expect(page.getByTestId('coverage-total')).toHaveText('133');
-    await expect(page.getByTestId('coverage-done')).toHaveText('14');
-    await expect(page.locator('tr[data-status="done"]')).toHaveCount(14);
-    await expect(page.locator('tr[data-status="todo"]')).toHaveCount(119);
+    await expect(page.getByTestId('coverage-done')).toHaveText('20');
+    await expect(page.locator('tr[data-status="done"]')).toHaveCount(20);
+    await expect(page.locator('tr[data-status="todo"]')).toHaveCount(113);
 });
 
 test('filters the matrix by component text and package', async ({page}) => {
@@ -30,7 +30,7 @@ test('filters done rows and links to the actual Playwright helper source', async
     await page.goto('/');
     await page.getByRole('button', {name: 'Done', exact: true}).click();
 
-    await expect(page.locator('tr[data-status="done"]')).toHaveCount(14);
+    await expect(page.locator('tr[data-status="done"]')).toHaveCount(20);
     await expect(page.locator('tr[data-status="todo"]')).toHaveCount(0);
     const link = page.locator('tr[data-harness="kit/select"]').getByRole('link', {name: /tuiSelect/});
     await expect(link).toHaveAttribute('href', /src\/select\.ts/);
