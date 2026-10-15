@@ -78,6 +78,8 @@ The real Angular fixture covers strict ComboBox (unmatched text not committed), 
 | `tuiComboBox(host)` | Select's API plus `fill(text)` |
 | `tuiDialog(host)` | `host`, `title`, `closeButton`, `button(name)`, `clickButton(name)`, `close()` |
 
+Dialog helpers are scoped to a caller-provided `tui-dialog` Locator; `title` is an optional heading Locator, while `close()` uses the real `tuiButtonX`, reports `closable: false` clearly, and waits for async close guards/exit animations. Native Playwright `page.keyboard.press('Escape')` covers dismissible dialogs. For disabled/custom buttons use `dialog.button('Save')` with `expect(...).toBeDisabled()` or other Playwright assertions.
+
 No arbitrary timeouts, global singleton state, or custom Playwright runner.
 
 ## Quality gates and limitations

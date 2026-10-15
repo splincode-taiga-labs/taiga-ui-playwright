@@ -181,3 +181,75 @@ test('Select Escape closes the real Taiga UI dropdown without changing the model
     await select.selectOption('Estonia');
     await expect(page.getByTestId('country-model')).toHaveText('Estonia');
 });
+
+test('Dialog can be reopened after the previous portal has been destroyed', async ({page}) => {
+    const button = page.getByRole('button', {name: 'Open dialog'});
+    const dialog = tuiDialog(page.locator('tui-dialog'));
+
+    for (let attempt = 0; attempt < 2; attempt++) {
+        await button.click();
+        await expect(dialog.title).toHaveText('Review changes');
+        await dialog.clickButton('Confirm');
+        await expect(dialog.host).toBeHidden();
+        await expect(page.getByTestId('dialog-model')).toHaveText('closed');
+    }
+});
+
+test('Dialog Escape dismisses the real portal', async ({page}) => {
+    await page.getByRole('button', {name: 'Open dialog'}).click();
+    const dialog = tuiDialog(page.locator('tui-dialog'));
+    await expect(dialog.host).toBeVisible();
+
+    await page.keyboard.press('Escape');
+
+    await expect(dialog.host).toBeHidden();
+    await expect(page.getByTestId('dialog-model')).toHaveText('closed');
+});
+
+test('Non-closable dialog fails with a useful error and is not dismissed by Escape', async ({page}) => {
+    await page.getByRole('button', {name: 'Open locked dialog'}).click();
+    const dialog = tuiDialog(page.locator('tui-dialog'));
+
+    await expect(dialog.title).toHaveText('Locked dialog');
+    await expect(dialog.closeButton).toHaveCount(0);
+    await expect(dialog.close()).rejects.toThrow(/closable: false/);
+    await page.keyboard.press('Escape');
+
+    await expect(dialog.host).toBeVisible();
+    await expect(page.getByTestId('dialog-model')).toHaveText('open');
+});
+
+test('Dismissible dialog without a close button closes via Escape', async ({page}) => {
+    await page.getByRole('button', {name: 'Open dismissible dialog'}).click();
+    const dialog = tuiDialog(page.locator('tui-dialog'));
+
+    await expect(dialog.closeButton).toHaveCount(0);
+    await page.keyboard.press('Escape');
+
+    await expect(dialog.host).toBeHidden();
+    await expect(page.getByTestId('dialog-model')).toHaveText('closed');
+});
+
+test('Dialog close waits for async closable guard and exit animations', async ({page}) => {
+    await page.getByRole('button', {name: 'Open guarded dialog'}).click();
+    const dialog = tuiDialog(page.locator('tui-dialog'));
+
+    await expect(dialog.title).toHaveText('Guarded dialog');
+    await dialog.close();
+
+    await expect(dialog.host).toBeHidden();
+    await expect(page.getByTestId('dialog-model')).toHaveText('closed');
+});
+
+test('Dialog Escape restores focus to its original trigger', async ({page}) => {
+    const button = page.getByRole('button', {name: 'Open dialog'});
+    await button.focus();
+    await button.click();
+
+    const dialog = tuiDialog(page.locator('tui-dialog'));
+    await expect(dialog.host).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(dialog.host).toBeHidden();
+
+    await expect(button).toBeFocused();
+});
