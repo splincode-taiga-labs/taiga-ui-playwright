@@ -157,7 +157,7 @@ export class HarnessMatrixPage {
         if (!name) {
             return null;
         }
-        const file = id === 'kit/combo-box' ? 'combo-box.ts' : id === 'kit/select' ? 'select.ts' : 'dialog.ts';
+        const file = id === 'kit/combo-box' ? 'combo-box.ts' : id === 'kit/select' ? 'select.ts' : id === 'portals/dialog' ? 'dialog.ts' : 'basic-harnesses.ts';
         return {name, file};
     }
 

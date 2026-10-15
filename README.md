@@ -82,6 +82,30 @@ Dialog helpers are scoped to a caller-provided `tui-dialog` Locator; `title` is 
 
 No arbitrary timeouts, global singleton state, or custom Playwright runner.
 
+## Additional tested v5 component harnesses
+
+The following eleven native/compound Taiga UI components expose Locator-first helpers:
+`tuiButton`, `tuiCheckbox`, `tuiRadio`, `tuiInput`, `tuiSwitch`,
+`tuiTextarea`, `tuiTabs`, `tuiSegmented`, `tuiAccordion`,
+`tuiPagination` and `tuiStepper`.
+
+Use a component-scoped Locator, then perform semantic actions. Each helper is
+validated on the actual Angular/Taiga UI v5 fixture, including FormControl updates,
+active selection, disabled controls, and accordion aria-controls pairing.
+
+```ts
+const tabs = tuiTabs(page.getByTestId('basic-tabs'));
+await tabs.select('Details');
+
+const accordion = tuiAccordion(page.getByTestId('basic-accordion'));
+await accordion.expand('Shipping');
+
+await tuiCheckbox(page.getByTestId('basic-checkbox')).check();
+```
+
+These are native Playwright-based helpers, not Angular CDK ComponentHarnesses.
+Coverage is marked Done only after verified browser integration.
+
 ## Quality gates and limitations
 
 CI runs strict TypeScript typechecking, ESM declaration build, Angular fixture build, synthetic DOM tests and Chromium E2E tests against a **real Angular/Taiga UI application**. Mobile overlay and broader browser/Angular version checks are follow-ups before a release.
