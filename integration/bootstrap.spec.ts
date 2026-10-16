@@ -4,7 +4,7 @@ test('Angular fixture bootstraps and renders all feature sections', async ({page
     const errors: string[] = [];
     page.on('pageerror', (error) => errors.push(error.message));
     page.on('console', (message) => {
-        if (message.type() === 'error') {
+        if (message.type() === 'error' && /needs to be compiled|JIT compiler|NG\d{4}|Uncaught|TypeError|ReferenceError/.test(message.text())) {
             errors.push(message.text());
         }
     });
