@@ -155,3 +155,7 @@ Calendar day selection requires a uniquely visible **in-month** cell and rejects
 ## Interactive widgets batch
 
 The real Angular 20 + Taiga UI 5.28.0 fixture also verifies five specialized helpers: `tuiRating` (keyboard-driven rating), `tuiLike` (checkbox semantics), `tuiCopy` (actual browser Clipboard API), `tuiInputChip` (tag creation/removal with the reactive form model), and `tuiProgress` (native progress value/max and Angular updates). The browser context must grant clipboard permissions when reading copied content. All five have actual Playwright integration tests before being marked Done in the coverage matrix.
+
+## Form and navigation helpers
+
+Five further source-backed Taiga UI v5 harnesses have real Angular integration: `tuiCounter` (min/max state), `tuiRadioList` (native radio semantics and FormControl), `tuiInputInline` (mirror/placeholder), `tuiRange` (keyboard-driven two-thumb value) and `tuiExpand` (expanded/collapsed lifecycle). These are tested against actual Angular 20 + Taiga UI 5.28.0 components.

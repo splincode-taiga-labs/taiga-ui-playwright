@@ -92,7 +92,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "expand",
     "path": "projects/core/components/expand",
     "id": "core/expand",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Core",
@@ -309,7 +309,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "counter",
     "path": "projects/kit/components/counter",
     "id": "kit/counter",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -393,7 +393,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "input-inline",
     "path": "projects/kit/components/input-inline",
     "id": "kit/input-inline",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -575,14 +575,14 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "radio-list",
     "path": "projects/kit/components/radio-list",
     "id": "kit/radio-list",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
     "name": "range",
     "path": "projects/kit/components/range",
     "id": "kit/range",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -954,6 +954,11 @@ export const IMPLEMENTATIONS: Readonly<Record<string, string>> = {
     'kit/select': 'tuiSelect',
     'kit/combo-box': 'tuiComboBox',
     'portals/dialog': 'tuiDialog',
+    'kit/counter': 'tuiCounter',
+    'kit/radio-list': 'tuiRadioList',
+    'kit/input-inline': 'tuiInputInline',
+    'kit/range': 'tuiRange',
+    'core/expand': 'tuiExpand',
     'kit/rating': 'tuiRating',
     'kit/like': 'tuiLike',
     'kit/copy': 'tuiCopy',
