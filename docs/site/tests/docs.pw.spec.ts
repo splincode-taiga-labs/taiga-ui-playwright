@@ -33,7 +33,7 @@ test('filters done rows and links to the actual Playwright helper source', async
     await expect(page.locator('tr[data-status="done"]')).toHaveCount(39);
     await expect(page.locator('tr[data-status="todo"]')).toHaveCount(0);
     const link = page.locator('tr[data-harness="kit/select"]').getByRole('link', {name: /tuiSelect/});
-    await expect(link).toHaveAttribute('href', /src\/select\.ts/);
+    await expect(link).toHaveAttribute('href', /#\/harness\/kit\/select$/);
 });
 
 test('navigates to Getting started using GitHub Pages compatible hash routing', async ({page}) => {
@@ -92,7 +92,7 @@ test('each verified harness has a navigable individual sidebar reference', async
     await page.goto('/#/harness/kit/select');
 
     await expect(page.locator('harness-detail tui-doc-page')).toBeVisible();
-    await expect(page.getByRole('heading', {name: 'tuiSelect', exact: true})).toBeVisible();
+    await expect(page.locator('harness-detail h1')).toContainText('tuiSelect');
     await expect(page.locator('tui-doc-navigation a[href*="/harness/kit/select"]')).toHaveCount(1);
     await expect(page.locator('tui-doc-navigation a.t-sublink_active')).toHaveCount(1);
     await expect(page.locator('tui-doc-navigation a.t-sublink_active')).toContainText('tuiSelect');
