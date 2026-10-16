@@ -27,6 +27,7 @@ import {TuiCopy, TuiInputChip, TuiLike, TuiProgressBar, TuiRating} from '@taiga-
 
             <tui-textfield data-testid="chip-widget" multi>
                 <input tuiInputChip aria-label="Enter tags" [formControl]="chips" />
+                <tui-input-chip *tuiItem />
             </tui-textfield>
             <output data-testid="chip-model">{{ chips.value | json }}</output>
 
