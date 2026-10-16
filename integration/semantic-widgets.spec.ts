@@ -62,7 +62,7 @@ test('Link follows the actual native anchor destination', async ({page}) => {
 });
 
 test('Chip reflects reactive appearance changes', async ({page}) => {
-    const chip = tuiChip(page.getByTestId('chip-widget'));
+    const chip = tuiChip(page.getByTestId('semantic-chip-widget'));
     await chip.expectAppearance('neutral');
     await page.getByRole('button', {name: 'Toggle chip'}).click();
     await chip.expectAppearance('positive');

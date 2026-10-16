@@ -47,7 +47,7 @@ import {
             <a data-testid="link-widget" tuiLink href="#semantic-link-destination">Open anchor</a>
             <div id="semantic-link-destination">Anchor target</div>
 
-            <span data-testid="chip-widget" tuiChip [attr.appearance]="chipAppearance()">Dynamic chip</span>
+            <span data-testid="semantic-chip-widget" tuiChip [attr.appearance]="chipAppearance()">Dynamic chip</span>
             <button tuiButton type="button" (click)="toggleChip()">Toggle chip</button>
 
             <span data-testid="badge-widget" tuiBadge appearance="positive" [size]="badgeSize()">

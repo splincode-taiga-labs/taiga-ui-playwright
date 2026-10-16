@@ -151,8 +151,8 @@ import {map, timer} from 'rxjs';
                 <app-range-inputs />
                 <app-interactive-widgets />
                 <app-form-navigation />
-                <app-multi-fields />
                 <app-semantic-widgets />
+                <app-multi-fields />
             </main>
         </tui-root>
     `,

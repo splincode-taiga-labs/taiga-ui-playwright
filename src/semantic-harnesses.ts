@@ -23,7 +23,9 @@ export class TuiSpinButtonHarness {
     }
 
     public async arrowRight(): Promise<void> {
-        await this.host.press('ArrowRight');
+        await expect(this.next).not.toHaveClass(/t-button_hidden/);
+        await this.next.focus();
+        await this.next.press('ArrowRight');
     }
 }
 
