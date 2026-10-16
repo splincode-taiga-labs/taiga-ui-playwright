@@ -6,18 +6,18 @@ import {TuiButton} from '@taiga-ui/core';
 @Component({
     selector: 'docs-copy-button',
     imports: [TuiButton],
-    template: [
-        '<button',
-        '    tuiIconButton',
-        '    type="button"',
-        '    appearance=""',
-        '    size="s"',
-        '    [iconStart]="copied() ? \'@tui.check\' : \'@tui.copy\'"',
-        '    [attr.aria-label]="(copied() ? \'Copied \' : \'Copy \') + label()"',
-        '    [disabled]="!code()"',
-        '    (click)="copy()"',
-        '>{{ copied() ? \'Copied\' : \'Copy\' }}</button>',
-    ].join('\n'),
+    template: `
+<button
+    tuiIconButton
+    type="button"
+    appearance=""
+    size="s"
+    [iconStart]="copied() ? '@tui.check' : '@tui.copy'"
+    [attr.aria-label]="(copied() ? 'Copied ' : 'Copy ') + label()"
+    [disabled]="!code()"
+    (click)="copy()"
+>{{ copied() ? 'Copied' : 'Copy' }}</button>
+    `,
 })
 export class DocsCopyButton {
     private readonly clipboard = inject(Clipboard);

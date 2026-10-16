@@ -11,44 +11,44 @@ import {HARNESS_REFERENCES, makeExample} from './harness-reference';
 @Component({
     selector: 'harness-detail',
     imports: [TuiDocCode, TuiDocPage, TuiLink, RouterLink, DocsCopyButton],
-    template: [
-        '@if (reference(); as item) {',
-        '  <tui-doc-page [header]="item.api" [package]="item.category" [tags]="[\'Playwright\', \'Done\']">',
-        '    <article class="harness-page">',
-        '      <p class="page-lead">An exported, tested Locator-first helper for the Taiga UI {{ item.name }} component.</p>',
-        '      <p class="reference-links">',
-        '        <a tuiLink routerLink="/matrix">Coverage matrix</a>',
-        '        <a tuiLink [href]="\'https://github.com/splincode-taiga-labs/taiga-ui-playwright/blob/main/src/\' + item.sourceFile" target="_blank" rel="noopener noreferrer">Source on GitHub ↗</a>',
-        '        <a tuiLink [href]="\'https://github.com/taiga-family/taiga-ui/tree/main/\' + upstreamPath()" target="_blank" rel="noopener noreferrer">Taiga UI source ↗</a>',
-        '      </p>',
-        '      <h2>Import</h2>',
-        '      <tui-doc-code filename="import.ts" [lineNumbers]="false" [code]="importCode()">',
-        '        <docs-copy-button label="import" [code]="importCode()" />',
-        '      </tui-doc-code>',
-        '      <h2>Playwright example</h2>',
-        '      <p>Replace the example test-id with your component locator. The package is currently private; you can copy its implementation below.</p>',
-        '      <tui-doc-code filename="playwright.spec.ts" [lineNumbers]="false" [code]="example()">',
-        '        <docs-copy-button label="example" [code]="example()" />',
-        '      </tui-doc-code>',
-        '      <details class="source-details">',
-        '        <summary>Full harness source ({{ item.sourceFile }})</summary>',
-        '        <p>The source file may contain other related harnesses. Copy it together with any local imports.</p>',
-        '        @if (source()) {',
-        '          <tui-doc-code [filename]="item.sourceFile" [lineNumbers]="false" [code]="source()">',
-        '            <docs-copy-button label="implementation" [code]="source()" />',
-        '          </tui-doc-code>',
-        '        } @else {',
-        '          <p role="status">Loading the tested implementation…</p>',
-        '        }',
-        '      </details>',
-        '    </article>',
-        '  </tui-doc-page>',
-        '} @else {',
-        '  <tui-doc-page header="Harness not found">',
-        '    <p class="harness-page">No verified harness matches this URL. <a tuiLink routerLink="/matrix">Browse the coverage matrix</a>.</p>',
-        '  </tui-doc-page>',
-        '}',
-    ].join('\n'),
+    template: `
+@if (reference(); as item) {
+  <tui-doc-page [header]="item.api" [package]="item.category" [tags]="['Playwright', 'Done']">
+    <article class="harness-page">
+      <p class="page-lead">An exported, tested Locator-first helper for the Taiga UI {{ item.name }} component.</p>
+      <p class="reference-links">
+        <a tuiLink routerLink="/matrix">Coverage matrix</a>
+        <a tuiLink [href]="'https://github.com/splincode-taiga-labs/taiga-ui-playwright/blob/main/src/' + item.sourceFile" target="_blank" rel="noopener noreferrer">Source on GitHub ↗</a>
+        <a tuiLink [href]="'https://github.com/taiga-family/taiga-ui/tree/main/' + upstreamPath()" target="_blank" rel="noopener noreferrer">Taiga UI source ↗</a>
+      </p>
+      <h2>Import</h2>
+      <tui-doc-code filename="import.ts" [lineNumbers]="false" [code]="importCode()">
+        <docs-copy-button label="import" [code]="importCode()" />
+      </tui-doc-code>
+      <h2>Playwright example</h2>
+      <p>Replace the example test-id with your component locator. The package is currently private; you can copy its implementation below.</p>
+      <tui-doc-code filename="playwright.spec.ts" [lineNumbers]="false" [code]="example()">
+        <docs-copy-button label="example" [code]="example()" />
+      </tui-doc-code>
+      <details class="source-details">
+        <summary>Full harness source ({{ item.sourceFile }})</summary>
+        <p>The source file may contain other related harnesses. Copy it together with any local imports.</p>
+        @if (source()) {
+          <tui-doc-code [filename]="item.sourceFile" [lineNumbers]="false" [code]="source()">
+            <docs-copy-button label="implementation" [code]="source()" />
+          </tui-doc-code>
+        } @else {
+          <p role="status">Loading the tested implementation…</p>
+        }
+      </details>
+    </article>
+  </tui-doc-page>
+} @else {
+  <tui-doc-page header="Harness not found">
+    <p class="harness-page">No verified harness matches this URL. <a tuiLink routerLink="/matrix">Browse the coverage matrix</a>.</p>
+  </tui-doc-page>
+}
+    `,
 })
 export class HarnessDetailPage {
     private readonly route = inject(ActivatedRoute);
