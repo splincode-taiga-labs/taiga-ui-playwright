@@ -31,3 +31,4 @@ export {TuiCalendarHarness, TuiCalendarMonthHarness, TuiInputDateHarness, TuiInp
 export {TuiCalendarRangeHarness, TuiInputDateRangeHarness, TuiInputDateTimeHarness, TuiInputMonthHarness, tuiCalendarRange, tuiInputDateRange, tuiInputDateTime, tuiInputMonth} from './date-range-harnesses.js';
 export {TuiRatingHarness, TuiLikeHarness, TuiCopyHarness, TuiInputChipHarness, TuiProgressHarness, tuiRating, tuiLike, tuiCopy, tuiInputChip, tuiProgress} from './interactive-widgets.js';
 export {TuiCounterHarness, TuiRadioListHarness, TuiInputInlineHarness, TuiRangeHarness, TuiExpandHarness, tuiCounter, tuiRadioList, tuiInputInline, tuiRange, tuiExpand} from './form-navigation.js';
+export {TuiMultiSelectHarness, TuiInputDateMultiHarness, TuiInputRangeHarness, tuiMultiSelect, tuiInputDateMulti, tuiInputRange} from './multi-fields.js';

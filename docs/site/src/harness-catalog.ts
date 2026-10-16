@@ -372,7 +372,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "input-date-multi",
     "path": "projects/kit/components/input-date-multi",
     "id": "kit/input-date-multi",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -442,7 +442,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "input-range",
     "path": "projects/kit/components/input-range",
     "id": "kit/input-range",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -505,7 +505,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "multi-select",
     "path": "projects/kit/components/multi-select",
     "id": "kit/multi-select",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -954,6 +954,9 @@ export const IMPLEMENTATIONS: Readonly<Record<string, string>> = {
     'kit/select': 'tuiSelect',
     'kit/combo-box': 'tuiComboBox',
     'portals/dialog': 'tuiDialog',
+    'kit/multi-select': 'tuiMultiSelect',
+    'kit/input-date-multi': 'tuiInputDateMulti',
+    'kit/input-range': 'tuiInputRange',
     'kit/counter': 'tuiCounter',
     'kit/radio-list': 'tuiRadioList',
     'kit/input-inline': 'tuiInputInline',
