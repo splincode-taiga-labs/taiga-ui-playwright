@@ -151,3 +151,7 @@ Calendar day selection requires a uniquely visible **in-month** cell and rejects
 ## Date ranges and combined fields
 
 `tuiCalendarRange`, `tuiInputDateRange`, `tuiInputDateTime`, and `tuiInputMonth` are scoped Locator-first APIs. Range helpers select two dates in the first visible month, validating the start/end order and calendar cell states. InputDateRange, InputDateTime and InputMonth resolve an owned overlay using `aria-controls` and are covered by real Angular form model integration. This first version does not support cross-month range selection or mobile native pickers.
+
+## Interactive widgets batch
+
+The real Angular 20 + Taiga UI 5.28.0 fixture also verifies five specialized helpers: `tuiRating` (keyboard-driven rating), `tuiLike` (checkbox semantics), `tuiCopy` (actual browser Clipboard API), `tuiInputChip` (tag creation/removal with the reactive form model), and `tuiProgress` (native progress value/max and Angular updates). The browser context must grant clipboard permissions when reading copied content. All five have actual Playwright integration tests before being marked Done in the coverage matrix.
