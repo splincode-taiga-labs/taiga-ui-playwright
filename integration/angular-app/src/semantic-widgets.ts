@@ -59,7 +59,7 @@ import {
             <button tuiButton type="button" (click)="togglePin()">Toggle pin</button>
 
             <meter data-testid="meter-widget" tuiMeter min="0" max="100" optimum="80"
-                [value]="meterValue()" />
+                [value]="meterValue()"></meter>
             <button tuiButton type="button" (click)="increaseMeter()">Increase meter</button>
             <output data-testid="meter-model">{{ meterValue() }}</output>
         </section>
