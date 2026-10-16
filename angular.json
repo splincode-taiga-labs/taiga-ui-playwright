@@ -63,6 +63,11 @@
                 "glob": "**/*",
                 "input": "docs/site/public",
                 "output": "/"
+              },
+              {
+                "glob": "*.ts",
+                "input": "src",
+                "output": "/assets/harness-sources"
               }
             ],
             "styles": [
