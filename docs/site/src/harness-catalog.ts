@@ -120,7 +120,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "link",
     "path": "projects/core/components/link",
     "id": "core/link",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Core",
@@ -169,7 +169,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "spin-button",
     "path": "projects/core/components/spin-button",
     "id": "core/spin-button",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Core",
@@ -211,7 +211,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "badge",
     "path": "projects/kit/components/badge",
     "id": "kit/badge",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -246,7 +246,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "button-loading",
     "path": "projects/kit/components/button-loading",
     "id": "kit/button-loading",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -267,7 +267,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "chip",
     "path": "projects/kit/components/chip",
     "id": "kit/chip",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -498,7 +498,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "meter",
     "path": "projects/kit/components/meter",
     "id": "kit/meter",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -519,7 +519,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "pager",
     "path": "projects/kit/components/pager",
     "id": "kit/pager",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -533,14 +533,14 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "pin",
     "path": "projects/kit/components/pin",
     "id": "kit/pin",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
     "name": "pincode",
     "path": "projects/kit/components/pincode",
     "id": "kit/pincode",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -954,6 +954,15 @@ export const IMPLEMENTATIONS: Readonly<Record<string, string>> = {
     'kit/select': 'tuiSelect',
     'kit/combo-box': 'tuiComboBox',
     'portals/dialog': 'tuiDialog',
+    'core/spin-button': 'tuiSpinButton',
+    'kit/pincode': 'tuiPincode',
+    'kit/button-loading': 'tuiButtonLoading',
+    'kit/pager': 'tuiPager',
+    'core/link': 'tuiLink',
+    'kit/chip': 'tuiChip',
+    'kit/badge': 'tuiBadge',
+    'kit/pin': 'tuiPin',
+    'kit/meter': 'tuiMeter',
     'kit/multi-select': 'tuiMultiSelect',
     'kit/input-date-multi': 'tuiInputDateMulti',
     'kit/input-range': 'tuiInputRange',
