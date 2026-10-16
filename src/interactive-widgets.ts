@@ -83,6 +83,11 @@ export class TuiInputChipHarness {
 
         await this.input.fill(text);
         await this.input.press('Enter');
+        console.log('InputChip diagnostics:', JSON.stringify({
+            input: await this.input.inputValue(),
+            model: await this.host.page().getByTestId('chip-model').textContent(),
+            html: (await this.host.innerHTML()).slice(0, 4000),
+        }));
         await expect(this.chip(text)).toHaveCount(1);
     }
 
