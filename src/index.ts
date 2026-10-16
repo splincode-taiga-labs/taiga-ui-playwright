@@ -29,3 +29,4 @@ export {
 export {TuiTypedFieldHarness, TuiSliderHarness, tuiInputColor, tuiInputNumber, tuiInputPhone, tuiInputPin, tuiInputSlider, tuiSlider} from './specialized-inputs.js';
 export {TuiCalendarHarness, TuiCalendarMonthHarness, TuiInputDateHarness, TuiInputYearHarness, TuiInputTimeHarness, tuiCalendar, tuiCalendarMonth, tuiInputDate, tuiInputYear, tuiInputTime} from './date-harnesses.js';
 export {TuiCalendarRangeHarness, TuiInputDateRangeHarness, TuiInputDateTimeHarness, TuiInputMonthHarness, tuiCalendarRange, tuiInputDateRange, tuiInputDateTime, tuiInputMonth} from './date-range-harnesses.js';
+export {TuiRatingHarness, TuiLikeHarness, TuiCopyHarness, TuiInputChipHarness, TuiProgressHarness, tuiRating, tuiLike, tuiCopy, tuiInputChip, tuiProgress} from './interactive-widgets.js';
