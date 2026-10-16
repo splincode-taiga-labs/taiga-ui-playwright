@@ -86,3 +86,65 @@ test('Current harnesses uses highlighted TypeScript in native addon-doc code com
     await expect(code.locator('.hljs-keyword').first()).toBeVisible();
     await expect(code.locator('.hljs-string').first()).toBeVisible();
 });
+
+
+test('each verified harness has a navigable individual sidebar reference', async ({page}) => {
+    await page.goto('/#/harness/kit/select');
+
+    await expect(page.locator('harness-detail tui-doc-page')).toBeVisible();
+    await expect(page.getByRole('heading', {name: 'tuiSelect', exact: true})).toBeVisible();
+    await expect(page.locator('tui-doc-navigation a[href*="/harness/kit/select"]')).toHaveCount(1);
+    await expect(page.locator('tui-doc-navigation a.t-sublink_active')).toHaveCount(1);
+    await expect(page.locator('tui-doc-navigation a.t-sublink_active')).toContainText('tuiSelect');
+    await expect(page.locator('tui-doc-navigation a[href*="/harness/kit/"]')).toHaveCount(31);
+});
+
+test('matrix links to harness docs and the extra inner text padding is gone', async ({page}) => {
+    await page.goto('/#/matrix');
+    const matrix = page.locator('.matrix-page');
+    await expect(matrix).toBeVisible();
+    expect(await matrix.evaluate((node) => getComputedStyle(node).paddingInlineStart)).toBe('0px');
+
+    const select = page.getByRole('combobox', {name: 'Filter by package'});
+    await expect(select).toBeVisible();
+    expect(await select.evaluate((node) => getComputedStyle(node).appearance)).toBe('none');
+    expect(await select.evaluate((node) => getComputedStyle(node).backgroundImage)).toContain('svg');
+
+    await page.locator('tr[data-harness="kit/select"]').getByRole('link', {name: /tuiSelect/}).click();
+    await expect(page).toHaveURL(/#\/harness\/kit\/select$/);
+    await expect(page.locator('harness-detail')).toBeVisible();
+});
+
+test('copy action copies real example code and import into browser clipboard', async ({page, context}) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+    await page.goto('/#/harness/kit/select');
+
+    await page.getByRole('button', {name: 'Copy import'}).click();
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText()))
+        .toBe("import {tuiSelect} from '@taiga-ui-labs/playwright';");
+    await expect(page.getByRole('button', {name: 'Copied import'})).toBeVisible();
+
+    await page.getByRole('button', {name: 'Copy example'}).click();
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText()))
+        .toContain("await harness.selectOption('Estonia');");
+});
+
+test('copy implementation reads real checked-in TypeScript source and copies it', async ({page, context}) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+    await page.goto('/#/harness/kit/select');
+    await page.locator('details.source-details summary').click();
+    const source = page.locator('details.source-details tui-doc-code');
+    await expect(source).toContainText('export class TuiSelect');
+
+    await page.getByRole('button', {name: 'Copy implementation'}).click();
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText()))
+        .toContain('export class TuiSelect');
+});
+
+test('copy button also works in the Getting started code sample', async ({page, context}) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+    await page.goto('/#/guide');
+    await page.getByRole('button', {name: 'Copy example'}).click();
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText()))
+        .toContain("import {tuiSelect, tuiComboBox, tuiDialog}");
+});
