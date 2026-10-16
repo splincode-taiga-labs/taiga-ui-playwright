@@ -5,6 +5,7 @@ import {CalendarInputs} from './calendar-inputs';
 import {RangeInputs} from './range-inputs';
 import {InteractiveWidgets} from './interactive-widgets';
 import {FormNavigation} from './form-navigation';
+import {MultiFields} from './multi-fields';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {TuiButton, TuiDialogService, TuiFilterByInputPipe, TuiRoot, TuiTextfield} from '@taiga-ui/core';
 import {TuiChevron, TuiComboBox, TuiDataListWrapper, TuiSelect} from '@taiga-ui/kit';
@@ -28,6 +29,7 @@ import {map, timer} from 'rxjs';
         RangeInputs,
         InteractiveWidgets,
         FormNavigation,
+        MultiFields,
     ],
     template: `
         <tui-root>
@@ -147,6 +149,7 @@ import {map, timer} from 'rxjs';
                 <app-range-inputs />
                 <app-interactive-widgets />
                 <app-form-navigation />
+                <app-multi-fields />
             </main>
         </tui-root>
     `,

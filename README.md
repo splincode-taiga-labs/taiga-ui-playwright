@@ -163,3 +163,8 @@ Five further source-backed Taiga UI v5 harnesses have real Angular integration: 
 ## Individual harness documentation
 
 Each verified helper has its own native addon-doc route at `/#/harness/<category>/<name>`, listed in the collapsible `Harnesses` sidebar. Each route offers a working `Copy import`, `Copy example` and `Copy implementation` control. The implementation is served unchanged from `src/*.ts` as Pages assets, so the site does not hand-maintain another copy of library source. Documentation search is enabled in the addon-doc sidebar. `npm run test:docs` exercises navigation, copy and source download with real Chromium.
+
+
+## Multi-value and range harnesses
+
+`tuiMultiSelect` chooses a unique option in an ARIA-linked dropdown, `tuiInputDateMulti` toggles dates in a multi-value calendar, and `tuiInputRange` edits two numeric endpoints. The real Angular 20/Taiga UI 5 fixture and addon-doc pages cover these exported helpers. Cross-month and mobile date-picker interactions are not yet tested.

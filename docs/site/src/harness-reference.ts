@@ -39,7 +39,10 @@ const SOURCES: Readonly<Record<string, string>> = {
     "kit/radio-list": "form-navigation.ts",
     "kit/input-inline": "form-navigation.ts",
     "kit/range": "form-navigation.ts",
-    "core/expand": "form-navigation.ts"
+    "core/expand": "form-navigation.ts",
+    "kit/multi-select": "multi-fields.ts",
+    "kit/input-date-multi": "multi-fields.ts",
+    "kit/input-range": "multi-fields.ts"
 };
 
 const ACTIONS: Readonly<Record<string, string>> = {
@@ -53,6 +56,9 @@ const ACTIONS: Readonly<Record<string, string>> = {
     "core/slider": "await harness.stepRight();\nexpect(await harness.value()).toBeGreaterThan(0);",
     "core/calendar": "await harness.selectDay(15);",
     "core/expand": "await harness.expectExpanded();",
+    "kit/multi-select": "await harness.selectOption('Estonia');",
+    "kit/input-date-multi": "await harness.toggleDay(17);",
+    "kit/input-range": "await harness.setStart(30);\nawait harness.setEnd(70);",
     "kit/calendar-month": "await harness.selectMonth(0);",
     "kit/input-date": "await harness.selectDay(15);",
     "kit/input-year": "await harness.fillYear('2026');",
