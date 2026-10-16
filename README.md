@@ -159,3 +159,7 @@ The real Angular 20 + Taiga UI 5.28.0 fixture also verifies five specialized hel
 ## Form and navigation helpers
 
 Five further source-backed Taiga UI v5 harnesses have real Angular integration: `tuiCounter` (min/max state), `tuiRadioList` (native radio semantics and FormControl), `tuiInputInline` (mirror/placeholder), `tuiRange` (keyboard-driven two-thumb value) and `tuiExpand` (expanded/collapsed lifecycle). These are tested against actual Angular 20 + Taiga UI 5.28.0 components.
+
+## Individual harness documentation
+
+Each verified helper has its own native addon-doc route at `/#/harness/<category>/<name>`, listed in the collapsible `Harnesses` sidebar. Each route offers a working `Copy import`, `Copy example` and `Copy implementation` control. The implementation is served unchanged from `src/*.ts` as Pages assets, so the site does not hand-maintain another copy of library source. Documentation search is enabled in the addon-doc sidebar. `npm run test:docs` exercises navigation, copy and source download with real Chromium.

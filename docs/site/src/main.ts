@@ -14,6 +14,8 @@ import {provideHighlightOptions} from 'ngx-highlightjs';
 import {DocsApp} from './app';
 import {HarnessMatrixPage} from './harness-matrix';
 import {GettingStartedPage} from './guide';
+import {HarnessDetailPage} from './harness-detail';
+import {HARNESS_NAVIGATION} from './harness-reference';
 
 bootstrapApplication(DocsApp, {
     providers: [
@@ -23,6 +25,7 @@ bootstrapApplication(DocsApp, {
             {path: '', pathMatch: 'full', redirectTo: 'matrix'},
             {path: 'matrix', component: HarnessMatrixPage, title: 'Harness coverage'},
             {path: 'guide', component: GettingStartedPage, title: 'Getting started'},
+            {path: 'harness/:category/:name', component: HarnessDetailPage, title: 'Harness reference'},
             {path: '**', redirectTo: ''},
         ], withHashLocation()),
         provideHighlightOptions({
@@ -34,13 +37,10 @@ bootstrapApplication(DocsApp, {
         {provide: TUI_DOC_LOGO, useValue: 'assets/brand.svg'},
         {provide: TUI_DOC_TITLE, useValue: 'Taiga UI Playwright · '},
         {provide: TUI_DOC_VERSION, useValue: '5.28.0'},
-        {provide: TUI_DOC_SEARCH_ENABLED, useValue: signal(false)},
+        {provide: TUI_DOC_SEARCH_ENABLED, useValue: signal(true)},
         {
             provide: TUI_DOC_PAGES,
-            useValue: [
-                {section: 'Documentation', title: 'Coverage matrix', route: '/matrix'},
-                {section: 'Documentation', title: 'Getting started', route: '/guide'},
-            ],
+            useValue: HARNESS_NAVIGATION,
         },
     ],
 }).catch((error: unknown) => console.error(error));

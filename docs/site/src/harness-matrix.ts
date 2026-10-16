@@ -1,16 +1,18 @@
 import {Component, computed, signal} from '@angular/core';
+import {RouterLink} from '@angular/router';
 import {TuiDocPage} from '@taiga-ui/addon-doc';
 import {TuiInput, TuiLink, TuiTextfield} from '@taiga-ui/core';
 import {TuiBadge, TuiSegmented} from '@taiga-ui/kit';
 
 import {HARNESS_CATALOG, IMPLEMENTATIONS, type HarnessCategory, type HarnessEntry, type HarnessStatus} from './harness-catalog';
+import {getHarnessSourceFile} from './harness-reference';
 
 type StatusFilter = 'all' | HarnessStatus;
 type GroupFilter = 'All' | HarnessCategory;
 
 @Component({
     selector: 'harness-matrix',
-    imports: [TuiDocPage, TuiInput, TuiTextfield, TuiLink, TuiBadge, TuiSegmented],
+    imports: [TuiDocPage, TuiInput, TuiTextfield, TuiLink, TuiBadge, TuiSegmented, RouterLink],
     template: `
         <tui-doc-page header="Playwright harness matrix" [tags]="['Community', 'Taiga UI v5']">
             <div class="matrix-page">
@@ -88,7 +90,7 @@ type GroupFilter = 'All' | HarnessCategory;
                                         <td><span tuiBadge size="s" [appearance]="appearance(item.status)">{{ statusLabel(item.status) }}</span></td>
                                         <td>
                                             @if (implementation(item.id); as api) {
-                                                <a tuiLink [href]="'https://github.com/splincode-taiga-labs/taiga-ui-playwright/tree/main/src/' + api.file" target="_blank" rel="noopener noreferrer"><code>{{ api.name }}</code> ↗</a>
+                                                <a tuiLink [routerLink]="'/harness/' + item.id"><code>{{ api.name }}</code> →</a>
                                             } @else {
                                                 <a tuiLink [href]="issueUrl(item)" target="_blank" rel="noopener noreferrer">Create issue ↗</a>
                                             }
@@ -157,7 +159,7 @@ export class HarnessMatrixPage {
         if (!name) {
             return null;
         }
-        const file = id === 'kit/combo-box' ? 'combo-box.ts' : id === 'kit/select' ? 'select.ts' : id === 'portals/dialog' ? 'dialog.ts' : id === 'kit/input-number' || id === 'kit/input-phone' || id === 'kit/input-pin' || id === 'kit/input-color' || id === 'kit/input-slider' || id === 'core/slider' ? 'specialized-inputs.ts' : id === 'core/calendar' || id === 'kit/calendar-month' || id === 'kit/input-date' || id === 'kit/input-year' || id === 'kit/input-time' ? 'date-harnesses.ts' : id === 'kit/calendar-range' || id === 'kit/input-date-range' || id === 'kit/input-date-time' || id === 'kit/input-month' ? 'date-range-harnesses.ts' : ['kit/rating', 'kit/like', 'kit/copy', 'kit/input-chip', 'kit/progress'].includes(id) ? 'interactive-widgets.ts' : ['kit/counter', 'kit/radio-list', 'kit/input-inline', 'kit/range', 'core/expand'].includes(id) ? 'form-navigation.ts' : 'basic-harnesses.ts';
+        const file = getHarnessSourceFile(id);
         return {name, file};
     }
 
