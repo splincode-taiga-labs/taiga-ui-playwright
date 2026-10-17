@@ -196,6 +196,8 @@ test('full harness source has a single Taiga scrollbar with bounded height', asy
     await expect(scrollbar.locator('tui-doc-code')).toContainText('export class TuiMultiSelect');
     await expect.poll(() => scrollbar.evaluate((element) => element.scrollHeight > element.clientHeight))
         .toBe(true);
+    expect(await scrollbar.evaluate((element) => getComputedStyle(element).maxBlockSize))
+        .toBe('500px');
     expect(await scrollbar.evaluate((element) => Math.round(element.getBoundingClientRect().height)))
         .toBeLessThanOrEqual(503);
     expect(await scrollbar.locator('code.hljs').first().evaluate((element) =>
@@ -212,8 +214,12 @@ test('new visual harnesses have navigable addon-doc pages with copyable source',
         await expect(page.locator('harness-detail h1')).toBeVisible();
         await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
         await expect(page.getByRole('button', {name: 'Copy example'})).toBeEnabled();
-        await page.locator('details.source-details summary').click();
-        await expect(page.locator('details.source-details tui-scrollbar')).toBeVisible();
+        const details = page.locator('details.source-details');
+        if (!(await details.evaluate((node: HTMLDetailsElement) => node.open))) {
+            await details.locator('summary').click();
+        }
+        await expect(details).toHaveAttribute('open', '');
+        await expect(details.locator('tui-scrollbar')).toBeVisible();
         await expect(page.getByRole('button', {name: 'Copy implementation'})).toBeEnabled();
     }
 });
