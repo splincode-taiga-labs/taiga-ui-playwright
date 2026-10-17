@@ -1,6 +1,11 @@
 import {HARNESS_CATALOG, IMPLEMENTATIONS} from './harness-catalog';
 
 const SOURCES: Readonly<Record<string, string>> = {
+    "kit/data-list-wrapper": "kit-interaction-harnesses.ts",
+    "kit/line-clamp": "kit-interaction-harnesses.ts",
+    "kit/block": "kit-interaction-harnesses.ts",
+    "kit/timeline": "kit-interaction-harnesses.ts",
+    "kit/input-month-range": "kit-interaction-harnesses.ts",
     "core/error": "core-behavior-harnesses.ts",
     "core/data-list": "core-behavior-harnesses.ts",
     "core/textfield": "core-behavior-harnesses.ts",
@@ -65,6 +70,11 @@ const SOURCES: Readonly<Record<string, string>> = {
 };
 
 const ACTIONS: Readonly<Record<string, string>> = {
+    "kit/data-list-wrapper": "await harness.selectOption('Beta');",
+    "kit/line-clamp": "await harness.expectLines(3);",
+    "kit/block": "await harness.setChecked(true);",
+    "kit/timeline": "await harness.moveStartOneStepRight();",
+    "kit/input-month-range": "await harness.selectRange(2, 4);",
     "core/error": "await harness.expectError('Invalid value');",
     "core/data-list": "await harness.select('Gamma');",
     "core/textfield": "await harness.clear();",
