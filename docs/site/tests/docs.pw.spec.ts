@@ -1,5 +1,7 @@
 import {expect, test} from '@playwright/test';
 
+import {HARNESS_CATALOG} from '../src/harness-catalog';
+
 test('renders the real addon-doc shell and the upstream coverage inventory', async ({page}) => {
     await page.goto('/');
 
@@ -96,7 +98,8 @@ test('each verified harness has a navigable individual sidebar reference', async
     await expect(page.locator('tui-doc-navigation a[href*="/harness/kit/select"]')).toHaveCount(1);
     await expect(page.locator('tui-doc-navigation a.t-sublink_active')).toHaveCount(1);
     await expect(page.locator('tui-doc-navigation a.t-sublink_active')).toContainText('tuiSelect');
-    await expect(page.locator('tui-doc-navigation a[href*="/harness/kit/"]')).toHaveCount(31);
+    const verifiedKitHarnesses = HARNESS_CATALOG.filter((entry) => entry.category === 'Kit' && entry.status === 'done');
+    await expect(page.locator('tui-doc-navigation a[href*="/harness/kit/"]')).toHaveCount(verifiedKitHarnesses.length);
 });
 
 test('matrix links to harness docs and the extra inner text padding is gone', async ({page}) => {
