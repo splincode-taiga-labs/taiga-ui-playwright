@@ -49,12 +49,12 @@ import {TuiActionBar, TuiCompass, TuiFilter, TuiPulse} from '@taiga-ui/kit';
                     [expanded]="actionExpanded()"
                 >
                     <tui-data-list>
-                        <button tuiOption type="button" (click)="actionCount.update(x => x + 10)">
+                        <button tuiOption type="button" (click)="archive()">
                             Archive selection
                         </button>
                     </tui-data-list>
                     <span>1 item selected</span>
-                    <button tuiButton type="button" (click)="actionCount.update(x => x + 1)">
+                    <button tuiButton type="button" (click)="apply()">
                         Apply changes
                     </button>
                 </tui-action-bar>
@@ -71,4 +71,12 @@ export class VisualActions {
     protected readonly actionVisible = signal(false);
     protected readonly actionExpanded = signal(false);
     protected readonly actionCount = signal(0);
+
+    protected archive(): void {
+        this.actionCount.update((count) => count + 10);
+    }
+
+    protected apply(): void {
+        this.actionCount.update((count) => count + 1);
+    }
 }
