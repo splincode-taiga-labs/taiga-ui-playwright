@@ -9,9 +9,9 @@ test('renders the real addon-doc shell and the upstream coverage inventory', asy
     await expect(page.locator('tui-doc-page')).toBeVisible();
     await expect(page.getByRole('heading', {name: 'Playwright harness matrix'})).toBeVisible();
     await expect(page.getByTestId('coverage-total')).toHaveText('133');
-    await expect(page.getByTestId('coverage-done')).toHaveText('51');
-    await expect(page.locator('tr[data-status="done"]')).toHaveCount(51);
-    await expect(page.locator('tr[data-status="todo"]')).toHaveCount(82);
+    await expect(page.getByTestId('coverage-done')).toHaveText('56');
+    await expect(page.locator('tr[data-status="done"]')).toHaveCount(56);
+    await expect(page.locator('tr[data-status="todo"]')).toHaveCount(77);
 });
 
 test('filters the matrix by component text and package', async ({page}) => {
@@ -32,7 +32,7 @@ test('filters done rows and links to the actual Playwright helper source', async
     await page.goto('/');
     await page.getByRole('button', {name: 'Done', exact: true}).click();
 
-    await expect(page.locator('tr[data-status="done"]')).toHaveCount(51);
+    await expect(page.locator('tr[data-status="done"]')).toHaveCount(56);
     await expect(page.locator('tr[data-status="todo"]')).toHaveCount(0);
     const link = page.locator('tr[data-harness="kit/select"]').getByRole('link', {name: /tuiSelect/});
     await expect(link).toHaveAttribute('href', /#\/harness\/kit\/select$/);
@@ -169,5 +169,57 @@ test('semantic harness docs have source and example links', async ({page}) => {
         await expect(page.locator('harness-detail h1')).toBeVisible();
         await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
         await expect(page.getByRole('button', {name: 'Copy example'})).toBeEnabled();
+    }
+});
+
+test('copy controls stay outside code overlays and work from the visible toolbar', async ({page, context}) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+    await page.goto('/#/harness/kit/select');
+
+    const copy = page.getByRole('button', {name: 'Copy import'});
+    await expect(copy).toBeVisible();
+    await expect(copy.locator('xpath=ancestor::div[contains(@class, "copyable-code__toolbar")]')).toBeVisible();
+    await expect(page.locator('tui-doc-code .t-code-actions button:visible')).toHaveCount(0);
+    await copy.click();
+
+    await expect(page.getByRole('button', {name: 'Copied import'})).toBeVisible();
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText()))
+        .toBe("import {tuiSelect} from '@taiga-ui-labs/playwright';");
+});
+
+test('full harness source has a single Taiga scrollbar with bounded height', async ({page}) => {
+    await page.goto('/#/harness/kit/multi-select');
+    await page.locator('details.source-details summary').click();
+
+    const scrollbar = page.locator('details.source-details tui-scrollbar.harness-source-scroll');
+    await expect(scrollbar).toBeVisible();
+    await expect(scrollbar.locator('tui-doc-code')).toContainText('export class TuiMultiSelect');
+    await expect.poll(() => scrollbar.evaluate((element) => element.scrollHeight > element.clientHeight))
+        .toBe(true);
+    expect(await scrollbar.evaluate((element) => getComputedStyle(element).maxBlockSize))
+        .toBe('500px');
+    expect(await scrollbar.evaluate((element) => Math.round(element.getBoundingClientRect().height)))
+        .toBeLessThanOrEqual(503);
+    expect(await scrollbar.locator('code.hljs').first().evaluate((element) =>
+        getComputedStyle(element).overflowX
+    )).toBe('visible');
+});
+
+test('new visual harnesses have navigable addon-doc pages with copyable source', async ({page}) => {
+    for (const route of [
+        'core/loader', 'kit/avatar', 'kit/badge-notification',
+        'kit/status', 'kit/breadcrumbs',
+    ]) {
+        await page.goto('/#/harness/' + route);
+        await expect(page.locator('harness-detail h1')).toBeVisible();
+        await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
+        await expect(page.getByRole('button', {name: 'Copy example'})).toBeEnabled();
+        const details = page.locator('details.source-details');
+        if (!(await details.evaluate((node: HTMLDetailsElement) => node.open))) {
+            await details.locator('summary').click();
+        }
+        await expect(details).toHaveAttribute('open', '');
+        await expect(details.locator('tui-scrollbar')).toBeVisible();
+        await expect(page.getByRole('button', {name: 'Copy implementation'})).toBeEnabled();
     }
 });

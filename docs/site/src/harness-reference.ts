@@ -1,6 +1,11 @@
 import {HARNESS_CATALOG, IMPLEMENTATIONS} from './harness-catalog';
 
 const SOURCES: Readonly<Record<string, string>> = {
+    "core/loader": "visual-harnesses.ts",
+    "kit/avatar": "visual-harnesses.ts",
+    "kit/badge-notification": "visual-harnesses.ts",
+    "kit/status": "visual-harnesses.ts",
+    "kit/breadcrumbs": "visual-harnesses.ts",
     "kit/select": "select.ts",
     "kit/combo-box": "combo-box.ts",
     "portals/dialog": "dialog.ts",
@@ -55,6 +60,11 @@ const SOURCES: Readonly<Record<string, string>> = {
 };
 
 const ACTIONS: Readonly<Record<string, string>> = {
+    "core/loader": "await harness.expectLoading();",
+    "kit/avatar": "await harness.expectShape('round');",
+    "kit/badge-notification": "await harness.expectCount(3);",
+    "kit/status": "await harness.expectColor('lime');",
+    "kit/breadcrumbs": "await harness.follow('Products');",
     "kit/select": "await harness.selectOption('Estonia');\nawait expect(harness.input).toHaveValue('Estonia');",
     "kit/combo-box": "await harness.fill('Tall');\nawait harness.selectOption('Tallinn');",
     "portals/dialog": "await expect(harness.title).toBeVisible();\nawait harness.close();",

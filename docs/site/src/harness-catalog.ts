@@ -127,7 +127,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "loader",
     "path": "projects/core/components/loader",
     "id": "core/loader",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Core",
@@ -204,7 +204,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "avatar",
     "path": "projects/kit/components/avatar",
     "id": "kit/avatar",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -218,7 +218,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "badge-notification",
     "path": "projects/kit/components/badge-notification",
     "id": "kit/badge-notification",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -239,7 +239,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "breadcrumbs",
     "path": "projects/kit/components/breadcrumbs",
     "id": "kit/breadcrumbs",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -624,7 +624,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "status",
     "path": "projects/kit/components/status",
     "id": "kit/status",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -951,6 +951,11 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
 ] as const;
 
 export const IMPLEMENTATIONS: Readonly<Record<string, string>> = {
+    'core/loader': 'tuiLoader',
+    'kit/avatar': 'tuiAvatar',
+    'kit/badge-notification': 'tuiBadgeNotification',
+    'kit/status': 'tuiStatus',
+    'kit/breadcrumbs': 'tuiBreadcrumbs',
     'kit/select': 'tuiSelect',
     'kit/combo-box': 'tuiComboBox',
     'portals/dialog': 'tuiDialog',
