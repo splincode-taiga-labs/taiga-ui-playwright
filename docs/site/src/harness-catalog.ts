@@ -57,7 +57,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "carousel",
     "path": "projects/core/components/carousel",
     "id": "core/carousel",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Core",
@@ -78,14 +78,14 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "data-list",
     "path": "projects/core/components/data-list",
     "id": "core/data-list",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Core",
     "name": "error",
     "path": "projects/core/components/error",
     "id": "core/error",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Core",
@@ -155,7 +155,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "scrollbar",
     "path": "projects/core/components/scrollbar",
     "id": "core/scrollbar",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Core",
@@ -176,7 +176,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "textfield",
     "path": "projects/core/components/textfield",
     "id": "core/textfield",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Core",
@@ -951,6 +951,11 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
 ] as const;
 
 export const IMPLEMENTATIONS: Readonly<Record<string, string>> = {
+    'core/error': 'tuiError',
+    'core/data-list': 'tuiDataList',
+    'core/textfield': 'tuiTextfield',
+    'core/scrollbar': 'tuiScrollbar',
+    'core/carousel': 'tuiCarousel',
     'core/loader': 'tuiLoader',
     'kit/avatar': 'tuiAvatar',
     'kit/badge-notification': 'tuiBadgeNotification',

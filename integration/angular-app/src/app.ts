@@ -8,6 +8,7 @@ import {FormNavigation} from './form-navigation';
 import {MultiFields} from './multi-fields';
 import {SemanticWidgets} from './semantic-widgets';
 import {VisualWidgets} from './visual-widgets';
+import {CoreBehavior} from './core-behavior';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {TuiButton, TuiDialogService, TuiFilterByInputPipe, TuiRoot, TuiTextfield} from '@taiga-ui/core';
 import {TuiChevron, TuiComboBox, TuiDataListWrapper, TuiSelect} from '@taiga-ui/kit';
@@ -34,6 +35,7 @@ import {map, timer} from 'rxjs';
         MultiFields,
         SemanticWidgets,
         VisualWidgets,
+        CoreBehavior,
     ],
     template: `
         <tui-root>
@@ -156,6 +158,7 @@ import {map, timer} from 'rxjs';
                 <app-semantic-widgets />
                 <app-multi-fields />
                 <app-visual-widgets />
+                <app-core-behavior />
             </main>
         </tui-root>
     `,

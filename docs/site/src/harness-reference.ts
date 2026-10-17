@@ -1,6 +1,11 @@
 import {HARNESS_CATALOG, IMPLEMENTATIONS} from './harness-catalog';
 
 const SOURCES: Readonly<Record<string, string>> = {
+    "core/error": "core-behavior-harnesses.ts",
+    "core/data-list": "core-behavior-harnesses.ts",
+    "core/textfield": "core-behavior-harnesses.ts",
+    "core/scrollbar": "core-behavior-harnesses.ts",
+    "core/carousel": "core-behavior-harnesses.ts",
     "core/loader": "visual-harnesses.ts",
     "kit/avatar": "visual-harnesses.ts",
     "kit/badge-notification": "visual-harnesses.ts",
@@ -60,6 +65,11 @@ const SOURCES: Readonly<Record<string, string>> = {
 };
 
 const ACTIONS: Readonly<Record<string, string>> = {
+    "core/error": "await harness.expectError('Invalid value');",
+    "core/data-list": "await harness.select('Gamma');",
+    "core/textfield": "await harness.clear();",
+    "core/scrollbar": "await harness.scrollToBottom();",
+    "core/carousel": "await harness.moveNext();",
     "core/loader": "await harness.expectLoading();",
     "kit/avatar": "await harness.expectShape('round');",
     "kit/badge-notification": "await harness.expectCount(3);",

@@ -34,3 +34,4 @@ export {TuiCounterHarness, TuiRadioListHarness, TuiInputInlineHarness, TuiRangeH
 export {TuiMultiSelectHarness, TuiInputDateMultiHarness, TuiInputRangeHarness, tuiMultiSelect, tuiInputDateMulti, tuiInputRange} from './multi-fields.js';
 export {TuiSpinButtonHarness, TuiPincodeHarness, TuiButtonLoadingHarness, TuiPagerHarness, TuiLinkHarness, TuiChipHarness, TuiBadgeHarness, TuiPinHarness, TuiMeterHarness, tuiSpinButton, tuiPincode, tuiButtonLoading, tuiPager, tuiLink, tuiChip, tuiBadge, tuiPin, tuiMeter} from './semantic-harnesses.js';
 export {TuiLoaderHarness, TuiAvatarHarness, TuiBadgeNotificationHarness, TuiStatusHarness, TuiBreadcrumbsHarness, tuiLoader, tuiAvatar, tuiBadgeNotification, tuiStatus, tuiBreadcrumbs} from './visual-harnesses.js';
+export {TuiErrorHarness, TuiDataListHarness, TuiTextfieldHarness, TuiScrollbarHarness, TuiCarouselHarness, tuiError, tuiDataList, tuiTextfield, tuiScrollbar, tuiCarousel} from './core-behavior-harnesses.js';
