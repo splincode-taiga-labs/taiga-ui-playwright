@@ -57,5 +57,5 @@ test('InputMonthRange chooses a bounded range in its own calendar portal', async
     const months = tuiInputMonthRange(page.getByTestId('month-range-field'));
     await months.selectRange(2, 4);
     await expect(page.getByTestId('month-range-model')).toContainText('2026:2-4');
-    await expect(months.input).toContainText('');
+    await expect(months.input).not.toHaveValue('');
 });
