@@ -9,7 +9,7 @@ export default defineConfig({
     forbidOnly: Boolean(process.env.CI),
     retries: process.env.CI ? 1 : 0,
     reporter: 'list',
-    use: {...devices['Desktop Chrome'], trace: 'on-first-retry'},
+    use: {...devices['Desktop Chrome'], reducedMotion: 'reduce', trace: 'on-first-retry'},
     projects: [
         {name: 'dom', testMatch: '**/tests/**/*.spec.ts'},
         {

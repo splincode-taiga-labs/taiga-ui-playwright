@@ -82,6 +82,7 @@ export class TuiScrollbarHarness {
     public constructor(public readonly host: Locator) {}
 
     public async scrollToBottom(): Promise<void> {
+        await this.host.scrollIntoViewIfNeeded();
         await this.host.evaluate((element) => element.scrollTo({top: element.scrollHeight, behavior: 'instant'}));
         await expect.poll(() => this.host.evaluate(
             (element) => element.scrollTop + element.clientHeight >= element.scrollHeight - 1,
