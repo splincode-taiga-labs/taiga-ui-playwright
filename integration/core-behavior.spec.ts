@@ -49,6 +49,7 @@ test('Carousel changes the Angular index using scroll snapping', async ({page}) 
     await expect(carousel.slide('Slide 1')).toBeVisible();
     await carousel.moveNext();
     await expect(page.getByTestId('carousel-model')).toHaveText('1');
+    await carousel.expectCenteredSlide();
     await carousel.movePrevious();
     await expect(page.getByTestId('carousel-model')).toHaveText('0');
 });

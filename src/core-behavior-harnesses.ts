@@ -114,6 +114,16 @@ export class TuiCarouselHarness {
         );
     }
 
+    /** Wait for Taiga UI to complete the interior-slide recentering frame. */
+    public async expectCenteredSlide(): Promise<void> {
+        await expect.poll(() => this.host.evaluate((element) => {
+            const overflow = getComputedStyle(element).overflowX;
+            return overflow === 'scroll' &&
+                element.clientWidth > 0 &&
+                Math.abs(element.scrollLeft - element.clientWidth) <= 1;
+        })).toBe(true);
+    }
+
     public async movePrevious(): Promise<void> {
         await expect(this.host).toBeVisible();
         await this.host.evaluate((element) => element.scrollTo({left: 0, behavior: 'instant'}));
