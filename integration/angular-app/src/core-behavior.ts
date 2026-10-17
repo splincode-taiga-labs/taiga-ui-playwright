@@ -26,7 +26,7 @@ import {
             <tui-data-list data-testid="choice-list" size="s">
                 <button tuiOption type="button" (click)="selected.set('Alpha')">Alpha</button>
                 <button tuiOption type="button" (click)="selected.set('Beta')">Beta</button>
-                <button tuiOption type="button" disabled>Unavailable</button>
+                <button tuiOption type="button" [disabled]="true">Unavailable</button>
                 <button tuiOption type="button" (click)="selected.set('Gamma')">Gamma</button>
             </tui-data-list>
             <output data-testid="choice-model">{{ selected() }}</output>
@@ -34,7 +34,7 @@ import {
             <tui-textfield data-testid="clearable-textfield">
                 <input tuiInput aria-label="Clearable text" [formControl]="textValue" />
             </tui-textfield>
-            <output data-testid="textfield-model">{{ textValue.value ?? 'null' }}</output>
+            <output data-testid="textfield-model">{{ textValue.value }}</output>
             <tui-textfield data-testid="disabled-textfield">
                 <input tuiInput aria-label="Disabled text" [formControl]="disabledText" />
             </tui-textfield>
