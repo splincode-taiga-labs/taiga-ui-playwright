@@ -15,13 +15,13 @@ export class TuiLoaderHarness {
     public async expectLoading(): Promise<void> {
         await expect(this.host).toHaveClass(/(?:^|\s)_loading(?:\s|$)/);
         await expect(this.spinner).toBeVisible();
-        await expect(this.content).toBeDisabled();
+        await expect(this.content).toHaveAttribute('inert', 'true');
     }
 
     public async expectIdle(): Promise<void> {
         await expect(this.host).not.toHaveClass(/(?:^|\s)_loading(?:\s|$)/);
         await expect(this.spinner).toHaveCount(0);
-        await expect(this.content).toBeEnabled();
+        await expect(this.content).not.toHaveAttribute('inert', 'true');
     }
 }
 
