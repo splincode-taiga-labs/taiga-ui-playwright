@@ -10,6 +10,7 @@ import {SemanticWidgets} from './semantic-widgets';
 import {VisualWidgets} from './visual-widgets';
 import {CoreBehavior} from './core-behavior';
 import {KitInteractions} from './kit-interactions';
+import {VisualActions} from './visual-actions';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {TuiButton, TuiDialogService, TuiFilterByInputPipe, TuiRoot, TuiTextfield} from '@taiga-ui/core';
 import {TuiChevron, TuiComboBox, TuiDataListWrapper, TuiSelect} from '@taiga-ui/kit';
@@ -38,6 +39,7 @@ import {map, timer} from 'rxjs';
         VisualWidgets,
         CoreBehavior,
         KitInteractions,
+        VisualActions,
     ],
     template: `
         <tui-root>
@@ -162,6 +164,7 @@ import {map, timer} from 'rxjs';
                 <app-visual-widgets />
                 <app-core-behavior />
                 <app-kit-interactions />
+                <app-visual-actions />
             </main>
         </tui-root>
     `,
