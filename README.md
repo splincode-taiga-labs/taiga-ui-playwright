@@ -185,3 +185,14 @@ The documentation's copy toolbar is outside the `TuiDocCode` overlay to keep
 Copy import/example/implementation clickable. Full source stays collapsed by
 default for users of this as-yet unpublished package; the expanded source uses
 `TuiScrollbar` with a 500px height cap and a GitHub source link.
+
+## Core behavior batch
+
+Five additional verified Locator-first APIs:
+- `tuiError` — assert validation message lifecycle.
+- `tuiDataList` — keyboard option navigation and enabled-only selection.
+- `tuiTextfield` — clear a FormControl through the component action, focus, disabled state.
+- `tuiScrollbar` — scroll the live Taiga UI container in both directions.
+- `tuiCarousel` — move slides with real scroll snapping and check Angular index updates.
+
+The Angular 20 / Taiga UI 5.28 fixture and addon-doc references provide real browser coverage for all five.
