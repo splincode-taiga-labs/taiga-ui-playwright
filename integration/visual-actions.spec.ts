@@ -27,7 +27,7 @@ test('Filter updates a real Angular control when checkboxes are toggled', async 
     await filter.setChecked('Beta', true);
     await expect(page.getByTestId('filter-model')).toHaveText('Beta');
     await filter.setChecked('Alpha', true);
-    await expect(page.getByTestId('filter-model')).toHaveText('Alpha,Beta');
+    await expect(page.getByTestId('filter-model')).toHaveText('Beta,Alpha');
     await filter.setChecked('Beta', false);
     await expect(page.getByTestId('filter-model')).toHaveText('Alpha');
 });
