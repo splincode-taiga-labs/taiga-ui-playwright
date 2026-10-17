@@ -237,3 +237,21 @@ test('core behavior harnesses have dedicated docs with real checked-in source', 
         await expect(page.getByRole('button', {name: 'Copy implementation'})).toBeEnabled();
     }
 });
+
+test('Taiga UI icon assets load on documentation pages and follow the base URL', async ({page}) => {
+    await page.goto('/#/harness/kit/select');
+
+    const copyButton = page.getByRole('button', {name: 'Copy import'});
+    await expect(copyButton).toBeVisible();
+    await expect.poll(() => copyButton.evaluate((button) =>
+        getComputedStyle(button).getPropertyValue('--t-icon-start'),
+    )).toContain('assets/taiga-ui/icons/copy.svg');
+
+    for (const name of ['copy', 'check', 'search', 'chevron-down']) {
+        const iconUrl = new URL('assets/taiga-ui/icons/' + name + '.svg', page.url());
+        const response = await page.request.get(iconUrl.toString());
+        expect(response.status(), iconUrl.toString()).toBe(200);
+        expect(response.headers()['content-type']).toMatch(/image\/svg\+xml/);
+        expect(await response.text()).toContain('<svg');
+    }
+});
