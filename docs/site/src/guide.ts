@@ -11,7 +11,10 @@ import {DocsCopyButton} from './copy-button';
             <article class="guide-page">
                 <p>This experimental library provides Locator-first element objects for Taiga UI. Not yet published to npm.</p>
                 <h2>Current harnesses</h2>
-                <tui-doc-code filename="playwright.spec.ts" [code]="example" [lineNumbers]="false"><docs-copy-button label="example" [code]="example" /></tui-doc-code>
+                <div class="copyable-code">
+                    <div class="copyable-code__toolbar"><docs-copy-button label="example" [code]="example" /></div>
+                    <tui-doc-code filename="playwright.spec.ts" [code]="example" [lineNumbers]="false" />
+                </div>
                 <h2>Browse individual harnesses</h2>
                 <p>Open the Harnesses section on the left to find a component, copy its import, copy a tested Playwright example or copy its full implementation source.</p>
                 <h2>How coverage is tracked</h2>

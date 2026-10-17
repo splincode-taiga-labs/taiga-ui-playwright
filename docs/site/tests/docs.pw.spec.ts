@@ -171,3 +171,34 @@ test('semantic harness docs have source and example links', async ({page}) => {
         await expect(page.getByRole('button', {name: 'Copy example'})).toBeEnabled();
     }
 });
+
+test('copy controls stay outside code overlays and work from the visible toolbar', async ({page, context}) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+    await page.goto('/#/harness/kit/select');
+
+    const copy = page.getByRole('button', {name: 'Copy import'});
+    await expect(copy).toBeVisible();
+    await expect(copy.locator('xpath=ancestor::div[contains(@class, "copyable-code__toolbar")]')).toBeVisible();
+    await expect(page.locator('tui-doc-code .t-code-actions button:visible')).toHaveCount(0);
+    await copy.click();
+
+    await expect(page.getByRole('button', {name: 'Copied import'})).toBeVisible();
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText()))
+        .toBe("import {tuiSelect} from '@taiga-ui-labs/playwright';");
+});
+
+test('full harness source has a single Taiga scrollbar with bounded height', async ({page}) => {
+    await page.goto('/#/harness/kit/select');
+    await page.locator('details.source-details summary').click();
+
+    const scrollbar = page.locator('details.source-details tui-scrollbar.harness-source-scroll');
+    await expect(scrollbar).toBeVisible();
+    await expect(scrollbar.locator('tui-doc-code')).toContainText('export class TuiSelect');
+    await expect.poll(() => scrollbar.evaluate((element) => element.scrollHeight > element.clientHeight))
+        .toBe(true);
+    expect(await scrollbar.evaluate((element) => Math.round(element.getBoundingClientRect().height)))
+        .toBeLessThanOrEqual(503);
+    expect(await scrollbar.locator('code.hljs').first().evaluate((element) =>
+        getComputedStyle(element).overflowX
+    )).toBe('visible');
+});

@@ -3,14 +3,14 @@ import {Component, computed, effect, inject, signal} from '@angular/core';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {TuiDocCode, TuiDocPage} from '@taiga-ui/addon-doc';
-import {TuiLink} from '@taiga-ui/core';
+import {TuiLink, TuiScrollbar} from '@taiga-ui/core';
 
 import {DocsCopyButton} from './copy-button';
 import {HARNESS_REFERENCES, makeExample} from './harness-reference';
 
 @Component({
     selector: 'harness-detail',
-    imports: [TuiDocCode, TuiDocPage, TuiLink, RouterLink, DocsCopyButton],
+    imports: [TuiDocCode, TuiDocPage, TuiLink, TuiScrollbar, RouterLink, DocsCopyButton],
     template: `
 @if (reference(); as item) {
   <tui-doc-page [header]="item.api" [package]="item.category" [tags]="['Playwright', 'Done']">
@@ -22,21 +22,29 @@ import {HARNESS_REFERENCES, makeExample} from './harness-reference';
         <a tuiLink [href]="'https://github.com/taiga-family/taiga-ui/tree/main/' + upstreamPath()" target="_blank" rel="noopener noreferrer">Taiga UI source ↗</a>
       </p>
       <h2>Import</h2>
-      <tui-doc-code filename="import.ts" [lineNumbers]="false" [code]="importCode()">
-        <docs-copy-button label="import" [code]="importCode()" />
-      </tui-doc-code>
+      <div class="copyable-code">
+        <div class="copyable-code__toolbar"><docs-copy-button label="import" [code]="importCode()" /></div>
+        <tui-doc-code filename="import.ts" [lineNumbers]="false" [code]="importCode()" />
+      </div>
       <h2>Playwright example</h2>
       <p>Replace the example test-id with your component locator. The package is currently private; you can copy its implementation below.</p>
-      <tui-doc-code filename="playwright.spec.ts" [lineNumbers]="false" [code]="example()">
-        <docs-copy-button label="example" [code]="example()" />
-      </tui-doc-code>
+      <div class="copyable-code">
+        <div class="copyable-code__toolbar"><docs-copy-button label="example" [code]="example()" /></div>
+        <tui-doc-code filename="playwright.spec.ts" [lineNumbers]="false" [code]="example()" />
+      </div>
       <details class="source-details">
         <summary>Full harness source ({{ item.sourceFile }})</summary>
         <p>The source file may contain other related harnesses. Copy it together with any local imports.</p>
         @if (source()) {
-          <tui-doc-code [filename]="item.sourceFile" [lineNumbers]="false" [code]="source()">
-            <docs-copy-button label="implementation" [code]="source()" />
-          </tui-doc-code>
+          <div class="copyable-code">
+            <div class="copyable-code__toolbar">
+              <docs-copy-button label="implementation" [code]="source()" />
+              <a tuiLink [href]="'https://github.com/splincode-taiga-labs/taiga-ui-playwright/blob/main/src/' + item.sourceFile" target="_blank" rel="noopener noreferrer">View on GitHub ↗</a>
+            </div>
+            <tui-scrollbar class="harness-source-scroll">
+              <tui-doc-code [filename]="item.sourceFile" [lineNumbers]="false" [code]="source()" />
+            </tui-scrollbar>
+          </div>
         } @else {
           <p role="status">Loading the tested implementation…</p>
         }
