@@ -188,12 +188,12 @@ test('copy controls stay outside code overlays and work from the visible toolbar
 });
 
 test('full harness source has a single Taiga scrollbar with bounded height', async ({page}) => {
-    await page.goto('/#/harness/kit/select');
+    await page.goto('/#/harness/kit/multi-select');
     await page.locator('details.source-details summary').click();
 
     const scrollbar = page.locator('details.source-details tui-scrollbar.harness-source-scroll');
     await expect(scrollbar).toBeVisible();
-    await expect(scrollbar.locator('tui-doc-code')).toContainText('export class TuiSelect');
+    await expect(scrollbar.locator('tui-doc-code')).toContainText('export class TuiMultiSelect');
     await expect.poll(() => scrollbar.evaluate((element) => element.scrollHeight > element.clientHeight))
         .toBe(true);
     expect(await scrollbar.evaluate((element) => Math.round(element.getBoundingClientRect().height)))
