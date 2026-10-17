@@ -42,7 +42,16 @@ const SOURCES: Readonly<Record<string, string>> = {
     "core/expand": "form-navigation.ts",
     "kit/multi-select": "multi-fields.ts",
     "kit/input-date-multi": "multi-fields.ts",
-    "kit/input-range": "multi-fields.ts"
+    "kit/input-range": "multi-fields.ts",
+    "core/spin-button": "semantic-harnesses.ts",
+    "kit/pincode": "semantic-harnesses.ts",
+    "kit/button-loading": "semantic-harnesses.ts",
+    "kit/pager": "semantic-harnesses.ts",
+    "core/link": "semantic-harnesses.ts",
+    "kit/chip": "semantic-harnesses.ts",
+    "kit/badge": "semantic-harnesses.ts",
+    "kit/pin": "semantic-harnesses.ts",
+    "kit/meter": "semantic-harnesses.ts"
 };
 
 const ACTIONS: Readonly<Record<string, string>> = {
@@ -59,6 +68,15 @@ const ACTIONS: Readonly<Record<string, string>> = {
     "kit/multi-select": "await harness.selectOption('Estonia');",
     "kit/input-date-multi": "await harness.toggleDay(17);",
     "kit/input-range": "await harness.setStart(30);\nawait harness.setEnd(70);",
+    "core/spin-button": "await harness.increase();",
+    "kit/pincode": "await harness.enter('1234');",
+    "kit/button-loading": "await harness.expectLoading();",
+    "kit/pager": "await harness.expectIndex(0);",
+    "core/link": "await harness.follow();",
+    "kit/chip": "await harness.expectAppearance('positive');",
+    "kit/badge": "await harness.expectAppearanceAndSize('positive', 'm');",
+    "kit/pin": "await harness.expectOpen(true);",
+    "kit/meter": "await harness.expectValue(25);",
     "kit/calendar-month": "await harness.selectMonth(0);",
     "kit/input-date": "await harness.selectDay(15);",
     "kit/input-year": "await harness.fillYear('2026');",

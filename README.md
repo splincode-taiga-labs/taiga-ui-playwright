@@ -168,3 +168,8 @@ Each verified helper has its own native addon-doc route at `/#/harness/<category
 ## Multi-value and range harnesses
 
 `tuiMultiSelect` chooses a unique option in an ARIA-linked dropdown, `tuiInputDateMulti` toggles dates in a multi-value calendar, and `tuiInputRange` edits two numeric endpoints. The real Angular 20/Taiga UI 5 fixture and addon-doc pages cover these exported helpers. Cross-month and mobile date-picker interactions are not yet tested.
+
+
+## Semantic navigation and status harnesses
+
+Nine additional Taiga UI v5 components have source-backed Locator helpers and real Angular E2E: `tuiSpinButton` (bounded increment/decrement and arrow keys), `tuiPincode` (numeric length-constrained entry), `tuiButtonLoading` (disabled interaction and status), `tuiPager` (active indicator index), `tuiLink` (native navigation), `tuiChip`/`tuiBadge` (dynamic appearance/size), `tuiPin` (open class) and `tuiMeter` (native values and bounds). Each has its own addon-doc reference with import and example.

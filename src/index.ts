@@ -32,3 +32,4 @@ export {TuiCalendarRangeHarness, TuiInputDateRangeHarness, TuiInputDateTimeHarne
 export {TuiRatingHarness, TuiLikeHarness, TuiCopyHarness, TuiInputChipHarness, TuiProgressHarness, tuiRating, tuiLike, tuiCopy, tuiInputChip, tuiProgress} from './interactive-widgets.js';
 export {TuiCounterHarness, TuiRadioListHarness, TuiInputInlineHarness, TuiRangeHarness, TuiExpandHarness, tuiCounter, tuiRadioList, tuiInputInline, tuiRange, tuiExpand} from './form-navigation.js';
 export {TuiMultiSelectHarness, TuiInputDateMultiHarness, TuiInputRangeHarness, tuiMultiSelect, tuiInputDateMulti, tuiInputRange} from './multi-fields.js';
+export {TuiSpinButtonHarness, TuiPincodeHarness, TuiButtonLoadingHarness, TuiPagerHarness, TuiLinkHarness, TuiChipHarness, TuiBadgeHarness, TuiPinHarness, TuiMeterHarness, tuiSpinButton, tuiPincode, tuiButtonLoading, tuiPager, tuiLink, tuiChip, tuiBadge, tuiPin, tuiMeter} from './semantic-harnesses.js';
