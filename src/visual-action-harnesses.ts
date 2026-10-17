@@ -39,14 +39,19 @@ export class TuiFilterHarness {
     }
 
     public async setChecked(name: string, checked: boolean): Promise<void> {
+        const item = this.items.filter({hasText: name});
         const checkbox = this.checkbox(name);
-        await expect(checkbox).toHaveCount(1);
+        await expect(item).toHaveCount(1);
         await expect(checkbox).toBeEnabled();
+        const isChecked = await checkbox.isChecked();
+        if (isChecked !== checked) {
+            // Taiga UI overlays the native checkbox with its label content.
+            // Click the accessible label, not the obscured input center.
+            await item.click();
+        }
         if (checked) {
-            await checkbox.check();
             await expect(checkbox).toBeChecked();
         } else {
-            await checkbox.uncheck();
             await expect(checkbox).not.toBeChecked();
         }
     }
@@ -76,6 +81,14 @@ export class TuiActionBarHarness {
         const action = this.host.getByRole('button', {name, exact: true});
         await expect(action).toBeEnabled();
         await action.click();
+    }
+
+    public async clickMenuOption(name: string): Promise<void> {
+        await this.expectExpanded(true);
+        const option = this.expandable.getByRole('option', {name, exact: true});
+        await expect(option).toHaveCount(1);
+        await expect(option).toBeEnabled();
+        await option.click();
     }
 
     public async expectSize(size: string): Promise<void> {

@@ -58,7 +58,7 @@ test('ActionBar preserves actions while expanding and collapsing its menu', asyn
     await expect(page.getByTestId('action-model')).toHaveText('1');
     await page.getByRole('button', {name: 'Toggle action menu'}).click();
     await bar.expectExpanded(true);
-    await bar.clickAction('Archive selection');
+    await bar.clickMenuOption('Archive selection');
     await expect(page.getByTestId('action-model')).toHaveText('11');
     await page.getByRole('button', {name: 'Toggle action menu'}).click();
     await bar.expectExpanded(false);
