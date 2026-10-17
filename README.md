@@ -173,3 +173,15 @@ Each verified helper has its own native addon-doc route at `/#/harness/<category
 ## Semantic navigation and status harnesses
 
 Nine additional Taiga UI v5 components have source-backed Locator helpers and real Angular E2E: `tuiSpinButton` (bounded increment/decrement and arrow keys), `tuiPincode` (numeric length-constrained entry), `tuiButtonLoading` (disabled interaction and status), `tuiPager` (active indicator index), `tuiLink` (native navigation), `tuiChip`/`tuiBadge` (dynamic appearance/size), `tuiPin` (open class) and `tuiMeter` (native values and bounds). Each has its own addon-doc reference with import and example.
+
+## Visual and navigation harnesses
+
+Five additional components are verified in the real Angular fixture:
+`tuiLoader` (loading and disabled content), `tuiAvatar` (shape and size),
+`tuiBadgeNotification` (count and size), `tuiStatus` (status color), and
+`tuiBreadcrumbs` (native navigation). Each has a dedicated addon-doc page.
+
+The documentation's copy toolbar is outside the `TuiDocCode` overlay to keep
+Copy import/example/implementation clickable. Full source stays collapsed by
+default for users of this as-yet unpublished package; the expanded source uses
+`TuiScrollbar` with a 500px height cap and a GitHub source link.
