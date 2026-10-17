@@ -232,7 +232,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "block",
     "path": "projects/kit/components/block",
     "id": "kit/block",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -316,7 +316,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "data-list-wrapper",
     "path": "projects/kit/components/data-list-wrapper",
     "id": "kit/data-list-wrapper",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -407,7 +407,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "input-month-range",
     "path": "projects/kit/components/input-month-range",
     "id": "kit/input-month-range",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -484,7 +484,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "line-clamp",
     "path": "projects/kit/components/line-clamp",
     "id": "kit/line-clamp",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -666,7 +666,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "timeline",
     "path": "projects/kit/components/timeline",
     "id": "kit/timeline",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -951,6 +951,11 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
 ] as const;
 
 export const IMPLEMENTATIONS: Readonly<Record<string, string>> = {
+    'kit/data-list-wrapper': 'tuiDataListWrapper',
+    'kit/line-clamp': 'tuiLineClamp',
+    'kit/block': 'tuiBlock',
+    'kit/timeline': 'tuiTimeline',
+    'kit/input-month-range': 'tuiInputMonthRange',
     'core/error': 'tuiError',
     'core/data-list': 'tuiDataList',
     'core/textfield': 'tuiTextfield',

@@ -196,3 +196,11 @@ Five additional verified Locator-first APIs:
 - `tuiCarousel` — move slides with real scroll snapping and check Angular index updates.
 
 The Angular 20 / Taiga UI 5.28 fixture and addon-doc references provide real browser coverage for all five.
+
+## Kit interaction harnesses
+
+Five more Taiga UI components are exercised in real Angular Playwright tests:
+`tuiDataListWrapper` checks option clicks and async loading; `tuiLineClamp` verifies
+CSS line limits; `tuiBlock` drives native checked/disabled state;
+`tuiTimeline` uses keyboard interaction and exposes layout orientation;
+`tuiInputMonthRange` scopes the date popup to its owning input and commits an actual range.
