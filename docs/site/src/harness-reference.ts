@@ -1,6 +1,11 @@
 import {HARNESS_CATALOG, IMPLEMENTATIONS} from './harness-catalog';
 
 const SOURCES: Readonly<Record<string, string>> = {
+    "core/icon": "visual-action-harnesses.ts",
+    "kit/filter": "visual-action-harnesses.ts",
+    "kit/action-bar": "visual-action-harnesses.ts",
+    "kit/pulse": "visual-action-harnesses.ts",
+    "kit/compass": "visual-action-harnesses.ts",
     "kit/data-list-wrapper": "kit-interaction-harnesses.ts",
     "kit/line-clamp": "kit-interaction-harnesses.ts",
     "kit/block": "kit-interaction-harnesses.ts",
@@ -70,6 +75,11 @@ const SOURCES: Readonly<Record<string, string>> = {
 };
 
 const ACTIONS: Readonly<Record<string, string>> = {
+    "core/icon": "await harness.expectIcon('search');",
+    "kit/filter": "await harness.setChecked('Beta', true);",
+    "kit/action-bar": "await harness.clickAction('Apply changes');",
+    "kit/pulse": "await harness.expectPlaying(true);",
+    "kit/compass": "await harness.expectDegrees(45);",
     "kit/data-list-wrapper": "await harness.selectOption('Beta');",
     "kit/line-clamp": "await harness.expectLines(3);",
     "kit/block": "await harness.setChecked(true);",

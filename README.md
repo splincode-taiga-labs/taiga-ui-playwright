@@ -204,3 +204,11 @@ Five more Taiga UI components are exercised in real Angular Playwright tests:
 CSS line limits; `tuiBlock` drives native checked/disabled state;
 `tuiTimeline` uses keyboard interaction and exposes layout orientation;
 `tuiInputMonthRange` scopes the date popup to its owning input and commits an actual range.
+
+## Visual and action batch
+
+Five additional verified Taiga UI v5.28 helpers: `tuiIcon` (real SVG resolver
+and HTTP asset availability), `tuiFilter` (FormControl checkbox selection),
+`tuiActionBar` (menu expansion and real action clicks), `tuiPulse`
+(reactive playing state), and `tuiCompass` (reactive CSS angle).
+Each has an Angular fixture, Chromium integration test and addon-doc page.
