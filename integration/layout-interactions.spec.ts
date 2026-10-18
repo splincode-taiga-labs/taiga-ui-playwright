@@ -13,7 +13,7 @@ test('Cell reflects dynamic Taiga size and height inputs', async ({page}) => {
     await cell.expectLayout('s', 'compact');
 });
 
-test('Label is associated with a native input and follows textfield orientation', async ({page}) => {
+test('Label focuses its associated native and Taiga textfield inputs', async ({page}) => {
     const label = tuiLabel(page.getByTestId('plain-label'));
     await label.expectOrientation('horizontal');
     await label.focusInput();
@@ -21,8 +21,9 @@ test('Label is associated with a native input and follows textfield orientation'
     await expect(page.getByLabel('Contact name')).toHaveValue('Ada');
 
     const floating = tuiLabel(page.getByTestId('floating-label'));
-    await floating.expectOrientation('vertical');
-    await expect(page.getByTestId('floating-field').locator('input')).toBeVisible();
+    await floating.expectOrientation('horizontal');
+    await floating.focusInput();
+    await expect(page.getByTestId('floating-field').locator('input')).toBeFocused();
 });
 
 test('Title changes its Taiga typography variant dynamically', async ({page}) => {

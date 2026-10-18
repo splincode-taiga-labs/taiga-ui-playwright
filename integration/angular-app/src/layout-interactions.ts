@@ -43,7 +43,7 @@ import {TuiItemsWithMore, TuiTiles} from '@taiga-ui/kit';
                 </tui-items-with-more>
             </div>
             <button tuiButton type="button" (click)="itemsLimit.set(4)">Show four items</button>
-            <button tuiButton type="button" (click)="itemsLimit.set(5)">Show all items</button>
+            <button tuiButton type="button" (click)="itemsLimit.set(6)">Show all items</button>
 
             <tui-tiles
                 data-testid="tiles-widget"
