@@ -883,7 +883,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "alert",
     "path": "projects/core/portals/alert",
     "id": "portals/alert",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Portals",
@@ -904,28 +904,28 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "dropdown",
     "path": "projects/core/portals/dropdown",
     "id": "portals/dropdown",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Portals",
     "name": "hint",
     "path": "projects/core/portals/hint",
     "id": "portals/hint",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Portals",
     "name": "modal",
     "path": "projects/core/portals/modal",
     "id": "portals/modal",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Portals",
     "name": "popup",
     "path": "projects/core/portals/popup",
     "id": "portals/popup",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Table",
@@ -951,6 +951,11 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
 ] as const;
 
 export const IMPLEMENTATIONS: Readonly<Record<string, string>> = {
+    'portals/alert': 'tuiAlert',
+    'portals/dropdown': 'tuiDropdownPortal',
+    'portals/hint': 'tuiHintPortal',
+    'portals/modal': 'tuiModal',
+    'portals/popup': 'tuiPopup',
     'kit/files': 'tuiFiles',
     'kit/tree': 'tuiTree',
     'kit/input-phone-international': 'tuiInternationalPhone',

@@ -1,6 +1,11 @@
 import {HARNESS_CATALOG, IMPLEMENTATIONS} from './harness-catalog';
 
 const SOURCES: Readonly<Record<string, string>> = {
+    "portals/alert": "remaining-portals-harnesses.ts",
+    "portals/dropdown": "remaining-portals-harnesses.ts",
+    "portals/hint": "remaining-portals-harnesses.ts",
+    "portals/modal": "remaining-portals-harnesses.ts",
+    "portals/popup": "remaining-portals-harnesses.ts",
     "kit/files": "remaining-kit-harnesses.ts",
     "kit/tree": "remaining-kit-harnesses.ts",
     "kit/input-phone-international": "remaining-kit-harnesses.ts",
@@ -124,6 +129,11 @@ const SOURCES: Readonly<Record<string, string>> = {
 };
 
 const ACTIONS: Readonly<Record<string, string>> = {
+    "portals/alert": "await harness.expectAlert('Portal alert content');",
+    "portals/dropdown": "await harness.expectMenuOption('Portal option');",
+    "portals/hint": "await harness.expectHint('Manual hint text');",
+    "portals/modal": "await harness.expectDialog('Modal panel');",
+    "portals/popup": "await harness.expectPortalContent('popup');",
     "kit/files": "await harness.expand();",
     "kit/tree": "await harness.expectNode('Initial tree node');",
     "kit/input-phone-international": "await harness.fill('+123456789');",
