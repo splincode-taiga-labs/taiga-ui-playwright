@@ -139,6 +139,7 @@ test('ComboBox handles empty filtering without selecting any option', async ({pa
     await combo.fill('unmatched city');
 
     await expect(combo.options).toHaveCount(0);
+    await expect(combo.overlay.locator('tui-data-list .t-empty')).toBeVisible();
     await expect(page.getByTestId('city-model')).toHaveText('null');
     await combo.close();
 });
