@@ -1,6 +1,11 @@
 import {HARNESS_CATALOG, IMPLEMENTATIONS} from './harness-catalog';
 
 const SOURCES: Readonly<Record<string, string>> = {
+    "core/notification": "notification-layout-harnesses.ts",
+    "kit/badged-content": "notification-layout-harnesses.ts",
+    "layout/block-status": "notification-layout-harnesses.ts",
+    "layout/card": "notification-layout-harnesses.ts",
+    "layout/input-search": "notification-layout-harnesses.ts",
     "core/cell": "layout-interaction-harnesses.ts",
     "core/label": "layout-interaction-harnesses.ts",
     "core/title": "layout-interaction-harnesses.ts",
@@ -80,6 +85,11 @@ const SOURCES: Readonly<Record<string, string>> = {
 };
 
 const ACTIONS: Readonly<Record<string, string>> = {
+    "core/notification": "await harness.expectState('info', 's');",
+    "kit/badged-content": "await harness.expectBadge('top', '2');",
+    "layout/block-status": "await harness.clickAction('Restore results');",
+    "layout/card": "await harness.expectCollapsed(true);",
+    "layout/input-search": "await harness.fill('Alpha');",
     "core/cell": "await harness.expectLayout('s', 'compact');",
     "core/label": "await harness.focusInput();",
     "core/title": "await harness.expectSize('s');",

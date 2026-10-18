@@ -12,6 +12,7 @@ import {CoreBehavior} from './core-behavior';
 import {KitInteractions} from './kit-interactions';
 import {VisualActions} from './visual-actions';
 import {LayoutInteractions} from './layout-interactions';
+import {NotificationLayout} from './notification-layout';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {TuiButton, TuiDialogService, TuiFilterByInputPipe, TuiRoot, TuiTextfield} from '@taiga-ui/core';
 import {TuiChevron, TuiComboBox, TuiDataListWrapper, TuiSelect} from '@taiga-ui/kit';
@@ -42,6 +43,7 @@ import {map, timer} from 'rxjs';
         KitInteractions,
         VisualActions,
         LayoutInteractions,
+        NotificationLayout,
     ],
     template: `
         <tui-root>
@@ -168,6 +170,7 @@ import {map, timer} from 'rxjs';
                 <app-kit-interactions />
                 <app-visual-actions />
                 <app-layout-interactions />
+                <app-notification-layout />
             </main>
         </tui-root>
     `,
