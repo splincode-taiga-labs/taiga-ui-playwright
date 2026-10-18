@@ -37,3 +37,4 @@ export {TuiLoaderHarness, TuiAvatarHarness, TuiBadgeNotificationHarness, TuiStat
 export {TuiErrorHarness, TuiDataListHarness, TuiTextfieldHarness, TuiScrollbarHarness, TuiCarouselHarness, tuiError, tuiDataList, tuiTextfield, tuiScrollbar, tuiCarousel} from './core-behavior-harnesses.js';
 export {TuiDataListWrapperHarness, TuiLineClampHarness, TuiBlockHarness, TuiTimelineHarness, TuiInputMonthRangeHarness, tuiDataListWrapper, tuiLineClamp, tuiBlock, tuiTimeline, tuiInputMonthRange} from './kit-interaction-harnesses.js';
 export {TuiIconHarness, TuiFilterHarness, TuiActionBarHarness, TuiPulseHarness, TuiCompassHarness, tuiIcon, tuiFilter, tuiActionBar, tuiPulse, tuiCompass} from './visual-action-harnesses.js';
+export {TuiCellHarness, TuiLabelHarness, TuiTitleHarness, TuiItemsWithMoreHarness, TuiTilesHarness, tuiCell, tuiLabel, tuiTitle, tuiItemsWithMore, tuiTiles} from './layout-interaction-harnesses.js';
