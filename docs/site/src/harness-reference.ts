@@ -1,6 +1,16 @@
 import {HARNESS_CATALOG, IMPLEMENTATIONS} from './harness-catalog';
 
 const SOURCES: Readonly<Record<string, string>> = {
+    "core/root": "remaining-layout-harnesses.ts",
+    "kit/comment": "remaining-layout-harnesses.ts",
+    "kit/message": "remaining-layout-harnesses.ts",
+    "kit/drawer": "remaining-layout-harnesses.ts",
+    "layout/header": "remaining-layout-harnesses.ts",
+    "layout/block-details": "remaining-layout-harnesses.ts",
+    "layout/surface": "remaining-layout-harnesses.ts",
+    "layout/search": "remaining-layout-harnesses.ts",
+    "layout/app-bar": "remaining-layout-harnesses.ts",
+    "layout/progressive-blur": "remaining-layout-harnesses.ts",
     "layout/list": "layout-transitions-harnesses.ts",
     "layout/slides": "layout-transitions-harnesses.ts",
     "layout/elastic-container": "layout-transitions-harnesses.ts",
@@ -95,6 +105,16 @@ const SOURCES: Readonly<Record<string, string>> = {
 };
 
 const ACTIONS: Readonly<Record<string, string>> = {
+    "core/root": "await tuiRoot(page.getByTestId('widget')).host.isVisible();",
+    "kit/comment": "await tuiComment(page.getByTestId('widget')).host.isVisible();",
+    "kit/message": "await tuiMessage(page.getByTestId('widget')).host.isVisible();",
+    "kit/drawer": "await tuiDrawer(page.getByTestId('widget')).host.isVisible();",
+    "layout/header": "await tuiHeader(page.getByTestId('widget')).host.isVisible();",
+    "layout/block-details": "await tuiBlockDetails(page.getByTestId('widget')).host.isVisible();",
+    "layout/surface": "await tuiSurface(page.getByTestId('widget')).host.isVisible();",
+    "layout/search": "await tuiSearch(page.getByTestId('widget')).search('text');",
+    "layout/app-bar": "await tuiAppBar(page.getByTestId('widget')).expectSize('l');",
+    "layout/progressive-blur": "await tuiProgressiveBlur(page.getByTestId('widget')).host.isVisible();",
     "layout/list": "await harness.expectSize('s');",
     "layout/slides": "await harness.expectSlide('Slide beta');",
     "layout/elastic-container": "await harness.expectHeightGreaterThan(100);",

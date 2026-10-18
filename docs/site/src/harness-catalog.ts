@@ -148,7 +148,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "root",
     "path": "projects/core/components/root",
     "id": "core/root",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Core",
@@ -281,7 +281,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "comment",
     "path": "projects/kit/components/comment",
     "id": "kit/comment",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -323,7 +323,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "drawer",
     "path": "projects/kit/components/drawer",
     "id": "kit/drawer",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -491,7 +491,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "message",
     "path": "projects/kit/components/message",
     "id": "kit/message",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -687,14 +687,14 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "app-bar",
     "path": "projects/layout/components/app-bar",
     "id": "layout/app-bar",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
     "name": "block-details",
     "path": "projects/layout/components/block-details",
     "id": "layout/block-details",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
@@ -743,7 +743,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "header",
     "path": "projects/layout/components/header",
     "id": "layout/header",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
@@ -785,14 +785,14 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "progressive-blur",
     "path": "projects/layout/components/progressive-blur",
     "id": "layout/progressive-blur",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
     "name": "search",
     "path": "projects/layout/components/search",
     "id": "layout/search",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
@@ -806,7 +806,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "surface",
     "path": "projects/layout/components/surface",
     "id": "layout/surface",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Mobile",
@@ -951,6 +951,16 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
 ] as const;
 
 export const IMPLEMENTATIONS: Readonly<Record<string, string>> = {
+    'core/root': 'tuiRoot',
+    'kit/comment': 'tuiComment',
+    'kit/message': 'tuiMessage',
+    'kit/drawer': 'tuiDrawer',
+    'layout/header': 'tuiHeader',
+    'layout/block-details': 'tuiBlockDetails',
+    'layout/surface': 'tuiSurface',
+    'layout/search': 'tuiSearch',
+    'layout/app-bar': 'tuiAppBar',
+    'layout/progressive-blur': 'tuiProgressiveBlur',
     'layout/list': 'tuiList',
     'layout/slides': 'tuiSlides',
     'layout/elastic-container': 'tuiElasticContainer',
