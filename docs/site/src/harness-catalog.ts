@@ -722,14 +722,14 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "elastic-container",
     "path": "projects/layout/components/elastic-container",
     "id": "layout/elastic-container",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
     "name": "floating-container",
     "path": "projects/layout/components/floating-container",
     "id": "layout/floating-container",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
@@ -764,7 +764,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "list",
     "path": "projects/layout/components/list",
     "id": "layout/list",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
@@ -799,7 +799,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "slides",
     "path": "projects/layout/components/slides",
     "id": "layout/slides",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
@@ -890,7 +890,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "close",
     "path": "projects/core/portals/close",
     "id": "portals/close",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Portals",
@@ -951,6 +951,11 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
 ] as const;
 
 export const IMPLEMENTATIONS: Readonly<Record<string, string>> = {
+    'layout/list': 'tuiList',
+    'layout/slides': 'tuiSlides',
+    'layout/elastic-container': 'tuiElasticContainer',
+    'layout/floating-container': 'tuiFloatingContainer',
+    'portals/close': 'tuiClose',
     'kit/confirm': 'tuiConfirm',
     'kit/toast': 'tuiToast',
     'layout/form': 'tuiForm',
