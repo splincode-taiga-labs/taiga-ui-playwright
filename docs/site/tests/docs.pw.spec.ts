@@ -9,9 +9,9 @@ test('renders the real addon-doc shell and the upstream coverage inventory', asy
     await expect(page.locator('tui-doc-page')).toBeVisible();
     await expect(page.getByRole('heading', {name: 'Playwright harness matrix'})).toBeVisible();
     await expect(page.getByTestId('coverage-total')).toHaveText('133');
-    await expect(page.getByTestId('coverage-done')).toHaveText('76');
-    await expect(page.locator('tr[data-status="done"]')).toHaveCount(76);
-    await expect(page.locator('tr[data-status="todo"]')).toHaveCount(57);
+    await expect(page.getByTestId('coverage-done')).toHaveText('81');
+    await expect(page.locator('tr[data-status="done"]')).toHaveCount(81);
+    await expect(page.locator('tr[data-status="todo"]')).toHaveCount(52);
 });
 
 test('filters the matrix by component text and package', async ({page}) => {
@@ -32,7 +32,7 @@ test('filters done rows and links to the actual Playwright helper source', async
     await page.goto('/');
     await page.getByRole('button', {name: 'Done', exact: true}).click();
 
-    await expect(page.locator('tr[data-status="done"]')).toHaveCount(76);
+    await expect(page.locator('tr[data-status="done"]')).toHaveCount(81);
     await expect(page.locator('tr[data-status="todo"]')).toHaveCount(0);
     const link = page.locator('tr[data-harness="kit/select"]').getByRole('link', {name: /tuiSelect/});
     await expect(link).toHaveAttribute('href', /#\/harness\/kit\/select$/);
@@ -294,6 +294,21 @@ test('new layout and overflow harnesses have source-backed reference pages', asy
         await expect(page.getByRole('button', {name: 'Copy example'})).toBeEnabled();
         const source = page.locator('details.source-details');
         if (!(await source.evaluate((node: HTMLDetailsElement) => node.open))) {
+            await source.locator('summary').click();
+        }
+        await expect(source.locator('tui-scrollbar')).toBeVisible();
+        await expect(page.getByRole('button', {name: 'Copy implementation'})).toBeEnabled();
+    }
+});
+
+test('new notification and layout harnesses expose tested source-backed pages', async ({page}) => {
+    for (const route of ['core/notification', 'kit/badged-content', 'layout/block-status', 'layout/card', 'layout/input-search']) {
+        await page.goto('/#/harness/' + route);
+        await expect(page.locator('harness-detail h1')).toBeVisible();
+        await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
+        await expect(page.getByRole('button', {name: 'Copy example'})).toBeEnabled();
+        const source = page.locator('details.source-details');
+        if (!(await source.evaluate((element: HTMLDetailsElement) => element.open))) {
             await source.locator('summary').click();
         }
         await expect(source.locator('tui-scrollbar')).toBeVisible();

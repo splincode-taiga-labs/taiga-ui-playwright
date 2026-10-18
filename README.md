@@ -220,3 +220,11 @@ Five additional real Angular/Taiga UI v5 helpers have verified integration tests
 `tuiTitle` (reactive typography variant), `tuiItemsWithMore` (adaptive visibility
 and item limits), and `tuiTiles` (drag-and-drop order map).
 Individual reference pages link to their actual implementation.
+
+## Notifications, badges and layout
+
+Five more Locator-first helpers have real Angular and Chromium tests:
+`tuiNotification` (appearance/size), `tuiBadgedContent` (slot projection),
+`tuiBlockStatus` (card and projected action), `tuiCard` (collapsed layout),
+and `tuiInputSearch` (portal open, typing and Escape/selection closure).
+Each has a source-backed documentation page. The catalog is now 81/133 once merged.
