@@ -51,7 +51,7 @@ import {
 
             <search data-testid="search-widget" tuiSearch>
                 <input type="search" aria-label="Layout search" />
-                <button tuiButton type="button" (click)="searchClicks.update(x => x + 1)">
+                <button tuiButton type="button" (click)="recordSearch()">
                     Search now
                 </button>
             </search>
@@ -60,7 +60,7 @@ import {
             <tui-app-bar data-testid="app-bar-widget" [size]="appBarSize()">
                 <button tuiSlot="start" type="button">Back</button>
                 App bar title
-                <button tuiSlot="end" type="button" (click)="appActions.update(x => x + 1)">
+                <button tuiSlot="end" type="button" (click)="recordAppAction()">
                     End action
                 </button>
             </tui-app-bar>
@@ -81,6 +81,14 @@ export class RemainingLayout {
     protected readonly appBarSize = signal<'m' | 'l'>('m');
     protected readonly searchClicks = signal(0);
     protected readonly appActions = signal(0);
+
+    protected recordSearch(): void {
+        this.searchClicks.update((count) => count + 1);
+    }
+
+    protected recordAppAction(): void {
+        this.appActions.update((count) => count + 1);
+    }
 
     protected toggleDrawer(): void {
         this.drawerDirection.set('start');
