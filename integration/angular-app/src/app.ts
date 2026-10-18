@@ -18,6 +18,7 @@ import {LayoutTransitions} from './layout-transitions';
 import {RemainingLayout} from './remaining-layout';
 import {RemainingMobile} from './remaining-mobile';
 import {CommerceTable} from './commerce-table';
+import {RemainingKit} from './remaining-kit';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {TuiButton, TuiDialogService, TuiFilterByInputPipe, TuiRoot, TuiTextfield} from '@taiga-ui/core';
 import {TuiChevron, TuiComboBox, TuiDataListWrapper, TuiSelect} from '@taiga-ui/kit';
@@ -54,6 +55,7 @@ import {map, timer} from 'rxjs';
         RemainingLayout,
         RemainingMobile,
         CommerceTable,
+        RemainingKit,
     ],
     template: `
         <tui-root>
@@ -186,6 +188,7 @@ import {map, timer} from 'rxjs';
                 <app-remaining-layout />
                 <app-remaining-mobile />
                 <app-commerce-table />
+                <app-remaining-kit />
             </main>
         </tui-root>
     `,

@@ -1,6 +1,12 @@
 import {HARNESS_CATALOG, IMPLEMENTATIONS} from './harness-catalog';
 
 const SOURCES: Readonly<Record<string, string>> = {
+    "kit/files": "remaining-kit-harnesses.ts",
+    "kit/tree": "remaining-kit-harnesses.ts",
+    "kit/input-phone-international": "remaining-kit-harnesses.ts",
+    "kit/notification-middle": "remaining-kit-harnesses.ts",
+    "kit/preview": "remaining-kit-harnesses.ts",
+    "kit/push": "remaining-kit-harnesses.ts",
     "commerce/input-card": "commerce-table-harnesses.ts",
     "commerce/input-card-group": "commerce-table-harnesses.ts",
     "commerce/thumbnail-card": "commerce-table-harnesses.ts",
@@ -118,6 +124,12 @@ const SOURCES: Readonly<Record<string, string>> = {
 };
 
 const ACTIONS: Readonly<Record<string, string>> = {
+    "kit/files": "await harness.expand();",
+    "kit/tree": "await harness.expectNode('Initial tree node');",
+    "kit/input-phone-international": "await harness.fill('+123456789');",
+    "kit/notification-middle": "await harness.dismiss();",
+    "kit/preview": "await harness.rotate();",
+    "kit/push": "await harness.close();",
     "commerce/input-card": "await harness.fillCard('4111111111111111');",
     "commerce/input-card-group": "await harness.fillNumber('4111111111111111');",
     "commerce/thumbnail-card": "await harness.expectSize('l');",

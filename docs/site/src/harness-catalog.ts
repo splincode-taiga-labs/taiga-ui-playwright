@@ -330,7 +330,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "files",
     "path": "projects/kit/components/files",
     "id": "kit/files",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -428,7 +428,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "input-phone-international",
     "path": "projects/kit/components/input-phone-international",
     "id": "kit/input-phone-international",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -512,7 +512,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "notification-middle",
     "path": "projects/kit/components/notification-middle",
     "id": "kit/notification-middle",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -547,7 +547,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "preview",
     "path": "projects/kit/components/preview",
     "id": "kit/preview",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -568,7 +568,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "push",
     "path": "projects/kit/components/push",
     "id": "kit/push",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -680,7 +680,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "tree",
     "path": "projects/kit/components/tree",
     "id": "kit/tree",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
@@ -951,6 +951,12 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
 ] as const;
 
 export const IMPLEMENTATIONS: Readonly<Record<string, string>> = {
+    'kit/files': 'tuiFiles',
+    'kit/tree': 'tuiTree',
+    'kit/input-phone-international': 'tuiInternationalPhone',
+    'kit/notification-middle': 'tuiNotificationMiddle',
+    'kit/preview': 'tuiPreview',
+    'kit/push': 'tuiPush',
     'commerce/input-card': 'tuiInputCard',
     'commerce/input-card-group': 'tuiInputCardGroup',
     'commerce/thumbnail-card': 'tuiThumbnailCard',
