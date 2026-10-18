@@ -58,6 +58,7 @@ import {TuiElasticContainer, TuiFloatingContainer, TuiList, TuiSlides} from '@ta
             <button tuiButton type="button" (click)="showPanel()">
                 Open closable panel
             </button>
+            <button tuiButton type="button">Outside close area</button>
             @if (panelOpen()) {
                 <div data-testid="closable-widget" tuiClose
                     (tuiClose)="onPanelClose()"
@@ -66,7 +67,6 @@ import {TuiElasticContainer, TuiFloatingContainer, TuiList, TuiSlides} from '@ta
                     Close with Escape or outside click
                 </div>
             }
-            <button tuiButton type="button">Outside close area</button>
             <output data-testid="close-model">{{ closeCount() }}</output>
         </section>
     `,
