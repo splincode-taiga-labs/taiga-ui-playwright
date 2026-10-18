@@ -9,7 +9,7 @@ test.beforeEach(async ({page}) => {
 });
 
 test('MobileCalendarDropdown switches the date input to a native mobile calendar', async ({page}) => {
-    await page.getByRole('textbox', {name: 'Mobile calendar input'}).click();
+    await page.getByTestId('calendar-dropdown-field').locator('input[tuiInputDate]').click();
     await tuiMobileCalendarDropdown(page.locator('tui-mobile-calendar-dropdown'))
         .expectCalendar();
 });

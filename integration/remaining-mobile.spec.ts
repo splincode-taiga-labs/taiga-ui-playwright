@@ -41,11 +41,15 @@ test('MobileSearchBar updates the style and its native search value', async ({pa
     await bar.expectAppearance('floating');
 });
 
-test('SwipeActions projects separate content and a functional action', async ({page}) => {
-    const swipe = tuiSwipeActions(page.getByTestId('swipe-actions-widget'));
-    await swipe.expectProjectedAction('Archive');
-    await swipe.host.locator('.t-actions').getByRole('button', {name: 'Archive'}).click();
-    await expect(page.getByTestId('archive-count')).toHaveText('1');
+test.describe('SwipeActions on touch devices', () => {
+    test.use({hasTouch: true, isMobile: true});
+
+    test('projects separate content and triggers a revealed action', async ({page}) => {
+        const swipe = tuiSwipeActions(page.getByTestId('swipe-actions-widget'));
+        await swipe.expectProjectedAction('Archive');
+        await swipe.clickAction('Archive');
+        await expect(page.getByTestId('archive-count')).toHaveText('1');
+    });
 });
 
 test('TabBar changes active tab and skeleton count', async ({page}) => {

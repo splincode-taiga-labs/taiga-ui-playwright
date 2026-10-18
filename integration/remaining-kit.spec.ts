@@ -24,8 +24,8 @@ test('Tree updates its rendered root when the bound value changes', async ({page
 
 test('InternationalPhone accepts formatted input using its actual directive', async ({page}) => {
     const phone = tuiInternationalPhone(page.getByTestId('international-phone-widget'));
-    await phone.fill('+123456789');
-    await expect(page.getByTestId('phone-value')).toContainText('123');
+    await phone.fill('+79110330102');
+    await expect(page.getByTestId('phone-value')).toHaveText('+79110330102');
 });
 
 test('NotificationMiddle is a real closable portal and responds to Escape', async ({page}) => {

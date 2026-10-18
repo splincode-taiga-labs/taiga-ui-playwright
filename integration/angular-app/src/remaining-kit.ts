@@ -1,16 +1,20 @@
 import {Component, signal} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {TuiItem} from '@taiga-ui/cdk';
-import {TuiButton, TuiTextfield} from '@taiga-ui/core';
+import {TuiTextfield} from '@taiga-ui/core';
 import {
     TuiFiles, TuiInputPhoneInternationalComponent, TuiNotificationMiddle,
     TuiPreviewComponent, TuiPushComponent, TuiTree,
+    tuiInputPhoneInternationalOptionsProvider,
 } from '@taiga-ui/kit';
+import metadata from 'libphonenumber-js/max/metadata';
+import {of} from 'rxjs';
 
 @Component({
     selector: 'app-remaining-kit',
+    providers: [tuiInputPhoneInternationalOptionsProvider({metadata: of(metadata)})],
     imports: [
-        ReactiveFormsModule, TuiItem, TuiButton, TuiTextfield,
+        ReactiveFormsModule, TuiItem, TuiTextfield,
         TuiFiles, TuiInputPhoneInternationalComponent, TuiNotificationMiddle,
         TuiPreviewComponent, TuiPushComponent, TuiTree,
     ],

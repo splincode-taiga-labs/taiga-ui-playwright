@@ -62,7 +62,7 @@ export class TuiPullToRefreshHarness {
     public constructor(public readonly host: Locator) {}
     public async expectContent(text: string): Promise<void> {
         await expect(this.host).toContainText(text);
-        await expect(this.host.locator('div')).toBeVisible();
+        await expect(this.host.getByText(text, {exact: true})).toBeVisible();
     }
 }
 

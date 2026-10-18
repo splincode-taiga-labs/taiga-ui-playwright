@@ -62,6 +62,14 @@ export class TuiSwipeActionsHarness {
         await expect(this.host.locator('.t-actions')).toContainText(text);
         await expect(this.host.locator('.t-content')).toBeVisible();
     }
+    public async clickAction(label: string): Promise<void> {
+        await this.host.evaluate((element) => {
+            element.scrollLeft = element.scrollWidth;
+        });
+        const button = this.host.locator('.t-actions').getByRole('button', {name: label});
+        await expect(button).toBeVisible();
+        await button.click();
+    }
 }
 
 export class TuiTabBarHarness {

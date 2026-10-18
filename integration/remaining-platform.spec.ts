@@ -23,13 +23,18 @@ test('DynamicHeader projects content inside its scroll container', async ({page}
     await tuiDynamicHeader(page.getByTestId('dynamic-header-widget'))
         .expectTitle('Dynamic header content');
     const container = page.getByTestId('dynamic-header-container');
-    await container.evaluate((element) => {
-        element.scrollTop = 20;
-        element.dispatchEvent(new Event('scroll'));
-        element.scrollTop = 70;
-        element.dispatchEvent(new Event('scroll'));
-    });
-    await tuiDynamicHeader(page.getByTestId('dynamic-header-widget')).expectDirection('-1');
+    const scrollTo = (top: number): Promise<void> =>
+        container.evaluate((element, next) => new Promise<void>((resolve) => {
+            element.addEventListener('scroll', () => resolve(), {once: true});
+            (element as HTMLElement).scrollTop = next;
+        }), top);
+
+    await scrollTo(20);
+    await scrollTo(70);
+    const header = tuiDynamicHeader(page.getByTestId('dynamic-header-widget'));
+    await header.expectDirection('-1');
+    await scrollTo(20);
+    await header.expectDirection('1');
 });
 
 test('Navigation aside updates expanded presentation on input changes', async ({page}) => {
