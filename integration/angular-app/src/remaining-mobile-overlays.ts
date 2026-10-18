@@ -18,11 +18,15 @@ import {TuiCalendar, TuiScrollRef, TuiTextfield} from '@taiga-ui/core';
     template: `
         <section data-testid="remaining-mobile-overlays">
             <h2>Mobile calendar and sheet portals</h2>
-            <tui-textfield data-testid="calendar-dropdown-field" tuiMobileCalendar>
+            <tui-textfield data-testid="calendar-dropdown-field" tuiMobileCalendar
+                [(open)]="calendarDropdownOpen">
                 <input tuiInputDate aria-label="Mobile calendar input"
                     [formControl]="date" />
                 <tui-calendar *tuiDropdown />
             </tui-textfield>
+            <button type="button" (click)="calendarDropdownOpen.set(true)">
+                Open mobile calendar dropdown
+            </button>
             <output data-testid="mobile-date">{{date.value}}</output>
 
             <div tuiScrollRef style="height:130px;overflow:auto">
@@ -39,6 +43,7 @@ import {TuiCalendar, TuiScrollRef, TuiTextfield} from '@taiga-ui/core';
 export class RemainingMobileOverlays {
     private readonly sheets = inject(TuiSheetDialogService);
     protected readonly date = new FormControl<TuiDay | null>(new TuiDay(2026, 9, 18));
+    protected readonly calendarDropdownOpen = signal(false);
     protected readonly sheetStatus = signal('closed');
 
     protected openSheet(): void {

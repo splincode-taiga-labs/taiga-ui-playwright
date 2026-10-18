@@ -8,8 +8,8 @@ test.beforeEach(async ({page}) => {
     await expect(page.getByTestId('remaining-mobile-overlays')).toBeVisible();
 });
 
-test('MobileCalendarDropdown switches the date input to a native mobile calendar', async ({page}) => {
-    await page.getByTestId('calendar-dropdown-field').locator('input[tuiInputDate]').click();
+test('MobileCalendarDropdown opens the native mobile calendar through the textfield', async ({page}) => {
+    await page.getByRole('button', {name: 'Open mobile calendar dropdown'}).click();
     await tuiMobileCalendarDropdown(page.locator('tui-mobile-calendar-dropdown'))
         .expectCalendar();
 });
