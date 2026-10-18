@@ -42,7 +42,7 @@ import {TuiBlockStatus, TuiCard, TuiInputSearch} from '@taiga-ui/layout';
                 <span tuiSlot="top">No results illustration</span>
                 <h3>No results</h3>
                 Try changing your filters
-                <button tuiButton type="button" (click)="restored.update(value => value + 1)">
+                <button tuiButton type="button" (click)="restore()">
                     Restore results
                 </button>
             </tui-block-status>
@@ -90,6 +90,10 @@ export class NotificationLayout {
     protected updateNotification(): void {
         this.notificationAppearance.set('warning');
         this.notificationSize.set('l');
+    }
+
+    protected restore(): void {
+        this.restored.update((value) => value + 1);
     }
 
     protected changeStatus(): void {
