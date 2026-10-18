@@ -16,6 +16,7 @@ import {NotificationLayout} from './notification-layout';
 import {PortalLayout} from './portal-layout';
 import {LayoutTransitions} from './layout-transitions';
 import {RemainingLayout} from './remaining-layout';
+import {RemainingMobile} from './remaining-mobile';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {TuiButton, TuiDialogService, TuiFilterByInputPipe, TuiRoot, TuiTextfield} from '@taiga-ui/core';
 import {TuiChevron, TuiComboBox, TuiDataListWrapper, TuiSelect} from '@taiga-ui/kit';
@@ -50,6 +51,7 @@ import {map, timer} from 'rxjs';
         PortalLayout,
         LayoutTransitions,
         RemainingLayout,
+        RemainingMobile,
     ],
     template: `
         <tui-root>
@@ -180,6 +182,7 @@ import {map, timer} from 'rxjs';
                 <app-portal-layout />
                 <app-layout-transitions />
                 <app-remaining-layout />
+                <app-remaining-mobile />
             </main>
         </tui-root>
     `,

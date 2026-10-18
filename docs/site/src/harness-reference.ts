@@ -1,6 +1,13 @@
 import {HARNESS_CATALOG, IMPLEMENTATIONS} from './harness-catalog';
 
 const SOURCES: Readonly<Record<string, string>> = {
+    "mobile/bottom-sheet": "remaining-mobile-harnesses.ts",
+    "mobile/keypad": "remaining-mobile-harnesses.ts",
+    "mobile/mobile-calendar": "remaining-mobile-harnesses.ts",
+    "mobile/mobile-calendar-sheet": "remaining-mobile-harnesses.ts",
+    "mobile/search-bar": "remaining-mobile-harnesses.ts",
+    "mobile/swipe-actions": "remaining-mobile-harnesses.ts",
+    "mobile/tab-bar": "remaining-mobile-harnesses.ts",
     "core/root": "remaining-layout-harnesses.ts",
     "kit/comment": "remaining-layout-harnesses.ts",
     "kit/message": "remaining-layout-harnesses.ts",
@@ -105,6 +112,13 @@ const SOURCES: Readonly<Record<string, string>> = {
 };
 
 const ACTIONS: Readonly<Record<string, string>> = {
+    "mobile/bottom-sheet": "await harness.expectStops(2, true);",
+    "mobile/keypad": "await harness.press('1');",
+    "mobile/mobile-calendar": "await harness.expectInitialized();",
+    "mobile/mobile-calendar-sheet": "await harness.expectDays();",
+    "mobile/search-bar": "await harness.fill('needle');",
+    "mobile/swipe-actions": "await harness.expectProjectedAction('Archive');",
+    "mobile/tab-bar": "await harness.selectTab('Profile');",
     "core/root": "await tuiRoot(page.getByTestId('widget')).host.isVisible();",
     "kit/comment": "await tuiComment(page.getByTestId('widget')).host.isVisible();",
     "kit/message": "await tuiMessage(page.getByTestId('widget')).host.isVisible();",

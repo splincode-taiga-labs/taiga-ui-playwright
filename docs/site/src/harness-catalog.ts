@@ -813,21 +813,21 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "bottom-sheet",
     "path": "projects/addon-mobile/components/bottom-sheet",
     "id": "mobile/bottom-sheet",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Mobile",
     "name": "keypad",
     "path": "projects/addon-mobile/components/keypad",
     "id": "mobile/keypad",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Mobile",
     "name": "mobile-calendar",
     "path": "projects/addon-mobile/components/mobile-calendar",
     "id": "mobile/mobile-calendar",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Mobile",
@@ -841,7 +841,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "mobile-calendar-sheet",
     "path": "projects/addon-mobile/components/mobile-calendar-sheet",
     "id": "mobile/mobile-calendar-sheet",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Mobile",
@@ -855,7 +855,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "search-bar",
     "path": "projects/addon-mobile/components/search-bar",
     "id": "mobile/search-bar",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Mobile",
@@ -869,14 +869,14 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "swipe-actions",
     "path": "projects/addon-mobile/components/swipe-actions",
     "id": "mobile/swipe-actions",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Mobile",
     "name": "tab-bar",
     "path": "projects/addon-mobile/components/tab-bar",
     "id": "mobile/tab-bar",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Portals",
@@ -951,6 +951,13 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
 ] as const;
 
 export const IMPLEMENTATIONS: Readonly<Record<string, string>> = {
+    'mobile/bottom-sheet': 'tuiBottomSheet',
+    'mobile/keypad': 'tuiKeypad',
+    'mobile/mobile-calendar': 'tuiMobileCalendar',
+    'mobile/mobile-calendar-sheet': 'tuiMobileCalendarSheet',
+    'mobile/search-bar': 'tuiSearchBar',
+    'mobile/swipe-actions': 'tuiSwipeActions',
+    'mobile/tab-bar': 'tuiTabBar',
     'core/root': 'tuiRoot',
     'kit/comment': 'tuiComment',
     'kit/message': 'tuiMessage',
