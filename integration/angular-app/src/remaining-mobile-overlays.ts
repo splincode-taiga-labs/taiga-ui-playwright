@@ -5,8 +5,8 @@ import {
     TuiMobileCalendarDropdown, TuiPullToRefresh, TuiSheetDialogService,
 } from '@taiga-ui/addon-mobile';
 import {TuiDay} from '@taiga-ui/cdk';
-import {TuiCalendar, TuiInputDate} from '@taiga-ui/kit';
-import {TuiScrollRef, TuiTextfield} from '@taiga-ui/core';
+import {TuiInputDate} from '@taiga-ui/kit';
+import {TuiCalendar, TuiScrollRef, TuiTextfield} from '@taiga-ui/core';
 
 @Component({
     selector: 'app-remaining-mobile-overlays',

@@ -1,14 +1,14 @@
 import {Component, inject, signal} from '@angular/core';
 import {Router, RouterOutlet} from '@angular/router';
 import {TuiDialog, TuiTextfield, TuiTitle} from '@taiga-ui/core';
-import {TuiFullscreen, TuiInputDate, TuiCalendar} from '@taiga-ui/kit';
+import {TuiFullscreen} from '@taiga-ui/kit';
 import {TuiDynamicHeader, TuiNavigation, TuiPdfViewer} from '@taiga-ui/layout';
 
 @Component({
     selector: 'app-remaining-platform',
     imports: [
         RouterOutlet, TuiDialog, TuiTextfield, TuiTitle,
-        TuiFullscreen, TuiInputDate, TuiCalendar, TuiDynamicHeader,
+        TuiFullscreen, TuiDynamicHeader,
         TuiNavigation, TuiPdfViewer,
     ],
     template: `
