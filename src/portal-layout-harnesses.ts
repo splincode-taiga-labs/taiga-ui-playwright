@@ -54,6 +54,10 @@ export class TuiFormHarness {
     public async expectSize(size: string): Promise<void> {
         await expect(this.host).toHaveAttribute('tuiForm', '');
         await expect(this.host).toHaveAttribute('data-size', size);
+    }
+
+    /** Form child options are injected on creation; they do not change with later inputs. */
+    public async expectInheritedButtonSize(size: string): Promise<void> {
         await expect(this.submitButton).toHaveAttribute('data-size', size);
     }
 

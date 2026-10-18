@@ -34,13 +34,16 @@ test('Toast opens with an appearance and closes through its real button', async 
     await expect(page.getByTestId('toast-result')).toHaveText('closed');
 });
 
-test('Form projects size into its child button and submits without navigation', async ({page}) => {
+test('Form updates host size, preserves injected child defaults, and submits', async ({page}) => {
     const form = tuiForm(page.getByTestId('form-widget'));
     await form.expectSize('l');
+    await form.expectInheritedButtonSize('l');
     await form.submit();
     await expect(page.getByTestId('form-result')).toHaveText('1');
     await page.getByRole('button', {name: 'Compact form'}).click();
     await form.expectSize('s');
+    // Size is injected at creation time, not reactively propagated to existing children.
+    await form.expectInheritedButtonSize('l');
     await form.submit();
     await expect(page.getByTestId('form-result')).toHaveText('2');
 });
