@@ -344,7 +344,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "fullscreen",
     "path": "projects/kit/components/fullscreen",
     "id": "kit/fullscreen",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -596,7 +596,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "routable-dialog",
     "path": "projects/kit/components/routable-dialog",
     "id": "kit/routable-dialog",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -715,7 +715,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "dynamic-header",
     "path": "projects/layout/components/dynamic-header",
     "id": "layout/dynamic-header",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
@@ -771,14 +771,14 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "navigation",
     "path": "projects/layout/components/navigation",
     "id": "layout/navigation",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
     "name": "pdf-viewer",
     "path": "projects/layout/components/pdf-viewer",
     "id": "layout/pdf-viewer",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
@@ -834,7 +834,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "mobile-calendar-dropdown",
     "path": "projects/addon-mobile/components/mobile-calendar-dropdown",
     "id": "mobile/mobile-calendar-dropdown",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Mobile",
@@ -848,7 +848,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "pull-to-refresh",
     "path": "projects/addon-mobile/components/pull-to-refresh",
     "id": "mobile/pull-to-refresh",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Mobile",
@@ -862,7 +862,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "sheet-dialog",
     "path": "projects/addon-mobile/components/sheet-dialog",
     "id": "mobile/sheet-dialog",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Mobile",
@@ -951,6 +951,14 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
 ] as const;
 
 export const IMPLEMENTATIONS: Readonly<Record<string, string>> = {
+    'kit/fullscreen': 'tuiFullscreen',
+    'kit/routable-dialog': 'tuiRoutableDialog',
+    'layout/dynamic-header': 'tuiDynamicHeader',
+    'layout/navigation': 'tuiNavigation',
+    'layout/pdf-viewer': 'tuiPdfViewer',
+    'mobile/mobile-calendar-dropdown': 'tuiMobileCalendarDropdown',
+    'mobile/pull-to-refresh': 'tuiPullToRefresh',
+    'mobile/sheet-dialog': 'tuiSheetDialog',
     'portals/alert': 'tuiAlert',
     'portals/dropdown': 'tuiDropdownPortal',
     'portals/hint': 'tuiHintPortal',

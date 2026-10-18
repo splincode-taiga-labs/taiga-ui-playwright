@@ -21,6 +21,8 @@ import {RemainingMobile} from './remaining-mobile';
 import {CommerceTable} from './commerce-table';
 import {RemainingKit} from './remaining-kit';
 import {RemainingPortals} from './remaining-portals';
+import {RemainingPlatform} from './remaining-platform';
+import {RemainingMobileOverlays} from './remaining-mobile-overlays';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {TuiButton, TuiDialogService, TuiFilterByInputPipe, TuiRoot, TuiTextfield} from '@taiga-ui/core';
 import {TuiChevron, TuiComboBox, TuiDataListWrapper, TuiSelect} from '@taiga-ui/kit';
@@ -59,6 +61,8 @@ import {map, timer} from 'rxjs';
         CommerceTable,
         RemainingKit,
         RemainingPortals,
+        RemainingPlatform,
+        RemainingMobileOverlays,
     ],
     template: `
         <tui-root>
@@ -193,6 +197,8 @@ import {map, timer} from 'rxjs';
                 @if (fixtureGroup === 'commerce-table') { <app-commerce-table /> }
                 @if (fixtureGroup === 'remaining-kit') { <app-remaining-kit /> }
                 @if (fixtureGroup === 'remaining-portals') { <app-remaining-portals /> }
+                @if (fixtureGroup === 'remaining-platform') { <app-remaining-platform /> }
+                @if (fixtureGroup === 'remaining-mobile-overlays') { <app-remaining-mobile-overlays /> }
             </main>
         </tui-root>
     `,

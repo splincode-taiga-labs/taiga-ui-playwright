@@ -9,9 +9,9 @@ test('renders the real addon-doc shell and the upstream coverage inventory', asy
     await expect(page.locator('tui-doc-page')).toBeVisible();
     await expect(page.getByRole('heading', {name: 'Playwright harness matrix'})).toBeVisible();
     await expect(page.getByTestId('coverage-total')).toHaveText('133');
-    await expect(page.getByTestId('coverage-done')).toHaveText('125');
-    await expect(page.locator('tr[data-status="done"]')).toHaveCount(125);
-    await expect(page.locator('tr[data-status="todo"]')).toHaveCount(8);
+    await expect(page.getByTestId('coverage-done')).toHaveText('133');
+    await expect(page.locator('tr[data-status="done"]')).toHaveCount(133);
+    await expect(page.locator('tr[data-status="todo"]')).toHaveCount(0);
 });
 
 test('filters the matrix by component text and package', async ({page}) => {
@@ -32,7 +32,7 @@ test('filters done rows and links to the actual Playwright helper source', async
     await page.goto('/');
     await page.getByRole('button', {name: 'Done', exact: true}).click();
 
-    await expect(page.locator('tr[data-status="done"]')).toHaveCount(125);
+    await expect(page.locator('tr[data-status="done"]')).toHaveCount(133);
     await expect(page.locator('tr[data-status="todo"]')).toHaveCount(0);
     const link = page.locator('tr[data-harness="kit/select"]').getByRole('link', {name: /tuiSelect/});
     await expect(link).toHaveAttribute('href', /#\/harness\/kit\/select$/);
@@ -381,6 +381,14 @@ test('complex Kit harnesses have tested source reference pages', async ({page}) 
 
 test('real alert dropdown hint modal and popup docs pages work', async ({page}) => {
     for (const id of ["portals/alert","portals/dropdown","portals/hint","portals/modal","portals/popup"]) {
+        await page.goto('/#/harness/' + id);
+        await expect(page.locator('harness-detail h1')).toBeVisible();
+        await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
+    }
+});
+
+test('final platform and mobile portal pages map to real source', async ({page}) => {
+    for (const id of ["kit/fullscreen","kit/routable-dialog","layout/dynamic-header","layout/navigation","layout/pdf-viewer","mobile/mobile-calendar-dropdown","mobile/pull-to-refresh","mobile/sheet-dialog"]) {
         await page.goto('/#/harness/' + id);
         await expect(page.locator('harness-detail h1')).toBeVisible();
         await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();

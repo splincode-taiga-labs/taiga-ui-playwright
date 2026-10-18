@@ -1,6 +1,14 @@
 import {HARNESS_CATALOG, IMPLEMENTATIONS} from './harness-catalog';
 
 const SOURCES: Readonly<Record<string, string>> = {
+    "kit/fullscreen": "remaining-platform-harnesses.ts",
+    "kit/routable-dialog": "remaining-platform-harnesses.ts",
+    "layout/dynamic-header": "remaining-platform-harnesses.ts",
+    "layout/navigation": "remaining-platform-harnesses.ts",
+    "layout/pdf-viewer": "remaining-platform-harnesses.ts",
+    "mobile/mobile-calendar-dropdown": "remaining-platform-harnesses.ts",
+    "mobile/pull-to-refresh": "remaining-platform-harnesses.ts",
+    "mobile/sheet-dialog": "remaining-platform-harnesses.ts",
     "portals/alert": "remaining-portals-harnesses.ts",
     "portals/dropdown": "remaining-portals-harnesses.ts",
     "portals/hint": "remaining-portals-harnesses.ts",
@@ -129,6 +137,14 @@ const SOURCES: Readonly<Record<string, string>> = {
 };
 
 const ACTIONS: Readonly<Record<string, string>> = {
+    "kit/fullscreen": "await harness.expectRoot();",
+    "kit/routable-dialog": "await harness.expectRouted('Routed dialog fixture');",
+    "layout/dynamic-header": "await harness.expectTitle('Dynamic header content');",
+    "layout/navigation": "await harness.expectExpanded(true);",
+    "layout/pdf-viewer": "await harness.expectPdf('Sample.pdf');",
+    "mobile/mobile-calendar-dropdown": "await harness.expectCalendar();",
+    "mobile/pull-to-refresh": "await harness.expectContent('Pullable scrolling content');",
+    "mobile/sheet-dialog": "await harness.expectSheet('Mobile sheet content');",
     "portals/alert": "await harness.expectAlert('Portal alert content');",
     "portals/dropdown": "await harness.expectMenuOption('Portal option');",
     "portals/hint": "await harness.expectHint('Manual hint text');",
