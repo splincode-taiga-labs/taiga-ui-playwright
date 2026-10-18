@@ -212,3 +212,11 @@ and HTTP asset availability), `tuiFilter` (FormControl checkbox selection),
 `tuiActionBar` (menu expansion and real action clicks), `tuiPulse`
 (reactive playing state), and `tuiCompass` (reactive CSS angle).
 Each has an Angular fixture, Chromium integration test and addon-doc page.
+
+## Layout and overflow harnesses
+
+Five additional real Angular/Taiga UI v5 helpers have verified integration tests:
+`tuiCell` (size/height changes), `tuiLabel` (input association, orientation),
+`tuiTitle` (reactive typography variant), `tuiItemsWithMore` (adaptive visibility
+and item limits), and `tuiTiles` (drag-and-drop order map).
+Individual reference pages link to their actual implementation.

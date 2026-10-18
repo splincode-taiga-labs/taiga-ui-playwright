@@ -1,6 +1,11 @@
 import {HARNESS_CATALOG, IMPLEMENTATIONS} from './harness-catalog';
 
 const SOURCES: Readonly<Record<string, string>> = {
+    "core/cell": "layout-interaction-harnesses.ts",
+    "core/label": "layout-interaction-harnesses.ts",
+    "core/title": "layout-interaction-harnesses.ts",
+    "kit/items-with-more": "layout-interaction-harnesses.ts",
+    "kit/tiles": "layout-interaction-harnesses.ts",
     "core/icon": "visual-action-harnesses.ts",
     "kit/filter": "visual-action-harnesses.ts",
     "kit/action-bar": "visual-action-harnesses.ts",
@@ -75,6 +80,11 @@ const SOURCES: Readonly<Record<string, string>> = {
 };
 
 const ACTIONS: Readonly<Record<string, string>> = {
+    "core/cell": "await harness.expectLayout('s', 'compact');",
+    "core/label": "await harness.focusInput();",
+    "core/title": "await harness.expectSize('s');",
+    "kit/items-with-more": "await harness.expectVisibleItems(['Alpha', 'Beta']);",
+    "kit/tiles": "await harness.drag(0, 1);",
     "core/icon": "await harness.expectIcon('search');",
     "kit/filter": "await harness.setChecked('Beta', true);",
     "kit/action-bar": "await harness.clickAction('Apply changes');",
