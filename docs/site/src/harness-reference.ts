@@ -1,6 +1,11 @@
 import {HARNESS_CATALOG, IMPLEMENTATIONS} from './harness-catalog';
 
 const SOURCES: Readonly<Record<string, string>> = {
+    "layout/list": "layout-transitions-harnesses.ts",
+    "layout/slides": "layout-transitions-harnesses.ts",
+    "layout/elastic-container": "layout-transitions-harnesses.ts",
+    "layout/floating-container": "layout-transitions-harnesses.ts",
+    "portals/close": "layout-transitions-harnesses.ts",
     "kit/confirm": "portal-layout-harnesses.ts",
     "kit/toast": "portal-layout-harnesses.ts",
     "layout/form": "portal-layout-harnesses.ts",
@@ -90,6 +95,11 @@ const SOURCES: Readonly<Record<string, string>> = {
 };
 
 const ACTIONS: Readonly<Record<string, string>> = {
+    "layout/list": "await harness.expectSize('s');",
+    "layout/slides": "await harness.expectSlide('Slide beta');",
+    "layout/elastic-container": "await harness.expectHeightGreaterThan(100);",
+    "layout/floating-container": "await harness.expectBackground('rgb(20, 40, 60)');",
+    "portals/close": "await harness.dismissByEscape();",
     "kit/confirm": "await harness.decide(true);",
     "kit/toast": "await harness.close();",
     "layout/form": "await harness.submit();",

@@ -40,3 +40,4 @@ export {TuiIconHarness, TuiFilterHarness, TuiActionBarHarness, TuiPulseHarness, 
 export {TuiCellHarness, TuiLabelHarness, TuiTitleHarness, TuiItemsWithMoreHarness, TuiTilesHarness, tuiCell, tuiLabel, tuiTitle, tuiItemsWithMore, tuiTiles} from './layout-interaction-harnesses.js';
 export {TuiNotificationHarness, TuiBadgedContentHarness, TuiBlockStatusHarness, TuiCardHarness, TuiInputSearchHarness, tuiNotification, tuiBadgedContent, tuiBlockStatus, tuiCard, tuiInputSearch} from './notification-layout-harnesses.js';
 export {TuiConfirmHarness, TuiToastHarness, TuiFormHarness, TuiItemGroupHarness, TuiShrinkWrapHarness, tuiConfirm, tuiToast, tuiForm, tuiItemGroup, tuiShrinkWrap} from './portal-layout-harnesses.js';
+export {TuiListHarness, TuiSlidesHarness, TuiElasticContainerHarness, TuiFloatingContainerHarness, TuiCloseHarness, tuiList, tuiSlides, tuiElasticContainer, tuiFloatingContainer, tuiClose} from './layout-transitions-harnesses.js';

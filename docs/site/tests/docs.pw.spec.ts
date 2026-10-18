@@ -9,9 +9,9 @@ test('renders the real addon-doc shell and the upstream coverage inventory', asy
     await expect(page.locator('tui-doc-page')).toBeVisible();
     await expect(page.getByRole('heading', {name: 'Playwright harness matrix'})).toBeVisible();
     await expect(page.getByTestId('coverage-total')).toHaveText('133');
-    await expect(page.getByTestId('coverage-done')).toHaveText('86');
-    await expect(page.locator('tr[data-status="done"]')).toHaveCount(86);
-    await expect(page.locator('tr[data-status="todo"]')).toHaveCount(47);
+    await expect(page.getByTestId('coverage-done')).toHaveText('91');
+    await expect(page.locator('tr[data-status="done"]')).toHaveCount(91);
+    await expect(page.locator('tr[data-status="todo"]')).toHaveCount(42);
 });
 
 test('filters the matrix by component text and package', async ({page}) => {
@@ -32,7 +32,7 @@ test('filters done rows and links to the actual Playwright helper source', async
     await page.goto('/');
     await page.getByRole('button', {name: 'Done', exact: true}).click();
 
-    await expect(page.locator('tr[data-status="done"]')).toHaveCount(86);
+    await expect(page.locator('tr[data-status="done"]')).toHaveCount(91);
     await expect(page.locator('tr[data-status="todo"]')).toHaveCount(0);
     const link = page.locator('tr[data-harness="kit/select"]').getByRole('link', {name: /tuiSelect/});
     await expect(link).toHaveAttribute('href', /#\/harness\/kit\/select$/);
@@ -324,6 +324,21 @@ test('Confirm, Toast and layout harnesses expose the source-backed docs', async 
         await expect(page.getByRole('button', {name: 'Copy example'})).toBeEnabled();
         const source = page.locator('details.source-details');
         if (!(await source.evaluate((element: HTMLDetailsElement) => element.open))) {
+            await source.locator('summary').click();
+        }
+        await expect(source.locator('tui-scrollbar')).toBeVisible();
+        await expect(page.getByRole('button', {name: 'Copy implementation'})).toBeEnabled();
+    }
+});
+
+test('responsive layout and close harnesses link to real tested implementations', async ({page}) => {
+    for (const route of ['layout/list', 'layout/slides', 'layout/elastic-container', 'layout/floating-container', 'portals/close']) {
+        await page.goto('/#/harness/' + route);
+        await expect(page.locator('harness-detail h1')).toBeVisible();
+        await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
+        await expect(page.getByRole('button', {name: 'Copy example'})).toBeEnabled();
+        const source = page.locator('details.source-details');
+        if (!(await source.evaluate((node: HTMLDetailsElement) => node.open))) {
             await source.locator('summary').click();
         }
         await expect(source.locator('tui-scrollbar')).toBeVisible();

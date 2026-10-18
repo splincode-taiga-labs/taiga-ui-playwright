@@ -235,3 +235,11 @@ New browser-tested helpers: `tuiConfirm` (dirty and pristine confirmation flows)
 `tuiToast` (appearance and dismissal), `tuiForm` (size projection and submit),
 `tuiItemGroup` (horizontal autoscroll), and `tuiShrinkWrap` (responsive max-inline-size).
 Each is backed by an actual Angular fixture, integration test, and addon-doc reference.
+
+## Layout and dismissal batch
+
+`tuiList` verifies native list items and size changes; `tuiSlides` verifies
+directional content switching; `tuiElasticContainer` measures real growth
+when a child is added; `tuiFloatingContainer` asserts its reactive background;
+and `tuiClose` checks Escape and outside click dismissal.
+Each has real Angular v5.28 integration and a source-backed docs page.
