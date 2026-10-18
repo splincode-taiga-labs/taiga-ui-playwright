@@ -1,4 +1,5 @@
 import {Component, inject, signal} from '@angular/core';
+import {DOCUMENT} from '@angular/common';
 import {HarnessControls} from './controls';
 import {SpecializedInputs} from './specialized-inputs';
 import {CalendarInputs} from './calendar-inputs';
@@ -187,16 +188,17 @@ import {map, timer} from 'rxjs';
                 <app-notification-layout />
                 <app-portal-layout />
                 <app-layout-transitions />
-                <app-remaining-layout />
-                <app-remaining-mobile />
-                <app-commerce-table />
-                <app-remaining-kit />
-                <app-remaining-portals />
+                @if (fixtureGroup === 'remaining-layout') { <app-remaining-layout /> }
+                @if (fixtureGroup === 'remaining-mobile') { <app-remaining-mobile /> }
+                @if (fixtureGroup === 'commerce-table') { <app-commerce-table /> }
+                @if (fixtureGroup === 'remaining-kit') { <app-remaining-kit /> }
+                @if (fixtureGroup === 'remaining-portals') { <app-remaining-portals /> }
             </main>
         </tui-root>
     `,
 })
 export class FixtureApp {
+    protected readonly fixtureGroup = new URLSearchParams(inject(DOCUMENT).location.search).get('fixture');
     private readonly dialogs = inject(TuiDialogService);
 
     protected readonly countries = ['Austria', 'Estonia', 'United Arab Emirates', 'C++'];

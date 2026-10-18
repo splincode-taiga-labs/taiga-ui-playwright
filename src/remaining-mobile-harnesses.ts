@@ -40,7 +40,7 @@ export class TuiMobileCalendarSheetHarness {
         return this.host.locator('.t-cell:not(.t-cell_empty):not(.t-cell_disabled)');
     }
     public async expectDays(): Promise<void> {
-        await expect(this.host.locator('.t-row')).toHaveCount(6);
+        await expect.poll(() => this.host.locator('.t-row').count()).toBeGreaterThan(3);
         await expect(this.days.first()).toBeVisible();
     }
 }

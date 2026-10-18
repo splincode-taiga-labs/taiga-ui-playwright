@@ -4,7 +4,7 @@ import {
 } from '../src/index.js';
 
 test.beforeEach(async ({page}) => {
-    await page.goto('/');
+    await page.goto('/?fixture=remaining-kit');
     await expect(page.getByTestId('remaining-kit')).toBeVisible();
 });
 

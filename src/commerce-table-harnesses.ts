@@ -22,7 +22,7 @@ export class TuiThumbnailCardHarness {
     public constructor(public readonly host: Locator) {}
     public async expectSize(size: string): Promise<void> {
         await expect(this.host).toHaveAttribute('data-size', size);
-        await expect(this.host.locator('.t-content')).toBeVisible();
+        await expect(this.host.locator('.t-content')).toContainText(/\S/);
     }
 }
 
@@ -49,7 +49,7 @@ export class TuiTableHarness {
 export class TuiTablePaginationHarness {
     public constructor(public readonly host: Locator) {}
     public async expectRange(from: number, to: number): Promise<void> {
-        await expect(this.host.locator('strong')).toContainText(from + '–' + to);
+        await expect(this.host.locator('strong').filter({hasText: from + '–' + to})).toHaveCount(1);
     }
     public async nextPage(): Promise<void> {
         await this.host.locator('button.t-button:not(.t-button_back)').click();

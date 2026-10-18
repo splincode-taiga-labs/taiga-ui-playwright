@@ -5,7 +5,7 @@ import {
 } from '../src/index.js';
 
 test.beforeEach(async ({page}) => {
-    await page.goto('/');
+    await page.goto('/?fixture=remaining-layout');
     await expect(page.getByTestId('remaining-layout')).toBeVisible();
 });
 

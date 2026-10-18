@@ -2,7 +2,7 @@ import {expect, test} from '@playwright/test';
 import {tuiAlert, tuiDropdownPortal, tuiHintPortal, tuiModal, tuiPopup} from '../src/index.js';
 
 test.beforeEach(async ({page}) => {
-    await page.goto('/');
+    await page.goto('/?fixture=remaining-portals');
     await expect(page.getByTestId('remaining-portals')).toBeVisible();
 });
 
