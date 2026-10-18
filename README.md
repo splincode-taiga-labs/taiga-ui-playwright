@@ -228,3 +228,10 @@ Five more Locator-first helpers have real Angular and Chromium tests:
 `tuiBlockStatus` (card and projected action), `tuiCard` (collapsed layout),
 and `tuiInputSearch` (portal open, typing and Escape/selection closure).
 Each has a source-backed documentation page. The catalog is now 81/133 once merged.
+
+## Portal and layout batch
+
+New browser-tested helpers: `tuiConfirm` (dirty and pristine confirmation flows),
+`tuiToast` (appearance and dismissal), `tuiForm` (size projection and submit),
+`tuiItemGroup` (horizontal autoscroll), and `tuiShrinkWrap` (responsive max-inline-size).
+Each is backed by an actual Angular fixture, integration test, and addon-doc reference.

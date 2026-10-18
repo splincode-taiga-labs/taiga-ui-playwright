@@ -13,7 +13,9 @@ export interface TuiOptionsFieldOptions {
 
 const OVERLAY_SELECTOR =
     'tui-dropdown:visible, tui-dropdown-mobile:visible, tui-sheet-dialog:visible';
-const DEFAULT_OPTION_SELECTOR = 'tui-data-list [tuiOption]';
+// Taiga adds a decorative .t-empty element with tuiOption when no results match.
+// Its own keyboard selector explicitly ignores .t-empty as a non-interactive placeholder.
+const DEFAULT_OPTION_SELECTOR = 'tui-data-list [tuiOption]:not(.t-empty)';
 const AMBIGUOUS_OVERLAY =
     'Cannot identify this field\'s Taiga UI dropdown: multiple overlays are visible. ' +
     'Use an input with aria-controls or pass {overlay: page.locator(...)}.';

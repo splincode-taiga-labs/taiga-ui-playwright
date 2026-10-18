@@ -1,6 +1,11 @@
 import {HARNESS_CATALOG, IMPLEMENTATIONS} from './harness-catalog';
 
 const SOURCES: Readonly<Record<string, string>> = {
+    "kit/confirm": "portal-layout-harnesses.ts",
+    "kit/toast": "portal-layout-harnesses.ts",
+    "layout/form": "portal-layout-harnesses.ts",
+    "layout/item-group": "portal-layout-harnesses.ts",
+    "kit/shrink-wrap": "portal-layout-harnesses.ts",
     "core/notification": "notification-layout-harnesses.ts",
     "kit/badged-content": "notification-layout-harnesses.ts",
     "layout/block-status": "notification-layout-harnesses.ts",
@@ -85,6 +90,11 @@ const SOURCES: Readonly<Record<string, string>> = {
 };
 
 const ACTIONS: Readonly<Record<string, string>> = {
+    "kit/confirm": "await harness.decide(true);",
+    "kit/toast": "await harness.close();",
+    "layout/form": "await harness.submit();",
+    "layout/item-group": "await harness.clickLastAndExpectScroll();",
+    "kit/shrink-wrap": "await harness.expectMaxInlineSize(180);",
     "core/notification": "await harness.expectState('info', 's');",
     "kit/badged-content": "await harness.expectBadge('top', '2');",
     "layout/block-status": "await harness.clickAction('Restore results');",

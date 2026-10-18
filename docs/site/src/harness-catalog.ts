@@ -295,7 +295,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "confirm",
     "path": "projects/kit/components/confirm",
     "id": "kit/confirm",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -617,7 +617,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "shrink-wrap",
     "path": "projects/kit/components/shrink-wrap",
     "id": "kit/shrink-wrap",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -673,7 +673,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "toast",
     "path": "projects/kit/components/toast",
     "id": "kit/toast",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -736,7 +736,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "form",
     "path": "projects/layout/components/form",
     "id": "layout/form",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
@@ -757,7 +757,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "item-group",
     "path": "projects/layout/components/item-group",
     "id": "layout/item-group",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
@@ -951,6 +951,11 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
 ] as const;
 
 export const IMPLEMENTATIONS: Readonly<Record<string, string>> = {
+    'kit/confirm': 'tuiConfirm',
+    'kit/toast': 'tuiToast',
+    'layout/form': 'tuiForm',
+    'layout/item-group': 'tuiItemGroup',
+    'kit/shrink-wrap': 'tuiShrinkWrap',
     'core/notification': 'tuiNotification',
     'kit/badged-content': 'tuiBadgedContent',
     'layout/block-status': 'tuiBlockStatus',
