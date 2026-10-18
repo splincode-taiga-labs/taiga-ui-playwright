@@ -11,7 +11,7 @@ export class TuiListHarness {
     public async expectSize(size: 's' | 'l'): Promise<void> {
         await expect(this.host).toHaveAttribute('tuiList', '');
         await expect(this.host).toHaveAttribute('data-size', size);
-        await expect(this.host).toHaveAttribute('role', 'list');
+        await expect(this.host).toHaveRole('list');
     }
 
     public async expectItems(labels: readonly string[]): Promise<void> {
