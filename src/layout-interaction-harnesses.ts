@@ -19,13 +19,19 @@ export class TuiLabelHarness {
         await expect(this.host).toHaveAttribute('data-orientation', orientation);
     }
 
-    public async focusInput(): Promise<void> {
+    public async expectAssociatedInput(): Promise<Locator> {
         const id = await this.host.getAttribute('for');
         if (!id) {
-            throw new Error('TuiLabel lacks a for attribute; it cannot focus a target input.');
+            throw new Error('TuiLabel lacks a for attribute; it cannot associate with a target input.');
         }
         const control = this.host.page().locator('[id=' + JSON.stringify(id) + ']');
         await expect(control).toHaveCount(1);
+        await expect(control).toBeVisible();
+        return control;
+    }
+
+    public async focusInput(): Promise<void> {
+        const control = await this.expectAssociatedInput();
         await this.host.click();
         await expect(control).toBeFocused();
     }

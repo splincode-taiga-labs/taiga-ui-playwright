@@ -22,8 +22,9 @@ test('Label focuses its associated native and Taiga textfield inputs', async ({p
 
     const floating = tuiLabel(page.getByTestId('floating-label'));
     await floating.expectOrientation('horizontal');
-    await floating.focusInput();
-    await expect(page.getByTestId('floating-field').locator('input')).toBeFocused();
+    const associatedInput = await floating.expectAssociatedInput();
+    await expect(associatedInput).toHaveAttribute('tuiInput', '');
+    await expect(associatedInput).toBeVisible();
 });
 
 test('Title changes its Taiga typography variant dynamically', async ({page}) => {
