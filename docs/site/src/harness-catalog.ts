@@ -22,21 +22,21 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "input-card",
     "path": "projects/addon-commerce/components/input-card",
     "id": "commerce/input-card",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Commerce",
     "name": "input-card-group",
     "path": "projects/addon-commerce/components/input-card-group",
     "id": "commerce/input-card-group",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Commerce",
     "name": "thumbnail-card",
     "path": "projects/addon-commerce/components/thumbnail-card",
     "id": "commerce/thumbnail-card",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Core",
@@ -932,25 +932,31 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "reorder",
     "path": "projects/addon-table/components/reorder",
     "id": "table/reorder",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Table",
     "name": "table",
     "path": "projects/addon-table/components/table",
     "id": "table/table",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Table",
     "name": "table-pagination",
     "path": "projects/addon-table/components/table-pagination",
     "id": "table/table-pagination",
-    "status": "todo"
+    "status": "done"
   }
 ] as const;
 
 export const IMPLEMENTATIONS: Readonly<Record<string, string>> = {
+    'commerce/input-card': 'tuiInputCard',
+    'commerce/input-card-group': 'tuiInputCardGroup',
+    'commerce/thumbnail-card': 'tuiThumbnailCard',
+    'table/reorder': 'tuiReorder',
+    'table/table': 'tuiTable',
+    'table/table-pagination': 'tuiTablePagination',
     'mobile/bottom-sheet': 'tuiBottomSheet',
     'mobile/keypad': 'tuiKeypad',
     'mobile/mobile-calendar': 'tuiMobileCalendar',

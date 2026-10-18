@@ -9,9 +9,9 @@ test('renders the real addon-doc shell and the upstream coverage inventory', asy
     await expect(page.locator('tui-doc-page')).toBeVisible();
     await expect(page.getByRole('heading', {name: 'Playwright harness matrix'})).toBeVisible();
     await expect(page.getByTestId('coverage-total')).toHaveText('133');
-    await expect(page.getByTestId('coverage-done')).toHaveText('108');
-    await expect(page.locator('tr[data-status="done"]')).toHaveCount(108);
-    await expect(page.locator('tr[data-status="todo"]')).toHaveCount(25);
+    await expect(page.getByTestId('coverage-done')).toHaveText('114');
+    await expect(page.locator('tr[data-status="done"]')).toHaveCount(114);
+    await expect(page.locator('tr[data-status="todo"]')).toHaveCount(19);
 });
 
 test('filters the matrix by component text and package', async ({page}) => {
@@ -32,7 +32,7 @@ test('filters done rows and links to the actual Playwright helper source', async
     await page.goto('/');
     await page.getByRole('button', {name: 'Done', exact: true}).click();
 
-    await expect(page.locator('tr[data-status="done"]')).toHaveCount(108);
+    await expect(page.locator('tr[data-status="done"]')).toHaveCount(114);
     await expect(page.locator('tr[data-status="todo"]')).toHaveCount(0);
     const link = page.locator('tr[data-harness="kit/select"]').getByRole('link', {name: /tuiSelect/});
     await expect(link).toHaveAttribute('href', /#\/harness\/kit\/select$/);
@@ -357,6 +357,14 @@ test('remaining Core, Kit, and Layout harnesses have real source references', as
 
 test('mobile components link to real Angular-backed harness source', async ({page}) => {
     for (const id of ["mobile/bottom-sheet","mobile/keypad","mobile/mobile-calendar","mobile/mobile-calendar-sheet","mobile/search-bar","mobile/swipe-actions","mobile/tab-bar"]) {
+        await page.goto('/#/harness/' + id);
+        await expect(page.locator('harness-detail h1')).toBeVisible();
+        await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
+    }
+});
+
+test('commerce and table harness pages include live source references', async ({page}) => {
+    for (const id of ["commerce/input-card","commerce/input-card-group","commerce/thumbnail-card","table/reorder","table/table","table/table-pagination"]) {
         await page.goto('/#/harness/' + id);
         await expect(page.locator('harness-detail h1')).toBeVisible();
         await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();

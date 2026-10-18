@@ -1,6 +1,12 @@
 import {HARNESS_CATALOG, IMPLEMENTATIONS} from './harness-catalog';
 
 const SOURCES: Readonly<Record<string, string>> = {
+    "commerce/input-card": "commerce-table-harnesses.ts",
+    "commerce/input-card-group": "commerce-table-harnesses.ts",
+    "commerce/thumbnail-card": "commerce-table-harnesses.ts",
+    "table/reorder": "commerce-table-harnesses.ts",
+    "table/table": "commerce-table-harnesses.ts",
+    "table/table-pagination": "commerce-table-harnesses.ts",
     "mobile/bottom-sheet": "remaining-mobile-harnesses.ts",
     "mobile/keypad": "remaining-mobile-harnesses.ts",
     "mobile/mobile-calendar": "remaining-mobile-harnesses.ts",
@@ -112,6 +118,12 @@ const SOURCES: Readonly<Record<string, string>> = {
 };
 
 const ACTIONS: Readonly<Record<string, string>> = {
+    "commerce/input-card": "await harness.fillCard('4111111111111111');",
+    "commerce/input-card-group": "await harness.fillNumber('4111111111111111');",
+    "commerce/thumbnail-card": "await harness.expectSize('l');",
+    "table/reorder": "await harness.toggleFirst();",
+    "table/table": "await harness.expectSize('s');",
+    "table/table-pagination": "await harness.nextPage();",
     "mobile/bottom-sheet": "await harness.expectStops(2, true);",
     "mobile/keypad": "await harness.press('1');",
     "mobile/mobile-calendar": "await harness.expectInitialized();",
