@@ -20,6 +20,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test:consumer": "node scripts/verify-consumer.mjs",
     "test": "playwright test",
     "verify": "npm run typecheck && npm run build && npm run build:fixture && npm test",
     "start:fixture": "ng serve fixture --host 127.0.0.1 --port 4201",
