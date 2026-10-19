@@ -2,18 +2,18 @@ import {expect, type Locator} from '@playwright/test';
 
 const DAY_CELL = '[automation-id="tui-calendar-sheet__cell"]:not(.t-cell_unavailable):not(.t-cell_disabled)';
 
-function ownedPortal(input: Locator): Promise<Locator> {
-    return (async () => {
+async function ownedPortal(input: Locator): Promise<Locator> {
+    if ((await input.getAttribute('aria-expanded')) !== 'true') {
         await input.click();
-        const id = await input.getAttribute('aria-controls');
-        if (!id) {
-            throw new Error('Date field is missing aria-controls; cannot scope the calendar portal.');
-        }
-        const page = input.page();
-        const portal = page.locator('tui-dropdown:visible').and(page.locator('[id=' + JSON.stringify(id) + ']'));
-        await expect(portal).toBeVisible();
-        return portal;
-    })();
+    }
+    const id = (await input.getAttribute('aria-controls'))?.trim();
+    if (!id || id.split(/\s+/).length !== 1) {
+        throw new Error('Date field requires a single aria-controls ID to scope its calendar portal.');
+    }
+    const page = input.page();
+    const portal = page.locator('tui-dropdown:visible').and(page.locator('[id=' + JSON.stringify(id) + ']'));
+    await expect(portal).toBeVisible();
+    return portal;
 }
 
 export class TuiCalendarRangeHarness {
