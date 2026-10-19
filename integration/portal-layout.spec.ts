@@ -19,6 +19,32 @@ test('Confirm rejects and accepts through its real Taiga UI dialog', async ({pag
     await expect(page.getByTestId('confirm-result')).toHaveText('yes');
 });
 
+test('Confirm uses its own dialog when another visible dialog has the same action', async ({page}) => {
+    await page.getByRole('button', {name: 'Request confirmation'}).click();
+    const confirm = tuiConfirm(page.locator('tui-dialog').filter({hasText: 'Are you sure?'}));
+
+    await page.evaluate(() => {
+        const unrelated = document.createElement('tui-dialog');
+        unrelated.setAttribute('data-testid', 'unrelated-confirm-dialog');
+        unrelated.style.cssText = 'position:fixed;right:0;bottom:0;z-index:0;display:block';
+        unrelated.innerHTML = '<div class="t-content">Unrelated confirmation</div><button type="button">Proceed</button>';
+        unrelated.querySelector('button')?.addEventListener('click', () => {
+            unrelated.setAttribute('data-selected', 'true');
+        });
+        document.body.append(unrelated);
+    });
+
+    const unrelated = page.getByTestId('unrelated-confirm-dialog');
+    await expect(unrelated).toBeVisible();
+
+    await confirm.expectContent('Are you sure?');
+    await confirm.decide(true);
+
+    await expect(page.getByTestId('confirm-result')).toHaveText('yes');
+    await expect(unrelated).toBeVisible();
+    await expect(unrelated).not.toHaveAttribute('data-selected', 'true');
+});
+
 test('Confirm resolves immediately when there are no unsaved changes', async ({page}) => {
     await page.getByRole('button', {name: 'Confirm pristine'}).click();
     await expect(page.getByTestId('confirm-result')).toHaveText('yes');

@@ -4,7 +4,7 @@ export class TuiConfirmHarness {
     public constructor(public readonly host: Locator) {}
 
     public get dialog(): Locator {
-        return this.host.page().locator('tui-dialog:visible');
+        return this.host;
     }
 
     public async decide(accept: boolean, label = accept ? 'Proceed' : 'Cancel'): Promise<void> {
