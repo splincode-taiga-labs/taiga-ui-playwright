@@ -49,6 +49,7 @@ for (const scenario of cases) {
                     if (id === 'portal-1') {
                         option.addEventListener('pointerover', () => {
                             swaps++;
+                            document.body.dataset.remounts = String(swaps);
                             popup.remove();
                             input.setAttribute('aria-controls', 'portal-2');
                             mount('portal-2');
@@ -68,9 +69,7 @@ for (const scenario of cases) {
                     mount('portal-1');
                 });
                 document.body.dataset.initialized = 'true';
-                Object.defineProperty(document.body.dataset, 'remounts', {
-                    get() { return String(swaps); },
-                });
+                document.body.dataset.remounts = String(swaps);
             </script>
         `);
 
