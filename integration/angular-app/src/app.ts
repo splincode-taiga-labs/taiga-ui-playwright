@@ -69,6 +69,7 @@ import {map, timer} from 'rxjs';
             <main>
                 <h1>Taiga UI Playwright integration fixture</h1>
 
+                @if (fixtureGroup === null) {
                 <section>
                     <label for="country">Country</label>
                     <tui-textfield data-testid="country-field" tuiChevron>
@@ -192,6 +193,7 @@ import {map, timer} from 'rxjs';
                 <app-notification-layout />
                 <app-portal-layout />
                 <app-layout-transitions />
+                }
                 @if (fixtureGroup === 'remaining-layout') { <app-remaining-layout /> }
                 @if (fixtureGroup === 'remaining-mobile') { <app-remaining-mobile /> }
                 @if (fixtureGroup === 'commerce-table') { <app-commerce-table /> }
