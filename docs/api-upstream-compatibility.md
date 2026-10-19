@@ -49,7 +49,7 @@ test('update country and city', async ({page}) => {
 | Playwright | Peer range **>=1.51 <2** is declared; CI verifies **1.51.0** and the lockfile-resolved version, but not the full range |
 | Node | Package declares **>=20**; consumer checks run on **20.19.0** and **24**. Node 20.0–20.18 and all other versions are not yet verified |
 | Browsers | Chromium full integration/docs; Chromium, Firefox and WebKit targeted smoke; Pixel 7 emulated mobile Chromium |
-| Known exclusion | WebKit + async ComboBox selection is skipped due to a detached option portal; [CI reproduction](https://github.com/splincode-taiga-labs/taiga-ui-playwright/actions/runs/39205562527) |
+| WebKit async ComboBox | Tested with real delayed options; dropdown reopens if its owned portal closes during loading. [Five no-retry repeats](https://github.com/splincode-taiga-labs/taiga-ui-playwright/actions/runs/39223806979) passed. This is targeted coverage, not a guarantee for all upstream versions |
 | Module format | NodeNext ESM root export (`exports["."].import`) and TypeScript declarations (`exports["."].types`) |
 | Package delivery | `private: true`, no npm release workflow; independent `npm pack` + fresh consumer install tested in CI |
 
