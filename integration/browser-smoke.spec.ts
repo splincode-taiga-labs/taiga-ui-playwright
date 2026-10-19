@@ -2,6 +2,9 @@ import {expect, test} from '@playwright/test';
 
 import {
     tuiComboBox,
+    tuiInputDate,
+    tuiInputDateRange,
+    tuiInputMonthRange,
     tuiDialog,
     tuiMobileCalendarDropdown,
     tuiSelect,
@@ -94,6 +97,47 @@ test('Dialog can close and reopen without using a stale portal', async ({page}) 
     await page.keyboard.press('Escape');
     await expect(dialog.host).toBeHidden();
     await expect(page.getByTestId('dialog-model')).toHaveText('closed');
+});
+
+test('InputDate selects from an already-open owned calendar across browsers', async ({page}) => {
+    await page.goto('/?fixture=smoke-calendars');
+    const date = tuiInputDate(page.getByTestId('date-input-field'));
+
+    await date.input.click();
+    await expect(date.input).toHaveAttribute('aria-expanded', 'true');
+    const id = await date.input.getAttribute('aria-controls');
+    expect(id).toBeTruthy();
+    await expect(page.locator('tui-dropdown:visible').and(page.locator('[id=' + JSON.stringify(id) + ']')))
+        .toBeVisible();
+
+    await date.selectDay(22);
+
+    await expect(page.getByTestId('date-model')).toHaveText('2026-0-22');
+    await expect(date.input).toHaveAttribute('aria-expanded', 'false');
+});
+
+test('InputDateRange completes a preopened two-day range across browsers', async ({page}) => {
+    await page.goto('/?fixture=smoke-calendars');
+    const range = tuiInputDateRange(page.getByTestId('date-range-field'));
+
+    await range.input.click();
+    await expect(range.input).toHaveAttribute('aria-expanded', 'true');
+    await range.selectRange(18, 20);
+
+    await expect(page.getByTestId('date-range-model')).toHaveText('18-20');
+    await expect(range.input).toHaveAttribute('aria-expanded', 'false');
+});
+
+test('InputMonthRange completes a preopened two-month range across browsers', async ({page}) => {
+    await page.goto('/?fixture=smoke-calendars');
+    const range = tuiInputMonthRange(page.getByTestId('month-range-field'));
+
+    await range.input.click();
+    await expect(range.input).toHaveAttribute('aria-expanded', 'true');
+    await range.selectRange(2, 4);
+
+    await expect(page.getByTestId('month-range-model')).toContainText('2026:2-4');
+    await expect(range.input).toHaveAttribute('aria-expanded', 'false');
 });
 
 test('Mobile calendar dropdown uses a real mobile portal', async ({page, isMobile}) => {
