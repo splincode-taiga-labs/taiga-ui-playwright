@@ -32,11 +32,7 @@ test('ComboBox filters and selects a loaded option', async ({page}) => {
     await expect(page.getByTestId('city-model')).toHaveText('Tallinn');
 });
 
-test('ComboBox waits for asynchronously loaded options', async ({page, browserName}) => {
-    test.skip(
-        browserName === 'webkit',
-        'Taiga UI v5.28 async ComboBox dropdown detaches during WebKit selection (issue #7)',
-    );
+test('ComboBox waits for asynchronously loaded options', async ({page}) => {
     await page.goto('/?fixture=smoke-options');
     const combo = tuiComboBox(page.getByTestId('async-city-field'));
 

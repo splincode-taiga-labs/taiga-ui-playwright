@@ -221,14 +221,15 @@ export class FixtureApp {
     protected readonly freeCity = new FormControl<string | null>(null);
     protected readonly asyncCity = new FormControl<string | null>(null);
     protected readonly asyncCities = signal<string[]>([]);
+    private asyncCitiesPending = false;
     protected readonly isCountryDisabled = (country: string): boolean => country === 'Austria';
 
     protected loadAsyncCities(): void {
-        if (this.asyncCities().length) {
+        if (this.asyncCitiesPending || this.asyncCities().length) {
             return;
         }
 
-        // Emulates an asynchronous API response; tests use Playwright assertions, not sleeps.
+        this.asyncCitiesPending = true;
         setTimeout(() => this.asyncCities.set(['Oslo', 'Odense']), 200);
     }
 
