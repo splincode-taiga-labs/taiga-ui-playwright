@@ -9,7 +9,7 @@ import {
 } from '../src/index.js';
 
 test('Select chooses from its own real Taiga UI portal', async ({page}) => {
-    await page.goto('/');
+    await page.goto('/?fixture=smoke-options');
     const primary = tuiSelect(page.getByTestId('country-field'));
     const secondary = tuiSelect(page.getByTestId('secondary-country-field'));
 
@@ -22,7 +22,7 @@ test('Select chooses from its own real Taiga UI portal', async ({page}) => {
 });
 
 test('ComboBox waits for asynchronously loaded options', async ({page}) => {
-    await page.goto('/');
+    await page.goto('/?fixture=smoke-options');
     const combo = tuiComboBox(page.getByTestId('async-city-field'));
 
     await combo.fill('Os');
@@ -33,7 +33,7 @@ test('ComboBox waits for asynchronously loaded options', async ({page}) => {
 });
 
 test('Dialog can close and reopen without using a stale portal', async ({page}) => {
-    await page.goto('/');
+    await page.goto('/?fixture=smoke-options');
     const trigger = page.getByRole('button', {name: 'Open dialog'});
     const dialog = tuiDialog(page.locator('tui-dialog'));
 
