@@ -51,10 +51,12 @@ export class TuiInputDateHarness {
     }
 
     public async calendar(): Promise<TuiCalendarHarness> {
-        await this.input.click();
-        const controls = await this.input.getAttribute('aria-controls');
-        if (!controls) {
-            throw new Error('InputDate has no aria-controls; cannot safely identify its calendar portal.');
+        if ((await this.input.getAttribute('aria-expanded')) !== 'true') {
+            await this.input.click();
+        }
+        const controls = (await this.input.getAttribute('aria-controls'))?.trim();
+        if (!controls || controls.split(/\s+/).length !== 1) {
+            throw new Error('InputDate requires a single aria-controls ID to identify its calendar portal.');
         }
         const portal = this.host.page().locator('tui-dropdown:visible').and(
             this.host.page().locator('[id=' + JSON.stringify(controls) + ']'),
