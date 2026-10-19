@@ -267,3 +267,10 @@ npm run test:smoke -- --project=webkit
 The smoke suite is excluded from `npm test` to avoid running it twice. WebKit runs the synchronous ComboBox selection scenario, but the async ComboBox scenario is explicitly skipped on WebKit: Taiga UI v5.28 intermittently detaches the option portal during a click ([reproduction in CI](https://github.com/splincode-taiga-labs/taiga-ui-playwright/actions/runs/39205562527)). Chromium and Firefox cover async option loading. This remains an open compatibility limitation in #7. GitHub Actions runs each browser project twice and collects screenshots on failure and traces on first retry. No hard-coded sleeps, forced clicks or global unscoped option selection are used.
 
 **Scope:** these smoke checks validate selected workflows, not every harness or all browser/OS combinations. Unsupported combinations or regressions must be reported explicitly before broadening the matrix.
+
+
+## Public API and package compatibility review
+
+The repo is **still private and unpublished**. See [API and upstream compatibility review](docs/api-upstream-compatibility.md) for tested version combinations, differences from upstream, example migrations, known limitations, and the no-go release decision.
+
+After `npm ci` and `npm run build`, run `npm run test:consumer` to pack the current code (without publishing it), install the archive into an independent temporary ESM project, check root runtime imports, and type-check a real TypeScript consumer using NodeNext resolution. CI runs this check before the Angular/browser suites.
