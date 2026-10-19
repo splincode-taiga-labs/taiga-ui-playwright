@@ -1,6 +1,5 @@
 import {expect, type Locator} from '@playwright/test';
 
-/** Verifies that an inline Taiga notification reflects its reactive appearance and size. */
 export class TuiNotificationHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -12,7 +11,6 @@ export class TuiNotificationHarness {
     }
 }
 
-/** Checks real content projection into the top and bottom badge slots. */
 export class TuiBadgedContentHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -36,7 +34,6 @@ export class TuiBadgedContentHarness {
     }
 }
 
-/** Exercises block status card state, adaptive size, and projected action. */
 export class TuiBlockStatusHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -60,7 +57,6 @@ export class TuiBlockStatusHarness {
     }
 }
 
-/** CardCollapsed changes layout through its real clip-path input. */
 export class TuiCardHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -75,10 +71,6 @@ export class TuiCardHarness {
     }
 }
 
-/**
- * Search field moves its own textfield into a popup, so use a globally scoped
- * Locator rather than assuming the textfield remains in its original section.
- */
 export class TuiInputSearchHarness {
     public constructor(public readonly host: Locator) {}
 

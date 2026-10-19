@@ -1,6 +1,5 @@
 import {expect, type Locator} from '@playwright/test';
 
-/** Confirm opens in a real tui-dialog portal and returns a boolean decision. */
 export class TuiConfirmHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -21,7 +20,6 @@ export class TuiConfirmHarness {
     }
 }
 
-/** Toast is rendered in a portal; its close control completes the toast Observable. */
 export class TuiToastHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -43,7 +41,6 @@ export class TuiToastHarness {
     }
 }
 
-/** Form size is applied to both its host and descendant component defaults. */
 export class TuiFormHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -67,7 +64,6 @@ export class TuiFormHarness {
     }
 }
 
-/** Validate the real item-group initialized/horizontal CSS contract and autoscroll. */
 export class TuiItemGroupHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -94,7 +90,6 @@ export class TuiItemGroupHarness {
     }
 }
 
-/** ShrinkWrap changes max-inline-size via its reactive directive input. */
 export class TuiShrinkWrapHarness {
     public constructor(public readonly host: Locator) {}
 

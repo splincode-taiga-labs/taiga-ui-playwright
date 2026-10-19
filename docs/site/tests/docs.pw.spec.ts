@@ -394,3 +394,15 @@ test('final platform and mobile portal pages map to real source', async ({page})
         await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
     }
 });
+
+test('full harness source shows the filename once and omits redundant class comments', async ({page}) => {
+    await page.goto('/#/harness/core/spin-button');
+    const details = page.locator('details.source-details');
+    await details.locator('summary').click();
+
+    await expect(details.locator('summary')).toContainText('semantic-harnesses.ts');
+    const source = details.locator('tui-doc-code');
+    await expect(source).toContainText('export class TuiSpinButtonHarness');
+    await expect(source.getByText('semantic-harnesses.ts', {exact: true})).toHaveCount(0);
+    await expect(source).not.toContainText('Real spin arrows reflect bounds');
+});

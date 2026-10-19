@@ -1,6 +1,5 @@
 import {expect, type Locator} from '@playwright/test';
 
-/** Textfield interaction backed by a real Taiga UI directive. */
 export class TuiTypedFieldHarness {
     public constructor(
         public readonly host: Locator,

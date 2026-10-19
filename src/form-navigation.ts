@@ -26,7 +26,6 @@ export class TuiCounterHarness {
     }
 }
 
-/** Selects the real native radio input inside Taiga UI RadioList. */
 export class TuiRadioListHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -42,7 +41,6 @@ export class TuiRadioListHarness {
     }
 }
 
-/** Inline control exposes a native input and a mirrored display value. */
 export class TuiInputInlineHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -61,7 +59,6 @@ export class TuiInputInlineHarness {
     }
 }
 
-/** Taiga Range hosts two native slider thumbs; keyboard changes the array model. */
 export class TuiRangeHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -86,7 +83,6 @@ export class TuiRangeHarness {
     }
 }
 
-/** Expansion tracks host lifecycle via Taiga UI's _expanded state. */
 export class TuiExpandHarness {
     public constructor(public readonly host: Locator) {}
 

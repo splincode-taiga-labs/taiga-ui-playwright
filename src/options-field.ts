@@ -33,7 +33,6 @@ function idSelector(id: string): string {
     return `[id=${JSON.stringify(id)}]`;
 }
 
-/** Base for interactive Taiga UI textfields that expose a data-list. */
 export abstract class TuiOptionsField {
     private linkedOverlayId: string | null = null;
 

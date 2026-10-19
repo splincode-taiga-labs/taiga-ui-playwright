@@ -1,6 +1,5 @@
 import {expect, type Locator} from '@playwright/test';
 
-/** Native list semantics plus reactive tuiList sizing. */
 export class TuiListHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -22,7 +21,6 @@ export class TuiListHarness {
     }
 }
 
-/** TuiSlides computes the direction sign from the current Angular input. */
 export class TuiSlidesHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -37,7 +35,6 @@ export class TuiSlidesHarness {
     }
 }
 
-/** Measures the actual resize of the Taiga auto-height elastic container. */
 export class TuiElasticContainerHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -55,7 +52,6 @@ export class TuiElasticContainerHarness {
     }
 }
 
-/** TuiFloatingContainer exposes its color input through a custom property. */
 export class TuiFloatingContainerHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -67,7 +63,6 @@ export class TuiFloatingContainerHarness {
     }
 }
 
-/** TuiClose emits for Escape or an outside mousedown/mouseup pair. */
 export class TuiCloseHarness {
     public constructor(public readonly host: Locator) {}
 

@@ -1,9 +1,5 @@
 import {expect, type Locator} from '@playwright/test';
 
-/**
- * Taiga UI native controls retain their native browser semantics.
- * Pass a Locator scoped to one real component, not a page-wide selector.
- */
 export class TuiButtonHarness {
     public constructor(public readonly host: Locator) {}
 

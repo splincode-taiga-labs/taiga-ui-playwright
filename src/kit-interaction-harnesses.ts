@@ -6,7 +6,6 @@ function validateMonthIndex(index: number): void {
     }
 }
 
-/** Native option clicks propagate through Taiga UI DataListWrapper's itemClick output. */
 export class TuiDataListWrapperHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -31,7 +30,6 @@ export class TuiDataListWrapperHarness {
     }
 }
 
-/** Checks actual CSS clamp behavior, including dynamic line-limit updates. */
 export class TuiLineClampHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -51,7 +49,6 @@ export class TuiLineClampHarness {
     }
 }
 
-/** Real native checkbox behavior within Taiga UI Block, with disabled propagation. */
 export class TuiBlockHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -83,7 +80,6 @@ export class TuiBlockHarness {
     }
 }
 
-/** Timeline interval drag handle is a native range input, accessible by keyboard. */
 export class TuiTimelineHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -104,7 +100,6 @@ export class TuiTimelineHarness {
     }
 }
 
-/** Month-range popup is owned by the input aria-controls, not any visible dropdown. */
 export class TuiInputMonthRangeHarness {
     public constructor(public readonly host: Locator) {}
 

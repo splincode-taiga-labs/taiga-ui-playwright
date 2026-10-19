@@ -1,6 +1,5 @@
 import {expect, type Locator} from '@playwright/test';
 
-/** Cell layout attributes are driven by reactive Taiga UI inputs. */
 export class TuiCellHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -11,7 +10,6 @@ export class TuiCellHarness {
     }
 }
 
-/** Label's orientation and native for/id association must remain usable. */
 export class TuiLabelHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -37,7 +35,6 @@ export class TuiLabelHarness {
     }
 }
 
-/** The data-size input chooses the actual typography variant. */
 export class TuiTitleHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -47,7 +44,6 @@ export class TuiTitleHarness {
     }
 }
 
-/** Inspect the real rendered set, including hidden and overflow item wrappers. */
 export class TuiItemsWithMoreHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -80,7 +76,6 @@ export class TuiItemsWithMoreHarness {
     }
 }
 
-/** Drag a real Taiga tile handle across another tile and assert Angular's order map externally. */
 export class TuiTilesHarness {
     public constructor(public readonly host: Locator) {}
 

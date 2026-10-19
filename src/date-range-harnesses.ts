@@ -16,7 +16,6 @@ function ownedPortal(input: Locator): Promise<Locator> {
     })();
 }
 
-/** CalendarRange renders two months, so select only days in the FIRST month. */
 export class TuiCalendarRangeHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -39,7 +38,6 @@ export class TuiCalendarRangeHarness {
     }
 }
 
-/** InputDateRange uses a portal with two calendars, not a simple day input. */
 export class TuiInputDateRangeHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -61,7 +59,6 @@ export class TuiInputDateRangeHarness {
     }
 }
 
-/** InputDateTime combines an in-month calendar with a preserved time model. */
 export class TuiInputDateTimeHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -82,7 +79,6 @@ export class TuiInputDateTimeHarness {
     }
 }
 
-/** Month input's popup is scoped through the input aria-controls relation. */
 export class TuiInputMonthHarness {
     public constructor(public readonly host: Locator) {}
 

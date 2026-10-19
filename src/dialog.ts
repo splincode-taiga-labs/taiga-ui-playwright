@@ -1,6 +1,5 @@
 import {expect, type Locator} from '@playwright/test';
 
-/** Scoped helper for a Taiga UI v5 tui-dialog portal. */
 export class TuiDialog {
     public constructor(public readonly host: Locator) {}
 

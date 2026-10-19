@@ -6,7 +6,6 @@ function exactLabel(text: string): RegExp {
     return new RegExp('^\\s*' + text.replace(/[.*+?^$()|[\]{}\\]/g, '\\$&') + '\\s*$');
 }
 
-/** Calendar dates are scoped to the calendar host, not a page-wide portal. */
 export class TuiCalendarHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -25,7 +24,6 @@ export class TuiCalendarHarness {
     }
 }
 
-/** CalendarMonth has month cells rather than native buttons. */
 export class TuiCalendarMonthHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -45,7 +43,6 @@ export class TuiCalendarMonthHarness {
     }
 }
 
-/** An InputDate's calendar is portaled outside its tui-textfield host. */
 export class TuiInputDateHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -75,7 +72,6 @@ export class TuiInputDateHarness {
     }
 }
 
-/** InputYear parses year values into a numeric Angular form model. */
 export class TuiInputYearHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -92,7 +88,6 @@ export class TuiInputYearHarness {
     }
 }
 
-/** InputTime masks time segments; use an explicit HH:MM value. */
 export class TuiInputTimeHarness {
     public constructor(public readonly host: Locator) {}
 
