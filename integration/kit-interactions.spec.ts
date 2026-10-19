@@ -59,3 +59,42 @@ test('InputMonthRange chooses a bounded range in its own calendar portal', async
     await expect(page.getByTestId('month-range-model')).toContainText('2026:2-4');
     await expect(months.input).not.toHaveValue('');
 });
+
+test('InputMonthRange reuses its already-open calendar without toggling it closed', async ({page}) => {
+    const months = tuiInputMonthRange(page.getByTestId('month-range-field'));
+    await months.input.click();
+    await expect(months.input).toHaveAttribute('aria-expanded', 'true');
+
+    const id = await months.input.getAttribute('aria-controls');
+    expect(id).toBeTruthy();
+    const owned = page.locator('tui-dropdown:visible').and(page.locator('[id=' + JSON.stringify(id) + ']'));
+    await expect(owned).toBeVisible();
+
+    await months.selectRange(2, 4);
+
+    await expect(page.getByTestId('month-range-model')).toContainText('2026:2-4');
+    await expect(owned).toBeHidden();
+});
+
+test('InputMonthRange selects only from its aria-controls portal with another dropdown visible', async ({page}) => {
+    const months = tuiInputMonthRange(page.getByTestId('month-range-field'));
+
+    await page.evaluate(() => {
+        const unrelated = document.createElement('tui-dropdown');
+        unrelated.setAttribute('data-testid', 'unrelated-month-dropdown');
+        unrelated.style.cssText = 'position:fixed;right:0;bottom:0;display:block;z-index:0';
+        unrelated.innerHTML = '<tui-calendar-month><div class="t-row"><button class="t-cell">March</button></div></tui-calendar-month>';
+        unrelated.querySelector('button')?.addEventListener('click', () => {
+            unrelated.setAttribute('data-selected', 'true');
+        });
+        document.body.appendChild(unrelated);
+    });
+
+    const unrelated = page.getByTestId('unrelated-month-dropdown');
+    await expect(unrelated).toBeVisible();
+    await months.selectRange(2, 4);
+
+    await expect(page.getByTestId('month-range-model')).toContainText('2026:2-4');
+    await expect(unrelated).toBeVisible();
+    await expect(unrelated).not.toHaveAttribute('data-selected', 'true');
+});
