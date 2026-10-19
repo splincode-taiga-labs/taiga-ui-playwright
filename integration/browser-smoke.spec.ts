@@ -251,7 +251,7 @@ test('Mobile InputDateRange selects across October and November in its own popup
     await field.selectRangeAcrossNextMonth(30, 2);
 
     await expect(page.getByTestId('mobile-date-range-full-model'))
-        .toHaveText(/2026-9-30:\\s*2026-10-2/);
+        .toHaveText(/2026-9-30:\s*2026-10-2/);
     await expect(field.input).toHaveAttribute('aria-expanded', 'false');
     await expect(unrelated).not.toHaveAttribute('data-clicked', 'true');
 });
@@ -269,7 +269,7 @@ test('Mobile InputDateRange crosses the December to January year boundary', asyn
     await field.selectRangeAcrossNextMonth(30, 2);
 
     await expect(page.getByTestId('mobile-date-range-full-model'))
-        .toHaveText(/2026-11-30:\\s*2027-0-2/);
+        .toHaveText(/2026-11-30:\s*2027-0-2/);
     await expect(field.input).toHaveAttribute('aria-expanded', 'false');
 });
 
