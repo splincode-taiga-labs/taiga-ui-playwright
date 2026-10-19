@@ -22,21 +22,21 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "input-card",
     "path": "projects/addon-commerce/components/input-card",
     "id": "commerce/input-card",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Commerce",
     "name": "input-card-group",
     "path": "projects/addon-commerce/components/input-card-group",
     "id": "commerce/input-card-group",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Commerce",
     "name": "thumbnail-card",
     "path": "projects/addon-commerce/components/thumbnail-card",
     "id": "commerce/thumbnail-card",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Core",
@@ -148,7 +148,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "root",
     "path": "projects/core/components/root",
     "id": "core/root",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Core",
@@ -281,7 +281,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "comment",
     "path": "projects/kit/components/comment",
     "id": "kit/comment",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -323,14 +323,14 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "drawer",
     "path": "projects/kit/components/drawer",
     "id": "kit/drawer",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
     "name": "files",
     "path": "projects/kit/components/files",
     "id": "kit/files",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -344,7 +344,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "fullscreen",
     "path": "projects/kit/components/fullscreen",
     "id": "kit/fullscreen",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -428,7 +428,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "input-phone-international",
     "path": "projects/kit/components/input-phone-international",
     "id": "kit/input-phone-international",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -491,7 +491,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "message",
     "path": "projects/kit/components/message",
     "id": "kit/message",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -512,7 +512,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "notification-middle",
     "path": "projects/kit/components/notification-middle",
     "id": "kit/notification-middle",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -547,7 +547,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "preview",
     "path": "projects/kit/components/preview",
     "id": "kit/preview",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -568,7 +568,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "push",
     "path": "projects/kit/components/push",
     "id": "kit/push",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -596,7 +596,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "routable-dialog",
     "path": "projects/kit/components/routable-dialog",
     "id": "kit/routable-dialog",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Kit",
@@ -680,21 +680,21 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "tree",
     "path": "projects/kit/components/tree",
     "id": "kit/tree",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
     "name": "app-bar",
     "path": "projects/layout/components/app-bar",
     "id": "layout/app-bar",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
     "name": "block-details",
     "path": "projects/layout/components/block-details",
     "id": "layout/block-details",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
@@ -715,7 +715,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "dynamic-header",
     "path": "projects/layout/components/dynamic-header",
     "id": "layout/dynamic-header",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
@@ -743,7 +743,7 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "header",
     "path": "projects/layout/components/header",
     "id": "layout/header",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
@@ -771,28 +771,28 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "navigation",
     "path": "projects/layout/components/navigation",
     "id": "layout/navigation",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
     "name": "pdf-viewer",
     "path": "projects/layout/components/pdf-viewer",
     "id": "layout/pdf-viewer",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
     "name": "progressive-blur",
     "path": "projects/layout/components/progressive-blur",
     "id": "layout/progressive-blur",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
     "name": "search",
     "path": "projects/layout/components/search",
     "id": "layout/search",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Layout",
@@ -806,84 +806,84 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "surface",
     "path": "projects/layout/components/surface",
     "id": "layout/surface",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Mobile",
     "name": "bottom-sheet",
     "path": "projects/addon-mobile/components/bottom-sheet",
     "id": "mobile/bottom-sheet",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Mobile",
     "name": "keypad",
     "path": "projects/addon-mobile/components/keypad",
     "id": "mobile/keypad",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Mobile",
     "name": "mobile-calendar",
     "path": "projects/addon-mobile/components/mobile-calendar",
     "id": "mobile/mobile-calendar",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Mobile",
     "name": "mobile-calendar-dropdown",
     "path": "projects/addon-mobile/components/mobile-calendar-dropdown",
     "id": "mobile/mobile-calendar-dropdown",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Mobile",
     "name": "mobile-calendar-sheet",
     "path": "projects/addon-mobile/components/mobile-calendar-sheet",
     "id": "mobile/mobile-calendar-sheet",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Mobile",
     "name": "pull-to-refresh",
     "path": "projects/addon-mobile/components/pull-to-refresh",
     "id": "mobile/pull-to-refresh",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Mobile",
     "name": "search-bar",
     "path": "projects/addon-mobile/components/search-bar",
     "id": "mobile/search-bar",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Mobile",
     "name": "sheet-dialog",
     "path": "projects/addon-mobile/components/sheet-dialog",
     "id": "mobile/sheet-dialog",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Mobile",
     "name": "swipe-actions",
     "path": "projects/addon-mobile/components/swipe-actions",
     "id": "mobile/swipe-actions",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Mobile",
     "name": "tab-bar",
     "path": "projects/addon-mobile/components/tab-bar",
     "id": "mobile/tab-bar",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Portals",
     "name": "alert",
     "path": "projects/core/portals/alert",
     "id": "portals/alert",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Portals",
@@ -904,53 +904,95 @@ export const HARNESS_CATALOG: readonly HarnessEntry[] = [
     "name": "dropdown",
     "path": "projects/core/portals/dropdown",
     "id": "portals/dropdown",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Portals",
     "name": "hint",
     "path": "projects/core/portals/hint",
     "id": "portals/hint",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Portals",
     "name": "modal",
     "path": "projects/core/portals/modal",
     "id": "portals/modal",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Portals",
     "name": "popup",
     "path": "projects/core/portals/popup",
     "id": "portals/popup",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Table",
     "name": "reorder",
     "path": "projects/addon-table/components/reorder",
     "id": "table/reorder",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Table",
     "name": "table",
     "path": "projects/addon-table/components/table",
     "id": "table/table",
-    "status": "todo"
+    "status": "done"
   },
   {
     "category": "Table",
     "name": "table-pagination",
     "path": "projects/addon-table/components/table-pagination",
     "id": "table/table-pagination",
-    "status": "todo"
+    "status": "done"
   }
 ] as const;
 
 export const IMPLEMENTATIONS: Readonly<Record<string, string>> = {
+    'kit/fullscreen': 'tuiFullscreen',
+    'kit/routable-dialog': 'tuiRoutableDialog',
+    'layout/dynamic-header': 'tuiDynamicHeader',
+    'layout/navigation': 'tuiNavigation',
+    'layout/pdf-viewer': 'tuiPdfViewer',
+    'mobile/mobile-calendar-dropdown': 'tuiMobileCalendarDropdown',
+    'mobile/pull-to-refresh': 'tuiPullToRefresh',
+    'mobile/sheet-dialog': 'tuiSheetDialog',
+    'portals/alert': 'tuiAlert',
+    'portals/dropdown': 'tuiDropdownPortal',
+    'portals/hint': 'tuiHintPortal',
+    'portals/modal': 'tuiModal',
+    'portals/popup': 'tuiPopup',
+    'kit/files': 'tuiFiles',
+    'kit/tree': 'tuiTree',
+    'kit/input-phone-international': 'tuiInternationalPhone',
+    'kit/notification-middle': 'tuiNotificationMiddle',
+    'kit/preview': 'tuiPreview',
+    'kit/push': 'tuiPush',
+    'commerce/input-card': 'tuiInputCard',
+    'commerce/input-card-group': 'tuiInputCardGroup',
+    'commerce/thumbnail-card': 'tuiThumbnailCard',
+    'table/reorder': 'tuiReorder',
+    'table/table': 'tuiTable',
+    'table/table-pagination': 'tuiTablePagination',
+    'mobile/bottom-sheet': 'tuiBottomSheet',
+    'mobile/keypad': 'tuiKeypad',
+    'mobile/mobile-calendar': 'tuiMobileCalendar',
+    'mobile/mobile-calendar-sheet': 'tuiMobileCalendarSheet',
+    'mobile/search-bar': 'tuiSearchBar',
+    'mobile/swipe-actions': 'tuiSwipeActions',
+    'mobile/tab-bar': 'tuiTabBar',
+    'core/root': 'tuiRoot',
+    'kit/comment': 'tuiComment',
+    'kit/message': 'tuiMessage',
+    'kit/drawer': 'tuiDrawer',
+    'layout/header': 'tuiHeader',
+    'layout/block-details': 'tuiBlockDetails',
+    'layout/surface': 'tuiSurface',
+    'layout/search': 'tuiSearch',
+    'layout/app-bar': 'tuiAppBar',
+    'layout/progressive-blur': 'tuiProgressiveBlur',
     'layout/list': 'tuiList',
     'layout/slides': 'tuiSlides',
     'layout/elastic-container': 'tuiElasticContainer',

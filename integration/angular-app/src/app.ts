@@ -1,4 +1,5 @@
 import {Component, inject, signal} from '@angular/core';
+import {DOCUMENT} from '@angular/common';
 import {HarnessControls} from './controls';
 import {SpecializedInputs} from './specialized-inputs';
 import {CalendarInputs} from './calendar-inputs';
@@ -15,6 +16,13 @@ import {LayoutInteractions} from './layout-interactions';
 import {NotificationLayout} from './notification-layout';
 import {PortalLayout} from './portal-layout';
 import {LayoutTransitions} from './layout-transitions';
+import {RemainingLayout} from './remaining-layout';
+import {RemainingMobile} from './remaining-mobile';
+import {CommerceTable} from './commerce-table';
+import {RemainingKit} from './remaining-kit';
+import {RemainingPortals} from './remaining-portals';
+import {RemainingPlatform} from './remaining-platform';
+import {RemainingMobileOverlays} from './remaining-mobile-overlays';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {TuiButton, TuiDialogService, TuiFilterByInputPipe, TuiRoot, TuiTextfield} from '@taiga-ui/core';
 import {TuiChevron, TuiComboBox, TuiDataListWrapper, TuiSelect} from '@taiga-ui/kit';
@@ -48,6 +56,13 @@ import {map, timer} from 'rxjs';
         NotificationLayout,
         PortalLayout,
         LayoutTransitions,
+        RemainingLayout,
+        RemainingMobile,
+        CommerceTable,
+        RemainingKit,
+        RemainingPortals,
+        RemainingPlatform,
+        RemainingMobileOverlays,
     ],
     template: `
         <tui-root>
@@ -177,11 +192,19 @@ import {map, timer} from 'rxjs';
                 <app-notification-layout />
                 <app-portal-layout />
                 <app-layout-transitions />
+                @if (fixtureGroup === 'remaining-layout') { <app-remaining-layout /> }
+                @if (fixtureGroup === 'remaining-mobile') { <app-remaining-mobile /> }
+                @if (fixtureGroup === 'commerce-table') { <app-commerce-table /> }
+                @if (fixtureGroup === 'remaining-kit') { <app-remaining-kit /> }
+                @if (fixtureGroup === 'remaining-portals') { <app-remaining-portals /> }
+                @if (fixtureGroup === 'remaining-platform') { <app-remaining-platform /> }
+                @if (fixtureGroup === 'remaining-mobile-overlays') { <app-remaining-mobile-overlays /> }
             </main>
         </tui-root>
     `,
 })
 export class FixtureApp {
+    protected readonly fixtureGroup = new URLSearchParams(inject(DOCUMENT).location.search).get('fixture');
     private readonly dialogs = inject(TuiDialogService);
 
     protected readonly countries = ['Austria', 'Estonia', 'United Arab Emirates', 'C++'];

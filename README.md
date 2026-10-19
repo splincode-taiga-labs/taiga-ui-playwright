@@ -243,3 +243,10 @@ directional content switching; `tuiElasticContainer` measures real growth
 when a child is added; `tuiFloatingContainer` asserts its reactive background;
 and `tuiClose` checks Escape and outside click dismissal.
 Each has real Angular v5.28 integration and a source-backed docs page.
+
+## Remaining v5 harnesses — consolidated PR
+
+The remaining components are being implemented in one consolidated branch.
+The first ten real Angular fixtures cover Core Root, Kit Comment/Message/Drawer,
+Layout Header/BlockDetails/Surface/Search/AppBar and ProgressiveBlur.
+Coverage is recorded per verified component; additional groups will join this PR.
