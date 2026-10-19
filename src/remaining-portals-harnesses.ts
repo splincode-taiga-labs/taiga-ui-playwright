@@ -13,7 +13,9 @@ export class TuiDropdownHarness {
     public constructor(public readonly host: Locator) {}
     public async expectMenuOption(label: string): Promise<void> {
         await expect(this.host).toBeVisible();
-        await expect(this.host.getByRole('option', {name: label})).toBeVisible();
+        const option = this.host.getByRole('option', {name: label, exact: true});
+        await expect(option).toHaveCount(1);
+        await expect(option).toBeVisible();
     }
 }
 
