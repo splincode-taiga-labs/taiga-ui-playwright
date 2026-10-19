@@ -24,9 +24,8 @@ export class TuiMobileDateCalendarHarness {
     public async portal(): Promise<Locator> {
         await expect(this.input).toHaveCount(1);
 
-        if ((await this.input.getAttribute('aria-expanded')) !== 'true') {
-            throw new Error('Mobile calendar is closed; open tuiMobileCalendar before selecting a date.');
-        }
+        await expect(this.input, 'Open tuiMobileCalendar before selecting a date')
+            .toHaveAttribute('aria-expanded', 'true');
 
         const id = (await this.input.getAttribute('aria-controls'))?.trim();
 
@@ -49,8 +48,9 @@ export class TuiMobileDateCalendarHarness {
 
         // The mobile calendar virtualizes months. Use the currently selected
         // month rather than an arbitrary similarly named day in another month.
-        const selectedMonth = portal.locator('tui-mobile-calendar-sheet')
-            .filter({has: portal.locator(ACTIVE_DAY)});
+        const selectedMonth = portal.locator(
+            'tui-mobile-calendar-sheet:has(' + ACTIVE_DAY + ')',
+        );
         await expect(selectedMonth).toHaveCount(1);
 
         const cell = selectedMonth.locator(DAY_CELL)
