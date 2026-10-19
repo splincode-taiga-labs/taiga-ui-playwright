@@ -1,5 +1,7 @@
 import {expect, type Locator} from '@playwright/test';
 
+import {clickOwnedCalendarCell, ownedCalendarPortal} from './calendar-portal.js';
+
 const DAY_SELECTOR = 'tui-calendar-sheet [automation-id="tui-calendar-sheet__cell"]:not(.t-cell_unavailable):not(.t-cell_disabled)';
 
 function exactLabel(text: string): RegExp {
@@ -51,25 +53,15 @@ export class TuiInputDateHarness {
     }
 
     public async calendar(): Promise<TuiCalendarHarness> {
-        if ((await this.input.getAttribute('aria-expanded')) !== 'true') {
-            await this.input.click();
-        }
-        const controls = (await this.input.getAttribute('aria-controls'))?.trim();
-        if (!controls || controls.split(/\s+/).length !== 1) {
-            throw new Error('InputDate requires a single aria-controls ID to identify its calendar portal.');
-        }
-        const portal = this.host.page().locator('tui-dropdown:visible').and(
-            this.host.page().locator('[id=' + JSON.stringify(controls) + ']'),
-        );
-        await expect(portal).toBeVisible();
+        const {portal} = await ownedCalendarPortal(this.input, 'InputDate');
+
         return new TuiCalendarHarness(portal.locator('tui-calendar'));
     }
 
     public async selectDay(day: number): Promise<void> {
-        const calendar = await this.calendar();
-        const cell = calendar.day(day);
-        await expect(cell).toHaveCount(1);
-        await cell.click();
+        await clickOwnedCalendarCell(this.input, 'InputDate', (portal) =>
+            new TuiCalendarHarness(portal.locator('tui-calendar')).day(day),
+        );
         await expect(this.input).not.toHaveValue('');
     }
 }
