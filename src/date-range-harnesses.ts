@@ -1,20 +1,8 @@
 import {expect, type Locator} from '@playwright/test';
 
-const DAY_CELL = '[automation-id="tui-calendar-sheet__cell"]:not(.t-cell_unavailable):not(.t-cell_disabled)';
+import {clickOwnedCalendarCell} from './calendar-portal.js';
 
-async function ownedPortal(input: Locator): Promise<Locator> {
-    if ((await input.getAttribute('aria-expanded')) !== 'true') {
-        await input.click();
-    }
-    const id = (await input.getAttribute('aria-controls'))?.trim();
-    if (!id || id.split(/\s+/).length !== 1) {
-        throw new Error('Date field requires a single aria-controls ID to scope its calendar portal.');
-    }
-    const page = input.page();
-    const portal = page.locator('tui-dropdown:visible').and(page.locator('[id=' + JSON.stringify(id) + ']'));
-    await expect(portal).toBeVisible();
-    return portal;
-}
+const DAY_CELL = '[automation-id="tui-calendar-sheet__cell"]:not(.t-cell_unavailable):not(.t-cell_disabled)';
 
 export class TuiCalendarRangeHarness {
     public constructor(public readonly host: Locator) {}
@@ -49,10 +37,12 @@ export class TuiInputDateRangeHarness {
         if (startDay > endDay) {
             throw new RangeError('Start day must be no later than end day within the same month.');
         }
-        const portal = await ownedPortal(this.input);
-        const range = new TuiCalendarRangeHarness(portal.locator('tui-calendar-range'));
-        await range.day(startDay).click();
-        await range.day(endDay).click();
+        await clickOwnedCalendarCell(this.input, 'InputDateRange', (portal) =>
+            new TuiCalendarRangeHarness(portal.locator('tui-calendar-range')).day(startDay),
+        );
+        await clickOwnedCalendarCell(this.input, 'InputDateRange', (portal) =>
+            new TuiCalendarRangeHarness(portal.locator('tui-calendar-range')).day(endDay),
+        );
         // InputDateRange closes its portal as soon as the range is complete.
         // Do not inspect detached calendar cells after the second click.
         await expect(this.input).not.toHaveValue('');
@@ -70,11 +60,10 @@ export class TuiInputDateTimeHarness {
         if (!Number.isInteger(day) || day < 1 || day > 31) {
             throw new RangeError('DateTime day must be an integer from 1 through 31.');
         }
-        const portal = await ownedPortal(this.input);
-        const cell = portal.locator('tui-calendar [automation-id="tui-calendar-sheet__cell"]:not(.t-cell_unavailable):not(.t-cell_disabled)')
-            .filter({hasText: new RegExp('^\\s*' + day + '\\s*$')});
-        await expect(cell).toHaveCount(1);
-        await cell.click();
+        await clickOwnedCalendarCell(this.input, 'InputDateTime', (portal) =>
+            portal.locator('tui-calendar [automation-id="tui-calendar-sheet__cell"]:not(.t-cell_unavailable):not(.t-cell_disabled)')
+                .filter({hasText: new RegExp('^\\s*' + day + '\\s*$')}),
+        );
         await expect(this.input).not.toHaveValue('');
     }
 }
@@ -90,11 +79,9 @@ export class TuiInputMonthHarness {
         if (!Number.isInteger(index) || index < 0 || index > 11) {
             throw new RangeError('InputMonth expects a month index from 0 through 11.');
         }
-        const portal = await ownedPortal(this.input);
-        const month = portal.locator('tui-calendar-month .t-row > .t-cell').nth(index);
-        await expect(month).toBeVisible();
-        await expect(month).not.toHaveClass(/t-cell_disabled/);
-        await month.click();
+        await clickOwnedCalendarCell(this.input, 'InputMonth', (portal) =>
+            portal.locator('tui-calendar-month .t-row > .t-cell').nth(index),
+        );
     }
 }
 
