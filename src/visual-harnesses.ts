@@ -1,6 +1,5 @@
 import {expect, type Locator} from '@playwright/test';
 
-/** Taiga UI Loader disables its projected fieldset while a spinner is active. */
 export class TuiLoaderHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -25,7 +24,6 @@ export class TuiLoaderHarness {
     }
 }
 
-/** Taiga UI Avatar exposes shape, size and image fallback on its host. */
 export class TuiAvatarHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -43,7 +41,6 @@ export class TuiAvatarHarness {
     }
 }
 
-/** Notification badges are presentational indicators, not buttons. */
 export class TuiBadgeNotificationHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -59,7 +56,6 @@ export class TuiBadgeNotificationHarness {
     }
 }
 
-/** TuiStatus exposes its status color via the host CSS custom property. */
 export class TuiStatusHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -68,7 +64,6 @@ export class TuiStatusHarness {
     }
 }
 
-/** Uses native links instead of coupling to breadcrumb overflow internals. */
 export class TuiBreadcrumbsHarness {
     public constructor(public readonly host: Locator) {}
 

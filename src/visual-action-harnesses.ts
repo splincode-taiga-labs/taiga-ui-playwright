@@ -1,6 +1,5 @@
 import {expect, type Locator} from '@playwright/test';
 
-/** The real Taiga icon resolver sets the CSS mask URL on its host. */
 export class TuiIconHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -26,7 +25,6 @@ export class TuiIconHarness {
     }
 }
 
-/** Filter toggles its actual FormControl array through native checkboxes. */
 export class TuiFilterHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -61,7 +59,6 @@ export class TuiFilterHarness {
     }
 }
 
-/** Taiga ActionBar combines persistent actions with collapsible menu content. */
 export class TuiActionBarHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -96,7 +93,6 @@ export class TuiActionBarHarness {
     }
 }
 
-/** A Pulse's playing state controls its animated CSS decoration. */
 export class TuiPulseHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -109,7 +105,6 @@ export class TuiPulseHarness {
     }
 }
 
-/** Compass exposes the angular-bound angle as a CSS custom property. */
 export class TuiCompassHarness {
     public constructor(public readonly host: Locator) {}
 

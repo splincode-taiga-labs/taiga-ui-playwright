@@ -42,7 +42,7 @@ import {HARNESS_REFERENCES, makeExample} from './harness-reference';
               <a tuiLink [href]="'https://github.com/splincode-taiga-labs/taiga-ui-playwright/blob/main/src/' + item.sourceFile" target="_blank" rel="noopener noreferrer">View on GitHub ↗</a>
             </div>
             <tui-scrollbar class="harness-source-scroll">
-              <tui-doc-code [filename]="item.sourceFile" [lineNumbers]="false" [code]="source()" />
+              <tui-doc-code [lineNumbers]="false" [code]="source()" />
             </tui-scrollbar>
           </div>
         } @else {

@@ -1,6 +1,5 @@
 import {expect, type Locator} from '@playwright/test';
 
-/** Real spin arrows reflect bounds through Taiga UI's hidden-arrow classes. */
 export class TuiSpinButtonHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -29,7 +28,6 @@ export class TuiSpinButtonHarness {
     }
 }
 
-/** Pincode is a numeric Maskito input with a live Angular control value. */
 export class TuiPincodeHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -50,7 +48,6 @@ export class TuiPincodeHarness {
     }
 }
 
-/** Loading buttons block clicks and expose the loader's live region. */
 export class TuiButtonLoadingHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -69,7 +66,6 @@ export class TuiButtonLoadingHarness {
     }
 }
 
-/** Pager is a presentational index indicator, not a clickable pagination control. */
 export class TuiPagerHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -100,7 +96,6 @@ export class TuiLinkHarness {
     }
 }
 
-/** Chip and badge expose Taiga appearance/size without custom DOM probing. */
 export class TuiChipHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -132,7 +127,6 @@ export class TuiPinHarness {
     }
 }
 
-/** HTMLMeterElement exposes a native numeric value, unlike purely visual progress bars. */
 export class TuiMeterHarness {
     public constructor(public readonly host: Locator) {}
 
