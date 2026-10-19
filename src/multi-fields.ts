@@ -11,7 +11,7 @@ async function ownedPortal(input: Locator): Promise<{readonly id: string; readon
     if ((await input.getAttribute('aria-expanded')) !== 'true') {
         await input.click();
     }
-    const id = await input.getAttribute('aria-controls');
+    const id = (await input.getAttribute('aria-controls'))?.trim();
     if (!id || id.trim().split(/\s+/).length !== 1) {
         throw new Error('Input has no unambiguous aria-controls relationship with its popup.');
     }
