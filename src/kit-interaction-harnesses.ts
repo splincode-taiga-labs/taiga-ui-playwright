@@ -114,10 +114,13 @@ export class TuiInputMonthRangeHarness {
             throw new RangeError('Start month must not exceed end month.');
         }
 
-        await this.input.click();
-        const id = await this.input.getAttribute('aria-controls');
-        if (!id) {
-            throw new Error('InputMonthRange lacks aria-controls; cannot scope its calendar portal.');
+        if ((await this.input.getAttribute('aria-expanded')) !== 'true') {
+            await this.input.click();
+        }
+
+        const id = (await this.input.getAttribute('aria-controls'))?.trim();
+        if (!id || id.split(/\s+/).length !== 1) {
+            throw new Error('InputMonthRange requires a single aria-controls ID to scope its calendar portal.');
         }
         const page = this.host.page();
         const overlay = page.locator('tui-dropdown:visible')
