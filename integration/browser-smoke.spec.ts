@@ -21,7 +21,22 @@ test('Select chooses from its own real Taiga UI portal', async ({page}) => {
     await expect(page.getByTestId('country-model')).toHaveText('Estonia');
 });
 
-test('ComboBox waits for asynchronously loaded options', async ({page}) => {
+test('ComboBox filters and selects a loaded option', async ({page}) => {
+    await page.goto('/?fixture=smoke-options');
+    const combo = tuiComboBox(page.getByTestId('city-field'));
+
+    await combo.fill('Tall');
+    await combo.selectOption('Tallinn');
+
+    await expect(combo.input).toHaveValue('Tallinn');
+    await expect(page.getByTestId('city-model')).toHaveText('Tallinn');
+});
+
+test('ComboBox waits for asynchronously loaded options', async ({page, browserName}) => {
+    test.skip(
+        browserName === 'webkit',
+        'Taiga UI v5.28 async ComboBox dropdown detaches during WebKit selection (issue #7)',
+    );
     await page.goto('/?fixture=smoke-options');
     const combo = tuiComboBox(page.getByTestId('async-city-field'));
 
