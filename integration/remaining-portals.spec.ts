@@ -18,6 +18,34 @@ test('Dropdown portal opens a list with a selectable option', async ({page}) => 
     await expect(page.getByTestId('portal-dropdown-value')).toHaveText('Portal option');
 });
 
+test('Dropdown only accepts exact option names in the real Taiga UI portal', async ({page}) => {
+    await page.getByRole('button', {name: 'Open dropdown portal'}).click();
+    const dropdown = tuiDropdownPortal(page.locator('tui-dropdown:visible'));
+
+    await expect(dropdown.expectMenuOption('Portal')).rejects.toThrow();
+    await dropdown.expectMenuOption('Portal option');
+    await expect(page.getByTestId('portal-dropdown-value')).toHaveText('');
+});
+
+test('Dropdown rejects ambiguous options with identical accessible names', async ({page}) => {
+    await page.getByRole('button', {name: 'Open dropdown portal'}).click();
+    const host = page.locator('tui-dropdown:visible');
+    const dropdown = tuiDropdownPortal(host);
+
+    await host.locator('tui-data-list').evaluate((list) => {
+        const original = list.querySelector('[tuiOption]');
+        if (!(original instanceof HTMLElement)) {
+            throw new Error('Real Taiga UI option is missing');
+        }
+
+        const duplicate = original.cloneNode(true);
+        list.appendChild(duplicate);
+    });
+    await expect(host.getByRole('option', {name: 'Portal option', exact: true})).toHaveCount(2);
+    await expect(dropdown.expectMenuOption('Portal option')).rejects.toThrow();
+    await expect(page.getByTestId('portal-dropdown-value')).toHaveText('');
+});
+
 test('Hint uses a real tooltip portal under a manual visibility driver', async ({page}) => {
     await page.getByRole('button', {name: 'Toggle portal hint'}).click();
     await tuiHintPortal(page.locator('tui-hint')).expectHint('Manual hint text');
