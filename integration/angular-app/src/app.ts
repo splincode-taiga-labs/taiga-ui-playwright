@@ -69,7 +69,7 @@ import {map, timer} from 'rxjs';
             <main>
                 <h1>Taiga UI Playwright integration fixture</h1>
 
-                @if (fixtureGroup === null) {
+                @if (fixtureGroup === null || fixtureGroup === 'smoke-options') {
                 <section>
                     <label for="country">Country</label>
                     <tui-textfield data-testid="country-field" tuiChevron>
@@ -177,6 +177,8 @@ import {map, timer} from 'rxjs';
                     <button tuiButton type="button" (click)="openGuardedDialog()">Open guarded dialog</button>
                     <output data-testid="dialog-model">{{ dialogState() }}</output>
                 </section>
+                }
+                @if (fixtureGroup === null) {
                 <app-harness-controls />
                 <app-specialized-inputs />
                 <app-calendar-inputs />
