@@ -79,7 +79,7 @@ export class TuiInputSearchHarness {
     }
 
     public get popup(): Locator {
-        return this.host.page().locator('tui-input-search-content');
+        return this.host.locator('xpath=ancestor::tui-input-search-content');
     }
 
     public async open(): Promise<void> {
