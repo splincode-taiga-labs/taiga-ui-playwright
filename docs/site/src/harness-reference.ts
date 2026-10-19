@@ -307,8 +307,7 @@ export function makeExample(entry: HarnessReference): string {
         '',
         "test('" + entry.name + "', async ({page}) => {",
         "    await page.goto('/');",
-        "    // Replace the locator with the matching component in your app.",
-        '    const harness = ' + entry.api + '(' + fixture + ');',
+            '    const harness = ' + entry.api + '(' + fixture + ');',
         ...action.split('\n').map((line) => '    ' + line),
         '});',
     ].join('\n');

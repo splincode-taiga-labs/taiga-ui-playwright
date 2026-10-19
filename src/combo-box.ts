@@ -7,7 +7,6 @@ export class TuiComboBox extends TuiOptionsField {
         super(host, 'input[tuiComboBox]', options);
     }
 
-    /** Enter filter text using native Playwright input events. */
     public async fill(value: string): Promise<void> {
         await this.input.fill(value);
     }
