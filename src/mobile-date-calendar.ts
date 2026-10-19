@@ -23,7 +23,6 @@ export class TuiMobileDateCalendarHarness {
 
     public async portal(): Promise<Locator> {
         await expect(this.input).toHaveCount(1);
-
         await expect(this.input, 'Open tuiMobileCalendar before selecting a date')
             .toHaveAttribute('aria-expanded', 'true');
 
@@ -46,8 +45,7 @@ export class TuiMobileDateCalendarHarness {
     private async chooseDay(portal: Locator, day: number): Promise<void> {
         validDay(day);
 
-        // The mobile calendar virtualizes months. Use the currently selected
-        // month rather than an arbitrary similarly named day in another month.
+        // A virtualized calendar may display the same day in multiple months.
         const selectedMonth = portal.locator(
             'tui-mobile-calendar-sheet:has(' + ACTIVE_DAY + ')',
         );
@@ -62,7 +60,7 @@ export class TuiMobileDateCalendarHarness {
         await cell.click();
     }
 
-    /** Select the adjacent rendered virtual-scroll month, anchored to the unique selected month. */
+    /** Select a date in the adjacent virtual-scroll month of the unique current selection. */
     private async chooseAdjacentMonthDay(
         portal: Locator,
         day: number,
@@ -82,7 +80,15 @@ export class TuiMobileDateCalendarHarness {
         await adjacent.scrollIntoViewIfNeeded();
 
         const cell = adjacent.locator('tui-mobile-calendar-sheet ' + DAY_CELL)
-            .filter({hasText: new RegExp('^\\s*' + day + '\\s*
+            .filter({hasText: new RegExp('^\\s*' + day + '\\s*$')});
+
+        await expect(cell).toHaveCount(1);
+        await expect(cell).toBeVisible();
+        await expect(cell).not.toHaveClass(/t-cell_disabled/);
+        await cell.click();
+    }
+
+    private async confirm(portal: Locator): Promise<void> {
         const confirm = portal.locator('[automation-id="tui-mobile-calendar__confirm"]');
         await expect(confirm).toBeEnabled();
         await confirm.click();
@@ -115,7 +121,7 @@ export class TuiMobileDateCalendarHarness {
         await expect(this.input).not.toHaveValue('');
     }
 
-    /** Choose a forward range that crosses into the next calendar month. */
+    /** Choose a forward range that crosses into the following calendar month. */
     public async selectRangeAcrossNextMonth(startDay: number, endDay: number): Promise<void> {
         if (await this.input.getAttribute('tuiInputDateRange') === null) {
             throw new Error('Use selectAdjacentMonthDay() for a mobile single-date field.');
@@ -127,54 +133,6 @@ export class TuiMobileDateCalendarHarness {
         const portal = await this.portal();
         await this.chooseDay(portal, startDay);
         await this.chooseAdjacentMonthDay(portal, endDay, 'next');
-        await this.confirm(portal);
-        await expect(this.input).not.toHaveValue('');
-    }
-
-    public async selectRange(start: number, end: number): Promise<void> {
-        if (await this.input.getAttribute('tuiInputDateRange') === null) {
-            throw new Error('Use selectDay() for a mobile InputDate field.');
-        }
-
-        validDay(start);
-        validDay(end);
-
-        if (start > end) {
-            throw new RangeError('Start day must not exceed end day in the same month.');
-        }
-
-        const portal = await this.portal();
-        await this.chooseDay(portal, start);
-        await this.chooseDay(portal, end);
-        await this.confirm(portal);
-        await expect(this.input).not.toHaveValue('');
-    }
-}
-
-export const tuiMobileDateCalendar = (host: Locator): TuiMobileDateCalendarHarness =>
-    new TuiMobileDateCalendarHarness(host);
-)});
-
-        await expect(cell).toHaveCount(1);
-        await expect(cell).toBeVisible();
-        await expect(cell).not.toHaveClass(/t-cell_disabled/);
-        await cell.click();
-    }
-
-    private async confirm(portal: Locator): Promise<void> {
-        const confirm = portal.locator('[automation-id="tui-mobile-calendar__confirm"]');
-        await expect(confirm).toBeEnabled();
-        await confirm.click();
-        await expect(portal).toBeHidden();
-    }
-
-    public async selectDay(day: number): Promise<void> {
-        if (await this.input.getAttribute('tuiInputDateRange') !== null) {
-            throw new Error('Use selectRange() for a mobile InputDateRange field.');
-        }
-
-        const portal = await this.portal();
-        await this.chooseDay(portal, day);
         await this.confirm(portal);
         await expect(this.input).not.toHaveValue('');
     }
