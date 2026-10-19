@@ -26,6 +26,7 @@
     "build:fixture": "ng build fixture",
     "test:dom": "playwright test --project=dom",
     "test:integration": "playwright test --project=integration",
+    "test:smoke": "playwright test --config playwright.smoke.config.ts",
     "start:docs": "ng serve docs --host 127.0.0.1 --port 4202",
     "build:docs": "ng build docs --configuration production",
     "build:docs:pages": "ng build docs --configuration production --base-href=/taiga-ui-playwright/",

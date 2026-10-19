@@ -112,7 +112,7 @@ Coverage is marked Done only after verified browser integration.
 
 ## Quality gates and limitations
 
-CI runs strict TypeScript typechecking, ESM declaration build, Angular fixture build, synthetic DOM tests and Chromium E2E tests against a **real Angular/Taiga UI application**. Mobile overlay and broader browser/Angular version checks are follow-ups before a release.
+CI runs strict TypeScript typechecking, ESM declaration build, Angular fixture build, synthetic DOM tests and Chromium E2E tests against a **real Angular/Taiga UI application**. An additional smoke job covers Chromium, Firefox, WebKit and mobile-emulated Chromium using the same Angular fixture. Broader Angular and browser-version compatibility still needs evaluation before a release.
 
 ## Harness coverage documentation
 
@@ -250,3 +250,20 @@ The remaining components are being implemented in one consolidated branch.
 The first ten real Angular fixtures cover Core Root, Kit Comment/Message/Drawer,
 Layout Header/BlockDetails/Surface/Search/AppBar and ProgressiveBlur.
 Coverage is recorded per verified component; additional groups will join this PR.
+
+## Cross-browser and mobile smoke tests
+
+Run a small, repeatable set of **real Angular + Taiga UI 5.28** interactions separately from the full Chromium suite:
+
+```bash
+npx playwright install chromium firefox webkit
+npm run test:smoke
+npm run test:smoke -- --repeat-each=3
+npm run test:smoke -- --project=webkit
+```
+
+`playwright.smoke.config.ts` configures desktop Chromium, Firefox, WebKit and an emulated Pixel 7 (Chromium/touch/mobile viewport). It verifies independent Select portals, delayed ComboBox options and dialog reopen/close lifecycle. Mobile-only scenarios additionally exercise real mobile calendar and sheet dialog overlays. They are skipped in desktop projects, not silently treated as browser coverage.
+
+The smoke suite is excluded from `npm test` to avoid running it twice. GitHub Actions runs each browser project twice and collects screenshots on failure and traces on first retry. No hard-coded sleeps, forced clicks or global unscoped option selection are used.
+
+**Scope:** these smoke checks validate selected workflows, not every harness or all browser/OS combinations. Unsupported combinations or regressions must be reported explicitly before broadening the matrix.
