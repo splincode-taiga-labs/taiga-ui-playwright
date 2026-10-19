@@ -274,3 +274,5 @@ The smoke suite is excluded from `npm test` to avoid running it twice. WebKit ru
 The repo is **still private and unpublished**. See [API and upstream compatibility review](docs/api-upstream-compatibility.md) for tested version combinations, differences from upstream, example migrations, known limitations, and the no-go release decision.
 
 After `npm ci` and `npm run build`, run `npm run test:consumer` to pack the current code (without publishing it), install the archive into an independent temporary ESM project, check root runtime imports, and type-check a real TypeScript consumer using NodeNext resolution. CI runs this check before the Angular/browser suites.
+
+The consumer contract runs on Node 24 with the lockfile Playwright version and on Node 20.19.0 with the declared minimum **Playwright 1.51.0** in CI. To check the minimum locally: `CONSUMER_PLAYWRIGHT_VERSION=1.51.0 npm run test:consumer`. This tests ESM imports and declarations, not the full Angular/browser integration suite.

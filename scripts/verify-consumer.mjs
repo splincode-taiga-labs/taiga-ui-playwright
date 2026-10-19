@@ -52,9 +52,11 @@ try {
 
     const consumer = join(work, 'consumer');
     await mkdir(consumer);
+    const playwrightVersion = process.env.CONSUMER_PLAYWRIGHT_VERSION?.trim() ||
+        await installedVersion('@playwright/test');
     const dependencies = {
         [packageJson.name]: 'file:' + join(work, artifact.filename),
-        '@playwright/test': await installedVersion('@playwright/test'),
+        '@playwright/test': playwrightVersion,
         typescript: await installedVersion('typescript'),
     };
     await writeFile(join(consumer, 'package.json'), JSON.stringify({
@@ -91,6 +93,11 @@ try {
     ].join('\n'));
 
     await run(npm, ['install', '--ignore-scripts', '--no-audit', '--no-fund'], consumer);
+    const installedPlaywright = JSON.parse(await readFile(
+        join(consumer, 'node_modules', '@playwright', 'test', 'package.json'), 'utf8',
+    ));
+    assert.equal(installedPlaywright.version, playwrightVersion,
+        'Consumer resolved an unexpected Playwright version');
     await run(process.execPath, [
         join(consumer, 'node_modules', 'typescript', 'bin', 'tsc'),
         '--project', join(consumer, 'tsconfig.json'),
@@ -104,7 +111,8 @@ try {
     ], consumer);
 
     process.stdout.write('Packed ' + artifact.filename + ', validated ' + paths.length +
-        ' archive files, ESM imports, and NodeNext TypeScript consumer.\n');
+        ' archive files, ESM imports, and NodeNext TypeScript consumer on Node ' +
+        process.version + ' with Playwright ' + playwrightVersion + '.\n');
 } finally {
     await rm(work, {recursive: true, force: true});
 }

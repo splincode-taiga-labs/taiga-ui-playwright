@@ -60,3 +60,20 @@ jobs:
           name: cross-browser-smoke-results
           path: test-results/
           retention-days: 7
+
+  consumer-minimum:
+    name: Consumer baseline (Node 20 / Playwright 1.51)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.19.0
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build
+      - name: Validate minimum declared Playwright peer in a fresh ESM consumer
+        run: npm run test:consumer
+        env:
+          CONSUMER_PLAYWRIGHT_VERSION: 1.51.0
