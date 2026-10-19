@@ -50,6 +50,7 @@ test('Async ComboBox reopens after Escape and ignores an unrelated matching port
     await combo.fill('Os');
     await combo.input.press('Escape');
     await expect(combo.overlay).toBeHidden();
+    await expect(combo.input).toHaveAttribute('aria-expanded', 'false');
 
     await combo.open();
     const overlay = await combo.getOverlay();
