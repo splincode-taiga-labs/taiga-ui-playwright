@@ -4,8 +4,8 @@ import {WA_IS_MOBILE} from '@ng-web-apis/platform';
 import {
     TuiMobileCalendarDropdown, TuiPullToRefresh, TuiSheetDialogService,
 } from '@taiga-ui/addon-mobile';
-import {TuiDay} from '@taiga-ui/cdk';
-import {TuiInputDate} from '@taiga-ui/kit';
+import {TuiDay, TuiDayRange} from '@taiga-ui/cdk';
+import {TuiInputDate, TuiInputDateRange, TuiCalendarRange} from '@taiga-ui/kit';
 import {TuiCalendar, TuiScrollRef, TuiTextfield} from '@taiga-ui/core';
 
 @Component({
@@ -13,6 +13,7 @@ import {TuiCalendar, TuiScrollRef, TuiTextfield} from '@taiga-ui/core';
     imports: [
         ReactiveFormsModule, TuiTextfield, TuiInputDate, TuiCalendar,
         TuiMobileCalendarDropdown, TuiPullToRefresh, TuiScrollRef,
+        TuiInputDateRange, TuiCalendarRange,
     ],
     providers: [{provide: WA_IS_MOBILE, useValue: true}],
     template: `
@@ -28,6 +29,22 @@ import {TuiCalendar, TuiScrollRef, TuiTextfield} from '@taiga-ui/core';
                 Open mobile calendar dropdown
             </button>
             <output data-testid="mobile-date">{{date.value}}</output>
+            <output data-testid="mobile-date-model">
+                {{ date.value?.year }}-{{ date.value?.month }}-{{ date.value?.day }}
+            </output>
+
+            <tui-textfield data-testid="mobile-date-range-field" tuiMobileCalendar
+                [(open)]="calendarRangeOpen">
+                <input tuiInputDateRange aria-label="Mobile vacation range"
+                    [formControl]="dateRange" />
+                <tui-calendar-range *tuiDropdown />
+            </tui-textfield>
+            <button type="button" (click)="calendarRangeOpen.set(true)">
+                Open mobile date range calendar
+            </button>
+            <output data-testid="mobile-date-range-model">
+                {{ dateRange.value?.from?.day }}-{{ dateRange.value?.to?.day }}
+            </output>
 
             <div tuiScrollRef style="height:130px;overflow:auto">
                 <tui-pull-to-refresh data-testid="pull-widget">
@@ -44,6 +61,10 @@ export class RemainingMobileOverlays {
     private readonly sheets = inject(TuiSheetDialogService);
     protected readonly date = new FormControl<TuiDay | null>(new TuiDay(2026, 9, 18));
     protected readonly calendarDropdownOpen = signal(false);
+    protected readonly dateRange = new FormControl<TuiDayRange | null>(
+        new TuiDayRange(new TuiDay(2026, 9, 18), new TuiDay(2026, 9, 19)),
+    );
+    protected readonly calendarRangeOpen = signal(false);
     protected readonly sheetStatus = signal('closed');
 
     protected openSheet(): void {
