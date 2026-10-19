@@ -196,6 +196,11 @@ import {map, timer} from 'rxjs';
                 <app-portal-layout />
                 <app-layout-transitions />
                 }
+                @if (fixtureGroup === 'smoke-calendars') {
+                <app-calendar-inputs />
+                <app-range-inputs />
+                <app-kit-interactions />
+                }
                 @if (fixtureGroup === 'remaining-layout') { <app-remaining-layout /> }
                 @if (fixtureGroup === 'remaining-mobile') { <app-remaining-mobile /> }
                 @if (fixtureGroup === 'commerce-table') { <app-commerce-table /> }
