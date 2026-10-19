@@ -99,7 +99,8 @@ test('Dialog can close and reopen without using a stale portal', async ({page}) 
     await expect(page.getByTestId('dialog-model')).toHaveText('closed');
 });
 
-test('InputDate selects from an already-open owned calendar across browsers', async ({page}) => {
+test('InputDate selects from an already-open owned calendar on desktop engines', async ({page, isMobile}) => {
+    test.skip(isMobile, 'Mobile InputDate needs tuiMobileCalendar or tuiDropdownSheet, not the desktop popup.');
     await page.goto('/?fixture=smoke-calendars');
     const date = tuiInputDate(page.getByTestId('date-input-field'));
 
@@ -116,7 +117,8 @@ test('InputDate selects from an already-open owned calendar across browsers', as
     await expect(date.input).toHaveAttribute('aria-expanded', 'false');
 });
 
-test('InputDateRange completes a preopened two-day range across browsers', async ({page}) => {
+test('InputDateRange completes a preopened two-day range on desktop engines', async ({page, isMobile}) => {
+    test.skip(isMobile, 'Mobile InputDateRange needs tuiMobileCalendar or tuiDropdownSheet, not the desktop popup.');
     await page.goto('/?fixture=smoke-calendars');
     const range = tuiInputDateRange(page.getByTestId('date-range-field'));
 
@@ -126,6 +128,22 @@ test('InputDateRange completes a preopened two-day range across browsers', async
 
     await expect(page.getByTestId('date-range-model')).toHaveText('18-20');
     await expect(range.input).toHaveAttribute('aria-expanded', 'false');
+});
+
+test('Mobile date inputs without a mobile adapter do not falsely expose a desktop popup', async ({page, isMobile}) => {
+    test.skip(!isMobile, 'On desktop, InputDate and InputDateRange use regular calendar dropdowns.');
+
+    await page.goto('/?fixture=smoke-calendars');
+    const date = tuiInputDate(page.getByTestId('date-input-field'));
+    const range = tuiInputDateRange(page.getByTestId('date-range-field'));
+
+    await date.input.click();
+    await expect(date.input).toHaveAttribute('aria-expanded', 'false');
+    await expect(page.getByTestId('date-model')).toHaveText('2026-0-15');
+
+    await range.input.click();
+    await expect(range.input).toHaveAttribute('aria-expanded', 'false');
+    await expect(page.getByTestId('date-range-model')).toHaveText('15-16');
 });
 
 test('InputMonthRange completes a preopened two-month range across browsers', async ({page}) => {
