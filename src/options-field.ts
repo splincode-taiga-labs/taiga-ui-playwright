@@ -162,28 +162,54 @@ export abstract class TuiOptionsField {
     public async selectOption(label: string): Promise<void> {
         await this.open();
 
-        await expect.poll(async () => {
-            const overlay = await this.getOverlay();
+        for (let attempt = 0; attempt < 3; attempt++) {
+            await expect.poll(async () => {
+                const overlay = await this.getOverlay();
 
-            if (!(await overlay.isVisible())) {
-                await this.open();
+                if (!(await overlay.isVisible())) {
+                    await this.open();
+                }
+
+                return this.option(label).count();
+            }, {message: `Expected a visible option named "${label}" in the current dropdown`})
+                .toBeGreaterThan(0);
+
+            await this.getOverlay();
+            const option = this.option(label);
+            const matches = await option.count();
+
+            if (matches > 1) {
+                throw new Error(`Multiple visible Taiga UI options match "${label}" (${matches}). Scope the option or use its Locator directly.`);
             }
 
-            return this.option(label).count();
-        }, {message: `Expected a visible option named "${label}" in the current dropdown`})
-            .toBeGreaterThan(0);
+            if (!matches) {
+                continue;
+            }
 
-        await this.getOverlay();
-        const option = this.option(label);
-        const matches = await option.count();
+            try {
+                await expect(option, `Taiga UI option "${label}" must be enabled`).toBeEnabled({timeout: 2500});
+                await option.click({timeout: 2500});
+                return;
+            } catch (error) {
+                await this.getOverlay();
+                const current = this.option(label);
+                const currentCount = await current.count();
 
-        if (matches > 1) {
-            throw new Error(`Multiple visible Taiga UI options match "${label}" (${matches}). Scope the option or use its Locator directly.`);
+                if (currentCount > 1) {
+                    throw new Error(`Multiple visible Taiga UI options match "${label}" (${currentCount}). Scope the option or use its Locator directly.`);
+                }
+
+                if (currentCount === 1 && !(await current.isEnabled())) {
+                    throw error;
+                }
+
+                if (attempt === 2) {
+                    throw error;
+                }
+            }
         }
 
-        await expect(option, `Expected a single visible option named "${label}"`).toHaveCount(1);
-        await expect(option, `Taiga UI option "${label}" must be enabled`).toBeEnabled();
-        await option.click();
+        throw new Error(`Expected a single visible option named "${label}"`);
     }
 
     public async getOptionLabels(): Promise<string[]> {
