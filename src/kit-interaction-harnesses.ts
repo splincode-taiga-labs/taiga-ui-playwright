@@ -1,5 +1,7 @@
 import {expect, type Locator} from '@playwright/test';
 
+import {clickOwnedCalendarCell} from './calendar-portal.js';
+
 function validateMonthIndex(index: number): void {
     if (!Number.isInteger(index) || index < 0 || index > 11) {
         throw new RangeError('Month index must be an integer between 0 (January) and 11 (December).');
@@ -114,31 +116,14 @@ export class TuiInputMonthRangeHarness {
             throw new RangeError('Start month must not exceed end month.');
         }
 
-        if ((await this.input.getAttribute('aria-expanded')) !== 'true') {
-            await this.input.click();
-        }
-
-        const id = (await this.input.getAttribute('aria-controls'))?.trim();
-        if (!id || id.split(/\s+/).length !== 1) {
-            throw new Error('InputMonthRange requires a single aria-controls ID to scope its calendar portal.');
-        }
-        const page = this.host.page();
-        const overlay = page.locator('tui-dropdown:visible')
-            .and(page.locator('[id=' + JSON.stringify(id) + ']'));
-        await expect(overlay).toBeVisible();
-        const cells = overlay.locator('tui-calendar-month .t-row > .t-cell');
-
-        const first = cells.nth(start);
-        await expect(first).toBeVisible();
-        await expect(first).not.toHaveClass(/t-cell_disabled/);
-        await first.click();
-
-        const last = cells.nth(end);
-        await expect(last).toBeVisible();
-        await expect(last).not.toHaveClass(/t-cell_disabled/);
-        await last.click();
+        await clickOwnedCalendarCell(this.input, 'InputMonthRange', (portal) =>
+            portal.locator('tui-calendar-month .t-row > .t-cell').nth(start),
+        );
+        await clickOwnedCalendarCell(this.input, 'InputMonthRange', (portal) =>
+            portal.locator('tui-calendar-month .t-row > .t-cell').nth(end),
+        );
         await expect(this.input).not.toHaveValue('');
-        await expect(overlay).toBeHidden();
+        await expect(this.input).toHaveAttribute('aria-expanded', 'false');
     }
 }
 
