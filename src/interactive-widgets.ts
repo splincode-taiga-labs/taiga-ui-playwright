@@ -1,6 +1,5 @@
 import {expect, type Locator} from '@playwright/test';
 
-/** Native range keyboard interaction, scoped to the Taiga UI rating host. */
 export class TuiRatingHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -32,7 +31,6 @@ export class TuiRatingHarness {
     }
 }
 
-/** Taiga UI Like is a decorated native checkbox; use native checkbox semantics. */
 export class TuiLikeHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -46,7 +44,6 @@ export class TuiLikeHarness {
     }
 }
 
-/** Clipboard permission and reading remain under Playwright's browser context. */
 export class TuiCopyHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -64,7 +61,6 @@ export class TuiCopyHarness {
     }
 }
 
-/** InputChip commits entered values into an Angular array control. */
 export class TuiInputChipHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -94,7 +90,6 @@ export class TuiInputChipHarness {
     }
 }
 
-/** Native progress value and max are observable DOM properties. */
 export class TuiProgressHarness {
     public constructor(public readonly host: Locator) {}
 

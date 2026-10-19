@@ -1,6 +1,5 @@
 import {expect, type Locator} from '@playwright/test';
 
-/** A user-visible validation message, including its dismissed/empty state. */
 export class TuiErrorHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -19,7 +18,6 @@ export class TuiErrorHarness {
     }
 }
 
-/** Navigate a Taiga UI option list with actual keyboard focus or click. */
 export class TuiDataListHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -47,7 +45,6 @@ export class TuiDataListHarness {
     }
 }
 
-/** Textfield's clear action updates its Angular accessor, not only the displayed input. */
 export class TuiTextfieldHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -77,7 +74,6 @@ export class TuiTextfieldHarness {
     }
 }
 
-/** The host is the scroll container for Taiga UI's non-delegated scrollbar. */
 export class TuiScrollbarHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -99,7 +95,6 @@ export class TuiScrollbarHarness {
     }
 }
 
-/** Carousel changes active slide through its scroll-snap interaction. */
 export class TuiCarouselHarness {
     public constructor(public readonly host: Locator) {}
 

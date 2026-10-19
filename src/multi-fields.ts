@@ -21,7 +21,6 @@ async function ownedPortal(input: Locator): Promise<Locator> {
     return portal;
 }
 
-/** Real MultiSelect: InputChip, MultiSelectGroup and ARIA-linked portal. */
 export class TuiMultiSelectHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -47,7 +46,6 @@ export class TuiMultiSelectHarness {
     }
 }
 
-/** Multi-date selection follows aria-controls and acts on uniquely matched current-month cells. */
 export class TuiInputDateMultiHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -70,7 +68,6 @@ export class TuiInputDateMultiHarness {
     }
 }
 
-/** Numeric form inputs inside tui-input-range, with a synchronized two-thumb slider. */
 export class TuiInputRangeHarness {
     public constructor(public readonly host: Locator) {}
 
