@@ -41,3 +41,19 @@ test('InputTime accepts 24-hour HH:MM and updates TuiTime', async ({page}) => {
     await expect(page.getByTestId('time-model')).toHaveText('12:34');
     await expect(field.fillTime('25:99')).rejects.toThrow(/HH:MM/);
 });
+
+test('InputDate selects from an already-expanded owned calendar', async ({page}) => {
+    const field = tuiInputDate(page.getByTestId('date-input-field'));
+    await field.input.click();
+    await expect(field.input).toHaveAttribute('aria-expanded', 'true');
+
+    const id = await field.input.getAttribute('aria-controls');
+    expect(id).toBeTruthy();
+    const owned = page.locator('tui-dropdown:visible').and(page.locator('[id=' + JSON.stringify(id) + ']'));
+    await expect(owned).toBeVisible();
+
+    await field.selectDay(22);
+
+    await expect(page.getByTestId('date-model')).toHaveText('2026-0-22');
+    await expect(owned).toBeHidden();
+});
