@@ -163,7 +163,12 @@ export abstract class TuiOptionsField {
         await this.open();
 
         await expect.poll(async () => {
-            await this.getOverlay();
+            const overlay = await this.getOverlay();
+
+            if (!(await overlay.isVisible())) {
+                await this.open();
+            }
+
             return this.option(label).count();
         }, {message: `Expected a visible option named "${label}" in the current dropdown`})
             .toBeGreaterThan(0);
