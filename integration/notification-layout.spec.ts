@@ -60,3 +60,35 @@ test('InputSearch moves its textfield into a popup and closes with Escape', asyn
     await expect(page.getByTestId('input-search-selection')).toHaveText('Alpha');
     await expect(field.popup).toHaveCount(0);
 });
+
+test('InputSearch scopes results and Escape to the popup containing its host', async ({page}) => {
+    const field = tuiInputSearch(page.getByTestId('input-search-widget'));
+    await field.fill('Al');
+
+    await page.evaluate(() => {
+        const unrelated = document.createElement('tui-input-search-content');
+        unrelated.setAttribute('data-testid', 'unrelated-search-popup');
+        unrelated.style.cssText = 'display:block;position:fixed;right:0;bottom:0;z-index:0';
+        unrelated.innerHTML = '<button type="button">Alpha result</button>';
+        unrelated.querySelector('button')?.addEventListener('click', () => {
+            unrelated.setAttribute('data-selected', 'true');
+        });
+        document.body.appendChild(unrelated);
+    });
+
+    const unrelated = page.getByTestId('unrelated-search-popup');
+    await expect(unrelated).toBeVisible();
+    await expect(field.popup).toContainText('Alpha result');
+    await field.chooseResult('Alpha result');
+    await expect(page.getByTestId('input-search-selection')).toHaveText('Alpha');
+    await expect(field.popup).toHaveCount(0);
+    await expect(unrelated).toBeVisible();
+    await expect(unrelated).not.toHaveAttribute('data-selected', 'true');
+
+    await field.open();
+    await expect(field.popup).toBeVisible();
+    await field.close();
+    await expect(field.popup).toHaveCount(0);
+    await expect(page.getByTestId('input-search-open')).toHaveText('false');
+    await expect(unrelated).toBeVisible();
+});
