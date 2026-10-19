@@ -45,6 +45,11 @@ import {TuiCalendar, TuiScrollRef, TuiTextfield} from '@taiga-ui/core';
             <output data-testid="mobile-date-range-model">
                 {{ dateRange.value?.from?.day }}-{{ dateRange.value?.to?.day }}
             </output>
+            <output data-testid="mobile-date-range-full-model">
+                {{ dateRange.value?.from?.year }}-{{ dateRange.value?.from?.month }}-{{ dateRange.value?.from?.day }}:
+                {{ dateRange.value?.to?.year }}-{{ dateRange.value?.to?.month }}-{{ dateRange.value?.to?.day }}
+            </output>
+            <button type="button" (click)="useDecemberRange()">Set December date range</button>
 
             <div tuiScrollRef style="height:130px;overflow:auto">
                 <tui-pull-to-refresh data-testid="pull-widget">
@@ -66,6 +71,12 @@ export class RemainingMobileOverlays {
     );
     protected readonly calendarRangeOpen = signal(false);
     protected readonly sheetStatus = signal('closed');
+
+    protected useDecemberRange(): void {
+        this.dateRange.setValue(
+            new TuiDayRange(new TuiDay(2026, 11, 30), new TuiDay(2026, 11, 31)),
+        );
+    }
 
     protected openSheet(): void {
         this.sheetStatus.set('open');
