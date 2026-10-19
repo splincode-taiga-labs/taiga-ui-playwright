@@ -46,14 +46,14 @@ test('update country and city', async ({page}) => {
 | --- | --- |
 | Taiga UI | Integration tested with **5.28.0** only |
 | Angular | Fixture tested with **20.3.0** only |
-| Playwright | Peer range **>=1.51 <2** is declared; CI exercises its lockfile-resolved version, not the entire range |
-| Node | Package declares **>=20**, CI tests **Node 24**; older supported versions are not yet verified |
+| Playwright | Peer range **>=1.51 <2** is declared; CI verifies **1.51.0** and the lockfile-resolved version, but not the full range |
+| Node | Package declares **>=20**; consumer checks run on **20.19.0** and **24**. Node 20.0–20.18 and all other versions are not yet verified |
 | Browsers | Chromium full integration/docs; Chromium, Firefox and WebKit targeted smoke; Pixel 7 emulated mobile Chromium |
 | Known exclusion | WebKit + async ComboBox selection is skipped due to a detached option portal; [CI reproduction](https://github.com/splincode-taiga-labs/taiga-ui-playwright/actions/runs/39205562527) |
 | Module format | NodeNext ESM root export (`exports["."].import`) and TypeScript declarations (`exports["."].types`) |
 | Package delivery | `private: true`, no npm release workflow; independent `npm pack` + fresh consumer install tested in CI |
 
-The package includes internal Taiga UI markup selectors, so some helpers can break across even minor UI changes. Prefer a narrow version support claim and monitor upstream changes before committing to maintenance SLAs.
+The Node 20.19.0 consumer check does not imply that Angular or the complete browser test suite support Node 20; those suites still run on Node 24. The package includes internal Taiga UI markup selectors, so some helpers can break across even minor UI changes. Prefer a narrow version support claim and monitor upstream changes before committing to maintenance SLAs.
 
 ## Packaging verification
 
@@ -63,7 +63,7 @@ After `npm ci && npm run build`:
 npm run test:consumer
 ```
 
-This creates an npm tarball in a temporary directory, checks its files, installs it **outside this repository** alongside Playwright and TypeScript versions resolved by the current lockfile, type-checks a NodeNext ESM consumer, and verifies runtime import of public factories. No publish, tag, credential or registry write is performed.
+This creates an npm tarball in a temporary directory, checks its files, installs it **outside this repository**, type-checks a NodeNext ESM consumer, and verifies runtime imports. By default it uses the lockfile's Playwright version. Set `CONSUMER_PLAYWRIGHT_VERSION=1.51.0` to test the declared minimum; CI verifies this on Node 20.19.0 as well as the lockfile version on Node 24. No publish, tag, credential or registry write is performed.
 
 ## Decision: NO-GO for a public npm release (for now)
 
