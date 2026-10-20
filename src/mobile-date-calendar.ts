@@ -23,7 +23,6 @@ export class TuiMobileDateCalendarHarness {
 
     public async portal(): Promise<Locator> {
         await expect(this.input).toHaveCount(1);
-
         await expect(this.input, 'Open tuiMobileCalendar before selecting a date')
             .toHaveAttribute('aria-expanded', 'true');
 
@@ -46,14 +45,41 @@ export class TuiMobileDateCalendarHarness {
     private async chooseDay(portal: Locator, day: number): Promise<void> {
         validDay(day);
 
-        // The mobile calendar virtualizes months. Use the currently selected
-        // month rather than an arbitrary similarly named day in another month.
+        // A virtualized calendar may display the same day in multiple months.
         const selectedMonth = portal.locator(
             'tui-mobile-calendar-sheet:has(' + ACTIVE_DAY + ')',
         );
         await expect(selectedMonth).toHaveCount(1);
 
         const cell = selectedMonth.locator(DAY_CELL)
+            .filter({hasText: new RegExp('^\\s*' + day + '\\s*$')});
+
+        await expect(cell).toHaveCount(1);
+        await expect(cell).toBeVisible();
+        await expect(cell).not.toHaveClass(/t-cell_disabled/);
+        await cell.click();
+    }
+
+    /** Select a date in the adjacent virtual-scroll month of the unique current selection. */
+    private async chooseAdjacentMonthDay(
+        portal: Locator,
+        day: number,
+        direction: 'next' | 'previous',
+    ): Promise<void> {
+        validDay(day);
+
+        const selected = portal.locator('.t-month-wrapper:has(' + ACTIVE_DAY + ')');
+        await expect(selected, 'Expected one selected month in the owned mobile calendar')
+            .toHaveCount(1);
+
+        const sibling = direction === 'next' ? 'following-sibling' : 'preceding-sibling';
+        const adjacent = selected.locator('xpath=' + sibling + '::section[1]');
+
+        await expect(adjacent, 'Expected an adjacent rendered mobile calendar month')
+            .toHaveCount(1);
+        await adjacent.scrollIntoViewIfNeeded();
+
+        const cell = adjacent.locator('tui-mobile-calendar-sheet ' + DAY_CELL)
             .filter({hasText: new RegExp('^\\s*' + day + '\\s*$')});
 
         await expect(cell).toHaveCount(1);
@@ -76,6 +102,37 @@ export class TuiMobileDateCalendarHarness {
 
         const portal = await this.portal();
         await this.chooseDay(portal, day);
+        await this.confirm(portal);
+        await expect(this.input).not.toHaveValue('');
+    }
+
+    /** Select a day in the preceding or following month of the current selection. */
+    public async selectAdjacentMonthDay(
+        day: number,
+        direction: 'next' | 'previous' = 'next',
+    ): Promise<void> {
+        if (await this.input.getAttribute('tuiInputDateRange') !== null) {
+            throw new Error('Use selectRangeAcrossNextMonth() for a mobile date-range field.');
+        }
+
+        const portal = await this.portal();
+        await this.chooseAdjacentMonthDay(portal, day, direction);
+        await this.confirm(portal);
+        await expect(this.input).not.toHaveValue('');
+    }
+
+    /** Choose a forward range that crosses into the following calendar month. */
+    public async selectRangeAcrossNextMonth(startDay: number, endDay: number): Promise<void> {
+        if (await this.input.getAttribute('tuiInputDateRange') === null) {
+            throw new Error('Use selectAdjacentMonthDay() for a mobile single-date field.');
+        }
+
+        validDay(startDay);
+        validDay(endDay);
+
+        const portal = await this.portal();
+        await this.chooseDay(portal, startDay);
+        await this.chooseAdjacentMonthDay(portal, endDay, 'next');
         await this.confirm(portal);
         await expect(this.input).not.toHaveValue('');
     }

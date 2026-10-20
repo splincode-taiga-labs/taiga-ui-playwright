@@ -213,6 +213,66 @@ test('Mobile InputDateRange confirms a real range and ignores an unrelated mobil
     await expect(decoy).not.toHaveAttribute('data-clicked', 'true');
 });
 
+test('Mobile InputDate selects a day in the next virtualized month', async ({page, isMobile}) => {
+    test.skip(!isMobile, 'This is the real mobile-only Taiga UI calendar.');
+
+    await page.goto('/?fixture=remaining-mobile-overlays');
+    const field = tuiMobileDateCalendar(page.getByTestId('calendar-dropdown-field'));
+    await page.getByRole('button', {name: 'Open mobile calendar dropdown'}).click();
+    await expect(await field.portal()).toBeVisible();
+
+    await field.selectAdjacentMonthDay(2, 'next');
+
+    await expect(page.getByTestId('mobile-date-model')).toHaveText('2026-10-2');
+    await expect(field.input).toHaveAttribute('aria-expanded', 'false');
+});
+
+test('Mobile InputDateRange selects across October and November in its own popup', async ({page, isMobile}) => {
+    test.skip(!isMobile, 'This is the real mobile-only Taiga UI calendar.');
+
+    await page.goto('/?fixture=remaining-mobile-overlays');
+    const field = tuiMobileDateCalendar(page.getByTestId('mobile-date-range-field'));
+    await page.getByRole('button', {name: 'Open mobile date range calendar'}).click();
+    await expect(await field.portal()).toBeVisible();
+
+    await page.evaluate(() => {
+        const unrelated = document.createElement('tui-mobile-calendar-dropdown');
+        unrelated.dataset.testid = 'other-month-calendar';
+        unrelated.style.cssText = 'position:fixed;right:0;bottom:0;z-index:0;pointer-events:none;display:block';
+        unrelated.innerHTML = '<tui-mobile-calendar><div automation-id="tui-primitive-calendar-mobile__cell">2</div></tui-mobile-calendar>';
+        unrelated.addEventListener('click', () => {
+            unrelated.dataset.clicked = 'true';
+        });
+        document.body.append(unrelated);
+    });
+    const unrelated = page.getByTestId('other-month-calendar');
+    await expect(unrelated).toBeVisible();
+
+    await field.selectRangeAcrossNextMonth(30, 2);
+
+    await expect(page.getByTestId('mobile-date-range-full-model'))
+        .toHaveText(/2026-9-30:\s*2026-10-2/);
+    await expect(field.input).toHaveAttribute('aria-expanded', 'false');
+    await expect(unrelated).not.toHaveAttribute('data-clicked', 'true');
+});
+
+test('Mobile InputDateRange crosses the December to January year boundary', async ({page, isMobile}) => {
+    test.skip(!isMobile, 'This is the real mobile-only Taiga UI calendar.');
+
+    await page.goto('/?fixture=remaining-mobile-overlays');
+    await page.getByRole('button', {name: 'Set December date range'}).click();
+
+    const field = tuiMobileDateCalendar(page.getByTestId('mobile-date-range-field'));
+    await page.getByRole('button', {name: 'Open mobile date range calendar'}).click();
+    await expect(await field.portal()).toBeVisible();
+
+    await field.selectRangeAcrossNextMonth(30, 2);
+
+    await expect(page.getByTestId('mobile-date-range-full-model'))
+        .toHaveText(/2026-11-30:\s*2027-0-2/);
+    await expect(field.input).toHaveAttribute('aria-expanded', 'false');
+});
+
 test('Mobile sheet dialog uses the Taiga UI service and overlay', async ({page, isMobile}) => {
     test.skip(!isMobile, 'Mobile sheet portal is tested with touch/mobile emulation');
 
