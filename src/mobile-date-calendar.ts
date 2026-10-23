@@ -1,6 +1,6 @@
 import {expect, type Locator} from '@playwright/test';
 
-const ACTIVE_DAY = '.t-cell[data-range="active"], .t-cell[data-range="start"], .t-cell[data-range="end"]';
+const ACTIVE_DAY = '.t-cell[data-range="active"], .t-cell[data-range="start"]';
 const DAY_CELL = '[automation-id="tui-primitive-calendar-mobile__cell"]';
 
 function validDay(day: number): void {
@@ -37,22 +37,50 @@ export class TuiMobileDateCalendarHarness {
             .and(page.locator('[id=' + JSON.stringify(id) + ']'));
 
         await expect(portal).toHaveCount(1);
-        await expect(portal.locator('tui-mobile-calendar')).toBeVisible();
+        const calendar = portal.locator('tui-mobile-calendar');
+        await expect(calendar).toBeVisible();
+        await expect(calendar).toHaveClass(/(?:^|\s)_initialized(?:\s|$)/);
 
         return portal;
+    }
+
+    private async scrollEarlier(portal: Locator, month: Locator): Promise<void> {
+        const viewport = portal.locator('tui-mobile-calendar .t-months');
+        await expect(viewport).toHaveCount(1);
+        const height = await month.evaluate((element) => element.getBoundingClientRect().height);
+
+        // Keep the anchor in the rendered range while revealing its predecessor.
+        await viewport.evaluate((element, monthHeight) => {
+            element.scrollBy({
+                top: -Math.min(element.clientHeight, monthHeight) / 2,
+                behavior: 'instant',
+            });
+        }, height);
+    }
+
+    private async selectedMonth(portal: Locator): Promise<Locator> {
+        const selected = portal.locator('.t-month-wrapper:has(' + ACTIVE_DAY + ')');
+        const end = portal.locator('.t-month-wrapper:has(.t-cell[data-range="end"])');
+
+        // Taiga UI opens a saved range at its end, which can leave the start
+        // month outside the virtualized DOM even for an adjacent-month range.
+        if (await selected.count() === 0 && await end.count() === 1) {
+            await this.scrollEarlier(portal, end);
+        }
+
+        await expect(selected, 'Expected one selected date or range start month in the owned mobile calendar')
+            .toHaveCount(1);
+
+        return selected;
     }
 
     private async chooseDay(portal: Locator, day: number): Promise<void> {
         validDay(day);
 
-        // A virtualized calendar may display the same day in multiple months.
-        const selectedMonth = portal.locator(
-            'tui-mobile-calendar-sheet:has(' + ACTIVE_DAY + ')',
-        );
-        await expect(selectedMonth).toHaveCount(1);
-
-        const cell = selectedMonth.locator(DAY_CELL)
-            .filter({hasText: new RegExp('^\\s*' + day + '\\s*$')});
+        const selectedMonth = await this.selectedMonth(portal);
+        const cell = selectedMonth.locator(
+            'tui-mobile-calendar-sheet ' + DAY_CELL,
+        ).filter({hasText: new RegExp('^\\s*' + day + '\\s*$')});
 
         await expect(cell).toHaveCount(1);
         await expect(cell).toBeVisible();
@@ -68,12 +96,14 @@ export class TuiMobileDateCalendarHarness {
     ): Promise<void> {
         validDay(day);
 
-        const selected = portal.locator('.t-month-wrapper:has(' + ACTIVE_DAY + ')');
-        await expect(selected, 'Expected one selected month in the owned mobile calendar')
-            .toHaveCount(1);
+        const selected = await this.selectedMonth(portal);
 
         const sibling = direction === 'next' ? 'following-sibling' : 'preceding-sibling';
         const adjacent = selected.locator('xpath=' + sibling + '::section[1]');
+
+        if (direction === 'previous' && await adjacent.count() === 0) {
+            await this.scrollEarlier(portal, selected);
+        }
 
         await expect(adjacent, 'Expected an adjacent rendered mobile calendar month')
             .toHaveCount(1);
@@ -137,6 +167,7 @@ export class TuiMobileDateCalendarHarness {
         await expect(this.input).not.toHaveValue('');
     }
 
+    /** Replace a range within its start month, including a saved cross-month range. */
     public async selectRange(start: number, end: number): Promise<void> {
         if (await this.input.getAttribute('tuiInputDateRange') === null) {
             throw new Error('Use selectDay() for a mobile InputDate field.');
