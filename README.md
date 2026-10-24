@@ -25,7 +25,7 @@ npm run verify
 Tests assert reactive form model output for Select and ComboBox and the dialog lifecycle after interacting through the exported helper functions. Node.js 24 is used by CI.
 
 
-No npm publishing workflow exists. The package is intentionally marked private until integration tests with an actual Angular/Taiga UI app are ready.
+No npm publishing workflow exists. The package remains intentionally private despite passing real Angular integration and independent packed-consumer checks: the [release decision is NO-GO](docs/api-upstream-compatibility.md). Do not publish without a new explicit decision.
 
 ## Example
 
@@ -129,14 +129,16 @@ GitHub Pages requires repository Settings → Pages → Source: **GitHub Actions
 
 ## Roadmap
 
-- [x] Locator-first Select, ComboBox, Dialog PoC
-- [x] DOM-based behavior tests and CI
-- [x] Validate against a real Angular 20 app using Taiga UI 5.28.0
-- [ ] Check mobile overlays, repeated fields and virtualized options
-- [ ] Compare to upstream Element Objects and propose improvements
-- [ ] Decide whether a separate npm package is warranted at all
+Follow [issue #10](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/10) for the sequential roadmap and [issue #9](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/9) for the conditional release gate.
 
-Related: [Taiga UI issue #476](https://github.com/taiga-family/taiga-ui/issues/476) and [PR #14584](https://github.com/taiga-family/taiga-ui/pull/14584).
+- [x] Locator-first PoC, reproducible CI and real Angular 20 / Taiga UI 5.28.0 integration.
+- [x] Portal ownership, Select/ComboBox/Dialog behavior and mobile overlay checks.
+- [x] Catalog mappings for all **133 tracked components** (not exhaustive behavior coverage).
+- [x] Cross-browser smoke, mobile calendar regressions and independently packed consumer checks ([CI #161](https://github.com/splincode-taiga-labs/taiga-ui-playwright/actions/runs/40092313429)).
+- [x] Compare upstream Element Objects and make the documented **NO-GO** release decision.
+- [ ] Public npm release: **blocked**, not planned until upstream direction, an external consumer, compatibility policy, ownership and a new explicit go decision are established.
+
+Related upstream work: [Taiga UI issue #476](https://github.com/taiga-family/taiga-ui/issues/476) and [PR #14584](https://github.com/taiga-family/taiga-ui/pull/14584).
 
 MIT license.
 
@@ -150,7 +152,7 @@ Calendar day selection requires a uniquely visible **in-month** cell and rejects
 
 ## Date ranges and combined fields
 
-`tuiCalendarRange`, `tuiInputDateRange`, `tuiInputDateTime`, and `tuiInputMonth` are scoped Locator-first APIs. Range helpers select two dates in the first visible month, validating the start/end order and calendar cell states. InputDateRange, InputDateTime and InputMonth resolve an owned overlay using `aria-controls` and are covered by real Angular form model integration. This first version does not support cross-month range selection or mobile native pickers.
+`tuiCalendarRange`, `tuiInputDateRange`, `tuiInputDateTime`, and `tuiInputMonth` are scoped Locator-first APIs. Range helpers select two dates in the first visible month, validating the start/end order and calendar cell states. InputDateRange, InputDateTime and InputMonth resolve an owned overlay using `aria-controls` and are covered by real Angular form model integration. The desktop date-range helper stays limited to two days in the same rendered month. Mobile dates and adjacent-month / December–January ranges are supported separately through `tuiMobileDateCalendar(host)` (see below); unrestricted month navigation is not supported.
 
 ## Interactive widgets batch
 
@@ -167,7 +169,7 @@ Each verified helper has its own native addon-doc route at `/#/harness/<category
 
 ## Multi-value and range harnesses
 
-`tuiMultiSelect` chooses a unique option in an ARIA-linked dropdown, `tuiInputDateMulti` toggles dates in a multi-value calendar, and `tuiInputRange` edits two numeric endpoints. The real Angular 20/Taiga UI 5 fixture and addon-doc pages cover these exported helpers. Cross-month and mobile date-picker interactions are not yet tested.
+`tuiMultiSelect` chooses a unique option in an ARIA-linked dropdown, `tuiInputDateMulti` toggles dates in a multi-value calendar, and `tuiInputRange` edits two numeric endpoints. The real Angular 20/Taiga UI 5 fixture and addon-doc pages cover these exported helpers. Cross-month mobile date-picker interactions are covered by the separate `tuiMobileDateCalendar(host)` harness and its real Angular smoke tests; these interactions are not part of the `tuiInputDateMulti` API.
 
 
 ## Semantic navigation and status harnesses
@@ -227,7 +229,7 @@ Five more Locator-first helpers have real Angular and Chromium tests:
 `tuiNotification` (appearance/size), `tuiBadgedContent` (slot projection),
 `tuiBlockStatus` (card and projected action), `tuiCard` (collapsed layout),
 and `tuiInputSearch` (portal open, typing and Escape/selection closure).
-Each has a source-backed documentation page. The catalog is now 81/133 once merged.
+Each has a source-backed documentation page. This section records a historical batch; the current catalog has 133/133 implementation mappings (not exhaustive behavior coverage).
 
 ## Portal and layout batch
 
