@@ -102,7 +102,7 @@ try {
     const packages = [
         '@angular/build', '@angular/cli', '@angular/cdk', '@angular/common',
         '@angular/compiler', '@angular/compiler-cli', '@angular/core',
-        '@angular/forms', '@angular/platform-browser', '@ng-web-apis/common',
+        '@angular/forms', '@angular/platform-browser', '@angular/router', '@ng-web-apis/common',
         '@ng-web-apis/platform', '@taiga-ui/cdk', '@taiga-ui/core',
         '@taiga-ui/kit', '@taiga-ui/icons', '@taiga-ui/styles', '@playwright/test',
         'less', 'rxjs', 'typescript', 'zone.js',
