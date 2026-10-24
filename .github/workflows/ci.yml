@@ -42,7 +42,10 @@ jobs:
   cross-browser-smoke:
     name: Cross-browser and mobile smoke
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      options: --user 1001
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -50,7 +53,6 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci --no-audit --no-fund
-      - run: npx playwright install --with-deps chromium firefox webkit
       - name: Repeat real Angular smoke scenarios in each browser
         run: npm run test:smoke -- --repeat-each=2
       - name: Stress WebKit async ComboBox without retries

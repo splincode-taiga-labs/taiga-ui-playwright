@@ -268,6 +268,34 @@ The smoke suite is excluded from `npm test` to avoid running it twice. Chromium,
 
 **Scope:** these smoke checks validate selected workflows, not every harness or all browser/OS combinations. Unsupported combinations or regressions must be reported explicitly before broadening the matrix.
 
+### Mobile date and range selection
+
+Use `tuiMobileDateCalendar(host)` for an input with the `tuiMobileCalendar` adapter.
+Open it through your application's trigger first; clicking a mobile date input does
+not open the popup automatically.
+
+```ts
+const range = tuiMobileDateCalendar(page.getByTestId('vacation-field'));
+await page.getByRole('button', {name: 'Open vacation calendar'}).click();
+await range.selectRangeAcrossNextMonth(30, 2);
+
+await page.getByRole('button', {name: 'Open vacation calendar'}).click();
+await range.selectRange(20, 22);
+```
+
+`selectRange()` uses the month containing the **range start**, including after
+reopening a saved range across adjacent months. `selectRangeAcrossNextMonth()`
+starts in that same month and ends in its successor, including December to January.
+The range end is never used as a substitute for a missing start marker.
+
+For single dates, use `selectDay(day)` or
+`selectAdjacentMonthDay(day, 'previous' | 'next')` (`'next'` by default).
+The harness waits for calendar initialization and reveals an unrendered preceding
+month with a bounded scroll based on actual month/viewport dimensions. All day
+and Confirm actions stay inside the input's exact `aria-controls`-owned portal.
+Missing, ambiguous or disabled targets fail; empty selections and unrestricted
+month/year navigation remain unsupported.
+
 
 ## Public API and package compatibility review
 

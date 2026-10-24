@@ -282,3 +282,62 @@ test('Mobile sheet dialog uses the Taiga UI service and overlay', async ({page, 
     await tuiSheetDialog(page.locator('tui-sheet-dialog')).expectSheet('Mobile sheet content');
     await expect(page.getByTestId('sheet-status')).toHaveText('open');
 });
+
+test('Mobile InputDate moves to the previous month and back after reopening', async ({page, isMobile}) => {
+    test.skip(!isMobile, 'This is the real mobile-only Taiga UI calendar.');
+
+    await page.goto('/?fixture=remaining-mobile-overlays');
+    const field = tuiMobileDateCalendar(page.getByTestId('calendar-dropdown-field'));
+    const open = page.getByRole('button', {name: 'Open mobile calendar dropdown'});
+
+    await open.click();
+    await field.selectAdjacentMonthDay(30, 'previous');
+    await expect(page.getByTestId('mobile-date-model')).toHaveText('2026-8-30');
+    await expect(field.input).toHaveAttribute('aria-expanded', 'false');
+
+    await open.click();
+    await field.selectAdjacentMonthDay(2);
+    await expect(page.getByTestId('mobile-date-model')).toHaveText('2026-9-2');
+    await expect(field.input).toHaveAttribute('aria-expanded', 'false');
+});
+
+test('Mobile InputDateRange replaces a saved cross-month range in its start month', async ({page, isMobile}) => {
+    test.skip(!isMobile, 'This is the real mobile-only Taiga UI calendar.');
+
+    await page.goto('/?fixture=remaining-mobile-overlays');
+    const field = tuiMobileDateCalendar(page.getByTestId('mobile-date-range-field'));
+    const open = page.getByRole('button', {name: 'Open mobile date range calendar'});
+
+    await open.click();
+    await field.selectRangeAcrossNextMonth(30, 2);
+    await expect(page.getByTestId('mobile-date-range-full-model'))
+        .toHaveText(/2026-9-30:\s*2026-10-2/);
+
+    await open.click();
+    await field.selectRange(20, 22);
+
+    await expect(page.getByTestId('mobile-date-range-full-model'))
+        .toHaveText(/2026-9-20:\s*2026-9-22/);
+    await expect(field.input).toHaveAttribute('aria-expanded', 'false');
+});
+
+test('Mobile InputDateRange replaces a saved cross-year range after reopening', async ({page, isMobile}) => {
+    test.skip(!isMobile, 'This is the real mobile-only Taiga UI calendar.');
+
+    await page.goto('/?fixture=remaining-mobile-overlays');
+    await page.getByRole('button', {name: 'Set December date range'}).click();
+    const field = tuiMobileDateCalendar(page.getByTestId('mobile-date-range-field'));
+    const open = page.getByRole('button', {name: 'Open mobile date range calendar'});
+
+    await open.click();
+    await field.selectRangeAcrossNextMonth(30, 2);
+    await expect(page.getByTestId('mobile-date-range-full-model'))
+        .toHaveText(/2026-11-30:\s*2027-0-2/);
+
+    await open.click();
+    await field.selectRangeAcrossNextMonth(29, 3);
+
+    await expect(page.getByTestId('mobile-date-range-full-model'))
+        .toHaveText(/2026-11-29:\s*2027-0-3/);
+    await expect(field.input).toHaveAttribute('aria-expanded', 'false');
+});
