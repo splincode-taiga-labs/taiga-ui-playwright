@@ -1,4 +1,5 @@
 import {expect, type Locator} from '@playwright/test';
+import {exactText} from './locator-text.js';
 
 export class TuiIconHarness {
     public constructor(public readonly host: Locator) {}
@@ -33,11 +34,11 @@ export class TuiFilterHarness {
     }
 
     public checkbox(name: string): Locator {
-        return this.items.filter({hasText: name}).getByRole('checkbox');
+        return this.items.filter({hasText: exactText(name)}).getByRole('checkbox');
     }
 
     public async setChecked(name: string, checked: boolean): Promise<void> {
-        const item = this.items.filter({hasText: name});
+        const item = this.items.filter({hasText: exactText(name)});
         const checkbox = this.checkbox(name);
         await expect(item).toHaveCount(1);
         await expect(checkbox).toBeEnabled();

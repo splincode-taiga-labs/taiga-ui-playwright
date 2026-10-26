@@ -23,13 +23,29 @@ test('Icon follows its Taiga SVG resolver and serves both assets', async ({page}
 test('Filter updates a real Angular control when checkboxes are toggled', async ({page}) => {
     const filter = tuiFilter(page.getByTestId('filter-widget'));
     await filter.expectSize('s');
-    await expect(filter.items).toHaveCount(3);
+    await expect(filter.items).toHaveCount(5);
     await filter.setChecked('Beta', true);
     await expect(page.getByTestId('filter-model')).toHaveText('Beta');
     await filter.setChecked('Alpha', true);
     await expect(page.getByTestId('filter-model')).toHaveText('Beta,Alpha');
     await filter.setChecked('Beta', false);
     await expect(page.getByTestId('filter-model')).toHaveText('Alpha');
+});
+
+test('Filter matches overlapping and regexp-special labels exactly', async ({page}) => {
+    const filter = tuiFilter(page.getByTestId('filter-widget'));
+    await expect(filter.checkbox('Alpha')).toHaveCount(1);
+    await expect(filter.checkbox('Alphabet')).toHaveCount(1);
+    await expect(filter.checkbox('C++')).toHaveCount(1);
+
+    await filter.setChecked('Alpha', true);
+    await expect(page.getByTestId('filter-model')).toHaveText('Alpha');
+    await filter.setChecked('C++', true);
+    await expect(page.getByTestId('filter-model')).toHaveText('Alpha,C++');
+    await filter.setChecked('Alphabet', true);
+    await expect(page.getByTestId('filter-model')).toHaveText('Alpha,C++,Alphabet');
+    await filter.setChecked('Alpha', false);
+    await expect(page.getByTestId('filter-model')).toHaveText('C++,Alphabet');
 });
 
 test('Pulse responds to a dynamic playing input', async ({page}) => {

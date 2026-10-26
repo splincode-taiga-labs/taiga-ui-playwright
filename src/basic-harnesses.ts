@@ -1,10 +1,5 @@
 import {expect, type Locator} from '@playwright/test';
-
-function exactText(label: string): RegExp {
-    const escaped = label.replace(/[.*+?^$()|[\]{}\\]/g, '\\$&');
-
-    return new RegExp('^\\s*' + escaped + '\\s*$');
-}
+import {exactText} from './locator-text.js';
 
 export class TuiButtonHarness {
     public constructor(public readonly host: Locator) {}
