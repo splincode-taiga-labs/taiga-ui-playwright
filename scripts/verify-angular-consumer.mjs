@@ -96,6 +96,8 @@ try {
     const [artifact] = JSON.parse(stdout);
     assert.ok(artifact?.filename, 'npm pack must produce an artifact');
 
+    const playwrightVersion = process.env.CONSUMER_PLAYWRIGHT_VERSION?.trim() ||
+        await installedVersion('@playwright/test');
     const dependencies = {
         [packageJson.name]: 'file:' + join(work, artifact.filename),
     };
@@ -107,7 +109,9 @@ try {
         '@taiga-ui/kit', '@taiga-ui/icons', '@taiga-ui/styles', '@playwright/test',
         'less', 'rxjs', 'typescript', 'zone.js',
     ];
-    for (const name of packages) dependencies[name] = await installedVersion(name);
+    for (const name of packages) {
+        dependencies[name] = name === '@playwright/test' ? playwrightVersion : await installedVersion(name);
+    }
 
     const consumer = join(work, 'angular-consumer');
     const files = {
@@ -224,6 +228,11 @@ try {
         consumer, 'node_modules', '@taiga-ui-labs', 'playwright', 'package.json',
     ), 'utf8'));
     assert.equal(resolvedPackage.version, packageJson.version);
+    const resolvedPlaywright = JSON.parse(await readFile(join(
+        consumer, 'node_modules', '@playwright', 'test', 'package.json',
+    ), 'utf8'));
+    assert.equal(resolvedPlaywright.version, playwrightVersion,
+        'Angular consumer resolved the wrong Playwright version');
     await serveAndTest(consumer);
     process.stdout.write('Isolated Angular 20 + Taiga UI 5 consumer passed using packed ' +
         artifact.filename + ' and Playwright ' + dependencies['@playwright/test'] + '.\n');

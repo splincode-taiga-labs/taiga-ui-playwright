@@ -66,12 +66,18 @@ jobs:
           retention-days: 7
 
   angular-consumer:
-    name: Packed package in isolated Angular app
+    name: Packed Angular consumer (Playwright ${{ matrix.playwright }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        playwright: ['1.51.0', '1.64.1']
     container:
-      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      image: mcr.microsoft.com/playwright:v${{ matrix.playwright }}-noble
       options: --user 1001
     timeout-minutes: 30
+    env:
+      CONSUMER_PLAYWRIGHT_VERSION: ${{ matrix.playwright }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
