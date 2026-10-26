@@ -69,7 +69,14 @@ export class TuiInputChipHarness {
     }
 
     public chip(text: string): Locator {
-        return this.host.locator('tui-input-chip').filter({hasText: text});
+        const escaped = text.replace(/[.*+?^$()|[\]{}\\]/g, '\\$&');
+
+        // The chip also contains a localized remove button; match its value only.
+        return this.host.locator('tui-input-chip').filter({
+            has: this.host.page().locator('.t-text', {
+                hasText: new RegExp('^\\s*' + escaped + '\\s*$'),
+            }),
+        });
     }
 
     public async add(text: string): Promise<void> {

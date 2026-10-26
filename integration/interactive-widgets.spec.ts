@@ -44,6 +44,28 @@ test('InputChip adds and removes tags in a real Angular array FormControl', asyn
     await expect(page.getByTestId('chip-model')).toContainText('"Beta"');
 });
 
+test('InputChip matches exact labels when tags overlap or contain regexp characters', async ({page}) => {
+    const chips = tuiInputChip(page.getByTestId('chip-widget'));
+
+    await chips.add('Alphabet');
+    await chips.add('Alpha');
+    await chips.add('C++');
+
+    await expect(chips.chip('Alpha')).toHaveCount(1);
+    await expect(chips.chip('C++')).toHaveCount(1);
+    await chips.remove('Alpha');
+
+    await expect(chips.chip('Alpha')).toHaveCount(0);
+    await expect(chips.chip('Alphabet')).toHaveCount(1);
+    await expect(page.getByTestId('chip-model')).not.toContainText('"Alpha"');
+    await expect(page.getByTestId('chip-model')).toContainText('"Alphabet"');
+    await expect(page.getByTestId('chip-model')).toContainText('"C++"');
+
+    await chips.remove('C++');
+    await expect(chips.chip('C++')).toHaveCount(0);
+    await expect(page.getByTestId('chip-model')).not.toContainText('"C++"');
+});
+
 test('Progress reads the native value and reacts to Angular updates', async ({page}) => {
     const progress = tuiProgress(page.getByTestId('progress-widget'));
     await progress.expectValue(25);
