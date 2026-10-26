@@ -1,5 +1,11 @@
 import {expect, type Locator} from '@playwright/test';
 
+function exactText(label: string): RegExp {
+    const escaped = label.replace(/[.*+?^$()|[\]{}\\]/g, '\\$&');
+
+    return new RegExp('^\\s*' + escaped + '\\s*$');
+}
+
 export class TuiButtonHarness {
     public constructor(public readonly host: Locator) {}
 
@@ -83,7 +89,7 @@ export class TuiTabsHarness {
     }
 
     public async select(name: string): Promise<void> {
-        const tab = this.host.locator('[tuiTab]').filter({hasText: name});
+        const tab = this.host.locator('[tuiTab]').filter({hasText: exactText(name)});
         await expect(tab).toHaveCount(1);
         await expect(tab).toBeEnabled();
         await tab.click();
@@ -110,7 +116,7 @@ export class TuiAccordionHarness {
     public constructor(public readonly host: Locator) {}
 
     public trigger(name: string): Locator {
-        return this.host.locator('button[tuiAccordion]').filter({hasText: name});
+        return this.host.locator('button[tuiAccordion]').filter({hasText: exactText(name)});
     }
 
     public async expand(name: string): Promise<Locator> {
@@ -160,7 +166,7 @@ export class TuiStepperHarness {
     public constructor(public readonly host: Locator) {}
 
     public step(name: string): Locator {
-        return this.host.locator('[tuiStep]').filter({hasText: name});
+        return this.host.locator('[tuiStep]').filter({hasText: exactText(name)});
     }
 
     public async activate(name: string): Promise<void> {

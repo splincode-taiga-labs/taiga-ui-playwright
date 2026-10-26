@@ -72,6 +72,8 @@ import {
                 <button tuiTab type="button">Overview</button>
                 <button tuiTab type="button">Details</button>
                 <button tuiTab type="button" disabled>Disabled tab</button>
+                <button tuiTab type="button">Details advanced</button>
+                <button tuiTab type="button">C++</button>
             </tui-tabs>
             <output data-testid="basic-tabs-model">{{ tabIndex }}</output>
 
@@ -87,6 +89,8 @@ import {
                 <tui-expand>Ships within 3 days</tui-expand>
                 <button [tuiAccordion]="false">Returns</button>
                 <tui-expand>30-day return window</tui-expand>
+                <button [tuiAccordion]="false">Shipping details</button>
+                <tui-expand>Shipping details content</tui-expand>
             </tui-accordion>
 
             <tui-pagination data-testid="basic-pagination" [length]="3" [(index)]="paginationIndex" />
@@ -96,6 +100,7 @@ import {
                 <button tuiStep type="button">Account</button>
                 <button tuiStep type="button">Shipping</button>
                 <button tuiStep type="button" disabled>Payment</button>
+                <button tuiStep type="button">Shipping details</button>
             </tui-stepper>
             <output data-testid="basic-stepper-model">{{ stepIndex }}</output>
         </section>
