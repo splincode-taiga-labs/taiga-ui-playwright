@@ -69,52 +69,10 @@ export class TuiInputChipHarness {
     }
 
     public chip(text: string): Locator {
-        const escaped = text.replace(/[.*+?^$()|[\]{}\\]/g, '\\        return this.host.locator('tui-input-chip').filter({hasText: text});');
+        const escaped = text.replace(/[.*+?^$()|[\]{}\\]/g, '\\$&');
 
         return this.host.locator('tui-input-chip')
-            .filter({hasText: new RegExp('^\\s*' + escaped + '\\s*
-    }
-
-    public async add(text: string): Promise<void> {
-        if (!text.trim()) {
-            throw new Error('Chip text must not be empty.');
-        }
-
-        await this.input.fill(text);
-        await this.input.press('Enter');
-        await expect(this.chip(text)).toHaveCount(1);
-    }
-
-    public async remove(text: string): Promise<void> {
-        const chip = this.chip(text);
-        await expect(chip).toHaveCount(1);
-        await chip.press('Backspace');
-        await expect(chip).toHaveCount(0);
-    }
-}
-
-export class TuiProgressHarness {
-    public constructor(public readonly host: Locator) {}
-
-    public async value(): Promise<number> {
-        return this.host.evaluate((element) => (element as HTMLProgressElement).value);
-    }
-
-    public async max(): Promise<number> {
-        return this.host.evaluate((element) => (element as HTMLProgressElement).max);
-    }
-
-    public async expectValue(value: number): Promise<void> {
-        await expect(this.host).toHaveJSProperty('value', value);
-    }
-}
-
-export const tuiRating = (host: Locator): TuiRatingHarness => new TuiRatingHarness(host);
-export const tuiLike = (host: Locator): TuiLikeHarness => new TuiLikeHarness(host);
-export const tuiCopy = (host: Locator): TuiCopyHarness => new TuiCopyHarness(host);
-export const tuiInputChip = (host: Locator): TuiInputChipHarness => new TuiInputChipHarness(host);
-export const tuiProgress = (host: Locator): TuiProgressHarness => new TuiProgressHarness(host);
-)});
+            .filter({hasText: new RegExp('^\\s*' + escaped + '\\s*$')});
     }
 
     public async add(text: string): Promise<void> {
