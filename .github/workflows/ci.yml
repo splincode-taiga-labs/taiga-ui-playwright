@@ -27,6 +27,8 @@ jobs:
         run: npm run test:consumer
       - run: npm run build:fixture
       - run: npm run build:docs:pages
+      - name: Assert npm tarball excludes Angular fixture and docs
+        run: npm run test:pack
       - run: npx playwright install --with-deps chromium
       - name: Smoke test Angular fixture bootstrap
         run: npx playwright test integration/bootstrap.spec.ts --project=integration --reporter=list
