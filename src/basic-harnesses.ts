@@ -80,11 +80,11 @@ export class TuiTabsHarness {
     public constructor(public readonly host: Locator) {}
 
     public tab(name: string): Locator {
-        return this.host.locator('[tuiTab]').getByText(name, {exact: true});
+        return this.host.locator('[tuiTab]').filter({hasText: exactText(name)});
     }
 
     public async select(name: string): Promise<void> {
-        const tab = this.host.locator('[tuiTab]').filter({hasText: exactText(name)});
+        const tab = this.tab(name);
         await expect(tab).toHaveCount(1);
         await expect(tab).toBeEnabled();
         await tab.click();
