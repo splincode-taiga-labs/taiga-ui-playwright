@@ -92,6 +92,21 @@ test('Tabs selects an exact label even with prefix matches and regexp characters
     await expect(page.getByTestId('basic-tabs-model')).toHaveText('3');
 });
 
+test('Tabs tab() locates the interactive button rather than a nested label', async ({page}) => {
+    const tabs = tuiTabs(page.getByTestId('basic-tabs'));
+    const details = tabs.tab('Details');
+
+    await expect(details).toHaveCount(1);
+    await expect(details).toHaveJSProperty('tagName', 'BUTTON');
+    await expect(tabs.tab('Details advanced')).toHaveCount(1);
+    await expect(tabs.tab('C++')).toHaveCount(1);
+    await expect(tabs.tab('Disabled tab')).toBeDisabled();
+
+    await details.click();
+    await expect(page.getByTestId('basic-tabs-model')).toHaveText('1');
+    await expect(details).toHaveClass(/(?:^|\s)_active(?:\s|$)/);
+});
+
 test('Segmented control selects by accessible button name', async ({page}) => {
     const segmented = tuiSegmented(page.getByTestId('basic-segmented'));
     await segmented.select('Week');

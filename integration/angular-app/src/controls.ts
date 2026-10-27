@@ -70,7 +70,7 @@ import {
 
             <tui-tabs data-testid="basic-tabs" [(activeItemIndex)]="tabIndex">
                 <button tuiTab type="button">Overview</button>
-                <button tuiTab type="button">Details</button>
+                <button tuiTab type="button"><span>Details</span></button>
                 <button tuiTab type="button" disabled>Disabled tab</button>
                 <button tuiTab type="button">Details advanced</button>
                 <button tuiTab type="button">C++</button>
