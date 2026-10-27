@@ -90,7 +90,7 @@ async function serveAndTest(directory) {
 
 try {
     const packageJson = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'));
-    assert.equal(packageJson.private, true, 'Do not turn on publishing during consumer validation');
+    assert.notEqual(packageJson.private, true, 'Packed release candidate must be publishable');
 
     const {stdout} = await run(npm, ['pack', '--json', '--ignore-scripts', '--pack-destination', work], root);
     const [artifact] = JSON.parse(stdout);

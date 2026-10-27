@@ -1,10 +1,21 @@
 {
   "name": "@taiga-ui-labs/playwright",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.0",
   "description": "Experimental Playwright-native element objects for Taiga UI",
   "license": "MIT",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/splincode-taiga-labs/taiga-ui-playwright.git"
+  },
+  "homepage": "https://splincode-taiga-labs.github.io/taiga-ui-playwright/",
+  "bugs": {
+    "url": "https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "engines": {
     "node": ">=20"
   },

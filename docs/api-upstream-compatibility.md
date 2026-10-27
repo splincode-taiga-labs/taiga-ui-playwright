@@ -1,6 +1,6 @@
 # API, compatibility, and upstream review
 
-Review date: 2026-10-19. This is an **experimental, private package**, not an official Taiga UI distribution.
+Initial compatibility review: 2026-10-19. Release preparation: 2026-10-27. This is an **experimental, independently maintained package**, not an official Taiga UI distribution.
 
 ## Upstream comparison
 
@@ -51,7 +51,7 @@ test('update country and city', async ({page}) => {
 | Browsers | Chromium full integration/docs; Chromium, Firefox and WebKit targeted smoke; Pixel 7 emulated mobile Chromium |
 | WebKit async ComboBox | Tested with real delayed options; dropdown reopens if its owned portal closes during loading. [Five no-retry repeats](https://github.com/splincode-taiga-labs/taiga-ui-playwright/actions/runs/39223806979) passed. This is targeted coverage, not a guarantee for all upstream versions |
 | Module format | NodeNext ESM root export (`exports["."].import`) and TypeScript declarations (`exports["."].types`) |
-| Package delivery | `private: true`, no npm release workflow; independent `npm pack` + fresh consumer install tested in CI |
+| Package delivery | Experimental 0.1.0 prepared for manual first publication; release workflow runs only for future tags, after npm Trusted Publisher setup. `npm pack` + fresh consumer install tested in CI |
 
 The Node 20.19.0 consumer check does not imply that Angular or the complete browser test suite support Node 20; those suites still run on Node 24. The package includes internal Taiga UI markup selectors, so some helpers can break across even minor UI changes. Prefer a narrow version support claim and monitor upstream changes before committing to maintenance SLAs.
 
@@ -65,10 +65,10 @@ npm run test:consumer
 
 This creates an npm tarball in a temporary directory, checks its files, installs it **outside this repository**, type-checks a NodeNext ESM consumer, and verifies runtime imports. By default it uses the lockfile's Playwright version. Set `CONSUMER_PLAYWRIGHT_VERSION=1.51.0` to test the declared minimum; CI verifies this on Node 20.19.0 as well as the lockfile version on Node 24. No publish, tag, credential or registry write is performed.
 
-## Decision: NO-GO for a public npm release (for now)
+## Decision: experimental 0.1.0 release preparation
 
-Keep this project as a **private PoC** and continue contributing reusable portal/locator improvements upstream. The upstream API is still under discussion, no independent consumer has validated long-term use, browser compatibility is incomplete, and 133 catalog entries do not imply a frozen or supported public API.
+A maintainer requested a first **experimental 0.1.0** publication while keeping API and upstream compatibility explicitly provisional. This is **not a claim of stable cross-version support**. Upstream PR #14584 is still open, independent external adoption is unverified, browser coverage is selective, and 133 catalog entries do not imply exhaustive testing. No official Taiga UI affiliation is claimed.
 
-Reconsider a release **only after**: (1) upstream PR #14584 is resolved or its design stabilizes; (2) at least one external consumer uses the packed artifact successfully; (3) supported Taiga UI/Angular/Playwright/Node ranges have been tested; (4) a maintainer accepts ongoing compatibility responsibility; and (5) npm scope ownership and publication workflow are explicitly approved under #9.
+The first publication remains a manual maintainer action, subject to verified npm scope ownership, green release checks, package inspection and a deliberate GO decision. The release workflow intentionally excludes `v0.1.0`. For later tags, only the authorized GitHub Actions Trusted Publisher can use OIDC to publish; see [npm release process](npm-release.md).
 
-This is a project recommendation, not authorization to publish.
+Before expanding the support policy, verify additional Angular/Taiga UI/Playwright/Node combinations and actual external consumer use. Revisit upstream API decisions and maintenance responsibility periodically. The setup PR itself neither publishes nor changes registry permissions.
