@@ -9,7 +9,7 @@ import {DocsCopyButton} from './copy-button';
     template: `
         <tui-doc-page header="Getting started" [tags]="['Playwright', 'TypeScript']">
             <article class="guide-page">
-                <p>This experimental library provides Locator-first element objects for Taiga UI. Not yet published to npm.</p>
+                <p>Install @taiga-ui-labs/playwright from npm to test Taiga UI with Playwright. This independent library is experimental.</p>
                 <h2>Current harnesses</h2>
                 <div class="copyable-code">
                     <div class="copyable-code__toolbar"><docs-copy-button label="example" [code]="example" /></div>
