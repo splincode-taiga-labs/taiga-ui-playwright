@@ -2,7 +2,7 @@
 
 > Experimental, **unofficial** Playwright-native element objects for Taiga UI v5, maintained by [splincode-taiga-labs](https://github.com/splincode-taiga-labs). This project is not affiliated with the Taiga UI maintainers.
 
-This is a proof of concept, **not a published npm package**. The goal is to explore Locator-first helpers for common, complex UI interactions and contribute useful ideas upstream.
+This is an experimental Locator-first helper library for common, complex UI interactions. Version **0.1.0** is the first public release candidate; the API is not stable and only the documented version combinations have been tested. Publication is an explicit maintainer action, not a side effect of merging a pull request.
 
 ## Why?
 
@@ -25,7 +25,7 @@ npm run verify
 Tests assert reactive form model output for Select and ComboBox and the dialog lifecycle after interacting through the exported helper functions. Node.js 24 is used by CI.
 
 
-No npm publishing workflow exists. The package remains intentionally private despite passing real Angular integration and independent packed-consumer checks: the [release decision is NO-GO](docs/api-upstream-compatibility.md). Do not publish without a new explicit decision.
+The first npm publication (0.1.0) must be performed manually by an authorized npm package owner. Future version tags (from v0.1.1 onward) can publish through an explicitly configured GitHub Actions Trusted Publisher. See [release instructions](docs/npm-release.md); merging alone never publishes.
 
 ## Example
 
@@ -301,7 +301,7 @@ month/year navigation remain unsupported.
 
 ## Public API and package compatibility review
 
-The repo is **still private and unpublished**. See [API and upstream compatibility review](docs/api-upstream-compatibility.md) for tested version combinations, differences from upstream, example migrations, known limitations, and the no-go release decision.
+Version **0.1.0** is prepared for the first experimental npm publication (publication itself is manual). See [API and upstream compatibility review](docs/api-upstream-compatibility.md) for tested combinations and known limitations, and [release instructions](docs/npm-release.md) for the guarded publication process.
 
 After `npm ci` and `npm run build`, run `npm run test:consumer` to pack the current code (without publishing it), install the archive into an independent temporary ESM project, check root runtime imports, and type-check a real TypeScript consumer using NodeNext resolution. CI runs this check before the Angular/browser suites.
 

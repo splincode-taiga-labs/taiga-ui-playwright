@@ -32,7 +32,7 @@ async function installedVersion(name) {
 
 try {
     const packageJson = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'));
-    assert.equal(packageJson.private, true, 'Keep the package private until release approval');
+    assert.notEqual(packageJson.private, true, 'Packed release candidate must be publishable');
 
     const {stdout} = await run(npm, [
         'pack', '--json', '--ignore-scripts', '--pack-destination', work,

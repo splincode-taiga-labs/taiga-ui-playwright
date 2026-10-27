@@ -1,0 +1,155 @@
+name: Publish to npm
+
+# 0.1.0 must be published manually to bootstrap npm Trusted Publishing.
+# Once the package exists, configure the npm Trusted Publisher for publish.yml.
+on:
+  push:
+    tags:
+      - 'v*'
+      - '!v0.1.0'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: npm-publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Verify release tarball and browser integration
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Ensure release commit is on main
+        run: |
+          git fetch --no-tags origin main:refs/remotes/origin/main
+          git merge-base --is-ancestor "$GITHUB_SHA" origin/main
+      - name: Match the tag to the package version
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          node --input-type=module -e '
+            import fs from "node:fs";
+            const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+            const tag = process.env.RELEASE_TAG;
+            if (!/^v\d+\.\d+\.\d+(?:-[0-9A-Za-z][0-9A-Za-z.-]*)?$/.test(tag) ||
+                tag !== "v" + pkg.version ||
+                pkg.private === true) {
+              throw new Error("Release tag must match a publishable package version: " + tag);
+            }
+          '
+      - run: npm ci --no-audit --no-fund
+      - run: npm run typecheck
+      - run: npm run build
+      - run: npm run test:consumer
+      - run: npm run build:fixture
+      - run: npm run build:docs:pages
+      - run: npx playwright install --with-deps chromium
+      - run: npm test
+      - run: npm run test:docs
+      - name: Pack exactly the verified build
+        run: |
+          mkdir release-artifact
+          npm pack --ignore-scripts --pack-destination release-artifact
+          (cd release-artifact && sha256sum *.tgz > SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: npm-release-tarball
+          path: release-artifact/
+          if-no-files-found: error
+          retention-days: 7
+
+  browser-smoke:
+    name: Cross-browser release smoke
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      options: --user 1001
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - run: npm ci --no-audit --no-fund
+      - run: npm run test:smoke -- --repeat-each=2
+
+  angular-consumer:
+    name: Packed Angular consumer (Playwright ${{ matrix.playwright }})
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v${{ matrix.playwright }}-noble
+      options: --user 1001
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        playwright: ['1.51.0', '1.64.1']
+    env:
+      CONSUMER_PLAYWRIGHT_VERSION: ${{ matrix.playwright }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build
+      - run: npm run test:consumer:angular
+
+  consumer-minimum:
+    name: Node 20 / Playwright 1.51 consumer
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20.19.0
+          package-manager-cache: false
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build
+      - run: npm run test:consumer
+        env:
+          CONSUMER_PLAYWRIGHT_VERSION: 1.51.0
+
+  publish:
+    name: Publish verified tarball using npm OIDC
+    needs: [verify, browser-smoke, angular-consumer, consumer-minimum]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Ensure npm supports Trusted Publishing
+        run: npm install --global npm@^11.15.0
+      - uses: actions/download-artifact@v4
+        with:
+          name: npm-release-tarball
+          path: release-artifact
+      - name: Verify downloaded tarball integrity
+        run: (cd release-artifact && sha256sum --check SHA256SUMS)
+      - name: Publish using Trusted Publisher (no NPM_TOKEN)
+        shell: bash
+        run: |
+          files=(release-artifact/*.tgz)
+          test "${#files[@]}" -eq 1
+          if [[ "$GITHUB_REF_NAME" == *-* ]]; then
+            npm publish "${files[0]}" --access public --tag next
+          else
+            npm publish "${files[0]}" --access public --tag latest
+          fi
