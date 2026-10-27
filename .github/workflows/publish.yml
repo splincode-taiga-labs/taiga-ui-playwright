@@ -126,6 +126,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment: npm
+    env:
+      # Use the public registry without setup-node's token-based .npmrc.
+      NPM_CONFIG_REGISTRY: https://registry.npmjs.org/
     permissions:
       contents: read
       id-token: write
@@ -133,7 +136,6 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 24
-          registry-url: https://registry.npmjs.org
           package-manager-cache: false
       - name: Ensure npm supports Trusted Publishing
         run: npm install --global npm@^11.15.0
@@ -146,8 +148,17 @@ jobs:
       - name: Publish using Trusted Publisher (no NPM_TOKEN)
         shell: bash
         run: |
-          files=(release-artifact/*.tgz)
+          # Never fall back to a long-lived or setup-node dummy npm token.
+          test -z "${NODE_AUTH_TOKEN:-}"
+          test -n "${ACTIONS_ID_TOKEN_REQUEST_URL:-}"
+          test -n "${ACTIONS_ID_TOKEN_REQUEST_TOKEN:-}"
+          # npm requires an explicit ./ for relative tarballs; otherwise it parses
+          # "release-artifact/name.tgz" as a GitHub repository shorthand.
+          files=(./release-artifact/*.tgz)
           test "${#files[@]}" -eq 1
+          test -f "${files[0]}"
+          # Catch local tarball path resolution errors before a real registry write.
+          npm publish "${files[0]}" --dry-run --ignore-scripts --access public
           if [[ "$GITHUB_REF_NAME" == *-* ]]; then
             npm publish "${files[0]}" --access public --tag next
           else
