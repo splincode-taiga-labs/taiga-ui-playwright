@@ -79,7 +79,7 @@ See the [interactive harness catalog](https://splincode-taiga-labs.github.io/tai
 For contributors and maintainers:
 
 - [Contributing](CONTRIBUTING.md) · [Compatibility and limitations](docs/api-upstream-compatibility.md)
-- [npm release process](docs/npm-release.md) · [Issues and feature requests](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues)
+- [Changelog](CHANGELOG.md) · [npm release process](docs/npm-release.md) · [Issues and feature requests](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues)
 
 Local development:
 
