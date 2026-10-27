@@ -64,7 +64,7 @@ import {TuiActionBar, TuiCompass, TuiFilter, TuiPulse} from '@taiga-ui/kit';
 })
 export class VisualActions {
     protected readonly currentIcon = signal('@tui.search');
-    protected readonly filters = ['Alpha', 'Beta', 'Gamma'];
+    protected readonly filters = ['Alpha', 'Alphabet', 'Beta', 'Gamma', 'C++'];
     protected readonly chosenFilters = new FormControl<readonly string[]>([], {nonNullable: true});
     protected readonly pulsePlaying = signal(true);
     protected readonly degrees = signal(45);
