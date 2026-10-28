@@ -261,19 +261,23 @@ try {
         ].join('\n'),
     };
     await writeProject(consumer, files);
-    await run(npm, ['install', '--no-audit', '--no-fund'], consumer);
-    const resolvedPackage = JSON.parse(await readFile(join(
-        consumer, 'node_modules', '@taiga-ui-labs', 'playwright', 'package.json',
-    ), 'utf8'));
-    assert.equal(resolvedPackage.version, registryVersion || packageJson.version);
+    const install = await run(npm, ['install', '--no-audit', '--no-fund'], consumer);
+    if (registryVersion) {
+        process.stdout.write('Published package install: ' + install.stdout + '\n');
+    }
+    const lock = JSON.parse(await readFile(join(consumer, 'package-lock.json'), 'utf8'));
+    const entry = lock.packages['node_modules/' + packageJson.name];
     if (registryVersion) {
         // Avoid a false positive caused by npm installing a workspace/file reference.
-        const lock = JSON.parse(await readFile(join(consumer, 'package-lock.json'), 'utf8'));
-        const entry = lock.packages['node_modules/' + packageJson.name];
+        process.stdout.write('Installed npm lock entry: ' + JSON.stringify(entry) + '\n');
         assert.match(entry?.resolved || '', /^https:\/\/registry\.npmjs\.org\//,
             'Published package must be resolved through the public npm registry');
         assert.ok(entry?.integrity, 'Published package is missing npm registry integrity');
     }
+    const resolvedPackage = JSON.parse(await readFile(join(
+        consumer, 'node_modules', '@taiga-ui-labs', 'playwright', 'package.json',
+    ), 'utf8'));
+    assert.equal(resolvedPackage.version, registryVersion || packageJson.version);
     const resolvedPlaywright = JSON.parse(await readFile(join(
         consumer, 'node_modules', '@playwright', 'test', 'package.json',
     ), 'utf8'));
