@@ -47,6 +47,7 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - run: npm run typecheck
       - run: npm run build
+      - run: npm run test:api
       - run: npm run test:consumer
       - run: npm run build:fixture
       - run: npm run build:docs:pages

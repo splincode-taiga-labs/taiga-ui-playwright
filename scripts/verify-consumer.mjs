@@ -78,7 +78,7 @@ try {
     }, null, 2));
     await writeFile(join(consumer, 'consumer.mts'), [
         "import type {Locator} from '@playwright/test';",
-        "import {tuiSelect, tuiComboBox, tuiDialog, type TuiOptionsFieldOptions} from '@taiga-ui-labs/playwright';",
+        "import {tuiSelect, tuiComboBox, tuiDialog, tuiTabs, type TuiOptionsFieldOptions, type TuiSelect, type TuiComboBox, type TuiDialog} from '@taiga-ui-labs/playwright';",
         '',
         'export function verifyTypedApi(host: Locator): void {',
         '    const options: TuiOptionsFieldOptions = {overlay: host.page().locator("tui-dropdown")};',
@@ -88,6 +88,19 @@ try {
         '    void select.selectOption("Estonia");',
         '    void combo.fill("Tall");',
         '    void dialog.close();',
+        '    const expectedSelect: TuiSelect = select;',
+        '    const expectedCombo: TuiComboBox = combo;',
+        '    const expectedDialog: TuiDialog = dialog;',
+        '    const input: Locator = expectedSelect.input;',
+        '    const option: Locator = expectedSelect.option("Estonia");',
+        '    const overlay: Promise<Locator> = expectedSelect.getOverlay();',
+        '    const labels: Promise<string[]> = expectedSelect.getOptionLabels();',
+        '    const value: Promise<string> = expectedSelect.getValue();',
+        '    const selection: Promise<void> = expectedSelect.selectOption("Estonia");',
+        '    const tabs = tuiTabs(host);',
+        '    const tab: Locator = tabs.tab("Details");',
+        '    const activation: Promise<void> = tabs.select("Details");',
+        '    void [input, option, overlay, labels, value, selection, tab, activation, expectedCombo, expectedDialog];',
         '}',
         '',
     ].join('\n'));
