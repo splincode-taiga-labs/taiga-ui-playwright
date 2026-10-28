@@ -53,6 +53,8 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm test
       - run: npm run test:docs
+      - name: Assert npm tarball contains runtime files only
+        run: npm run test:pack
       - name: Pack exactly the verified build
         run: |
           mkdir release-artifact

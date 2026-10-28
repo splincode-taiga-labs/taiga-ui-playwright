@@ -45,7 +45,7 @@ try {
         assert.ok(paths.includes(required), 'Missing packed file: ' + required);
     }
     const unexpected = paths.filter((path) =>
-        !path.startsWith('dist/') &&
+        !/^dist\/[^/]+\.(?:js|js\.map|d\.ts|d\.ts\.map)$/.test(path) &&
         !['package.json', 'README.md', 'LICENSE'].includes(path),
     );
     assert.deepEqual(unexpected, [], 'Unexpected files in npm tarball');
