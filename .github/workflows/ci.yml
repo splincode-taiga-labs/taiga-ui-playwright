@@ -4,6 +4,13 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
+    inputs:
+      npm_version:
+        description: 'Exact published version to test from npm (including a 1.0.0 prerelease)'
+        required: true
+        type: string
+        default: '0.1.1'
 
 permissions:
   contents: read
@@ -107,3 +114,25 @@ jobs:
         run: npm run test:consumer
         env:
           CONSUMER_PLAYWRIGHT_VERSION: 1.51.0
+
+  registry-consumer:
+    name: Published npm consumer (Angular 20 / Taiga UI 5.28)
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      options: --user 1001
+    timeout-minutes: 30
+    env:
+      # The published release is intentionally independent of the current PR source.
+      # For a release candidate, use Actions -> CI -> Run workflow -> npm_version.
+      CONSUMER_REGISTRY_VERSION: ${{ inputs.npm_version || '0.1.1' }}
+      CONSUMER_PLAYWRIGHT_VERSION: 1.64.1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Install published npm version into a clean Angular app and verify it
+        run: npm run test:consumer:angular
