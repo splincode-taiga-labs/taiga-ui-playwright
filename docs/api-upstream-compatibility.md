@@ -51,7 +51,7 @@ test('update country and city', async ({page}) => {
 | Browsers | Chromium full integration/docs; Chromium, Firefox and WebKit targeted smoke; Pixel 7 emulated mobile Chromium |
 | WebKit async ComboBox | Tested with real delayed options; dropdown reopens if its owned portal closes during loading. [Five no-retry repeats](https://github.com/splincode-taiga-labs/taiga-ui-playwright/actions/runs/39223806979) passed. This is targeted coverage, not a guarantee for all upstream versions |
 | Module format | NodeNext ESM root export (`exports["."].import`) and TypeScript declarations (`exports["."].types`) |
-| Package delivery | Experimental 0.1.0 prepared for manual first publication; release workflow runs only for future tags, after npm Trusted Publisher setup. `npm pack` + fresh consumer install tested in CI |
+| Package delivery | Experimental **0.1.1** published via npm OIDC with provenance; runtime-only packaging guard merged in PR #85 (effective on the next published version). Local `npm pack` and a **public registry** Angular consumer are tested separately in CI |
 
 The Node 20.19.0 consumer check does not imply that Angular or the complete browser test suite support Node 20; those suites still run on Node 24. The package includes internal Taiga UI markup selectors, so some helpers can break across even minor UI changes. Prefer a narrow version support claim and monitor upstream changes before committing to maintenance SLAs.
 
@@ -65,10 +65,12 @@ npm run test:consumer
 
 This creates an npm tarball in a temporary directory, checks its files, installs it **outside this repository**, type-checks a NodeNext ESM consumer, and verifies runtime imports. By default it uses the lockfile's Playwright version. Set `CONSUMER_PLAYWRIGHT_VERSION=1.51.0` to test the declared minimum; CI verifies this on Node 20.19.0 as well as the lockfile version on Node 24. No publish, tag, credential or registry write is performed.
 
-## Decision: experimental 0.1.0 release preparation
+## Release status and 1.0 readiness
 
-A maintainer requested a first **experimental 0.1.0** publication while keeping API and upstream compatibility explicitly provisional. This is **not a claim of stable cross-version support**. Upstream PR #14584 is still open, independent external adoption is unverified, browser coverage is selective, and 133 catalog entries do not imply exhaustive testing. No official Taiga UI affiliation is claimed.
+**0.1.1 was published successfully** through the protected GitHub Actions workflow with npm Trusted Publishing and signed provenance. It remains **experimental**. Upstream PR #14584 has not established an interchangeable public API, and a catalog of 133 mapped components does not imply exhaustive behavior coverage. The package is independent of Taiga UI and not officially endorsed.
 
-The first publication remains a manual maintainer action, subject to verified npm scope ownership, green release checks, package inspection and a deliberate GO decision. The release workflow intentionally excludes `v0.1.0`. For later tags, only the authorized GitHub Actions Trusted Publisher can use OIDC to publish; see [npm release process](npm-release.md).
+The old 0.1.1 npm tarball contained built docs and fixture files. [PR #85](https://github.com/splincode-taiga-labs/taiga-ui-playwright/pull/85) corrected `files` and added a packlist CI guard; that fix will take effect in the next published version, not retroactively in 0.1.1.
 
-Before expanding the support policy, verify additional Angular/Taiga UI/Playwright/Node combinations and actual external consumer use. Revisit upstream API decisions and maintenance responsibility periodically. The setup PR itself neither publishes nor changes registry permissions.
+CI now also supports a **real registry installation** smoke check: `CONSUMER_REGISTRY_VERSION=0.1.1 npm run test:consumer:angular` installs that exact version from npm (not a local `file:` archive), verifies the resolved registry/integrity, type-checks imports, and exercises actual Angular Select/ComboBox form interactions. To validate a published prerelease, run the **CI** workflow manually with input `npm_version=1.0.0-rc.1` once that prerelease exists on npm. This proves compatibility for that selected consumer, not adoption or wider version support.
+
+Before committing to 1.0, freeze and review the exported API and maintenance policy, test any broader version ranges we intend to promise, and verify the 1.0 release candidate. Track remaining work in [issue #86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86).

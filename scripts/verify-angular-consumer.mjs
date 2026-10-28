@@ -12,6 +12,11 @@ const work = await mkdtemp(join(tmpdir(), 'taiga-ui-angular-consumer-'));
 const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 const port = 4251;
 const url = 'http://127.0.0.1:' + port;
+const registryVersion = process.env.CONSUMER_REGISTRY_VERSION?.trim();
+
+if (registryVersion && !/^\d+\.\d+\.\d+(?:-[0-9A-Za-z][0-9A-Za-z.-]*)?$/.test(registryVersion)) {
+    throw new Error('CONSUMER_REGISTRY_VERSION must be an exact semver version');
+}
 
 async function run(command, args, cwd) {
     try {
@@ -92,14 +97,24 @@ try {
     const packageJson = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'));
     assert.notEqual(packageJson.private, true, 'Packed release candidate must be publishable');
 
-    const {stdout} = await run(npm, ['pack', '--json', '--ignore-scripts', '--pack-destination', work], root);
-    const [artifact] = JSON.parse(stdout);
-    assert.ok(artifact?.filename, 'npm pack must produce an artifact');
+    // Registry mode proves an actual published package can be installed independently.
+    // Default mode keeps checking the current local build tarball before publication.
+    let packageSource;
+    if (registryVersion) {
+        packageSource = packageJson.name + '@' + registryVersion;
+    } else {
+        const {stdout} = await run(npm, [
+            'pack', '--json', '--ignore-scripts', '--pack-destination', work,
+        ], root);
+        const [artifact] = JSON.parse(stdout);
+        assert.ok(artifact?.filename, 'npm pack must produce an artifact');
+        packageSource = 'file:' + join(work, artifact.filename);
+    }
 
     const playwrightVersion = process.env.CONSUMER_PLAYWRIGHT_VERSION?.trim() ||
         await installedVersion('@playwright/test');
     const dependencies = {
-        [packageJson.name]: 'file:' + join(work, artifact.filename),
+        [packageJson.name]: packageSource,
     };
     const packages = [
         '@angular/build', '@angular/cli', '@angular/cdk', '@angular/common',
@@ -173,6 +188,29 @@ try {
             angularCompilerOptions: {strictTemplates: true, strictInjectionParameters: true},
             files: ['src/main.ts', 'src/app.ts'],
         },
+        'tsconfig.contract.json': {
+            compilerOptions: {
+                target: 'ES2022',
+                module: 'NodeNext',
+                moduleResolution: 'NodeNext',
+                strict: true,
+                noEmit: true,
+                skipLibCheck: true,
+            },
+            files: ['package-contract.mts'],
+        },
+        'package-contract.mts': [
+            "import type {Locator} from '@playwright/test';",
+            "import {tuiSelect, tuiComboBox, tuiDialog, type TuiOptionsFieldOptions} from '@taiga-ui-labs/playwright';",
+            'export function assertTypedConsumer(host: Locator): void {',
+            '  const select: ReturnType<typeof tuiSelect> = tuiSelect(host);',
+            '  const options: TuiOptionsFieldOptions = {overlay: host.page().locator("tui-dropdown")};',
+            '  void tuiSelect(host, options).selectOption("Estonia");',
+            '  void tuiComboBox(host).fill("Tall");',
+            '  void tuiDialog(host).clickButton("Save");',
+            '  void select.input;',
+            '}',
+        ].join('\n'),
         'src/index.html': '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Independent Angular consumer</title></head><body><app-consumer></app-consumer></body></html>',
         'src/styles.less': "@import '@taiga-ui/styles/taiga-ui-theme.less';\n@import '@taiga-ui/styles/taiga-ui-fonts.less';\n",
         'src/main.ts': [
@@ -227,15 +265,27 @@ try {
     const resolvedPackage = JSON.parse(await readFile(join(
         consumer, 'node_modules', '@taiga-ui-labs', 'playwright', 'package.json',
     ), 'utf8'));
-    assert.equal(resolvedPackage.version, packageJson.version);
+    assert.equal(resolvedPackage.version, registryVersion || packageJson.version);
+    if (registryVersion) {
+        // Avoid a false positive caused by npm installing a workspace/file reference.
+        const lock = JSON.parse(await readFile(join(consumer, 'package-lock.json'), 'utf8'));
+        const entry = lock.packages['node_modules/' + packageJson.name];
+        assert.match(entry?.resolved || '', /^https:\/\/registry\.npmjs\.org\//,
+            'Published package must be resolved through the public npm registry');
+        assert.ok(entry?.integrity, 'Published package is missing npm registry integrity');
+    }
     const resolvedPlaywright = JSON.parse(await readFile(join(
         consumer, 'node_modules', '@playwright', 'test', 'package.json',
     ), 'utf8'));
     assert.equal(resolvedPlaywright.version, playwrightVersion,
         'Angular consumer resolved the wrong Playwright version');
+    await run(process.execPath, [
+        join(consumer, 'node_modules', 'typescript', 'bin', 'tsc'),
+        '--project', join(consumer, 'tsconfig.contract.json'),
+    ], consumer);
     await serveAndTest(consumer);
-    process.stdout.write('Isolated Angular 20 + Taiga UI 5 consumer passed using packed ' +
-        artifact.filename + ' and Playwright ' + dependencies['@playwright/test'] + '.\n');
+    process.stdout.write('Isolated Angular 20 + Taiga UI 5 consumer passed using ' +
+        packageSource + ' and Playwright ' + dependencies['@playwright/test'] + '.\n');
 } finally {
     await rm(work, {recursive: true, force: true});
 }
