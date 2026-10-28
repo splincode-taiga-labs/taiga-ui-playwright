@@ -101,7 +101,8 @@ try {
     // Default mode keeps checking the current local build tarball before publication.
     let packageSource;
     if (registryVersion) {
-        packageSource = packageJson.name + '@' + registryVersion;
+        // package.json dependency values are versions, not "name@version" CLI specs.
+        packageSource = registryVersion;
     } else {
         const {stdout} = await run(npm, [
             'pack', '--json', '--ignore-scripts', '--pack-destination', work,
@@ -289,7 +290,8 @@ try {
     ], consumer);
     await serveAndTest(consumer);
     process.stdout.write('Isolated Angular 20 + Taiga UI 5 consumer passed using ' +
-        packageSource + ' and Playwright ' + dependencies['@playwright/test'] + '.\n');
+        (registryVersion ? packageJson.name + '@' + registryVersion + ' (npm registry)' : packageSource) +
+        ' and Playwright ' + dependencies['@playwright/test'] + '.\n');
 } finally {
     await rm(work, {recursive: true, force: true});
 }
