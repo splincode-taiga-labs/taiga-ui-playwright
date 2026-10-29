@@ -121,7 +121,11 @@ try {
         '@angular/build', '@angular/cli', '@angular/cdk', '@angular/common',
         '@angular/compiler', '@angular/compiler-cli', '@angular/core',
         '@angular/forms', '@angular/platform-browser', '@angular/router', '@ng-web-apis/common',
-        '@ng-web-apis/platform', '@taiga-ui/cdk', '@taiga-ui/core',
+        '@ng-web-apis/platform',
+        // Taiga UI allows compatible Maskito peers, but mixed patches can
+        // conflict (e.g. phone 5.6.1 requires kit ^5.6.1). Pin the tested family.
+        '@maskito/angular', '@maskito/core', '@maskito/kit', '@maskito/phone',
+        '@taiga-ui/cdk', '@taiga-ui/core',
         '@taiga-ui/kit', '@taiga-ui/icons', '@taiga-ui/styles', '@playwright/test',
         'less', 'rxjs', 'typescript', 'zone.js',
     ];

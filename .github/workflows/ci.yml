@@ -30,6 +30,8 @@ jobs:
         run: git diff --exit-code -- package.json package-lock.json
       - run: npm run typecheck
       - run: npm run build
+      - name: Verify public API export inventory
+        run: npm run test:api
       - name: Verify npm tarball in an independent ESM TypeScript consumer
         run: npm run test:consumer
       - run: npm run build:fixture

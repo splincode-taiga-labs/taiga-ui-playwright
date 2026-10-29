@@ -105,7 +105,29 @@ export abstract class TuiOptionsField {
         const overlay = await this.getOverlay();
         const expanded = await this.input.getAttribute('aria-expanded');
 
-        if (expanded === 'true' || (this.config.overlay && await overlay.isVisible())) {
+        if (expanded === 'true') {
+            // Async option updates can detach an expanded Taiga dropdown. A stale
+            // aria-controls id must not leave us waiting on a destroyed portal.
+            // ArrowDown asks the focused input to reopen without toggling it closed.
+            await expect.poll(async () => {
+                const current = await this.getOverlay();
+
+                if (!this.config.overlay && !this.linkedOverlayId && await current.count() > 1) {
+                    throw new Error(AMBIGUOUS_OVERLAY);
+                }
+
+                if (await current.isVisible()) {
+                    return true;
+                }
+
+                await this.input.press('ArrowDown');
+                return (await this.getOverlay()).isVisible();
+            }, {message: 'Expected the field-owned Taiga UI dropdown to reopen'})
+                .toBe(true);
+            return;
+        }
+
+        if (this.config.overlay && await overlay.isVisible()) {
             await this.assertUnambiguous(overlay);
             return;
         }

@@ -36,6 +36,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test:consumer": "node scripts/verify-consumer.mjs",
     "test:pack": "node scripts/verify-packlist.mjs",
+    "test:api": "node scripts/verify-public-api.mjs",
     "test:consumer:angular": "node scripts/verify-angular-consumer.mjs",
     "test": "playwright test",
     "verify": "npm run typecheck && npm run build && npm run build:fixture && npm test",
