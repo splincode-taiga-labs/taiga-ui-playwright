@@ -1,6 +1,6 @@
 # Publishing @taiga-ui-labs/playwright to npm
 
-This is an unofficial, independently maintained Taiga UI v5 Playwright library. The npm package is **experimental before 1.0**. The public API and compatibility policy are tracked in [issue #86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86).
+This is an unofficial, independently maintained Taiga UI v5 Playwright library. The npm package remains **pre-1.0 until the final tag is published**. The public API and compatibility policy are tracked in [issue #86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86).
 
 ## Current published release
 
@@ -33,9 +33,9 @@ git push origin "v$VERSION"
 
 First agree on and document the supported public API (not just names), Taiga/Angular/Node/Playwright compatibility promise, and error/overlay behavior. See [public API draft](public-api.md) and [tested compatibility](api-upstream-compatibility.md). All 133 catalog mappings are **not** a claim of exhaustive behavior coverage.
 
-When issue #86's pre-RC requirements are satisfied:
+The `release/1.0.0-rc.1` proposal keeps the 266 root exports and adds packed-export/type-contract checks. **Do not tag an unreviewed RC branch.** When pre-RC requirements are satisfied and its PR is green:
 
-1. Prepare a separately reviewed `1.0.0-rc.1` version bump and changelog; do not publish a final `1.0.0` yet.
+1. Review and merge the `1.0.0-rc.1` version bump, API contract, compatibility notes and changelog; do not publish final `1.0.0` yet.
 2. Merge it only with green CI, then tag the reviewed `main` commit as `v1.0.0-rc.1`.
 3. The protected OIDC workflow publishes the candidate under npm dist-tag `next`, leaving `latest` unaffected.
 4. Trigger the CI workflow manually with `npm_version=1.0.0-rc.1`. Verify registry install, tarball footprint, TypeScript contracts and real Angular browser behavior; resolve regressions.
