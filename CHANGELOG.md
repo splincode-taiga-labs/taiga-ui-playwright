@@ -2,6 +2,12 @@
 
 This project is experimental and independently maintained; the public API may change before 1.0.
 
+## 0.1.2 — pending publication
+
+- Prepare a patch release containing the runtime-only npm packlist fix from PR #85. Unlike the already-published 0.1.1 archive, the new tarball excludes generated Angular fixtures and documentation. The local tarball is guarded by `npm run test:pack`; the **published** package still needs verification after release.
+- Include the independent registry Angular consumer checks from PR #87 and public export inventory/type-contract checks from PR #88, as well as the WebKit asynchronous ComboBox portal recovery covered by real browser regressions.
+- Keep the API experimental: this patch release does not freeze the 266 named exports or approve 1.0.0. See [1.0 readiness issue #86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86).
+
 ## 0.1.1 — 2026-10-27
 
 - Released `@taiga-ui-labs/playwright@0.1.1` publicly on npm through GitHub Actions Trusted Publishing (OIDC), with signed provenance.
