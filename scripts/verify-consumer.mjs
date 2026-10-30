@@ -105,7 +105,7 @@ try {
         '    const dialogCloseButton: Locator = expectedDialog.closeButton;',
         '    const dialogAction: Locator = expectedDialog.button("Save");',
         '    const dialogClick: Promise<void> = expectedDialog.clickButton("Save");',
-                '    const tabs = tuiTabs(host);',
+        '    const tabs = tuiTabs(host);',
         '    const tab: Locator = tabs.tab("Details");',
         '    const activation: Promise<void> = tabs.select("Details");',
         '    void [input, option, overlay, labels, value, selection, tab, activation, expectedCombo, expectedDialog,',
