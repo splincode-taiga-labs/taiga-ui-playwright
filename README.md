@@ -9,7 +9,7 @@
 - **Easy to read:** `selectOption('Estonia')`, `fill('Tall')`, `select('Details')`.
 - **Ready to explore:** [Browse the component harnesses and examples](https://splincode-taiga-labs.github.io/taiga-ui-playwright/).
 
-> Community-maintained and **unofficial**. Currently experimental and focused on Taiga UI v5. Tested against Angular 20.3 and Taiga UI 5.28; other versions are not guaranteed.
+> Community-maintained and **unofficial**. Preparing a **1.0.0-rc.1** API contract; the current npm `latest` remains `0.1.2` until a separate final release decision. Tested with Angular 20.3 / Taiga UI 5.28; other versions require validation.
 
 ## Install
 
@@ -78,7 +78,7 @@ See the [interactive harness catalog](https://splincode-taiga-labs.github.io/tai
 
 For contributors and maintainers:
 
-- [Contributing](CONTRIBUTING.md) · [Public API draft](docs/public-api.md) · [Compatibility](docs/api-upstream-compatibility.md)
+- [Contributing](CONTRIBUTING.md) · [1.0 API contract proposal](docs/public-api.md) · [Compatibility](docs/api-upstream-compatibility.md)
 - [Changelog](CHANGELOG.md) · [npm release process](docs/npm-release.md) · [Issues and feature requests](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues)
 
 Local development:
@@ -88,5 +88,7 @@ npm ci
 npx playwright install chromium
 npm run verify
 ```
+
+**1.0 release policy:** all 266 package-root exports are retained for the candidate. See the [API contract](docs/public-api.md), [tested support matrix](docs/api-upstream-compatibility.md) and [release gate #86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86). The 133 mapped harnesses are not a claim of exhaustive browser coverage.
 
 MIT licensed. This project is not affiliated with the Taiga UI maintainers.

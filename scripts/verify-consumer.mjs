@@ -97,10 +97,19 @@ try {
         '    const labels: Promise<string[]> = expectedSelect.getOptionLabels();',
         '    const value: Promise<string> = expectedSelect.getValue();',
         '    const selection: Promise<void> = expectedSelect.selectOption("Estonia");',
+        '    const opening: Promise<void> = expectedSelect.open();',
+        '    const closing: Promise<void> = expectedSelect.close();',
+        '    const optionList: Locator = expectedSelect.options;',
+        '    const comboFill: Promise<void> = expectedCombo.fill("Tall");',
+        '    const dialogTitle: Locator = expectedDialog.title;',
+        '    const dialogCloseButton: Locator = expectedDialog.closeButton;',
+        '    const dialogAction: Locator = expectedDialog.button("Save");',
+        '    const dialogClick: Promise<void> = expectedDialog.clickButton("Save");',
         '    const tabs = tuiTabs(host);',
         '    const tab: Locator = tabs.tab("Details");',
         '    const activation: Promise<void> = tabs.select("Details");',
-        '    void [input, option, overlay, labels, value, selection, tab, activation, expectedCombo, expectedDialog];',
+        '    void [input, option, overlay, labels, value, selection, tab, activation, expectedCombo, expectedDialog,',
+        '          opening, closing, optionList, comboFill, dialogTitle, dialogCloseButton, dialogAction, dialogClick];',
         '}',
         '',
     ].join('\n'));
@@ -115,12 +124,21 @@ try {
         join(consumer, 'node_modules', 'typescript', 'bin', 'tsc'),
         '--project', join(consumer, 'tsconfig.json'),
     ], consumer);
+    // Check actual ESM exports from the packed package, not only TS source declarations.
+    const inventory = JSON.parse(await readFile(join(root, 'docs/public-api.exports.json'), 'utf8'));
+    const runtimeExports = inventory.exports.filter((name) => !name.startsWith('type '));
     await run(process.execPath, [
         '--input-type=module',
         '--eval',
-        "import {tuiSelect, tuiComboBox, tuiDialog} from '@taiga-ui-labs/playwright'; " +
-        "if ([tuiSelect, tuiComboBox, tuiDialog].some((value) => typeof value !== 'function')) " +
-        "throw new Error('Missing ESM factory export');",
+        "import * as api from '@taiga-ui-labs/playwright'; " +
+        'const expected = ' + JSON.stringify(runtimeExports) + '; ' +
+        "const actual = Object.keys(api).sort(); " +
+        "if (JSON.stringify(actual) !== JSON.stringify(expected)) " +
+        "throw new Error('Packed ESM exports mismatch: ' + JSON.stringify({" +
+        "missing: expected.filter((name) => !(name in api)), " +
+        "unexpected: actual.filter((name) => !expected.includes(name))})); " +
+        "if (actual.some((name) => typeof api[name] !== 'function')) " +
+        "throw new Error('A runtime API export is not a class or factory');",
     ], consumer);
 
     process.stdout.write('Packed ' + artifact.filename + ', validated ' + paths.length +
