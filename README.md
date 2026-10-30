@@ -9,7 +9,7 @@
 - **Easy to read:** `selectOption('Estonia')`, `fill('Tall')`, `select('Details')`.
 - **Ready to explore:** [Browse the component harnesses and examples](https://splincode-taiga-labs.github.io/taiga-ui-playwright/).
 
-> Community-maintained and **unofficial**. Preparing a **1.0.0-rc.1** API contract; the current npm `latest` remains `0.1.2` until a separate final release decision. Tested with Angular 20.3 / Taiga UI 5.28; other versions require validation.
+> Community-maintained and **unofficial**. Preparing a **1.0.0-rc.2** API contract; the current npm `latest` remains `0.1.2` until a separate final release decision. Tested with Angular 20.3 / Taiga UI 5.28; other versions require validation.
 
 ## Install
 

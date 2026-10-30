@@ -1,6 +1,6 @@
 # Public API contract — 1.0 release candidate
 
-**Status:** proposed 1.0 contract for `1.0.0-rc.1`, subject to review and [maintainer GO in #86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86). An RC is not the final 1.0 compatibility commitment.
+**Status:** proposed 1.0 contract for `1.0.0-rc.2`, subject to review and [maintainer GO in #86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86). An RC is not the final 1.0 compatibility commitment.
 
 ## Stable surface proposed for 1.x
 
@@ -50,4 +50,4 @@ Do not use deep `dist/` imports. There is no compatibility facade for the propos
 
 ## Final-release gate
 
-Before `1.0.0`: publish `1.0.0-rc.1` under npm dist-tag `next` through the protected workflow; run CI against that **registry** version, verify signed provenance and exact archive contents, and confirm the full browser/consumer matrix. Final `1.0.0` requires an explicit maintainer GO in [issue #86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86). Do not tag final 1.0 solely because the RC was built.
+Before `1.0.0`: publish `1.0.0-rc.2` under npm dist-tag `next` through the protected workflow; run CI against that **registry** version, verify signed provenance and exact archive contents, and confirm the full browser/consumer matrix. Final `1.0.0` requires an explicit maintainer GO in [issue #86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86). Do not tag final 1.0 solely because the RC was built.

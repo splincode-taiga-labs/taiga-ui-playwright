@@ -29,16 +29,18 @@ git push origin "v$VERSION"
 
 **Never** republish an existing npm package version, set long-lived npm tokens, run an unverified manual `npm publish`, or push a version tag before the release PR is merged and the `main` CI is green. The `v0.1.0` bootstrap exception is historical and is intentionally excluded from tag publishing.
 
-## Preparing a 1.0 release candidate
+## Recovering the first 1.0 release candidate
 
-First agree on and document the supported public API (not just names), Taiga/Angular/Node/Playwright compatibility promise, and error/overlay behavior. See [public API draft](public-api.md) and [tested compatibility](api-upstream-compatibility.md). All 133 catalog mappings are **not** a claim of exhaustive behavior coverage.
+- `v1.0.0-rc.1` was pushed from merged `main` on 2026-10-30. [All five release verification jobs passed](https://github.com/splincode-taiga-labs/taiga-ui-playwright/actions/runs/41076966713), but the final publish job failed **before npm publication** because npm requires an explicit dist-tag in `npm publish --dry-run` for prerelease versions.
+- Keep the historical `v1.0.0-rc.1` Git tag unchanged. The corrected release is **`1.0.0-rc.2`** with the same runtime API as rc.1.
+- The workflow now computes one dist-tag and passes it to both the dry-run and real `npm publish`: **`next`** for prereleases and **`latest`** for stable versions. PR/main CI additionally exercises the npm dry-run with the appropriate tag.
 
-The `release/1.0.0-rc.1` proposal keeps the 266 root exports and adds packed-export/type-contract checks. **Do not tag an unreviewed RC branch.** When pre-RC requirements are satisfied and its PR is green:
+### Publish `1.0.0-rc.2`
 
-1. Review and merge the `1.0.0-rc.1` version bump, API contract, compatibility notes and changelog; do not publish final `1.0.0` yet.
-2. Merge it only with green CI, then tag the reviewed `main` commit as `v1.0.0-rc.1`.
-3. The protected OIDC workflow publishes the candidate under npm dist-tag `next`, leaving `latest` unaffected.
-4. Trigger the CI workflow manually with `npm_version=1.0.0-rc.1`. Verify registry install, tarball footprint, TypeScript contracts and real Angular browser behavior; resolve regressions.
-5. Request an explicit maintainer GO in #86 before any final `v1.0.0` tag.
+1. Review and merge the RC2 fix PR, with its version bump, changelog and workflow change. Verify the full [CI workflow](https://github.com/splincode-taiga-labs/taiga-ui-playwright/actions/workflows/ci.yml) is green both on the PR and on the resulting `main` commit.
+2. Confirm that `package.json` and `package-lock.json` both declare `1.0.0-rc.2`; from the reviewed and merged `main`, create and push tag `v1.0.0-rc.2`. **Do not move `v1.0.0-rc.1`.**
+3. Confirm that the protected npm OIDC workflow publishes `@taiga-ui-labs/playwright@1.0.0-rc.2` with the `next` dist-tag, leaving `latest` at the current stable release `0.1.2`.
+4. Verify the npm registry tarball, integrity and signed provenance. Trigger **Actions → CI → Run workflow** with `npm_version=1.0.0-rc.2` to exercise that exact published version from npm in a clean real Angular/Taiga UI consumer.
+5. Review results and request an explicit maintainer GO in [issue #86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86) before preparing and tagging the **final** `1.0.0`. The 133 mapped harnesses do not imply exhaustive browser coverage.
 
-The release workflow uses Node 24 with a supported npm 11 version and requests short-lived OIDC credentials; the package's consumer runtime support is a separate compatibility question. See [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers/) for details.
+The release workflow uses Node 24 with npm 11 and short-lived OIDC credentials; no long-lived `NPM_TOKEN` should be introduced. See [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers/) for details.
