@@ -120,8 +120,10 @@ try {
     const packages = [
         '@angular/build', '@angular/cli', '@angular/cdk', '@angular/common',
         '@angular/compiler', '@angular/compiler-cli', '@angular/core',
-        '@angular/forms', '@angular/platform-browser', '@angular/router', '@ng-web-apis/common',
-        '@ng-web-apis/platform',
+        '@angular/forms', '@angular/platform-browser', '@angular/router',
+        // Keep Web APIs peers from the same tested lockfile family: a newer
+        // mutation-observer patch can require a newer common patch.
+        '@ng-web-apis/common', '@ng-web-apis/mutation-observer', '@ng-web-apis/platform',
         // Taiga UI allows compatible Maskito peers, but mixed patches can
         // conflict (e.g. phone 5.6.1 requires kit ^5.6.1). Pin the tested family.
         '@maskito/angular', '@maskito/core', '@maskito/kit', '@maskito/phone',
