@@ -160,10 +160,11 @@ jobs:
           files=(./release-artifact/*.tgz)
           test "${#files[@]}" -eq 1
           test -f "${files[0]}"
-          # Catch local tarball path resolution errors before a real registry write.
-          npm publish "${files[0]}" --dry-run --ignore-scripts --access public
+          # npm requires an explicit dist-tag even for a prerelease dry-run.
+          # Select it once so the dry-run tests the actual publish configuration.
+          dist_tag=latest
           if [[ "$GITHUB_REF_NAME" == *-* ]]; then
-            npm publish "${files[0]}" --access public --tag next
-          else
-            npm publish "${files[0]}" --access public --tag latest
+            dist_tag=next
           fi
+          npm publish "${files[0]}" --dry-run --ignore-scripts --access public --tag "$dist_tag"
+          npm publish "${files[0]}" --access public --tag "$dist_tag"
