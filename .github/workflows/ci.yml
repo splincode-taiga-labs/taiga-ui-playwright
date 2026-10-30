@@ -38,6 +38,15 @@ jobs:
       - run: npm run build:docs:pages
       - name: Assert npm tarball excludes Angular fixture and docs
         run: npm run test:pack
+      - name: Exercise npm prepublish for stable and prerelease versions
+        shell: bash
+        run: |
+          version="$(node -p 'require("./package.json").version')"
+          dist_tag=latest
+          if [[ "$version" == *-* ]]; then
+            dist_tag=next
+          fi
+          npm publish --dry-run --ignore-scripts --access public --tag "$dist_tag"
       - run: npx playwright install --with-deps chromium
       - name: Smoke test Angular fixture bootstrap
         run: npx playwright test integration/bootstrap.spec.ts --project=integration --reporter=list
