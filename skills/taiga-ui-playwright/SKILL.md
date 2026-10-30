@@ -5,7 +5,7 @@ description: Write, debug, and review reliable Playwright tests for Angular appl
 
 # Taiga UI Playwright
 
-Use `@taiga-ui-labs/playwright` to test **real Taiga UI behavior** with Playwright locators. This is an independent, experimental library, not an official Taiga UI package or a replacement for `@playwright/test`.
+Use `@taiga-ui-labs/playwright` to test **real Taiga UI behavior** with Playwright locators. This is an independent library, not an official Taiga UI package or a replacement for `@playwright/test`. The 1.0 public API is under RC review; check the installed package version and its exported declarations before generating code.
 
 ## Before writing a test
 
@@ -53,7 +53,7 @@ These test IDs, URL and labels are **examples**, not selectors that can be copie
 - Verify observable user-visible state **and**, when available, Angular form state. Check disabled, asynchronous and ambiguous-option cases.
 - Avoid `waitForTimeout`, `force: true`, brittle CSS internals and unscoped `.first()` workarounds. Use auto-waiting and explicit, meaningful assertions.
 - If options are virtualized, only DOM-mounted options can be selected; scroll or search using the app's real UI.
-- Do not imply that 133 catalog mappings mean complete behavior coverage. The tested baseline is Angular 20.3 / Taiga UI 5.28, Playwright >=1.51 <2; validate other versions in the target project.
+- Do not imply that 133 catalog mappings mean complete behavior coverage. The tested baseline is Angular 20.3 / Taiga UI 5.28, Playwright **1.51.0 and 1.64.1**; the broader declared peer range `>=1.51 <2` is not fully tested. Validate other versions in the target project.
 
 ## Verify
 
@@ -70,3 +70,4 @@ If troubleshooting or extending this library itself, read its [contributing guid
 - [Interactive harness catalog and examples](https://splincode-taiga-labs.github.io/taiga-ui-playwright/)
 - [GitHub source and TypeScript exports](https://github.com/splincode-taiga-labs/taiga-ui-playwright/blob/main/src/index.ts)
 - [npm package](https://www.npmjs.com/package/@taiga-ui-labs/playwright)
+- [Proposed 1.0 API contract](https://github.com/splincode-taiga-labs/taiga-ui-playwright/blob/main/docs/public-api.md)
