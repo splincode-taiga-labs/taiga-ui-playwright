@@ -1,8 +1,15 @@
 # Changelog
 
-This is an independently maintained Taiga UI v5 Playwright library. Before final `1.0.0`, the public API is a release candidate and may still change.
+This is an independently maintained Taiga UI v5 Playwright library. The `1.x` public API follows the [documented compatibility contract](docs/public-api.md) and SemVer.
 
-## 1.0.0-rc.2 — release candidate (not published)
+## 1.0.0 — stable API
+
+- Graduate the existing Locator-first public API to SemVer 1.x without runtime behavior, selector, or exported-name changes from `1.0.0-rc.2`.
+- Preserve all 266 named root exports, including the type-only options contract, and document overlay ownership, ambiguous options and error semantics.
+- Keep compatibility claims to the verified baseline: Angular 20.3.0, Taiga UI 5.28.0, Playwright 1.51.0 and 1.64.1, Node 20.19.0 for the minimal consumer and Node 24 for browser integration.
+- Publish through the existing protected GitHub Actions / npm OIDC workflow using the `latest` dist-tag. Do not claim broader browser or Taiga UI version coverage without tests.
+
+## 1.0.0-rc.2 — release candidate
 
 - Retry the 1.0 release candidate using the **same runtime API and behavior as rc.1**. The first tagged attempt passed all five verification jobs but stopped at `npm publish --dry-run` before any registry write because npm requires `--tag` for prereleases, including dry-runs.
 - Fix the publishing workflow to pass the **same explicit dist-tag** to both the dry-run and actual publish (`next` for prereleases, `latest` for stable versions).

@@ -5,7 +5,7 @@ description: Write, debug, and review reliable Playwright tests for Angular appl
 
 # Taiga UI Playwright
 
-Use `@taiga-ui-labs/playwright` to test **real Taiga UI behavior** with Playwright locators. This is an independent library, not an official Taiga UI package or a replacement for `@playwright/test`. The 1.0 public API is under RC review; check the installed package version and its exported declarations before generating code.
+Use `@taiga-ui-labs/playwright` to test **real Taiga UI behavior** with Playwright locators. This is an independent library, not an official Taiga UI package or a replacement for `@playwright/test`. The 1.x API contract is stable once the final release is published; always check the installed package version and its exported declarations before generating code.
 
 ## Before writing a test
 
@@ -70,4 +70,4 @@ If troubleshooting or extending this library itself, read its [contributing guid
 - [Interactive harness catalog and examples](https://splincode-taiga-labs.github.io/taiga-ui-playwright/)
 - [GitHub source and TypeScript exports](https://github.com/splincode-taiga-labs/taiga-ui-playwright/blob/main/src/index.ts)
 - [npm package](https://www.npmjs.com/package/@taiga-ui-labs/playwright)
-- [Proposed 1.0 API contract](https://github.com/splincode-taiga-labs/taiga-ui-playwright/blob/main/docs/public-api.md)
+- [1.x API contract](https://github.com/splincode-taiga-labs/taiga-ui-playwright/blob/main/docs/public-api.md)

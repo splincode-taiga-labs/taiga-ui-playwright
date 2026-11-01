@@ -1,10 +1,10 @@
-# Public API contract — 1.0 release candidate
+# Public API contract — 1.x
 
-**Status:** proposed 1.0 contract for `1.0.0-rc.2`, subject to review and [maintainer GO in #86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86). An RC is not the final 1.0 compatibility commitment.
+**Status:** frozen for the final `1.0.0` release. The maintainer approved stable 1.0 on 2026-11-01. The compatibility commitment begins when the final version is published; release verification remains tracked in [#86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86).
 
-## Stable surface proposed for 1.x
+## Stable surface for 1.x
 
-The only supported entrypoint is the ESM package root, `@taiga-ui-labs/playwright`. The existing **266 named exports** remain available without renaming or removal relative to `0.1.2` (including the type-only `TuiOptionsFieldOptions`). These exported factories, classes and public TypeScript declarations are **all part of the proposed 1.x API**. We are **not** treating some root exports as undocumented internal APIs.
+The only supported entrypoint is the ESM package root, `@taiga-ui-labs/playwright`. The existing **266 named exports** remain available without renaming or removal relative to `0.1.2` (including the type-only `TuiOptionsFieldOptions`). These exported factories, classes and public TypeScript declarations are **all part of the 1.x API**. We are **not** treating some root exports as undocumented internal APIs.
 
 The [reviewed export inventory](public-api.exports.json) and `npm run test:api` prohibit unreviewed name changes. `npm run test:consumer` checks that every runtime export resolves from a standalone **packed** npm package, and type-checks representative public methods using NodeNext. Runtime behavior is covered by fixture/browser tests at the verified baseline.
 
@@ -29,7 +29,7 @@ There are **133 mapped Taiga UI components**, but a mapping is not a promise of 
 - Error types include Playwright assertion/timeout errors and explicit `Error` for ambiguous ownership, duplicate options or missing dialog close controls. **Human-readable error messages are diagnostic, not exact-string compatibility contracts.** Do not assert entire error messages in consumer tests.
 - Helpers use Playwright locators and auto-waiting; they do not control Angular change detection or install a separate test runner.
 
-## Compatibility policy proposed for 1.0
+## Tested compatibility baseline for 1.0
 
 | Layer | Verified and supportable baseline | Not verified by this release |
 | --- | --- | --- |
@@ -38,7 +38,7 @@ There are **133 mapped Taiga UI components**, but a mapping is not a promise of 
 | Playwright | **1.51.0** and **1.64.1** consumer matrix | Every intermediate version accepted by the declared `>=1.51.0 <2` peer range |
 | Node.js | **20.19.0** for ESM consumer; **24** for browser/Angular tests | All other versions allowed by the `>=20` engine range |
 | Browsers | Full Chromium fixture/docs; targeted Firefox, WebKit and mobile Chromium smoke | Full behavior of every helper across every browser |
-| npm package | Published **0.1.2** registry consumer; 123-file runtime/declaration tarball with signed OIDC provenance | Published 1.0 RC until it is cut and independently tested |
+| npm package | Verified signed OIDC release path, packed consumer tests and published registry Angular consumer | Untested future versions and unverified tarballs |
 
 This matrix is the **tested support baseline**, not a claim that every other compatible version fails. The broad npm peer/engine ranges indicate installability, not the breadth of integration evidence. Taiga UI DOM changes can affect a helper even in a minor version; assess newly supported versions in CI before documenting them as verified. There is no official upstream endorsement or guaranteed response-time SLA.
 
@@ -50,4 +50,4 @@ Do not use deep `dist/` imports. There is no compatibility facade for the propos
 
 ## Final-release gate
 
-Before `1.0.0`: publish `1.0.0-rc.2` under npm dist-tag `next` through the protected workflow; run CI against that **registry** version, verify signed provenance and exact archive contents, and confirm the full browser/consumer matrix. Final `1.0.0` requires an explicit maintainer GO in [issue #86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86). Do not tag final 1.0 solely because the RC was built.
+The maintainer approved final `1.0.0` on 2026-11-01. Before tagging the final release, the published `1.0.0-rc.2` must pass an independent npm **registry** Angular consumer, with signed provenance and verified archive contents, and the final release commit must pass CI. The protected OIDC workflow publishes final `1.0.0` to `latest`; verify the **published final** package through the registry consumer before closing [#86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86).

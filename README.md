@@ -9,7 +9,7 @@
 - **Easy to read:** `selectOption('Estonia')`, `fill('Tall')`, `select('Details')`.
 - **Ready to explore:** [Browse the component harnesses and examples](https://splincode-taiga-labs.github.io/taiga-ui-playwright/).
 
-> Community-maintained and **unofficial**. Preparing a **1.0.0-rc.2** API contract; the current npm `latest` remains `0.1.2` until a separate final release decision. Tested with Angular 20.3 / Taiga UI 5.28; other versions require validation.
+> Community-maintained and **unofficial**. The **1.0 public API** preserves 266 named exports. Tested with Angular 20.3 / Taiga UI 5.28; other versions require validation.
 
 ## Install
 
@@ -89,6 +89,6 @@ npx playwright install chromium
 npm run verify
 ```
 
-**1.0 release policy:** all 266 package-root exports are retained for the candidate. See the [API contract](docs/public-api.md), [tested support matrix](docs/api-upstream-compatibility.md) and [release gate #86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86). The 133 mapped harnesses are not a claim of exhaustive browser coverage.
+**1.x compatibility policy:** 266 package-root exports are covered by the [API contract](docs/public-api.md) and the [tested support matrix](docs/api-upstream-compatibility.md). The 133 mapped harnesses are not a claim of exhaustive browser coverage.
 
 MIT licensed. This project is not affiliated with the Taiga UI maintainers.
