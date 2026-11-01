@@ -1,7 +1,7 @@
 {
   "name": "@taiga-ui-labs/playwright",
-  "version": "1.0.0-rc.2",
-  "description": "Experimental Playwright-native element objects for Taiga UI",
+  "version": "1.0.0",
+  "description": "Playwright-native element objects for Taiga UI",
   "license": "MIT",
   "type": "module",
   "repository": {

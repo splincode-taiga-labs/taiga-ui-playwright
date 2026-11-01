@@ -1,6 +1,6 @@
 # API, compatibility, and upstream review
 
-Initial compatibility review: 2026-10-19. 1.0 release candidate preparation: 2026-10-30. This is an **independently maintained package**, not an official Taiga UI distribution. The 1.0 API contract is proposed in [public-api.md](public-api.md), pending RC validation and maintainer GO.
+Initial compatibility review: 2026-10-19. 1.0 release candidate preparation: 2026-10-30. This is an **independently maintained package**, not an official Taiga UI distribution. The frozen 1.x API contract is documented in [public-api.md](public-api.md); final publication remains gated on verified release artifacts.
 
 ## Upstream comparison
 
@@ -65,12 +65,12 @@ npm run test:consumer
 
 This creates an npm tarball in a temporary directory, checks its files, installs it **outside this repository**, type-checks a NodeNext ESM consumer, and verifies runtime imports. By default it uses the lockfile's Playwright version. Set `CONSUMER_PLAYWRIGHT_VERSION=1.51.0` to test the declared minimum; CI verifies this on Node 20.19.0 as well as the lockfile version on Node 24. No publish, tag, credential or registry write is performed.
 
-## Release status and 1.0 readiness
+## Release validation
 
 **0.1.2 is published** through the protected [GitHub Actions workflow](https://github.com/splincode-taiga-labs/taiga-ui-playwright/actions/runs/41048920224) with npm Trusted Publishing, signed provenance and a **123-file** runtime-only archive. The previous `0.1.1` package remains immutable and includes unrelated fixture/docs output; PR #85's packaging fix shipped in `0.1.2`.
 
 **Published registry consumer verified:** `CONSUMER_REGISTRY_VERSION=0.1.2 npm run test:consumer:angular` installs exact `0.1.2` from npm (not a `file:` archive), checks the resolved tarball URL and integrity, type-checks package imports, and runs real Angular 20 / Taiga UI 5 Select and ComboBox interactions. [PR #90 CI](https://github.com/splincode-taiga-labs/taiga-ui-playwright/actions/runs/41050281269) passed.
 
-The **1.0 candidate** retains the existing 266 named package-root exports and strengthens packaged ESM and TypeScript method-contract checks. See [the proposed 1.0 API contract](public-api.md). This is a SemVer commitment to the API after the **final 1.0 release**, not an assertion that every behavior of 133 mapped components has exhaustive browser coverage.
+The **1.0 contract** retains the existing 266 named package-root exports and strengthens packaged ESM and TypeScript method-contract checks. See [the frozen 1.0 API contract](public-api.md). This is a SemVer commitment to the API once the **final 1.0 release is published**, not an assertion that every behavior of 133 mapped components has exhaustive browser coverage.
 
-Before the final 1.0 tag: publish `1.0.0-rc.2` under npm dist-tag `next` (without disturbing `latest`), trigger **CI > Run workflow > npm_version=1.0.0-rc.2**, verify the registry artifact's source, signature and real browser behavior, and obtain an explicit maintainer GO in [issue #86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86). Upstream PR #14584 is still not an interchangeable published API.
+The maintainer approved final 1.0 on 2026-11-01. Before tagging it, independently verify the published `1.0.0-rc.2` on npm `next` with **CI > Run workflow > npm_version=1.0.0-rc.2**, confirm provenance and browser behavior, then require green CI on the final release commit. After publishing stable `1.0.0` to npm `latest`, repeat the registry consumer against exact `1.0.0` before closing [#86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86). Upstream PR #14584 is not an interchangeable published API.

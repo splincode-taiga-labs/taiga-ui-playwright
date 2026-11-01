@@ -1,10 +1,10 @@
 # Publishing @taiga-ui-labs/playwright to npm
 
-This is an unofficial, independently maintained Taiga UI v5 Playwright library. The npm package remains **pre-1.0 until the final tag is published**. The public API and compatibility policy are tracked in [issue #86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86).
+This is an unofficial, independently maintained Taiga UI v5 Playwright library. The 1.x API contract is documented in [public-api.md](public-api.md); publishing and registry validation are tracked in [issue #86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86).
 
-## Current published release
+## Previous 0.1.x release
 
-- `0.1.2` was published on 2026-10-30 through [GitHub Actions Trusted Publishing (OIDC)](https://github.com/splincode-taiga-labs/taiga-ui-playwright/actions/runs/41048920224) with a signed provenance statement. It was published to npm with the `latest` dist-tag.
+- `0.1.2` was published on 2026-10-30 through [GitHub Actions Trusted Publishing (OIDC)](https://github.com/splincode-taiga-labs/taiga-ui-playwright/actions/runs/41048920224) with a signed provenance statement. It was published to npm with the `latest` dist-tag at the time.
 - The verified release tarball contains **123 files / 47,760 packed bytes** (47.8 kB), excluding Angular fixtures and documentation bundles. The immutable `0.1.1` archive contained 9,188 files; PR #85 corrected the source packlist, and `0.1.2` shipped that correction.
 - CI now installs the actual published `0.1.2` from the npm registry in an isolated Angular/Taiga UI consumer. This is separate from the release's pre-publication checks of the local tarball.
 - The release workflow is [`.github/workflows/publish.yml`](../.github/workflows/publish.yml). It requires a matching tag on `main`, all verification jobs, and the protected GitHub `npm` environment.
@@ -25,9 +25,19 @@ git push origin "v$VERSION"
 
 4. Review the [publish workflow](https://github.com/splincode-taiga-labs/taiga-ui-playwright/actions/workflows/publish.yml). The workflow verifies the tag belongs to `main`, builds and checks the exact tarball, tests the browser/consumer matrix, and publishes that verified tarball through npm OIDC **after environment approval**. Stable versions use npm dist-tag `latest`; prereleases use `next`.
 5. Confirm that the npm registry contains the **new exact version**, the tarball contains only expected runtime/declaration files, and npm provenance is available. Run the CI workflow manually with `npm_version=<published-version>` to install and test the *published* artifact in an independent real Angular/Taiga UI consumer. Update both the workflow-dispatch default and `CONSUMER_REGISTRY_VERSION` fallback after validating the new release; PR CI should also pass against that published version.
-6. Record the publish and consumer run links in [issue #86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86). Publishing `0.1.2` alone does not close the 1.0 readiness issue.
+6. Record the publish and consumer run links in [issue #86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86). Close the 1.0 readiness issue only after the final published `1.0.0` passes its npm-registry consumer.
 
 **Never** republish an existing npm package version, set long-lived npm tokens, run an unverified manual `npm publish`, or push a version tag before the release PR is merged and the `main` CI is green. The `v0.1.0` bootstrap exception is historical and is intentionally excluded from tag publishing.
+
+## Stable 1.0.0 release
+
+The maintainer approved the 1.0 public API freeze on 2026-11-01. Stable release should contain **no runtime or exported API changes** relative to `1.0.0-rc.2`.
+
+1. Verify that npm has published exact `1.0.0-rc.2` under `next` with provenance and that **CI > Run workflow > npm_version=1.0.0-rc.2** passes against the public registry.
+2. Merge the `1.0.0` version, lockfile, docs and changelog PR after green CI; verify green `main` CI.
+3. Tag that merged `main` commit as `v1.0.0`, push the tag, and approve the protected `npm` environment if requested. The existing OIDC workflow uses `latest` for a stable tag.
+4. Confirm npm `latest=1.0.0`, verify signed provenance and the exact runtime-only tarball, and run **CI > Run workflow > npm_version=1.0.0** to validate the published package in a clean Angular/Taiga UI consumer.
+5. Only after that verification, close [#86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86) and update the CI registry-consumer default to `1.0.0` in a follow-up PR. Keep the default at the already-published `0.1.2` until the stable version actually exists on npm.
 
 ## Recovering the first 1.0 release candidate
 
@@ -41,6 +51,6 @@ git push origin "v$VERSION"
 2. Confirm that `package.json` and `package-lock.json` both declare `1.0.0-rc.2`; from the reviewed and merged `main`, create and push tag `v1.0.0-rc.2`. **Do not move `v1.0.0-rc.1`.**
 3. Confirm that the protected npm OIDC workflow publishes `@taiga-ui-labs/playwright@1.0.0-rc.2` with the `next` dist-tag, leaving `latest` at the current stable release `0.1.2`.
 4. Verify the npm registry tarball, integrity and signed provenance. Trigger **Actions → CI → Run workflow** with `npm_version=1.0.0-rc.2` to exercise that exact published version from npm in a clean real Angular/Taiga UI consumer.
-5. Review results and request an explicit maintainer GO in [issue #86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86) before preparing and tagging the **final** `1.0.0`. The 133 mapped harnesses do not imply exhaustive browser coverage.
+5. Review RC2 registry results before tagging the **final** `1.0.0`, as described above. The maintainer already approved the release on 2026-11-01. The 133 mapped harnesses do not imply exhaustive browser coverage.
 
 The release workflow uses Node 24 with npm 11 and short-lived OIDC credentials; no long-lived `NPM_TOKEN` should be introduced. See [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers/) for details.
