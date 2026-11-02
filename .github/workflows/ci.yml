@@ -46,7 +46,14 @@ jobs:
           if [[ "$version" == *-* ]]; then
             dist_tag=next
           fi
-          npm publish --dry-run --ignore-scripts --access public --tag "$dist_tag"
+          # npm refuses --dry-run for versions already published to the registry.
+          # The packlist has already been verified in the step above.
+          published="$(npm view "@taiga-ui-labs/playwright@$version" version --registry=https://registry.npmjs.org/ 2>/dev/null || true)"
+          if [[ "$published" == "$version" ]]; then
+            echo "Version $version is already published; skipping immutable npm publish --dry-run."
+          else
+            npm publish --dry-run --ignore-scripts --access public --tag "$dist_tag"
+          fi
       - run: npx playwright install --with-deps chromium
       - name: Smoke test Angular fixture bootstrap
         run: npx playwright test integration/bootstrap.spec.ts --project=integration --reporter=list
