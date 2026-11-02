@@ -13,12 +13,28 @@ test('Files expands hidden document items from a real TuiFiles template', async 
     await files.expectFile('File alpha.txt');
     await files.expand();
     await files.expectFile('File gamma.txt');
+
+    // Repeated expand() must not collapse an already expanded list.
+    await files.expand();
+    await files.expectFile('File gamma.txt');
 });
 
 test('Tree updates its rendered root when the bound value changes', async ({page}) => {
     const tree = tuiTree(page.getByTestId('tree-widget'));
     await tree.expectNode('Initial tree node');
     await page.getByRole('button', {name: 'Update tree'}).click();
+    await tree.expectNode('Updated tree node');
+});
+
+test('Tree finds a matching node when multiple sibling items exist', async ({page}) => {
+    await page.setContent(`
+        <tui-tree role="tree">
+            <tui-tree-item>Initial tree node</tui-tree-item>
+            <tui-tree-item>Updated tree node</tui-tree-item>
+        </tui-tree>
+    `);
+
+    const tree = tuiTree(page.locator('tui-tree'));
     await tree.expectNode('Updated tree node');
 });
 
