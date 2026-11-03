@@ -3,8 +3,15 @@ import {expect, type Locator} from '@playwright/test';
 export class TuiFilesHarness {
     public constructor(public readonly host: Locator) {}
     public async expand(): Promise<void> {
+        const panel = this.host.locator('tui-expand');
+
+        // The expand button can become a collapse action after the first click.
+        if (await panel.evaluate((node) => node.classList.contains('_expanded'))) {
+            return;
+        }
+
         await this.host.locator('.t-bottom button').click();
-        await expect(this.host.locator('tui-expand')).toHaveClass(/(?:^|\s)_expanded(?:\s|$)/);
+        await expect(panel).toHaveClass(/(?:^|\s)_expanded(?:\s|$)/);
     }
     public async expectFile(name: string): Promise<void> {
         await expect(this.host).toContainText(name);
@@ -15,7 +22,8 @@ export class TuiTreeHarness {
     public constructor(public readonly host: Locator) {}
     public async expectNode(text: string): Promise<void> {
         await expect(this.host).toHaveRole('tree');
-        await expect(this.host.locator('tui-tree-item')).toContainText(text);
+        // A real tree can contain multiple items. Assert against matching nodes only.
+        await expect(this.host.locator('tui-tree-item').filter({hasText: text}).first()).toContainText(text);
     }
 }
 
