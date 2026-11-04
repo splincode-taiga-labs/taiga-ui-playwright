@@ -246,7 +246,7 @@ try {
         },
         'package-contract.mts': [
             "import type {Locator} from '@playwright/test';",
-            "import {tuiSelect, tuiComboBox, tuiDialog, type TuiOptionsFieldOptions} from '@taiga-ui-labs/playwright';",
+            `import {tuiSelect, tuiComboBox, tuiDialog, type TuiOptionsFieldOptions} from '${entrypoint}';`,
             'export function assertTypedConsumer(host: Locator): void {',
             '  const select: ReturnType<typeof tuiSelect> = tuiSelect(host);',
             '  const options: TuiOptionsFieldOptions = {overlay: host.page().locator("tui-dropdown")};',
@@ -267,12 +267,16 @@ try {
             "bootstrapApplication(ConsumerApp, {providers: [provideZonelessChangeDetection(), provideTaiga()]})",
             "    .catch((error: unknown) => console.error(error));",
         ].join('\n'),
-        'src/app.html': "<tui-root><main>\n  <tui-textfield data-testid=\"country-field\" tuiChevron>\n    <input aria-label=\"Country\" tuiSelect [formControl]=\"country\" />\n    <tui-data-list-wrapper *tuiDropdown [items]=\"countries\" />\n  </tui-textfield>\n  <output data-testid=\"country-model\">{{ country.value }}</output>\n  <tui-textfield data-testid=\"city-field\" tuiChevron>\n    <input aria-label=\"City\" tuiComboBox [formControl]=\"city\" />\n    <tui-data-list-wrapper *tuiDropdown [items]=\"cities | tuiFilterByInput\" />\n  </tui-textfield>\n  <output data-testid=\"city-model\">{{ city.value }}</output>\n</main></tui-root>",
+        'src/app.html': "<tui-root><main>\n  <tui-textfield data-testid=\"country-field\" tuiChevron>\n    <input aria-label=\"Country\" tuiSelect [formControl]=\"country\" />\n    <tui-data-list-wrapper *tuiDropdown [items]=\"countries\" />\n  </tui-textfield>\n  <output data-testid=\"country-model\">{{ country.value }}</output>\n  <tui-textfield data-testid=\"city-field\" tuiChevron>\n    <input aria-label=\"City\" tuiComboBox [formControl]=\"city\" />\n    <tui-data-list-wrapper *tuiDropdown [items]=\"cities | tuiFilterByInput\" />\n  </tui-textfield>\n  <output data-testid=\"city-model\">{{ city.value }}</output>\n</main></tui-root>".replaceAll('*tuiDropdown', taigaV4 ? '*tuiTextfieldDropdown new' : '*tuiDropdown'),
         'src/app.ts': [
             "import {Component} from '@angular/core';",
             "import {FormControl, ReactiveFormsModule} from '@angular/forms';",
-            "import {TuiChevron, TuiComboBox, TuiDataListWrapper, TuiSelect} from '@taiga-ui/kit';",
-            "import {TuiFilterByInputPipe, TuiRoot, TuiTextfield} from '@taiga-ui/core';",
+            taigaV4
+                ? "import {TuiChevron, TuiComboBox, TuiDataListWrapper, TuiSelect, TuiFilterByInputPipe} from '@taiga-ui/kit';"
+                : "import {TuiChevron, TuiComboBox, TuiDataListWrapper, TuiSelect} from '@taiga-ui/kit';",
+            taigaV4
+                ? "import {TuiRoot, TuiTextfield} from '@taiga-ui/core';"
+                : "import {TuiFilterByInputPipe, TuiRoot, TuiTextfield} from '@taiga-ui/core';",
             "@Component({",
             "  selector: 'app-consumer',",
             "  imports: [ReactiveFormsModule, TuiRoot, TuiTextfield, TuiChevron, TuiSelect, TuiDataListWrapper, TuiComboBox, TuiFilterByInputPipe],",
@@ -287,7 +291,7 @@ try {
         ].join('\n'),
         'smoke.mjs': [
             "import {chromium, expect} from '@playwright/test';",
-            "import {tuiSelect, tuiComboBox} from '@taiga-ui-labs/playwright';",
+            `import {tuiSelect, tuiComboBox} from '${entrypoint}';`,
             "const browser = await chromium.launch({headless: true});",
             "try {",
             "  const page = await browser.newPage({viewport: {width: 1280, height: 800}});",
@@ -333,7 +337,7 @@ try {
         '--project', join(consumer, 'tsconfig.contract.json'),
     ], consumer);
     await serveAndTest(consumer);
-    process.stdout.write('Isolated Angular 20 + Taiga UI 5 consumer passed using ' +
+    process.stdout.write('Isolated Angular 20 + Taiga UI ' + (taigaV4 || '5') + ' consumer passed using ' +
         (registryVersion ? packageJson.name + '@' + registryVersion + ' (npm registry)' : packageSource) +
         ' and Playwright ' + dependencies['@playwright/test'] + '.\n');
 } finally {
