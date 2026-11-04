@@ -38,7 +38,7 @@ bootstrapApplication(DocsApp, {
         }),
         {provide: TUI_DOC_LOGO, useValue: 'assets/brand.svg'},
         {provide: TUI_DOC_TITLE, useValue: 'Taiga UI Playwright · '},
-        {provide: TUI_DOC_VERSION, useValue: '5.28.0'},
+        {provide: TUI_DOC_VERSION, useValue: 'v5.28 / v4 compat'},
         {provide: TUI_DOC_SEARCH_ENABLED, useValue: signal(true)},
         {
             provide: TUI_DOC_PAGES,
