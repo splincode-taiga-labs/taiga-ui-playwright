@@ -274,7 +274,7 @@ try {
                 : "bootstrapApplication(ConsumerApp, {providers: [provideZonelessChangeDetection(), provideTaiga()]})",
             "    .catch((error: unknown) => console.error(error));",
         ].join('\n'),
-        'src/app.html': "<tui-root><main>\n  <tui-textfield data-testid=\"country-field\" tuiChevron>\n    <input aria-label=\"Country\" tuiSelect [formControl]=\"country\" />\n    <tui-data-list-wrapper *tuiDropdown [items]=\"countries\" />\n  </tui-textfield>\n  <output data-testid=\"country-model\">{{ country.value }}</output>\n  <tui-textfield data-testid=\"city-field\" tuiChevron>\n    <input aria-label=\"City\" tuiComboBox [formControl]=\"city\" />\n    <tui-data-list-wrapper *tuiDropdown [items]=\"cities | tuiFilterByInput\" />\n  </tui-textfield>\n  <output data-testid=\"city-model\">{{ city.value }}</output>\n</main></tui-root>".replaceAll('*tuiDropdown', taigaV4 ? '*tuiTextfieldDropdown new' : '*tuiDropdown'),
+        'src/app.html': "<tui-root><main>\n  <tui-textfield data-testid=\"country-field\" tuiChevron>\n    <input aria-label=\"Country\" tuiSelect [formControl]=\"country\" />\n    <tui-data-list-wrapper *tuiDropdown [items]=\"countries\" />\n  </tui-textfield>\n  <output data-testid=\"country-model\">{{ country.value }}</output>\n  <tui-textfield data-testid=\"city-field\" tuiChevron>\n    <input aria-label=\"City\" tuiComboBox [formControl]=\"city\" />\n    <tui-data-list-wrapper *tuiDropdown [items]=\"cities | tuiFilterByInput\" />\n  </tui-textfield>\n  <output data-testid=\"city-model\">{{ city.value }}</output>\n</main></tui-root>".replaceAll('*tuiDropdown', taigaV4 ? '*tuiTextfieldDropdown' : '*tuiDropdown'),
         'src/app.ts': [
             "import {Component} from '@angular/core';",
             "import {FormControl, ReactiveFormsModule} from '@angular/forms';",
@@ -282,11 +282,13 @@ try {
                 ? "import {TuiChevron, TuiComboBox, TuiDataListWrapper, TuiSelect, TuiFilterByInputPipe} from '@taiga-ui/kit';"
                 : "import {TuiChevron, TuiComboBox, TuiDataListWrapper, TuiSelect} from '@taiga-ui/kit';",
             taigaV4
-                ? "import {TuiRoot, TuiTextfield} from '@taiga-ui/core';"
+                ? "import {TuiRoot, TuiTextfield, TuiTextfieldDropdownDirective} from '@taiga-ui/core';"
                 : "import {TuiFilterByInputPipe, TuiRoot, TuiTextfield} from '@taiga-ui/core';",
             "@Component({",
             "  selector: 'app-consumer',",
-            "  imports: [ReactiveFormsModule, TuiRoot, TuiTextfield, TuiChevron, TuiSelect, TuiDataListWrapper, TuiComboBox, TuiFilterByInputPipe],",
+            taigaV4
+                ? "  imports: [ReactiveFormsModule, TuiRoot, TuiTextfield, TuiTextfieldDropdownDirective, TuiChevron, TuiSelect, TuiDataListWrapper, TuiComboBox, TuiFilterByInputPipe],"
+                : "  imports: [ReactiveFormsModule, TuiRoot, TuiTextfield, TuiChevron, TuiSelect, TuiDataListWrapper, TuiComboBox, TuiFilterByInputPipe],",
             "  templateUrl: './app.html',",
             "})",
             "export class ConsumerApp {",
