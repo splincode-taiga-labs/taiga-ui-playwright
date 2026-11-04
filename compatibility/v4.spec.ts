@@ -16,6 +16,23 @@ test('button updates Angular state', async ({page}) => {
 
 test('Select updates FormControl via a v4 dropdown', async ({page}) => {
     const select = tuiSelect(page.getByTestId('country-field'));
+    await select.input.click();
+    console.log('v4 dropdown debug:', JSON.stringify(await page.evaluate(() => {
+        const input = document.querySelector('[data-testid="country-field"] input');
+        const host = document.querySelector('[data-testid="country-field"]');
+        return {
+            expanded: input?.getAttribute('aria-expanded'),
+            controlledId: input?.getAttribute('aria-controls'),
+            hostRect: host?.getBoundingClientRect().toJSON(),
+            focused: document.activeElement?.outerHTML.slice(0, 300),
+            dropdownHosts: [...document.querySelectorAll('tui-dropdowns, tui-dropdown')].map((el) => ({
+                tag: el.tagName,
+                id: el.id,
+                html: el.outerHTML.slice(0, 750),
+            })),
+            visibleText: document.body.innerText.slice(0, 1100),
+        };
+    })));
     await select.selectOption('Estonia');
     await expect(page.getByTestId('country-model')).toHaveText('Estonia');
 });
