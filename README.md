@@ -50,6 +50,19 @@ test('edit a Taiga UI form', async ({page}) => {
 
 Provide the **component host** to the helper: for Select or ComboBox, pass the containing `tui-textfield`, not an unscoped overlay or input. Adapt test IDs to your application. All helpers use native Playwright APIs and auto-waiting.
 
+## Taiga UI v4 compatibility
+
+For **Taiga UI 4.x**, use the versioned secondary entrypoint:
+
+```ts
+import {tuiSelect, tuiComboBox} from '@taiga-ui-labs/playwright/v4';
+```
+
+For **Taiga UI 5.x**, continue using the root import `@taiga-ui-labs/playwright`.
+Both entrypoints share the same Locator-first API. A dedicated v4 consumer tests
+Select and ComboBox on **Angular 20.3 / Taiga UI 4.106.0**. Other components
+and versions of 4.x are **not yet verified**. Read the [compatibility policy](docs/api-upstream-compatibility.md).
+
 ## AI agent skill
 
 Teach Codex, Claude Code, Cursor, or another compatible coding agent how to write Taiga UI Playwright tests using this package.
