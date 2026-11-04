@@ -261,7 +261,7 @@ try {
         ].join('\n'),
         'src/index.html': '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Independent Angular consumer</title></head><body><app-consumer></app-consumer></body></html>',
         'src/styles.less': taigaV4
-            ? "@import '@taiga-ui/styles/taiga-ui-global.less';\n"
+            ? "@import '@taiga-ui/styles/taiga-ui-global.less';\nmain { padding: 2rem; }\ntui-textfield { display: block; margin-block: 1.25rem; }\n"
             : "@import '@taiga-ui/styles/taiga-ui-theme.less';\n@import '@taiga-ui/styles/taiga-ui-fonts.less';\n",
         'src/main.ts': [
             "import '@angular/compiler';",
