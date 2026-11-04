@@ -1,6 +1,6 @@
 import {type Locator} from '@playwright/test';
 
-import {TuiOptionsField, type TuiOptionsFieldOptions} from './options-field.js';
+import {TuiOptionsField, type TuiOptionsFieldOptions} from './options-field';
 
 export class TuiComboBox extends TuiOptionsField {
     public constructor(host: Locator, options: TuiOptionsFieldOptions = {}) {
