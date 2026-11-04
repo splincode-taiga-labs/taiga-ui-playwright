@@ -60,8 +60,8 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - name: Smoke test Angular fixture bootstrap
         run: npx playwright test integration/bootstrap.spec.ts --project=integration --reporter=list
-      - run: npm test
       - run: npm run test:docs
+      - run: npm test
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
