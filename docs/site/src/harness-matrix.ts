@@ -31,7 +31,22 @@ type GroupFilter = 'All' | HarnessCategory;
                     </div>
                 </div>
 
-                <div class="metrics" aria-label="Coverage summary">
+                <div class="version-choices" role="region" aria-label="Supported Taiga UI versions">
+                    <div class="version-choice version-choice--current">
+                        <span class="version-choice__eyebrow">COMPONENT CATALOG</span>
+                        <h3>Taiga UI 5 <small>v5.28.0</small></h3>
+                        <p>Browse 133 Playwright helpers in the v5 component inventory. Individual behavior coverage varies.</p>
+                        <span class="version-choice__status">Current matrix</span>
+                    </div>
+                    <div class="version-choice">
+                        <span class="version-choice__eyebrow">COMPATIBILITY</span>
+                        <h3>Taiga UI 4 <small>v4.106.0</small></h3>
+                        <p>Separate <code>/v4</code> entrypoint in the repository (npm release pending). Button, Select and ComboBox verified against a real Angular demo.</p>
+                        <a tuiLink routerLink="/v4">Explore v4 compatibility</a>
+                    </div>
+                </div>
+
+                <div class="metrics" aria-label="Taiga UI v5 coverage summary">
                     <div class="metric"><strong data-testid="coverage-total">{{ total }}</strong><span>Components</span></div>
                     <div class="metric"><strong data-testid="coverage-done">{{ done }}</strong><span>Implemented</span></div>
                     <div class="metric"><strong>{{ inProgress }}</strong><span>In progress</span></div>
