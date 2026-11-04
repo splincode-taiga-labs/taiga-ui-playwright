@@ -257,14 +257,18 @@ try {
             '}',
         ].join('\n'),
         'src/index.html': '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Independent Angular consumer</title></head><body><app-consumer></app-consumer></body></html>',
-        'src/styles.less': "@import '@taiga-ui/styles/taiga-ui-theme.less';\n@import '@taiga-ui/styles/taiga-ui-fonts.less';\n",
+        'src/styles.less': taigaV4
+            ? "@import '@taiga-ui/styles/taiga-ui-theme.less';\n"
+            : "@import '@taiga-ui/styles/taiga-ui-theme.less';\n@import '@taiga-ui/styles/taiga-ui-fonts.less';\n",
         'src/main.ts': [
             "import '@angular/compiler';",
             "import {provideZonelessChangeDetection} from '@angular/core';",
             "import {bootstrapApplication} from '@angular/platform-browser';",
-            "import {provideTaiga} from '@taiga-ui/core';",
+            taigaV4 ? '' : "import {provideTaiga} from '@taiga-ui/core';",
             "import {ConsumerApp} from './app';",
-            "bootstrapApplication(ConsumerApp, {providers: [provideZonelessChangeDetection(), provideTaiga()]})",
+            taigaV4
+                ? "bootstrapApplication(ConsumerApp, {providers: [provideZonelessChangeDetection()]})"
+                : "bootstrapApplication(ConsumerApp, {providers: [provideZonelessChangeDetection(), provideTaiga()]})",
             "    .catch((error: unknown) => console.error(error));",
         ].join('\n'),
         'src/app.html': "<tui-root><main>\n  <tui-textfield data-testid=\"country-field\" tuiChevron>\n    <input aria-label=\"Country\" tuiSelect [formControl]=\"country\" />\n    <tui-data-list-wrapper *tuiDropdown [items]=\"countries\" />\n  </tui-textfield>\n  <output data-testid=\"country-model\">{{ country.value }}</output>\n  <tui-textfield data-testid=\"city-field\" tuiChevron>\n    <input aria-label=\"City\" tuiComboBox [formControl]=\"city\" />\n    <tui-data-list-wrapper *tuiDropdown [items]=\"cities | tuiFilterByInput\" />\n  </tui-textfield>\n  <output data-testid=\"city-model\">{{ city.value }}</output>\n</main></tui-root>".replaceAll('*tuiDropdown', taigaV4 ? '*tuiTextfieldDropdown new' : '*tuiDropdown'),
