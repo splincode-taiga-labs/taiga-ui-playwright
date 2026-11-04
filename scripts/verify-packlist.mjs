@@ -7,7 +7,7 @@ import {promisify} from 'node:util';
 
 const exec = promisify(execFile);
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const dist = join(root, 'dist');
+const dist = join(root, 'dist', 'package');
 const manifest = JSON.parse(await readFile(join(dist, 'package.json'), 'utf8'));
 
 const {stdout} = await exec('npm', ['pack', dist, '--json', '--dry-run', '--ignore-scripts'], {

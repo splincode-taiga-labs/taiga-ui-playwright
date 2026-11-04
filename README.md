@@ -73,12 +73,16 @@ the `/v4` secondary entrypoint without duplicating the primary implementation.
 npm ci
 npm run build
 npm run test:pack
-npm run test:consumer
-npm pack ./dist
+npm run test:compat
+npm pack ./dist/package
 ```
 
-The distributable npm package is **`dist/`**, not the repository root.
-The release workflow publishes `./dist` using the GitHub Release tag.
+The distributable npm package is **`dist/package/`**, not the repository root.
+The release workflow publishes `./dist/package` using the GitHub Release tag.
+
+The `integration/angular-app` and `integration/angular-app-v4` npm workspaces contain
+permanent Taiga UI **5.28** and **4.106** demos. Run `npm run test:compat` to
+start both and exercise the real built APF root and `/v4` entrypoints.
 
 ## AI agent skill
 

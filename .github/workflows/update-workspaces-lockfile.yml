@@ -1,0 +1,30 @@
+name: Regenerate lockfile for demo workspaces
+
+on:
+  push:
+    branches: [feat/taiga-v4-secondary-entrypoint]
+
+permissions:
+  contents: write
+
+jobs:
+  regenerate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/taiga-v4-secondary-entrypoint
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+      - name: Commit updated workspace lockfile
+        shell: bash
+        run: |
+          git add package-lock.json
+          if ! git diff --cached --quiet; then
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'build: lock Taiga UI 4 and 5 demo workspaces'
+            git push origin HEAD:feat/taiga-v4-secondary-entrypoint
+          fi

@@ -71,18 +71,24 @@ public API is available through the secondary entrypoint but is not yet
 integration-verified on v4. Other v4 versions need independent testing.
 
 ```sh
-CONSUMER_TAIGA_VERSION=4.106.0 npm run test:consumer:angular
+npm run test:compat
 ```
 
-## Packaging verification
+## Packaging and workspace browser verification
 
 After `npm ci && npm run build`:
 
 ```sh
-npm run test:consumer
+npm run test:pack
+npm run test:compat
 ```
 
-This creates an npm tarball in a temporary directory, checks its files, installs it **outside this repository**, type-checks a NodeNext ESM consumer, and verifies runtime imports. By default it uses the lockfile's Playwright version. Set `CONSUMER_PLAYWRIGHT_VERSION=1.51.0` to test the declared minimum; CI verifies this on Node 20.19.0 as well as the lockfile version on Node 24. No publish, tag, credential or registry write is performed.
+Both demos are version-pinned **npm workspaces**: `integration/angular-app`
+(Taiga UI 5.28) and `integration/angular-app-v4` (Taiga UI 4.106).
+Playwright runs against both independent Angular apps and imports built APF
+root and `/v4` JavaScript, rather than temporary generated consumers.
+
+The npm package output is `dist/package`, separate from fixture/docs build output.
 
 ## Release validation
 
