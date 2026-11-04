@@ -427,6 +427,7 @@ test('v4 guide lists only verified browser interactions and a versioned import',
     await expect(guide.getByText('3 / 3')).toBeVisible();
     await expect(guide.locator('table.compat-table tbody tr')).toHaveCount(3);
     await expect(guide).toContainText('Targeted compatibility, not full v4 coverage');
+    await expect(guide).toContainText('npm release pending');
     await expect(guide).toContainText('@taiga-ui-labs/playwright/v4');
     await expect(guide.getByRole('button', {name: 'Copy v4 import'})).toBeEnabled();
     await expect(guide.getByRole('button', {name: 'Copy v4 example'})).toBeEnabled();

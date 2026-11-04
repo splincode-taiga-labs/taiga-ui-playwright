@@ -52,7 +52,7 @@ Provide the **component host** to the helper: for Select or ComboBox, pass the c
 
 ## Taiga UI v4 compatibility
 
-For **Taiga UI 4.x**, use the versioned secondary entrypoint:
+For **Taiga UI 4.x**, use the versioned secondary entrypoint **after the next npm release** (v1.0.1 predates this addition):
 
 ```ts
 import {tuiSelect, tuiComboBox} from '@taiga-ui-labs/playwright/v4';
