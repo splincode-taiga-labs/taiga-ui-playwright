@@ -12,7 +12,7 @@ const [artifact] = JSON.parse(stdout);
 assert.ok(artifact?.files?.length, 'npm pack produced no package files');
 const paths = artifact.files.map(({path}) => path);
 
-for (const expected of ['package.json', 'dist/index.js', 'dist/index.d.ts']) {
+for (const expected of ['package.json', 'dist/index.js', 'dist/index.d.ts', 'dist/v4.js', 'dist/v4.d.ts']) {
     assert.ok(paths.includes(expected), 'Missing packed file: ' + expected);
 }
 
