@@ -430,6 +430,6 @@ test('v4 guide lists only verified browser interactions and a versioned import',
     await expect(guide).toContainText('@taiga-ui-labs/playwright/v4');
     await expect(guide.getByRole('button', {name: 'Copy v4 import'})).toBeEnabled();
     await expect(guide.getByRole('button', {name: 'Copy v4 example'})).toBeEnabled();
-    await page.getByRole('link', {name: 'v5 Matrix', exact: true}).click();
+    await page.getByRole('link', {name: 'Matrix', exact: true}).click();
     await expect(page).toHaveURL(/#\/matrix$/);
 });
