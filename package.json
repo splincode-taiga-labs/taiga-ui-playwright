@@ -19,24 +19,8 @@
   "engines": {
     "node": ">=20"
   },
-  "files": [
-    "dist/*.js",
-    "dist/*.js.map",
-    "dist/*.d.ts",
-    "dist/*.d.ts.map"
-  ],
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./v4": {
-      "types": "./dist/v4.d.ts",
-      "import": "./dist/v4.js"
-    }
-  },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "ng-packagr -p ng-package.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test:consumer": "node scripts/verify-consumer.mjs",
     "test:pack": "node scripts/verify-packlist.mjs",
@@ -87,6 +71,7 @@
     "highlight.js": "11.11.1",
     "less": "4.4.2",
     "markdown-it": "14.3.2",
+    "ng-packagr": "20.3.2",
     "ngx-highlightjs": "14.0.1",
     "rxjs": "7.8.2",
     "tslib": "2.8.1",

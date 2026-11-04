@@ -63,6 +63,23 @@ Both entrypoints share the same Locator-first API. A dedicated v4 consumer tests
 Select and ComboBox on **Angular 20.3 / Taiga UI 4.106.0**. Other components
 and versions of 4.x are **not yet verified**. Read the [compatibility policy](docs/api-upstream-compatibility.md).
 
+## Build and packaging
+
+The library uses **ng-packagr 20.3.2** to publish Angular Package Format (APF).
+The primary entrypoint is `src/index.ts`; `v4/src/public-api.ts` defines
+the `/v4` secondary entrypoint without duplicating the primary implementation.
+
+```bash
+npm ci
+npm run build
+npm run test:pack
+npm run test:consumer
+npm pack ./dist
+```
+
+The distributable npm package is **`dist/`**, not the repository root.
+The release workflow publishes `./dist` using the GitHub Release tag.
+
 ## AI agent skill
 
 Teach Codex, Claude Code, Cursor, or another compatible coding agent how to write Taiga UI Playwright tests using this package.

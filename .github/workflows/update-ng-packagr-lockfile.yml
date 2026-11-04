@@ -1,0 +1,31 @@
+name: Regenerate lockfile for ng-packagr migration
+
+on:
+  push:
+    branches: [feat/taiga-v4-secondary-entrypoint]
+
+permissions:
+  contents: write
+
+jobs:
+  regenerate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/taiga-v4-secondary-entrypoint
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Resolve ng-packagr 20.3.2 and update the npm lockfile
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+      - name: Commit regenerated lockfile to the migration branch
+        shell: bash
+        run: |
+          git add package-lock.json
+          if ! git diff --cached --quiet; then
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'build: regenerate npm lockfile for ng-packagr'
+            git push origin HEAD:feat/taiga-v4-secondary-entrypoint
+          fi

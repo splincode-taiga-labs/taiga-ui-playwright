@@ -35,18 +35,28 @@ try {
     assert.notEqual(packageJson.private, true, 'Packed release candidate must be publishable');
 
     const {stdout} = await run(npm, [
-        'pack', '--json', '--ignore-scripts', '--pack-destination', work,
+        'pack', join(root, 'dist'), '--json', '--ignore-scripts', '--pack-destination', work,
     ], root);
     const [artifact] = JSON.parse(stdout);
     assert.ok(artifact?.filename, 'npm pack did not produce a tarball');
 
     const paths = artifact.files.map(({path}) => path);
-    for (const required of ['package.json', 'dist/index.js', 'dist/index.d.ts', 'dist/v4.js', 'dist/v4.d.ts']) {
-        assert.ok(paths.includes(required), 'Missing packed file: ' + required);
+    const builtManifest = JSON.parse(await readFile(join(root, 'dist', 'package.json'), 'utf8'));
+    for (const entrypoint of ['.', './v4']) {
+        const entry = builtManifest.exports?.[entrypoint];
+        assert.ok(entry, 'Missing packed APF entrypoint: ' + entrypoint);
+        for (const field of ['types', 'default']) {
+            const path = entry?.[field];
+            assert.ok(typeof path === 'string' && path.startsWith('./'),
+                'Invalid APF ' + field + ' export: ' + entrypoint);
+            assert.ok(paths.includes(path.slice(2)),
+                'Missing packed file for ' + entrypoint + ': ' + path);
+        }
     }
     const unexpected = paths.filter((path) =>
-        !/^dist\/[^/]+\.(?:js|js\.map|d\.ts|d\.ts\.map)$/.test(path) &&
-        !['package.json', 'README.md', 'LICENSE'].includes(path),
+        !/^fesm2022\/[^/]+\.mjs(?:\.map)?$/.test(path) &&
+        !/^(?:v4\/)?index\.d\.ts(?:\.map)?$/.test(path) &&
+        !['package.json', 'README.md', 'LICENSE', 'v4/package.json'].includes(path),
     );
     assert.deepEqual(unexpected, [], 'Unexpected files in npm tarball');
 

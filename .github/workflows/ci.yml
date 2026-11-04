@@ -52,7 +52,7 @@ jobs:
           if [[ "$published" == "$version" ]]; then
             echo "Version $version is already published; skipping immutable npm publish --dry-run."
           else
-            npm publish --dry-run --ignore-scripts --access public --tag "$dist_tag"
+            npm publish ./dist --dry-run --ignore-scripts --access public --tag "$dist_tag"
           fi
       - run: npx playwright install --with-deps chromium
       - name: Smoke test Angular fixture bootstrap

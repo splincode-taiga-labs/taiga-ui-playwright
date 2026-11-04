@@ -116,7 +116,7 @@ try {
         packageSource = registryVersion;
     } else {
         const {stdout} = await run(npm, [
-            'pack', '--json', '--ignore-scripts', '--pack-destination', work,
+            'pack', join(root, 'dist'), '--json', '--ignore-scripts', '--pack-destination', work,
         ], root);
         const [artifact] = JSON.parse(stdout);
         assert.ok(artifact?.filename, 'npm pack must produce an artifact');
