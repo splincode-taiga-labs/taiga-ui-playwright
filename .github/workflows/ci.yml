@@ -116,6 +116,27 @@ jobs:
       - name: Install tarball into clean Angular app and exercise real Taiga UI
         run: npm run test:consumer:angular
 
+  angular-v4-consumer:
+    name: Packed Angular consumer (Taiga UI 4.106.0)
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      options: --user 1001
+    timeout-minutes: 30
+    env:
+      CONSUMER_TAIGA_VERSION: 4.106.0
+      CONSUMER_PLAYWRIGHT_VERSION: 1.64.1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build
+      - name: Test packed v4 entrypoint against real Taiga UI 4.x
+        run: npm run test:consumer:angular
+
   consumer-minimum:
     name: Consumer baseline (Node 20 / Playwright 1.51)
     runs-on: ubuntu-latest
