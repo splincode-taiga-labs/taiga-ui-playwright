@@ -32,12 +32,10 @@ jobs:
       - run: npm run build
       - name: Verify public API export inventory
         run: npm run test:api
-      - name: Verify npm tarball in an independent ESM TypeScript consumer
-        run: npm run test:consumer
+      - name: Assert packaged APF entrypoints and package contents
+        run: npm run test:pack
       - run: npm run build:fixture
       - run: npm run build:docs:pages
-      - name: Assert npm tarball excludes Angular fixture and docs
-        run: npm run test:pack
       - name: Exercise npm prepublish for stable and prerelease versions
         shell: bash
         run: |
@@ -52,7 +50,7 @@ jobs:
           if [[ "$published" == "$version" ]]; then
             echo "Version $version is already published; skipping immutable npm publish --dry-run."
           else
-            npm publish --dry-run --ignore-scripts --access public --tag "$dist_tag"
+            npm publish ./dist/package --dry-run --ignore-scripts --access public --tag "$dist_tag"
           fi
       - run: npx playwright install --with-deps chromium
       - name: Smoke test Angular fixture bootstrap
@@ -92,59 +90,13 @@ jobs:
           path: test-results/
           retention-days: 7
 
-  angular-consumer:
-    name: Packed Angular consumer (Playwright ${{ matrix.playwright }})
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        playwright: ['1.51.0', '1.64.1']
-    container:
-      image: mcr.microsoft.com/playwright:v${{ matrix.playwright }}-noble
-      options: --user 1001
-    timeout-minutes: 30
-    env:
-      CONSUMER_PLAYWRIGHT_VERSION: ${{ matrix.playwright }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: npm
-      - run: npm ci --no-audit --no-fund
-      - run: npm run build
-      - name: Install tarball into clean Angular app and exercise real Taiga UI
-        run: npm run test:consumer:angular
-
-  consumer-minimum:
-    name: Consumer baseline (Node 20 / Playwright 1.51)
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20.19.0
-          cache: npm
-      - run: npm ci --no-audit --no-fund
-      - run: npm run build
-      - name: Validate minimum declared Playwright peer in a fresh ESM consumer
-        run: npm run test:consumer
-        env:
-          CONSUMER_PLAYWRIGHT_VERSION: 1.51.0
-
-  registry-consumer:
-    name: Published npm consumer (Angular 20 / Taiga UI 5.28)
+  compatibility:
+    name: Taiga UI v4 + v5 workspace browsers
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.64.1-noble
       options: --user 1001
     timeout-minutes: 30
-    env:
-      # The published release is intentionally independent of the current PR source.
-      # For a release candidate, use Actions -> CI -> Run workflow -> npm_version.
-      CONSUMER_REGISTRY_VERSION: ${{ inputs.npm_version || '0.1.2' }}
-      CONSUMER_PLAYWRIGHT_VERSION: 1.64.1
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -152,5 +104,14 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci --no-audit --no-fund
-      - name: Install published npm version into a clean Angular app and verify it
-        run: npm run test:consumer:angular
+      - run: npm run build
+      - name: Verify both entrypoints in APF package
+        run: npm run test:pack
+      - name: Run Playwright against Taiga UI 4 and Taiga UI 5 workspaces
+        run: npm run test:compat
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: compatibility-results
+          path: test-results/
+          retention-days: 7

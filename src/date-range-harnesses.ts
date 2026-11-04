@@ -1,6 +1,6 @@
 import {expect, type Locator} from '@playwright/test';
 
-import {clickOwnedCalendarCell} from './calendar-portal.js';
+import {clickOwnedCalendarCell} from './calendar-portal';
 
 const DAY_CELL = '[automation-id="tui-calendar-sheet__cell"]:not(.t-cell_unavailable):not(.t-cell_disabled)';
 

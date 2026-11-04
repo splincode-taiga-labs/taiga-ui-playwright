@@ -1,6 +1,6 @@
 import {expect, type Locator} from '@playwright/test';
 
-import {clickOwnedCalendarCell, ownedCalendarPortal} from './calendar-portal.js';
+import {clickOwnedCalendarCell, ownedCalendarPortal} from './calendar-portal';
 
 const DAY_SELECTOR = 'tui-calendar-sheet [automation-id="tui-calendar-sheet__cell"]:not(.t-cell_unavailable):not(.t-cell_disabled)';
 

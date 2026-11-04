@@ -44,33 +44,58 @@ test('update country and city', async ({page}) => {
 
 | Dimension | Status |
 | --- | --- |
-| Taiga UI | Integration tested with **5.28.0** only |
+| Taiga UI | Root: **5.28.0**; `/v4`: **4.106.0**. Permanent demo workspaces exercise the package's built API in Chromium. Other v4 components and versions remain unverified |
 | Angular | Fixture tested with **20.3.0** only |
-| Playwright | Peer range **>=1.51 <2** is declared; CI verifies **1.51.0** and the lockfile-resolved version, but not the full range |
-| Node | Package declares **>=20**; consumer checks run on **20.19.0** and **24**. Node 20.0–20.18 and all other versions are not yet verified |
+| Playwright | Peer range **>=1.51 <2** is declared; the current v4/v5 compatibility suite runs on **1.64.1**, not the entire peer range |
+| Node | Package declares **>=20**; current workspace/browser CI runs on **24**. Node 20 verification was performed in the earlier consumer pipeline but is no longer rerun by this PR |
 | Browsers | Chromium full integration/docs; Chromium, Firefox and WebKit targeted smoke; Pixel 7 emulated mobile Chromium |
 | WebKit async ComboBox | Tested with real delayed options; dropdown reopens if its owned portal closes during loading. [Five no-retry repeats](https://github.com/splincode-taiga-labs/taiga-ui-playwright/actions/runs/39223806979) passed. This is targeted coverage, not a guarantee for all upstream versions |
-| Module format | NodeNext ESM root export (`exports["."].import`) and TypeScript declarations (`exports["."].types`) |
+| Module format | `ng-packagr` APF ESM bundles and generated TypeScript declarations for root and `/v4` exports |
 | Package delivery | **0.1.2** published through npm OIDC with signed provenance; **123 files / 47,760 packed bytes**, with no Angular fixture/docs bundles. The actual npm 0.1.2 was installed and tested in a clean Angular consumer in PR #90; RC publication remains a separate future gate. |
 
-The Node 20.19.0 consumer check does not imply that Angular or the complete browser test suite support Node 20; those suites still run on Node 24. The npm `engines.node: >=20` and Playwright `>=1.51 <2` peer range are **declarations**, not evidence that the whole ranges have been verified. The 1.0 tested baseline is specifically Angular 20.3.0, Taiga UI 5.28.0, Playwright 1.51.0 and 1.64.1, Node 20.19.0 (ESM consumer) and Node 24 (browser integration). The package includes internal Taiga UI markup selectors, so helpers can be affected by minor Taiga UI DOM changes. Other versions need explicit validation before being called supported.
+The historical Node 20.19.0 consumer check does not imply that Angular or the browser test suite supports Node 20. The `engines.node: >=20` and Playwright `>=1.51 <2` peer range are **declarations**, not evidence that entire ranges are verified. Current workspace compatibility CI uses Angular 20.3.0, Taiga UI 4.106.0/5.28.0, Playwright 1.64.1 and Node 24. The package includes internal Taiga UI markup selectors, so helpers can be affected by minor Taiga UI DOM changes. Other versions need explicit validation before being called supported.
 
-## Packaging verification
+## Taiga UI v4 secondary entrypoint
+
+Import from `@taiga-ui-labs/playwright/v4` for Taiga UI 4.x projects.
+This additive export exposes the same helpers as the original 1.x package root,
+without forking their implementation or changing existing v5 imports.
+
+The dedicated Angular 20.3 workspace installs Taiga UI **4.106.0**, Maskito
+**3.x**, and `@ng-web-apis` **4.x** instead of the v5 dependency family.
+It uses v4's `*tuiTextfieldDropdown` syntax and drives real Select and
+ComboBox controls in Chromium, asserting reactive form values.
+
+**Verified scope:** Select and ComboBox on 4.106.0 only. The rest of the
+public API is available through the secondary entrypoint but is not yet
+integration-verified on v4. Other v4 versions need independent testing.
+
+```sh
+npm run test:compat
+```
+
+## Packaging and workspace browser verification
 
 After `npm ci && npm run build`:
 
 ```sh
-npm run test:consumer
+npm run test:pack
+npm run test:compat
 ```
 
-This creates an npm tarball in a temporary directory, checks its files, installs it **outside this repository**, type-checks a NodeNext ESM consumer, and verifies runtime imports. By default it uses the lockfile's Playwright version. Set `CONSUMER_PLAYWRIGHT_VERSION=1.51.0` to test the declared minimum; CI verifies this on Node 20.19.0 as well as the lockfile version on Node 24. No publish, tag, credential or registry write is performed.
+Both demos are version-pinned **npm workspaces**: `integration/angular-app`
+(Taiga UI 5.28) and `integration/angular-app-v4` (Taiga UI 4.106).
+Playwright runs against both independent Angular apps and imports built APF
+root and `/v4` JavaScript, rather than temporary generated consumers.
+
+The npm package output is `dist/package`, separate from fixture/docs build output.
 
 ## Release validation
 
 **0.1.2 is published** through the protected [GitHub Actions workflow](https://github.com/splincode-taiga-labs/taiga-ui-playwright/actions/runs/41048920224) with npm Trusted Publishing, signed provenance and a **123-file** runtime-only archive. The previous `0.1.1` package remains immutable and includes unrelated fixture/docs output; PR #85's packaging fix shipped in `0.1.2`.
 
-**Published registry consumer verified:** `CONSUMER_REGISTRY_VERSION=0.1.2 npm run test:consumer:angular` installs exact `0.1.2` from npm (not a `file:` archive), checks the resolved tarball URL and integrity, type-checks package imports, and runs real Angular 20 / Taiga UI 5 Select and ComboBox interactions. [PR #90 CI](https://github.com/splincode-taiga-labs/taiga-ui-playwright/actions/runs/41050281269) passed.
+**Historical published registry verification:** the now-retired `test:consumer:angular` script installed `0.1.2` from npm, checked package integrity and exercised Taiga UI 5 Select and ComboBox; this is not part of the current workspace-based CI. [PR #90 CI](https://github.com/splincode-taiga-labs/taiga-ui-playwright/actions/runs/41050281269) passed.
 
-The **1.0 contract** retains the existing 266 named package-root exports and strengthens packaged ESM and TypeScript method-contract checks. See [the frozen 1.0 API contract](public-api.md). This is a SemVer commitment to the API once the **final 1.0 release is published**, not an assertion that every behavior of 133 mapped components has exhaustive browser coverage.
+The **1.0 contract** retains the existing 266 named package-root exports and is checked by the public API inventory, APF packlist and workspace browser tests. See [the frozen 1.0 API contract](public-api.md). This is a SemVer commitment to the API once the **final 1.0 release is published**, not an assertion that every behavior of 133 mapped components has exhaustive browser coverage.
 
-The maintainer approved final 1.0 on 2026-11-01. Before tagging it, independently verify the published `1.0.0-rc.2` on npm `next` with **CI > Run workflow > npm_version=1.0.0-rc.2**, confirm provenance and browser behavior, then require green CI on the final release commit. After publishing stable `1.0.0` to npm `latest`, repeat the registry consumer against exact `1.0.0` before closing [#86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86). Upstream PR #14584 is not an interchangeable published API.
+The maintainer approved final 1.0 on 2026-11-01. Before tagging it, independently verify the published `1.0.0-rc.2` on npm `next` with **CI > Run workflow > npm_version=1.0.0-rc.2**, confirm provenance and browser behavior, then require green CI on the final release commit. After publishing stable `1.0.0` to npm `latest`, repeat the workspace browser checks against the release artifact before closing [#86](https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/86). Upstream PR #14584 is not an interchangeable published API.

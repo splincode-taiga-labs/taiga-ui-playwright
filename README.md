@@ -50,6 +50,40 @@ test('edit a Taiga UI form', async ({page}) => {
 
 Provide the **component host** to the helper: for Select or ComboBox, pass the containing `tui-textfield`, not an unscoped overlay or input. Adapt test IDs to your application. All helpers use native Playwright APIs and auto-waiting.
 
+## Taiga UI v4 compatibility
+
+For **Taiga UI 4.x**, use the versioned secondary entrypoint:
+
+```ts
+import {tuiSelect, tuiComboBox} from '@taiga-ui-labs/playwright/v4';
+```
+
+For **Taiga UI 5.x**, continue using the root import `@taiga-ui-labs/playwright`.
+Both entrypoints share the same Locator-first API. The v4 demo workspace tests
+Select and ComboBox on **Angular 20.3 / Taiga UI 4.106.0**. Other components
+and versions of 4.x are **not yet verified**. Read the [compatibility policy](docs/api-upstream-compatibility.md).
+
+## Build and packaging
+
+The library uses **ng-packagr 20.3.2** to publish Angular Package Format (APF).
+The primary entrypoint is `src/index.ts`; `v4/src/public-api.ts` defines
+the `/v4` secondary entrypoint without duplicating the primary implementation.
+
+```bash
+npm ci
+npm run build
+npm run test:pack
+npm run test:compat
+npm pack ./dist/package
+```
+
+The distributable npm package is **`dist/package/`**, not the repository root.
+The release workflow publishes `./dist/package` using the GitHub Release tag.
+
+The `integration/angular-app` and `integration/angular-app-v4` npm workspaces contain
+permanent Taiga UI **5.28** and **4.106** demos. Run `npm run test:compat` to
+start both and exercise the real built APF root and `/v4` entrypoints.
+
 ## AI agent skill
 
 Teach Codex, Claude Code, Cursor, or another compatible coding agent how to write Taiga UI Playwright tests using this package.
