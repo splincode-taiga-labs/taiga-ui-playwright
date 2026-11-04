@@ -13,6 +13,14 @@ const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 const port = 4251;
 const url = 'http://127.0.0.1:' + port;
 const registryVersion = process.env.CONSUMER_REGISTRY_VERSION?.trim();
+const taigaV4 = process.env.CONSUMER_TAIGA_VERSION?.trim();
+if (taigaV4 && !/^4[.]\d+[.]\d+$/.test(taigaV4)) {
+    throw new Error('CONSUMER_TAIGA_VERSION must be an exact Taiga UI v4 version');
+}
+if (taigaV4 && registryVersion) {
+    throw new Error('v4 consumer must use the current packed package');
+}
+const entrypoint = '@taiga-ui-labs/playwright' + (taigaV4 ? '/v4' : '');
 
 if (registryVersion && !/^\d+\.\d+\.\d+(?:-[0-9A-Za-z][0-9A-Za-z.-]*)?$/.test(registryVersion)) {
     throw new Error('CONSUMER_REGISTRY_VERSION must be an exact semver version');
@@ -133,8 +141,36 @@ try {
         '@taiga-ui/kit', '@taiga-ui/icons', '@taiga-ui/styles', '@playwright/test',
         'less', 'rxjs', 'typescript', 'zone.js',
     ];
+    // Taiga v4 needs the older Maskito 3.x and Web APIs 4.x peer families.
+    const v4Versions = taigaV4 ? {
+        '@maskito/angular': '3.11.1',
+        '@maskito/core': '3.11.1',
+        '@maskito/kit': '3.11.1',
+        '@maskito/phone': '3.11.1',
+        '@ng-web-apis/common': '4.14.0',
+        '@ng-web-apis/intersection-observer': '4.14.0',
+        '@ng-web-apis/mutation-observer': '4.14.0',
+        '@ng-web-apis/platform': '4.14.0',
+        '@ng-web-apis/resize-observer': '4.14.0',
+        '@ng-web-apis/screen-orientation': '4.14.0',
+        '@taiga-ui/cdk': taigaV4,
+        '@taiga-ui/core': taigaV4,
+        '@taiga-ui/kit': taigaV4,
+        '@taiga-ui/icons': taigaV4,
+        '@taiga-ui/styles': taigaV4,
+        '@taiga-ui/i18n': taigaV4,
+        '@taiga-ui/event-plugins': '^4.7.0',
+        '@taiga-ui/font-watcher': '~0.3.0',
+        '@taiga-ui/polymorpheus': '^4.10.0',
+    } : {};
+    if (taigaV4) {
+        packages.push('@angular/animations', '@taiga-ui/i18n', '@taiga-ui/event-plugins',
+            '@taiga-ui/font-watcher', '@taiga-ui/polymorpheus');
+    }
     for (const name of packages) {
-        dependencies[name] = name === '@playwright/test' ? playwrightVersion : await installedVersion(name);
+        dependencies[name] = name === '@playwright/test' ? playwrightVersion
+            : v4Versions[name] ?? (name === '@angular/animations'
+                ? await installedVersion('@angular/core') : await installedVersion(name));
     }
 
     const consumer = join(work, 'angular-consumer');
