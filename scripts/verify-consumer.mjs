@@ -41,7 +41,7 @@ try {
     assert.ok(artifact?.filename, 'npm pack did not produce a tarball');
 
     const paths = artifact.files.map(({path}) => path);
-    for (const required of ['package.json', 'dist/index.js', 'dist/index.d.ts']) {
+    for (const required of ['package.json', 'dist/index.js', 'dist/index.d.ts', 'dist/v4.js', 'dist/v4.d.ts']) {
         assert.ok(paths.includes(required), 'Missing packed file: ' + required);
     }
     const unexpected = paths.filter((path) =>
@@ -80,9 +80,12 @@ try {
         "import type {Locator} from '@playwright/test';",
         "import {tuiSelect, tuiComboBox, tuiDialog, tuiTabs, type TuiOptionsFieldOptions, type TuiSelect, type TuiComboBox, type TuiDialog} from '@taiga-ui-labs/playwright';",
         '',
+        "import {tuiSelect as tuiSelectV4, tuiComboBox as tuiComboBoxV4} from '@taiga-ui-labs/playwright/v4';",
         'export function verifyTypedApi(host: Locator): void {',
         '    const options: TuiOptionsFieldOptions = {overlay: host.page().locator("tui-dropdown")};',
         '    const select = tuiSelect(host, options);',
+        '    void tuiSelectV4(host, options).selectOption("Estonia");',
+        '    void tuiComboBoxV4(host).fill("Tall");',
         '    const combo = tuiComboBox(host);',
         '    const dialog = tuiDialog(host);',
         '    void select.selectOption("Estonia");',
@@ -139,6 +142,14 @@ try {
         "unexpected: actual.filter((name) => !expected.includes(name))})); " +
         "if (actual.some((name) => typeof api[name] !== 'function')) " +
         "throw new Error('A runtime API export is not a class or factory');",
+    ], consumer);
+
+    await run(process.execPath, [
+        '--input-type=module', '--eval',
+        "import * as root from '@taiga-ui-labs/playwright'; " +
+        "import * as v4 from '@taiga-ui-labs/playwright/v4'; " +
+        "if (JSON.stringify(Object.keys(root).sort()) !== JSON.stringify(Object.keys(v4).sort())) " +
+        "throw Error('v4 entrypoint exports differ from root')",
     ], consumer);
 
     process.stdout.write('Packed ' + artifact.filename + ', validated ' + paths.length +
