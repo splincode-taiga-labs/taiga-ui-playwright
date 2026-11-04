@@ -9,7 +9,7 @@
 - **Easy to read:** `selectOption('Estonia')`, `fill('Tall')`, `select('Details')`.
 - **Ready to explore:** [Browse the component harnesses and examples](https://splincode-taiga-labs.github.io/taiga-ui-playwright/).
 
-> Community-maintained and **unofficial**. The **1.0 public API** preserves 266 named exports. Tested with Angular 20.3 / Taiga UI 5.28; other versions require validation.
+> Community-maintained and **unofficial**. The **1.0 public API** preserves 266 named exports. Tested with Angular 20.3 / Taiga UI 5.28; targeted Button, Select and ComboBox tests also pass with Taiga UI 4.106. Other components and versions require validation.
 
 ## Install
 
@@ -57,6 +57,8 @@ For **Taiga UI 4.x**, use the versioned secondary entrypoint:
 ```ts
 import {tuiSelect, tuiComboBox} from '@taiga-ui-labs/playwright/v4';
 ```
+
+See the [Taiga UI 4 compatibility guide](https://splincode-taiga-labs.github.io/taiga-ui-playwright/v4/) for the verified components and limitations.
 
 For **Taiga UI 5.x**, continue using the root import `@taiga-ui-labs/playwright`.
 Both entrypoints share the same Locator-first API. The v4 demo workspace tests
