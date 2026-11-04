@@ -59,7 +59,7 @@ import {tuiSelect, tuiComboBox} from '@taiga-ui-labs/playwright/v4';
 ```
 
 For **Taiga UI 5.x**, continue using the root import `@taiga-ui-labs/playwright`.
-Both entrypoints share the same Locator-first API. A dedicated v4 consumer tests
+Both entrypoints share the same Locator-first API. The v4 demo workspace tests
 Select and ComboBox on **Angular 20.3 / Taiga UI 4.106.0**. Other components
 and versions of 4.x are **not yet verified**. Read the [compatibility policy](docs/api-upstream-compatibility.md).
 
