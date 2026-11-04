@@ -22,7 +22,7 @@ type GroupFilter = 'All' | HarnessCategory;
                     <p>
                         Locator-first Playwright helpers for Taiga UI. The matrix inventories
                         component directories across seven upstream packages. <strong>Done</strong>
-                        means an actual helper is exported and tested; everything else is
+                        means an actual helper is exported and tested in the v5 catalog; everything else is
                         clearly marked TODO.
                     </p>
                     <div class="intro-links">

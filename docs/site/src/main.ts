@@ -14,6 +14,7 @@ import {provideHighlightOptions} from 'ngx-highlightjs';
 import {DocsApp} from './app';
 import {HarnessMatrixPage} from './harness-matrix';
 import {GettingStartedPage} from './guide';
+import {V4CompatibilityPage} from './v4-compatibility';
 import {HarnessDetailPage} from './harness-detail';
 import {HARNESS_NAVIGATION} from './harness-reference';
 
@@ -25,6 +26,7 @@ bootstrapApplication(DocsApp, {
             {path: '', pathMatch: 'full', redirectTo: 'matrix'},
             {path: 'matrix', component: HarnessMatrixPage, title: 'Harness coverage'},
             {path: 'guide', component: GettingStartedPage, title: 'Getting started'},
+            {path: 'v4', component: V4CompatibilityPage, title: 'Taiga UI 4 compatibility'},
             {path: 'harness/:category/:name', component: HarnessDetailPage, title: 'Harness reference'},
             {path: '**', redirectTo: ''},
         ], withHashLocation()),
