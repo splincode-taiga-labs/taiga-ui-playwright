@@ -1,6 +1,6 @@
 ---
 name: taiga-ui-playwright
-description: Write, debug, and review reliable Playwright tests for Angular applications using Taiga UI v5. Use when interacting with Select, ComboBox, Dialog, calendar, tabs, overlays, or other Taiga UI components; prefer the @taiga-ui-labs/playwright Locator-first harnesses and native Playwright assertions.
+description: Write, debug, and review reliable Playwright tests for Angular applications using Taiga UI v4 or v5. Use when interacting with Select, ComboBox, Dialog, calendar, tabs, overlays, or other Taiga UI components; prefer the @taiga-ui-labs/playwright Locator-first harnesses and native Playwright assertions.
 ---
 
 # Taiga UI Playwright
@@ -11,7 +11,8 @@ Use `@taiga-ui-labs/playwright` to test **real Taiga UI behavior** with Playwrig
 
 1. Identify the Taiga UI component, the enclosing DOM host, and the expected application state. Inspect the Angular template or existing E2E selectors. Do not invent test IDs or assume that an overlay belongs to a field.
 2. Check that `@playwright/test` is installed and that `@taiga-ui-labs/playwright` is in the project's dev dependencies. If not, suggest or run `npm install --save-dev @taiga-ui-labs/playwright` with the user's consent.
-3. Discover available helpers through installed package declarations or the [harness catalog](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). Import only names actually exported by the installed version; don't invent methods or selectors.
+3. For Taiga UI 4.x, import from `@taiga-ui-labs/playwright/v4`. For Taiga UI 5.x, continue using `@taiga-ui-labs/playwright`. The v4 compatibility consumer currently covers Select and ComboBox on 4.106.0 only.
+4. Discover available helpers through installed package declarations or the [harness catalog](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). Import only names actually exported by the installed version; don't invent methods or selectors.
 
 ## Preferred usage
 
