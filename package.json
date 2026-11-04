@@ -29,6 +29,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./v4": {
+      "types": "./dist/v4.d.ts",
+      "import": "./dist/v4.js"
     }
   },
   "scripts": {
