@@ -5,6 +5,8 @@ import {packageApi} from './api';
 const {tuiButton, tuiSelect, tuiComboBox} = await packageApi('./v4');
 
 test.beforeEach(async ({page}) => {
+    page.on('pageerror', (error) => console.log('v4 browser exception:', error.stack));
+    page.on('console', (msg) => { if (msg.type() === 'error') console.log('v4 console error:', msg.text()); });
     await page.goto('/');
     await expect(page.getByRole('heading', {name: 'Taiga UI 4 demo'})).toBeVisible();
 });
