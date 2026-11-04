@@ -73,6 +73,9 @@ async function serveAndTest(directory) {
             if (server.exitCode !== null) {
                 throw new Error('Isolated Angular dev server exited early:\n' + output);
             }
+            if (output.includes('Application bundle generation failed.')) {
+                throw new Error('Isolated Angular build failed:\n' + output);
+            }
             try {
                 const response = await fetch(url, {signal: AbortSignal.timeout(2_000)});
                 if (response.ok) {
@@ -258,7 +261,7 @@ try {
         ].join('\n'),
         'src/index.html': '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Independent Angular consumer</title></head><body><app-consumer></app-consumer></body></html>',
         'src/styles.less': taigaV4
-            ? "@import '@taiga-ui/styles/taiga-ui-theme.less';\n"
+            ? "@import '@taiga-ui/styles/taiga-ui-global.less';\n"
             : "@import '@taiga-ui/styles/taiga-ui-theme.less';\n@import '@taiga-ui/styles/taiga-ui-fonts.less';\n",
         'src/main.ts': [
             "import '@angular/compiler';",
