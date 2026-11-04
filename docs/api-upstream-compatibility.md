@@ -44,7 +44,7 @@ test('update country and city', async ({page}) => {
 
 | Dimension | Status |
 | --- | --- |
-| Taiga UI | Integration tested with **5.28.0** only |
+| Taiga UI | Root import: **5.28.0** verified. `/v4` import: **4.106.0** isolated Angular consumer for Select and ComboBox only. Other helpers and releases unverified |
 | Angular | Fixture tested with **20.3.0** only |
 | Playwright | Peer range **>=1.51 <2** is declared; CI verifies **1.51.0** and the lockfile-resolved version, but not the full range |
 | Node | Package declares **>=20**; consumer checks run on **20.19.0** and **24**. Node 20.0–20.18 and all other versions are not yet verified |
@@ -54,6 +54,25 @@ test('update country and city', async ({page}) => {
 | Package delivery | **0.1.2** published through npm OIDC with signed provenance; **123 files / 47,760 packed bytes**, with no Angular fixture/docs bundles. The actual npm 0.1.2 was installed and tested in a clean Angular consumer in PR #90; RC publication remains a separate future gate. |
 
 The Node 20.19.0 consumer check does not imply that Angular or the complete browser test suite support Node 20; those suites still run on Node 24. The npm `engines.node: >=20` and Playwright `>=1.51 <2` peer range are **declarations**, not evidence that the whole ranges have been verified. The 1.0 tested baseline is specifically Angular 20.3.0, Taiga UI 5.28.0, Playwright 1.51.0 and 1.64.1, Node 20.19.0 (ESM consumer) and Node 24 (browser integration). The package includes internal Taiga UI markup selectors, so helpers can be affected by minor Taiga UI DOM changes. Other versions need explicit validation before being called supported.
+
+## Taiga UI v4 secondary entrypoint
+
+Import from `@taiga-ui-labs/playwright/v4` for Taiga UI 4.x projects.
+This additive export exposes the same helpers as the original 1.x package root,
+without forking their implementation or changing existing v5 imports.
+
+The dedicated Angular 20.3 consumer installs Taiga UI **4.106.0**, Maskito
+**3.x**, and `@ng-web-apis` **4.x** instead of the v5 dependency family.
+It uses v4's `*tuiTextfieldDropdown` syntax and drives real Select and
+ComboBox controls in Chromium, asserting reactive form values.
+
+**Verified scope:** Select and ComboBox on 4.106.0 only. The rest of the
+public API is available through the secondary entrypoint but is not yet
+integration-verified on v4. Other v4 versions need independent testing.
+
+```sh
+CONSUMER_TAIGA_VERSION=4.106.0 npm run test:consumer:angular
+```
 
 ## Packaging verification
 
