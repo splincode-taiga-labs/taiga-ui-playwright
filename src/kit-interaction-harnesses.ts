@@ -1,6 +1,6 @@
 import {expect, type Locator} from '@playwright/test';
 
-import {clickOwnedCalendarCell} from './calendar-portal.js';
+import {clickOwnedCalendarCell} from './calendar-portal';
 
 function validateMonthIndex(index: number): void {
     if (!Number.isInteger(index) || index < 0 || index > 11) {
