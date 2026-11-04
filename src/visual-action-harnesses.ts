@@ -1,5 +1,5 @@
 import {expect, type Locator} from '@playwright/test';
-import {exactText} from './locator-text.js';
+import {exactText} from './locator-text';
 
 export class TuiIconHarness {
     public constructor(public readonly host: Locator) {}
