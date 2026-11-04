@@ -29,14 +29,14 @@ import {TuiChevron, TuiComboBox, TuiDataListWrapper, TuiFilterByInputPipe, TuiSe
                 <section>
                     <tui-textfield data-testid="country-field" tuiChevron>
                         <input aria-label="Country" tuiSelect [formControl]="country" />
-                        <tui-data-list-wrapper *tuiTextfieldDropdown [items]="countries" />
+                        <tui-data-list-wrapper new *tuiTextfieldDropdown [items]="countries" />
                     </tui-textfield>
                     <output data-testid="country-model">{{ country.value ?? 'null' }}</output>
                 </section>
                 <section>
                     <tui-textfield data-testid="city-field" tuiChevron>
                         <input aria-label="City" tuiComboBox [formControl]="city" />
-                        <tui-data-list-wrapper *tuiTextfieldDropdown [items]="cities | tuiFilterByInput" />
+                        <tui-data-list-wrapper new *tuiTextfieldDropdown [items]="cities | tuiFilterByInput" />
                     </tui-textfield>
                     <output data-testid="city-model">{{ city.value ?? 'null' }}</output>
                 </section>
