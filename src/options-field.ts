@@ -150,6 +150,17 @@ export abstract class TuiOptionsField {
         }
 
         await this.input.click();
+
+        // Taiga UI 4 can close the portal during click focus handling.
+        // ArrowDown opens it without toggling a focused Select/ComboBox closed.
+        // Preserve v5's click behavior, including asynchronously mounted portals.
+        const afterClick = await this.getOverlay();
+
+        if (!(await afterClick.isVisible()) &&
+            (await this.input.getAttribute('aria-expanded')) === 'false') {
+            await this.input.press('ArrowDown');
+        }
+
         await this.assertUnambiguous(await this.getOverlay());
     }
 

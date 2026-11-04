@@ -16,8 +16,6 @@ test('button updates Angular state', async ({page}) => {
 
 test('Select updates FormControl via a v4 dropdown', async ({page}) => {
     const select = tuiSelect(page.getByTestId('country-field'));
-    await select.input.press('ArrowDown');
-    await expect(select.overlay).toBeVisible();
     await select.selectOption('Estonia');
     await expect(page.getByTestId('country-model')).toHaveText('Estonia');
 });
@@ -25,8 +23,6 @@ test('Select updates FormControl via a v4 dropdown', async ({page}) => {
 test('ComboBox updates FormControl via a v4 dropdown', async ({page}) => {
     const combo = tuiComboBox(page.getByTestId('city-field'));
     await combo.fill('Tall');
-    await combo.input.press('ArrowDown');
-    await expect(combo.overlay).toBeVisible();
     await combo.selectOption('Tallinn');
     await expect(page.getByTestId('city-model')).toHaveText('Tallinn');
 });
