@@ -1,11 +1,12 @@
 import {Component} from '@angular/core';
+import {RouterLink} from '@angular/router';
 import {TuiDocCode, TuiDocPage} from '@taiga-ui/addon-doc';
 import {TuiLink} from '@taiga-ui/core';
 import {DocsCopyButton} from './copy-button';
 
 @Component({
     selector: 'getting-started',
-    imports: [TuiDocCode, TuiDocPage, TuiLink, DocsCopyButton],
+    imports: [TuiDocCode, TuiDocPage, TuiLink, RouterLink, DocsCopyButton],
     template: `
         <tui-doc-page header="Getting started" [tags]="['Playwright', 'TypeScript']">
             <article class="guide-page">
@@ -15,6 +16,8 @@ import {DocsCopyButton} from './copy-button';
                     <div class="copyable-code__toolbar"><docs-copy-button label="example" [code]="example" /></div>
                     <tui-doc-code filename="playwright.spec.ts" [code]="example" [lineNumbers]="false" />
                 </div>
+                <h2>Taiga UI 4 projects</h2>
+                <p>Taiga UI 4 uses <code>@taiga-ui-labs/playwright/v4</code>. The <a tuiLink routerLink="/v4">v4 compatibility page</a> explains the verified scope and provides a tested example. Do not assume the entire v5 catalog is supported on v4.</p>
                 <h2>Browse individual harnesses</h2>
                 <p>Open the Harnesses section on the left to find a component, copy its import, copy a tested Playwright example or copy its full implementation source.</p>
                 <h2>How coverage is tracked</h2>

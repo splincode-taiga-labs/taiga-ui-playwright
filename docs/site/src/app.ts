@@ -10,6 +10,7 @@ import {TuiLink} from '@taiga-ui/core';
         <tui-doc-main>
             <nav ngProjectAs="tuiDocHeader" class="docs-links">
                 <a tuiLink routerLink="/">Matrix</a>
+                <a tuiLink routerLink="/v4">v4 Compatibility</a>
                 <a tuiLink routerLink="/guide">Guide</a>
                 <a
                     tuiLink

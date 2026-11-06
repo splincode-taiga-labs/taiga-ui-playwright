@@ -4,6 +4,13 @@ import {packageApi} from './api';
 
 const {tuiButton, tuiSelect, tuiComboBox} = await packageApi('./v4');
 
+test('v4 entrypoint exposes the same runtime API as the package root', async () => {
+    const root = await packageApi('.');
+    const v4 = await packageApi('./v4');
+
+    expect(Object.keys(v4).sort()).toEqual(Object.keys(root).sort());
+});
+
 test.beforeEach(async ({page}) => {
     await page.goto('/');
     await expect(page.getByRole('heading', {name: 'Taiga UI 4 demo'})).toBeVisible();

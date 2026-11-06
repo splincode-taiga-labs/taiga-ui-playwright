@@ -406,3 +406,31 @@ test('full harness source shows the filename once and omits redundant class comm
     await expect(source.getByText('semantic-harnesses.ts', {exact: true})).toHaveCount(0);
     await expect(source).not.toContainText('Real spin arrows reflect bounds');
 });
+
+test('landing distinguishes the v5 catalog from targeted Taiga UI 4 compatibility', async ({page}) => {
+    await page.goto('/');
+    const versions = page.getByRole('region', {name: 'Supported Taiga UI versions'});
+    await expect(versions).toBeVisible();
+    await expect(versions.getByRole('heading', {name: /Taiga UI 5/})).toBeVisible();
+    await expect(versions.getByRole('heading', {name: /Taiga UI 4/})).toBeVisible();
+    await expect(versions).toContainText('Button, Select and ComboBox');
+    await expect(page.getByTestId('coverage-total')).toHaveText('133');
+    await versions.getByRole('link', {name: 'Explore v4 compatibility'}).click();
+    await expect(page).toHaveURL(/#\/v4$/);
+    await expect(page.getByRole('heading', {name: 'Taiga UI 4 compatibility'})).toBeVisible();
+});
+
+test('v4 guide lists only verified browser interactions and a versioned import', async ({page}) => {
+    await page.goto('/#/v4');
+    const guide = page.locator('v4-compatibility');
+    await expect(guide).toBeVisible();
+    await expect(guide.getByText('3 / 3')).toBeVisible();
+    await expect(guide.locator('table.compat-table tbody tr')).toHaveCount(3);
+    await expect(guide).toContainText('Targeted compatibility, not full v4 coverage');
+    await expect(guide).toContainText('v1.0.1 does not expose /v4');
+    await expect(guide).toContainText('@taiga-ui-labs/playwright/v4');
+    await expect(guide.getByRole('button', {name: 'Copy v4 import'})).toBeEnabled();
+    await expect(guide.getByRole('button', {name: 'Copy v4 example'})).toBeEnabled();
+    await page.getByRole('link', {name: 'Matrix', exact: true}).click();
+    await expect(page).toHaveURL(/#\/matrix$/);
+});
