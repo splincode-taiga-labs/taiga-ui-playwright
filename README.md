@@ -58,7 +58,7 @@ For **Taiga UI 4.x**, use the versioned secondary entrypoint **after installing 
 import {tuiSelect, tuiComboBox} from '@taiga-ui-labs/playwright/v4';
 ```
 
-See the [Taiga UI 4 compatibility guide](https://splincode-taiga-labs.github.io/taiga-ui-playwright/v4/) for the verified components and limitations.
+See the [interactive Taiga UI 4 demo](https://splincode-taiga-labs.github.io/taiga-ui-playwright/v4/), built from the same Angular workspace used by the v4 Playwright tests. It demonstrates the verified components; it is not a claim of full v4 coverage.
 
 For **Taiga UI 5.x**, continue using the root import `@taiga-ui-labs/playwright`.
 Both entrypoints share the same Locator-first API. The v4 demo workspace tests
@@ -85,6 +85,10 @@ The release workflow publishes `./dist/package` using the GitHub Release tag.
 The `integration/angular-app` and `integration/angular-app-v4` npm workspaces contain
 permanent Taiga UI **5.28** and **4.106** demos. Run `npm run test:compat` to
 start both and exercise the real built APF root and `/v4` entrypoints.
+
+The **same v4 workspace** is bundled into `dist/docs/browser/v4/` by
+`npm run build:docs:pages`, then deployed as a real interactive app under
+`/taiga-ui-playwright/v4/`. It replaces the former v5-rendered compatibility page.
 
 ## AI agent skill
 

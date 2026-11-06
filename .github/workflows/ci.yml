@@ -36,11 +36,12 @@ jobs:
         run: npm run test:pack
       - run: npm run build:fixture
       - run: npm run build:docs:pages
-      - name: Verify GitHub Pages /v4/ compatibility URL
+      - name: Verify GitHub Pages includes the actual Taiga UI 4 Angular app
         shell: bash
         run: |
           test -f dist/docs/browser/v4/index.html
-          grep -Fq '../#/v4' dist/docs/browser/v4/index.html
+          grep -Fq '<app-demo-v4' dist/docs/browser/v4/index.html
+          grep -Fq '/taiga-ui-playwright/v4/' dist/docs/browser/v4/index.html
       - name: Exercise npm prepublish for stable and prerelease versions
         shell: bash
         run: |
