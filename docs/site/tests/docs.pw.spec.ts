@@ -427,6 +427,7 @@ test('docs does not offer a v4 page pretending to use Taiga UI 4', async ({page}
     await page.goto('/#/guide');
     await expect(page.getByRole('link', {name: 'interactive v4 demo'})).toHaveAttribute('href', 'v4/');
     await page.goto('/#/v4');
-    await expect(page.getByRole('heading', {name: 'Playwright harness matrix'})).toBeVisible();
+    await expect(page.locator('tui-doc-main')).toBeVisible();
+    await expect(page.getByRole('link', {name: 'v4 Demo', exact: true})).toHaveAttribute('href', 'v4/');
     await expect(page.locator('v4-compatibility')).toHaveCount(0);
 });
