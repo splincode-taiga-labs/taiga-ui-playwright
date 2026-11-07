@@ -1,2 +1,4 @@
-/** Taiga UI 4.x secondary entrypoint; reference the primary APF entrypoint by package name. */
+/** Taiga UI v4 secondary entrypoint. Shared helpers use the primary APF entrypoint. */
 export * from '@taiga-ui-labs/playwright';
+// The explicit exports override the v5 Avatar DOM contract for v4.
+export {TuiAvatarHarness, tuiAvatar} from './avatar';

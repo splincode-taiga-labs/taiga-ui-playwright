@@ -2,15 +2,21 @@ import {Component, signal} from '@angular/core';
 
 import {V4_COMPONENTS} from './component-inventory';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {TuiButton, TuiRoot, TuiTextfield, TuiTextfieldDropdownDirective} from '@taiga-ui/core';
+import {TuiButton, TuiExpandComponent, TuiLink, TuiLoader, TuiRoot, TuiTextfield, TuiTextfieldDropdownDirective} from '@taiga-ui/core';
 import {
+    TuiAvatar,
+    TuiBadge,
+    TuiBadgeNotification,
     TuiCheckbox,
+    TuiChip,
     TuiChevron,
     TuiComboBox,
     TuiDataListWrapper,
     TuiFilterByInputPipe,
     TuiInputNumberDirective,
+    TuiLike,
     TuiPagination,
+    TuiProgressBar,
     TuiRadioComponent,
     TuiSegmented,
     TuiSelect,
@@ -30,6 +36,15 @@ import {
         TuiTextfield,
         TuiTextfieldDropdownDirective,
         TuiButton,
+        TuiLink,
+        TuiLoader,
+        TuiExpandComponent,
+        TuiAvatar,
+        TuiBadge,
+        TuiBadgeNotification,
+        TuiChip,
+        TuiLike,
+        TuiProgressBar,
         TuiChevron,
         TuiSelect,
         TuiDataListWrapper,
@@ -62,7 +77,7 @@ import {
                 </p>
                 <p class="notice">
                     <strong>Tested controls, not blanket v4 compatibility.</strong>
-                    This demo exercises twelve real Taiga UI controls with the packaged /v4 API
+                    This demo exercises 22 real Taiga UI controls with the packaged /v4 API
                     in Chromium on 4.106.0. Other components and earlier 4.x versions
                     still need their own integration tests.
                 </p>
@@ -171,6 +186,55 @@ import {
                     </tui-textfield>
                     <output data-testid="number-model">{{ amount.value }}</output>
                 </section>
+
+                <section>
+                    <h2>Link</h2>
+                    <a tuiLink href="#v4-link-target" data-testid="link">Go to target</a>
+                    <p id="v4-link-target">V4 link target</p>
+                </section>
+                <section>
+                    <h2>Badge</h2>
+                    <span tuiBadge appearance="primary" size="m" data-testid="badge">Active</span>
+                </section>
+                <section>
+                    <h2>Chip</h2>
+                    <span tuiChip appearance="neutral" size="s" data-testid="chip">Angular</span>
+                </section>
+                <section>
+                    <h2>BadgeNotification</h2>
+                    <tui-badge-notification size="l" data-testid="notification-badge">7</tui-badge-notification>
+                </section>
+                <section>
+                    <h2>Like</h2>
+                    <label><input tuiLike type="checkbox" data-testid="like" [formControl]="liked" /> Like</label>
+                    <output data-testid="like-model">{{ liked.value }}</output>
+                </section>
+                <section>
+                    <h2>Progress</h2>
+                    <progress tuiProgressBar data-testid="progress" [value]="progress()" max="100"></progress>
+                    <button tuiButton type="button" (click)="progress.set(75)">Set progress to 75</button>
+                    <output data-testid="progress-model">{{ progress() }}</output>
+                </section>
+                <section>
+                    <h2>Loader</h2>
+                    <tui-loader data-testid="loader" [showLoader]="loading()">Loading content</tui-loader>
+                    <button tuiButton type="button" (click)="loading.set(!loading())">Toggle loading</button>
+                </section>
+                <section>
+                    <h2>Expand</h2>
+                    <button tuiButton type="button" (click)="expanded.set(!expanded())">Toggle section</button>
+                    <tui-expand data-testid="expand" [expanded]="expanded()">Expandable content</tui-expand>
+                </section>
+                <section>
+                    <h2>Avatar</h2>
+                    <tui-avatar data-testid="avatar" [round]="false" size="m">AB</tui-avatar>
+                    <tui-avatar data-testid="avatar-round" size="s">CD</tui-avatar>
+                </section>
+                <section>
+                    <h2>Textfield</h2>
+                    <p>The existing numeric input uses the real Taiga UI 4 textfield.</p>
+                    <button tuiButton type="button" (click)="amount.setValue(12)">Set amount</button>
+                </section>
                 <p class="footnote">
                     Open source · <a href="https://github.com/splincode-taiga-labs/taiga-ui-playwright/blob/main/compatibility/v4.spec.ts"
                         target="_blank" rel="noopener noreferrer">Playwright tests ↗</a>
@@ -182,7 +246,7 @@ import {
 `,
 })
 export class DemoV4 {
-    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber} from '@taiga-ui-labs/playwright/v4';";
+    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield} from '@taiga-ui-labs/playwright/v4';";
     protected readonly componentInventory = V4_COMPONENTS;
     protected readonly verifiedCount = V4_COMPONENTS.filter((component) => component.verified).length;
     protected readonly countries = ['Austria', 'Estonia'];
@@ -195,6 +259,10 @@ export class DemoV4 {
     protected readonly enabled = new FormControl(false, {nonNullable: true});
     protected readonly notes = new FormControl('', {nonNullable: true});
     protected readonly amount = new FormControl<number | null>(null);
+    protected readonly liked = new FormControl(false, {nonNullable: true});
+    protected readonly progress = signal(25);
+    protected readonly loading = signal(true);
+    protected readonly expanded = signal(false);
     protected activeTab = 0;
     protected activeSegment = 0;
     protected pageIndex = 0;
