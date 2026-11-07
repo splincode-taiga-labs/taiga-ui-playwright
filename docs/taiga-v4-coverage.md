@@ -4,13 +4,13 @@ The npm secondary entrypoint `@taiga-ui-labs/playwright/v4` exports the **same 2
 
 ## Browser-verified on Taiga UI 4.106.0
 
-The [live v4 demo](https://splincode-taiga-labs.github.io/taiga-ui-playwright/v4/) runs real Taiga UI v4 controls, and `compatibility/v4.spec.ts` imports the **built APF /v4 entrypoint**. Each test exercises a live component and checks DOM state or its Angular model.
+The local v4 Angular fixture runs real Taiga UI v4 controls in CI, and `compatibility/v4.spec.ts` imports the **built APF /v4 entrypoint**. Each test exercises a live component and checks DOM state or its Angular model.
 
 | Component | Export | Verification |
 | --- | --- | --- |
 | Button | `tuiButton` | Click increments signal |
 | Select | `tuiSelect` | Select option updates FormControl |
-| ComboBox | `tuiComboBox` | Fill and select update FormControl |
+| ComboBox | `tuiComboBox` | Fill and select update FormControl; one filtered option uses the native v4 Enter handler to avoid strict-mode blur clearing |
 | Checkbox | `tuiCheckbox` | Check/uncheck update FormControl |
 | Radio | `tuiRadio` | Check updates FormControl |
 | Switch | `tuiSwitch` | Toggle updates FormControl |
@@ -39,7 +39,7 @@ The [live v4 demo](https://splincode-taiga-labs.github.io/taiga-ui-playwright/v4
 
 ## v4 component inventory
 
-The [v4 source inventory](taiga-v4-inventory.md) lists 123 real Taiga UI v4 component directories (not directives or legacy controls). The live /v4 demo contains the same list. **A mapped helper does not mean its v4 behavior was verified.**
+The [v4 source inventory](taiga-v4-inventory.md) lists 123 real Taiga UI v4 component directories (not directives or legacy controls). The [public documentation](https://splincode-taiga-labs.github.io/taiga-ui-playwright/) includes a separate v4 TODO matrix for this inventory. **A mapped helper does not mean its v4 behavior was verified.**
 
 ## Consumer usage
 
@@ -63,6 +63,6 @@ npm run test:compat
 npm run build:docs:pages
 ```
 
-When implementing another v4 harness, first add its **actual v4 component** to `integration/angular-app-v4/src/app.ts`, then a `compatibility/v4.spec.ts` test asserting the resulting Angular state or DOM. Run that same workspace in the published /v4 demo; only then add the helper to this table. Do not infer compatibility solely from an exported TypeScript symbol or a passing v5 test.
+When implementing another v4 harness, first add its **actual v4 component** to `integration/angular-app-v4/src/app.ts`, then a `compatibility/v4.spec.ts` test asserting the resulting Angular state or DOM. Run that same workspace in the v4 Playwright CI project; only then add the helper to this table. Do not deploy the fixture HTML to GitHub Pages. Do not infer compatibility solely from an exported TypeScript symbol or a passing v5 test.
 
 The v5 entrypoint `@taiga-ui-labs/playwright` is unchanged. This library is independent of Taiga UI and not an officially supported Taiga UI package.

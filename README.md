@@ -58,7 +58,7 @@ For **Taiga UI 4.x**, use the versioned secondary entrypoint **after installing 
 import {tuiSelect, tuiComboBox} from '@taiga-ui-labs/playwright/v4';
 ```
 
-The demo includes a [source-based v4 component inventory](docs/taiga-v4-inventory.md), separating verified controls from untested and unmapped components. See the [interactive Taiga UI 4 demo](https://splincode-taiga-labs.github.io/taiga-ui-playwright/v4/), built from the same Angular workspace used by the v4 Playwright tests. It demonstrates 26 tested controls; it is not a claim of complete v4 coverage. See the [v4 test matrix](docs/taiga-v4-coverage.md).
+The demo includes a [source-based v4 component inventory](docs/taiga-v4-inventory.md), separating verified controls from untested and unmapped components. The [single documentation site](https://splincode-taiga-labs.github.io/taiga-ui-playwright/) shows separate v4 TODO coverage and version-specific imports/examples for every mapped harness. The v4 Angular fixture runs in CI only and is not published. See the [v4 test matrix](docs/taiga-v4-coverage.md).
 
 For **Taiga UI 5.x**, continue using the root import `@taiga-ui-labs/playwright`.
 Both entrypoints share the same Locator-first API. The v4 demo workspace tests 26 controls on **Angular 20.3 / Taiga UI 4.106.0**. The `/v4` entrypoint exposes all 266 public API exports, but the remaining harnesses and other 4.x versions are **not yet browser-verified**. Read the [compatibility policy](docs/api-upstream-compatibility.md).
@@ -84,9 +84,10 @@ The `integration/angular-app` and `integration/angular-app-v4` npm workspaces co
 permanent Taiga UI **5.28** and **4.106** demos. Run `npm run test:compat` to
 start both and exercise the real built APF root and `/v4` entrypoints.
 
-The **same v4 workspace** is bundled into `dist/docs/browser/v4/` by
-`npm run build:docs:pages`, then deployed as a real interactive app under
-`/taiga-ui-playwright/v4/`. It replaces the former v5-rendered compatibility page.
+The **v4 workspace** is test-only. `npm run test:compat` runs both real Angular
+demos locally through Playwright. `npm run build:docs:pages` publishes only the
+v5-based documentation shell, with separate v5/v4 coverage matrices and
+per-harness usage examples. No v4 Angular HTML bundle is deployed.
 
 ## AI agent skill
 

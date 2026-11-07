@@ -296,14 +296,18 @@ export function getHarnessSourceFile(id: string): string {
     return SOURCES[id] ?? '';
 }
 
-export function makeExample(entry: HarnessReference): string {
-    const action = ACTIONS[entry.id] ?? 'await expect(harness.host).toBeVisible();';
+export function makeExample(entry: HarnessReference, version: 'v5' | 'v4' = 'v5'): string {
+    const action = version === 'v4' && entry.api === 'tuiDialog'
+        ? "await expect(harness.title).toHaveText('V4 confirmation');\nawait harness.close();"
+        : ACTIONS[entry.id] ?? 'await expect(harness.host).toBeVisible();';
     const fixture = entry.id === 'portals/dialog'
         ? "page.locator('tui-dialog')"
-        : "page.getByTestId('" + entry.name + "-field')";
+        : version === 'v4' && entry.api === 'tuiAvatar'
+            ? "page.getByTestId('avatar-round')"
+            : "page.getByTestId('" + entry.name + "-field')";
     return [
         "import {expect, test} from '@playwright/test';",
-        "import {" + entry.api + "} from '@taiga-ui-labs/playwright';",
+        "import {" + entry.api + "} from '@taiga-ui-labs/playwright" + (version === 'v4' ? '/v4' : '') + "';",
         '',
         "test('" + entry.name + "', async ({page}) => {",
         "    await page.goto('/');",
