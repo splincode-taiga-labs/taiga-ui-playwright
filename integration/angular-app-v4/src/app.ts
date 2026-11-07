@@ -1,8 +1,20 @@
-import {Component, signal} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 
 import {V4_COMPONENTS} from './component-inventory';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {TuiButton, TuiExpandComponent, TuiLink, TuiLoader, TuiRoot, TuiTextfield, TuiTextfieldDropdownDirective} from '@taiga-ui/core';
+import {TuiDay} from '@taiga-ui/cdk';
+import {
+    TuiButton,
+    TuiCalendar,
+    TuiDialogService,
+    TuiExpandComponent,
+    TuiLink,
+    TuiLoader,
+    TuiRoot,
+    TuiSelectLike,
+    TuiTextfield,
+    TuiTextfieldDropdownDirective,
+} from '@taiga-ui/core';
 import {
     TuiAvatar,
     TuiBadge,
@@ -11,6 +23,9 @@ import {
     TuiChip,
     TuiChevron,
     TuiComboBox,
+    TuiInputChip,
+    TuiInputDate,
+    TuiMultiSelect,
     TuiDataListWrapper,
     TuiFilterByInputPipe,
     TuiInputNumberDirective,
@@ -36,6 +51,11 @@ import {
         TuiTextfield,
         TuiTextfieldDropdownDirective,
         TuiButton,
+        TuiCalendar,
+        TuiSelectLike,
+        TuiInputDate,
+        TuiInputChip,
+        TuiMultiSelect,
         TuiLink,
         TuiLoader,
         TuiExpandComponent,
@@ -77,7 +97,7 @@ import {
                 </p>
                 <p class="notice">
                     <strong>Tested controls, not blanket v4 compatibility.</strong>
-                    This demo exercises 22 real Taiga UI controls with the packaged /v4 API
+                    This demo exercises 26 real Taiga UI controls with the packaged /v4 API
                     in Chromium on 4.106.0. Other components and earlier 4.x versions
                     still need their own integration tests.
                 </p>
@@ -235,6 +255,33 @@ import {
                     <p>The existing numeric input uses the real Taiga UI 4 textfield.</p>
                     <button tuiButton type="button" (click)="amount.setValue(12)">Set amount</button>
                 </section>
+
+                <section>
+                    <h2>Calendar</h2>
+                    <tui-calendar data-testid="v4-calendar" [value]="calendarValue()" (dayClick)="calendarValue.set($event)" />
+                    <output data-testid="v4-calendar-model">{{ calendarValue()?.year }}-{{ calendarValue()?.month }}-{{ calendarValue()?.day }}</output>
+                </section>
+                <section>
+                    <h2>InputDate</h2>
+                    <tui-textfield data-testid="v4-date-field">
+                        <input tuiInputDate aria-label="Appointment date" [formControl]="appointmentDate" />
+                        <tui-calendar *tuiTextfieldDropdown />
+                    </tui-textfield>
+                    <output data-testid="v4-date-model">{{ appointmentDate.value?.year }}-{{ appointmentDate.value?.month }}-{{ appointmentDate.value?.day }}</output>
+                </section>
+                <section>
+                    <h2>MultiSelect</h2>
+                    <tui-textfield multi tuiChevron data-testid="v4-multi-field">
+                        <input tuiInputChip tuiSelectLike aria-label="Countries" [formControl]="selectedCountries" />
+                        <tui-data-list-wrapper new tuiMultiSelectGroup *tuiTextfieldDropdown [items]="multiCountriesOptions" />
+                    </tui-textfield>
+                    <output data-testid="v4-multi-model">{{ selectedCountries.value.join(',') }}</output>
+                </section>
+                <section>
+                    <h2>Dialog</h2>
+                    <button tuiButton type="button" (click)="showConfirmation()">Open v4 dialog</button>
+                    <output data-testid="v4-dialog-model">{{ dialogResult() }}</output>
+                </section>
                 <p class="footnote">
                     Open source · <a href="https://github.com/splincode-taiga-labs/taiga-ui-playwright/blob/main/compatibility/v4.spec.ts"
                         target="_blank" rel="noopener noreferrer">Playwright tests ↗</a>
@@ -246,7 +293,8 @@ import {
 `,
 })
 export class DemoV4 {
-    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield} from '@taiga-ui-labs/playwright/v4';";
+    private readonly dialog = inject(TuiDialogService);
+    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog} from '@taiga-ui-labs/playwright/v4';";
     protected readonly componentInventory = V4_COMPONENTS;
     protected readonly verifiedCount = V4_COMPONENTS.filter((component) => component.verified).length;
     protected readonly countries = ['Austria', 'Estonia'];
@@ -263,10 +311,23 @@ export class DemoV4 {
     protected readonly progress = signal(25);
     protected readonly loading = signal(true);
     protected readonly expanded = signal(false);
+    protected readonly calendarValue = signal<TuiDay | null>(new TuiDay(2026, 0, 15));
+    protected readonly appointmentDate = new FormControl<TuiDay | null>(new TuiDay(2026, 0, 15));
+    protected readonly multiCountriesOptions = ['Austria', 'Estonia', 'Latvia'];
+    protected readonly selectedCountries = new FormControl<string[]>([], {nonNullable: true});
+    protected readonly dialogResult = signal('pending');
     protected activeTab = 0;
     protected activeSegment = 0;
     protected pageIndex = 0;
     protected stepIndex = 0;
+
+    protected showConfirmation(): void {
+        this.dialogResult.set('pending');
+        this.dialog.open('Confirm the operation?', {
+            label: 'V4 confirmation',
+            data: {button: 'Confirm'},
+        }).subscribe({complete: () => this.dialogResult.set('closed')});
+    }
 
     protected save(): void {
         this.saved.update((value) => value + 1);
