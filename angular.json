@@ -71,11 +71,6 @@
                 "output": "/"
               },
               {
-                "glob": "*.ts",
-                "input": "src",
-                "output": "/assets/harness-sources"
-              },
-              {
                 "glob": "**/*.svg",
                 "input": "node_modules/@taiga-ui/icons/src",
                 "output": "assets/taiga-ui/icons"
