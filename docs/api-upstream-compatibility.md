@@ -44,7 +44,7 @@ test('update country and city', async ({page}) => {
 
 | Dimension | Status |
 | --- | --- |
-| Taiga UI | Root: **5.28.0**; `/v4`: **4.106.0**. Permanent demo workspaces exercise the package's built API in Chromium. Other v4 components and versions remain unverified |
+| Taiga UI | Root: **5.28.0**; `/v4`: **4.106.0**. Permanent demo workspaces exercise the package's built API in Chromium. Twelve real v4 controls are tested; other components and versions remain unverified |
 | Angular | Fixture tested with **20.3.0** only |
 | Playwright | Peer range **>=1.51 <2** is declared; the current v4/v5 compatibility suite runs on **1.64.1**, not the entire peer range |
 | Node | Package declares **>=20**; current workspace/browser CI runs on **24**. Node 20 verification was performed in the earlier consumer pipeline but is no longer rerun by this PR |
@@ -63,12 +63,9 @@ without forking their implementation or changing existing v5 imports.
 
 The dedicated Angular 20.3 workspace installs Taiga UI **4.106.0**, Maskito
 **3.x**, and `@ng-web-apis` **4.x** instead of the v5 dependency family.
-It uses v4's `*tuiTextfieldDropdown` syntax and drives real Select and
-ComboBox controls in Chromium, asserting reactive form values.
+It uses v4's `*tuiTextfieldDropdown` syntax and drives twelve real controls in Chromium, asserting Angular state and reactive form values.
 
-**Verified scope:** Select and ComboBox on 4.106.0 only. The rest of the
-public API is available through the secondary entrypoint but is not yet
-integration-verified on v4. Other v4 versions need independent testing.
+**Verified scope:** Button, Select, ComboBox, Checkbox, Radio, Switch, Tabs, Segmented, Textarea, Pagination, Stepper and InputNumber on 4.106.0. The rest of the public API is available through the secondary entrypoint but is not yet integration-verified on v4. Other v4 versions need independent testing. See [the v4 coverage matrix](taiga-v4-coverage.md).
 
 ```sh
 npm run test:compat

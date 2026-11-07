@@ -16,7 +16,7 @@ import {DocsCopyButton} from './copy-button';
                     <tui-doc-code filename="playwright.spec.ts" [code]="example" [lineNumbers]="false" />
                 </div>
                 <h2>Taiga UI 4 projects</h2>
-                <p>Taiga UI 4 uses <code>@taiga-ui-labs/playwright/v4</code>. The <a tuiLink href="v4/">interactive v4 demo</a> is built from the same Angular workspace used by Playwright. Do not assume the entire v5 catalog is supported on v4.</p>
+                <p>Taiga UI 4 uses <code>@taiga-ui-labs/playwright/v4</code>. The <a tuiLink href="v4/">interactive v4 demo</a> is built from the same Angular workspace used by Playwright. The v4 browser suite covers twelve controls on 4.106.0. All API symbols can be imported, but other behaviors and earlier 4.x versions are not yet verified. See the <a tuiLink href="https://github.com/splincode-taiga-labs/taiga-ui-playwright/blob/main/docs/taiga-v4-coverage.md" target="_blank" rel="noopener noreferrer">v4 compatibility matrix ↗</a> and the <a tuiLink href="https://github.com/splincode-taiga-labs/taiga-ui-playwright/blob/main/docs/taiga-v4-inventory.md" target="_blank" rel="noopener noreferrer">v4 source inventory ↗</a>.</p>
                 <h2>Browse individual harnesses</h2>
                 <p>Open the Harnesses section on the left to find a component, copy its import, copy a tested Playwright example or copy its full implementation source.</p>
                 <h2>How coverage is tracked</h2>
