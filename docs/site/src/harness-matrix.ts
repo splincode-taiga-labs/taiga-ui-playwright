@@ -4,8 +4,9 @@ import {TuiDocPage} from '@taiga-ui/addon-doc';
 import {TuiInput, TuiLink, TuiTextfield} from '@taiga-ui/core';
 import {TuiBadge, TuiSegmented} from '@taiga-ui/kit';
 
-import {HARNESS_CATALOG, IMPLEMENTATIONS, type HarnessCategory, type HarnessEntry, type HarnessStatus} from './harness-catalog';
-import {getHarnessSourceFile} from './harness-reference';
+import {HARNESS_CATALOG, type HarnessCategory, type HarnessEntry, type HarnessStatus} from './harness-catalog';
+import {HARNESS_REFERENCES} from './harness-reference';
+import {V4_CATALOG} from './v4-catalog';
 
 type StatusFilter = 'all' | HarnessStatus;
 type GroupFilter = 'All' | HarnessCategory;
@@ -14,16 +15,16 @@ type GroupFilter = 'All' | HarnessCategory;
     selector: 'harness-matrix',
     imports: [TuiDocPage, TuiInput, TuiTextfield, TuiLink, TuiBadge, TuiSegmented, RouterLink],
     template: `
-        <tui-doc-page header="Playwright harness matrix" [tags]="['Community', 'Taiga UI v5']">
+        <tui-doc-page header="Playwright harness matrix" [tags]="['Community', version() === 'v4' ? 'Taiga UI v4' : 'Taiga UI v5']">
             <div class="matrix-page">
                 <div class="intro">
                     <div class="eyebrow">TESTING / COVERAGE</div>
                     <h2>Reliable tests, one component at a time.</h2>
                     <p>
                         Locator-first Playwright helpers for Taiga UI. The matrix inventories
-                        component directories across seven upstream packages. <strong>Done</strong>
-                        means an actual helper is exported and tested in the v5 catalog; everything else is
-                        clearly marked TODO.
+                        component inventories for both major versions. <strong>Done</strong>
+                        in v5 means an exported and tested helper. <strong>Verified</strong> in v4
+                        requires a real v4 browser test; untested behaviors remain TODO.
                     </p>
                     <div class="intro-links">
                         <a tuiLink href="https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/10" target="_blank" rel="noopener noreferrer">Development roadmap ↗</a>
@@ -32,30 +33,30 @@ type GroupFilter = 'All' | HarnessCategory;
                 </div>
 
                 <div class="version-choices" role="region" aria-label="Supported Taiga UI versions">
-                    <div class="version-choice version-choice--current">
+                    <div class="version-choice" [class.version-choice--current]="version() === 'v5'">
                         <span class="version-choice__eyebrow">COMPONENT CATALOG</span>
                         <h3>Taiga UI 5 <small>v5.28.0</small></h3>
-                        <p>Browse 133 Playwright helpers in the v5 component inventory. Individual behavior coverage varies.</p>
-                        <span class="version-choice__status">Current matrix</span>
+                        <p>{{ v5Total }} catalog helpers · {{ v5Done }} implemented · <strong data-testid="v5-todo">{{ v5Todo }} TODO</strong>. Individual behavior coverage varies.</p>
+                        <button type="button" class="version-choice__action" [attr.aria-pressed]="version() === 'v5'" (click)="selectVersion('v5')">View v5 matrix</button>
                     </div>
-                    <div class="version-choice">
+                    <div class="version-choice" [class.version-choice--current]="version() === 'v4'">
                         <span class="version-choice__eyebrow">COMPATIBILITY</span>
                         <h3>Taiga UI 4 <small>v4.106.0</small></h3>
-                        <p>Explore the actual Angular demo using Taiga UI 4.106.0. 26 real controls are exercised through the /v4 npm entrypoint. Other harnesses are not yet browser-verified.</p>
-                        <a tuiLink href="v4/">Open interactive v4 demo</a>
+                        <p>{{ v4Total }} upstream components · {{ v4Verified }} browser-verified · <strong data-testid="v4-todo">{{ v4Todo }} TODO</strong>. The v4 Angular app runs in CI only.</p>
+                        <button type="button" class="version-choice__action" [attr.aria-pressed]="version() === 'v4'" (click)="selectVersion('v4')">View v4 matrix</button>
                     </div>
                 </div>
 
-                <div class="metrics" aria-label="Taiga UI v5 coverage summary">
-                    <div class="metric"><strong data-testid="coverage-total">{{ total }}</strong><span>Components</span></div>
-                    <div class="metric"><strong data-testid="coverage-done">{{ done }}</strong><span>Implemented</span></div>
-                    <div class="metric"><strong>{{ inProgress }}</strong><span>In progress</span></div>
-                    <div class="metric"><strong>{{ todo }}</strong><span>TODO</span></div>
+                <div class="metrics" [attr.aria-label]="version() === 'v4' ? 'Taiga UI v4 coverage summary' : 'Taiga UI v5 coverage summary'">
+                    <div class="metric"><strong data-testid="coverage-total">{{ total() }}</strong><span>Components</span></div>
+                    <div class="metric"><strong data-testid="coverage-done">{{ done() }}</strong><span>{{ version() === 'v4' ? 'Verified' : 'Implemented' }}</span></div>
+                    <div class="metric"><strong>{{ inProgress() }}</strong><span>In progress</span></div>
+                    <div class="metric"><strong data-testid="coverage-todo">{{ todo() }}</strong><span>TODO</span></div>
                 </div>
-                <div class="progress" role="progressbar" aria-label="Harness coverage" [attr.aria-valuenow]="done" [attr.aria-valuemax]="total" aria-valuemin="0">
-                    <div [style.width.%]="done / total * 100"></div>
+                <div class="progress" role="progressbar" aria-label="Harness coverage" [attr.aria-valuenow]="done()" [attr.aria-valuemax]="total()" aria-valuemin="0">
+                    <div [style.width.%]="total() ? done() / total() * 100 : 0"></div>
                 </div>
-                <div class="summary">{{ (done / total * 100).toFixed(1) }}% implemented · Catalog snapshot: Taiga UI v5.28.0 · Updated manually with each merged helper</div>
+                <div class="summary">{{ (total() ? done() / total() * 100 : 0).toFixed(1) }}% {{ version() === 'v4' ? 'browser-verified · v4 source inventory · Taiga UI 4.106.0' : 'implemented · v5 catalog snapshot · Taiga UI 5.28.0' }}</div>
 
                 <section aria-labelledby="coverage-heading">
                     <div class="section-heading">
@@ -82,14 +83,14 @@ type GroupFilter = 'All' | HarnessCategory;
                                 [value]="group()"
                                 (change)="group.set($any($event.target).value)"
                             >
-                                @for (category of groups; track category) {
+                                @for (category of groups(); track category) {
                                     <option [value]="category">{{ category }}</option>
                                 }
                             </select>
                         </label>
                     </div>
                     <tui-segmented class="status-control" aria-label="Filter by status" [activeItemIndex]="statusIndex()" (activeItemIndexChange)="setStatusIndex($event)">
-                        @for (item of statuses; track item) {
+                        @for (item of statuses(); track item) {
                             <button type="button">{{ item.label }}</button>
                         }
                     </tui-segmented>
@@ -105,11 +106,11 @@ type GroupFilter = 'All' | HarnessCategory;
                                         <td><span tuiBadge size="s" [appearance]="appearance(item.status)">{{ statusLabel(item.status) }}</span></td>
                                         <td>
                                             @if (implementation(item.id); as api) {
-                                                <a tuiLink [routerLink]="'/harness/' + item.id"><code>{{ api.name }}</code> →</a>
+                                                <a tuiLink [routerLink]="api.route" [queryParams]="version() === 'v4' ? {version: 'v4'} : {}"><code>{{ api.api }}</code> →</a>
                                             } @else {
                                                 <a tuiLink [href]="issueUrl(item)" target="_blank" rel="noopener noreferrer">Create issue ↗</a>
                                             }
-                                            <a class="source-link" [href]="'https://github.com/taiga-family/taiga-ui/tree/main/' + item.path" target="_blank" rel="noopener noreferrer">Source</a>
+                                            <a class="source-link" [href]="'https://github.com/taiga-family/taiga-ui/tree/' + (version() === 'v4' ? 'v4.x/' : 'main/') + item.path" target="_blank" rel="noopener noreferrer">Source</a>
                                         </td>
                                     </tr>
                                 } @empty {
@@ -119,7 +120,7 @@ type GroupFilter = 'All' | HarnessCategory;
                         </table>
                     </div>
                 </section>
-                <p class="footnote">Unofficial community project. Inventory is derived from upstream component directories, not the number of Angular CDK harnesses or all Taiga UI directives. Some directories are primitives or infrastructure that may not warrant a separate E2E helper.</p>
+                <p class="footnote">Unofficial community project. Inventory is derived from upstream component directories, not the number of Angular CDK harnesses or all Taiga UI directives. Some directories are primitives or infrastructure that may not warrant a separate E2E helper. v4 TODO means behavior has not been browser-verified, even when an export exists.</p>
             </div>
         </tui-doc-page>
     `,
@@ -129,36 +130,53 @@ export class HarnessMatrixPage {
     protected readonly group = signal<GroupFilter>('All');
     protected readonly statusIndex = signal(0);
 
-    protected readonly groups: readonly GroupFilter[] = ['All', 'Core', 'Kit', 'Portals', 'Mobile', 'Layout', 'Table', 'Commerce'];
-    protected readonly statuses: ReadonlyArray<{value: StatusFilter; label: string}> = [
+    protected readonly version = signal<'v5' | 'v4'>('v5');
+    protected readonly v5Total = HARNESS_CATALOG.length;
+    protected readonly v5Done = HARNESS_CATALOG.filter((item) => item.status === 'done').length;
+    protected readonly v5Todo = HARNESS_CATALOG.filter((item) => item.status === 'todo').length;
+    protected readonly v4Total = V4_CATALOG.length;
+    protected readonly v4Verified = V4_CATALOG.filter((item) => item.status === 'done').length;
+    protected readonly v4Todo = V4_CATALOG.filter((item) => item.status === 'todo').length;
+    protected readonly groups = computed<readonly GroupFilter[]>(() => this.version() === 'v4'
+        ? ['All', 'Core', 'Kit', 'Mobile', 'Layout', 'Table', 'Commerce']
+        : ['All', 'Core', 'Kit', 'Portals', 'Mobile', 'Layout', 'Table', 'Commerce']);
+    protected readonly statuses = computed<ReadonlyArray<{value: StatusFilter; label: string}>>(() => [
         {value: 'all', label: 'All'},
-        {value: 'done', label: 'Done'},
+        {value: 'done', label: this.version() === 'v4' ? 'Verified' : 'Done'},
         {value: 'in-progress', label: 'In progress'},
         {value: 'todo', label: 'TODO'},
-    ];
-
-    protected readonly total = HARNESS_CATALOG.length;
-    protected readonly done = HARNESS_CATALOG.filter((item) => item.status === 'done').length;
-    protected readonly inProgress = HARNESS_CATALOG.filter((item) => item.status === 'in-progress').length;
-    protected readonly todo = this.total - this.done - this.inProgress;
+    ]);
+    protected readonly catalog = computed<readonly HarnessEntry[]>(() =>
+        this.version() === 'v4' ? V4_CATALOG : HARNESS_CATALOG);
+    protected readonly total = computed(() => this.catalog().length);
+    protected readonly done = computed(() => this.catalog().filter((item) => item.status === 'done').length);
+    protected readonly inProgress = computed(() => this.catalog().filter((item) => item.status === 'in-progress').length);
+    protected readonly todo = computed(() => this.total() - this.done() - this.inProgress());
     protected readonly filtered = computed(() => {
         const query = this.query().trim().toLowerCase();
         const group = this.group();
-        const status = this.statuses[this.statusIndex()]?.value ?? 'all';
+        const status = this.statuses()[this.statusIndex()]?.value ?? 'all';
 
-        return HARNESS_CATALOG.filter((item) =>
+        return this.catalog().filter((item) =>
             (group === 'All' || item.category === group) &&
             (status === 'all' || item.status === status) &&
             (!query || item.name.includes(query) || item.category.toLowerCase().includes(query))
         );
     });
 
+    protected selectVersion(version: 'v5' | 'v4'): void {
+        this.version.set(version);
+        this.statusIndex.set(0);
+        this.group.set('All');
+        this.query.set('');
+    }
+
     protected setStatusIndex(value: number): void {
         this.statusIndex.set(value);
     }
 
     protected statusLabel(status: HarnessStatus): string {
-        return status === 'done' ? 'Done' : status === 'in-progress' ? 'In progress' : 'TODO';
+        return status === 'done' ? (this.version() === 'v4' ? 'Verified' : 'Done') : status === 'in-progress' ? 'In progress' : 'TODO';
     }
 
     protected appearance(status: HarnessStatus): 'positive' | 'info' | 'neutral' {
@@ -169,18 +187,17 @@ export class HarnessMatrixPage {
         return name.split('-').map((word) => word[0]?.toUpperCase() + word.slice(1)).join(' ');
     }
 
-    protected implementation(id: string): {name: string; file: string} | null {
-        const name = IMPLEMENTATIONS[id];
-        if (!name) {
-            return null;
+    protected implementation(id: string) {
+        if (this.version() === 'v4') {
+            const api = V4_CATALOG.find((item) => item.id === id)?.api;
+            return api ? HARNESS_REFERENCES.find((item) => item.api === api) ?? null : null;
         }
-        const file = getHarnessSourceFile(id);
-        return {name, file};
+        return HARNESS_REFERENCES.find((item) => item.id === id) ?? null;
     }
 
     protected issueUrl(item: HarnessEntry): string {
-        const title = encodeURIComponent('feat: add Playwright harness for ' + item.name);
-        const body = encodeURIComponent('Package: ' + item.category + '\nUpstream: https://github.com/taiga-family/taiga-ui/tree/main/' + item.path + '\n\nAcceptance criteria:\n- Locator-first helper\n- Real Angular integration tests\n- Documentation and CI');
+        const title = encodeURIComponent((this.version() === 'v4' ? 'test: verify v4 harness for ' : 'feat: add Playwright harness for ') + item.name);
+        const body = encodeURIComponent('Package: ' + item.category + '\nUpstream: https://github.com/taiga-family/taiga-ui/tree/' + (this.version() === 'v4' ? 'v4.x/' : 'main/') + item.path + '\n\nAcceptance criteria:\n- Locator-first helper\n- Real Angular integration tests\n- Documentation and CI');
         return 'https://github.com/splincode-taiga-labs/taiga-ui-playwright/issues/new?title=' + title + '&body=' + body;
     }
 }

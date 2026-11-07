@@ -36,6 +36,7 @@ test('ComboBox updates FormControl via a v4 dropdown', async ({page}) => {
     const combo = tuiComboBox(page.getByTestId('city-field'));
     await combo.fill('Tall');
     await combo.selectOption('Tallinn');
+    await expect(combo.input).toHaveValue('Tallinn');
     await expect(page.getByTestId('city-model')).toHaveText('Tallinn');
 });
 

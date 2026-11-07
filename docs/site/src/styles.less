@@ -138,3 +138,47 @@ tui-doc-code .hljs { white-space: pre; overflow-wrap: normal; overflow-x: auto; 
     .version-choices { grid-template-columns: 1fr; }
     .version-choice { padding: 1.125rem; }
 }
+
+/* Version switches stay in the single documentation app. */
+.version-choice__action {
+    margin-block-start: auto;
+    border: 0;
+    padding: .4rem 0;
+    background: transparent;
+    color: var(--tui-text-action);
+    font: inherit;
+    font-weight: 650;
+    cursor: pointer;
+}
+.version-choice__action:focus-visible,
+.harness-version-switch button:focus-visible {
+    outline: 2px solid var(--tui-text-action);
+    outline-offset: 3px;
+}
+.harness-version-switch {
+    display: inline-flex;
+    gap: .25rem;
+    padding: .25rem;
+    border: 1px solid var(--tui-border-normal);
+    border-radius: var(--tui-radius-m);
+    margin-block-end: 1rem;
+}
+.harness-version-switch button {
+    border: 0;
+    border-radius: var(--tui-radius-s);
+    background: transparent;
+    color: var(--tui-text-secondary);
+    padding: .55rem .9rem;
+    font: inherit;
+    cursor: pointer;
+}
+.harness-version-switch button[aria-pressed='true'] {
+    background: var(--tui-background-neutral-1);
+    color: var(--tui-text-primary);
+    font-weight: 650;
+}
+.compatibility-note {
+    margin-block: .75rem;
+    color: var(--tui-text-secondary);
+    line-height: 1.6;
+}

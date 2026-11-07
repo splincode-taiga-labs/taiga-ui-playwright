@@ -28,6 +28,8 @@ jobs:
           cache: npm
       - run: npm ci --no-audit --no-fund
       - run: npm run build:docs:pages
+      - name: Ensure v4 test fixture is not published
+        run: test ! -e dist/docs/browser/v4/index.html
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

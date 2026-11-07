@@ -407,27 +407,56 @@ test('full harness source shows the filename once and omits redundant class comm
     await expect(source).not.toContainText('Real spin arrows reflect bounds');
 });
 
-test('landing links to the interactive v4 Angular demo and keeps v5 coverage separate', async ({page}) => {
+test('landing separates v5 coverage and v4 TODO without a demo link', async ({page}) => {
     await page.goto('/');
     const versions = page.getByRole('region', {name: 'Supported Taiga UI versions'});
-    await expect(versions).toBeVisible();
     await expect(versions.getByRole('heading', {name: /Taiga UI 5/})).toBeVisible();
     await expect(versions.getByRole('heading', {name: /Taiga UI 4/})).toBeVisible();
-    await expect(versions).toContainText('26 real controls');
+    await expect(page.getByTestId('v5-todo')).toHaveText('0 TODO');
+    await expect(page.getByTestId('v4-todo')).toHaveText('97 TODO');
     await expect(page.getByTestId('coverage-total')).toHaveText('133');
-
-    // This link navigates to the independently built Taiga 4 application on Pages,
-    // not to a mock screen rendered by the Taiga 5 documentation app.
-    const link = versions.getByRole('link', {name: 'Open interactive v4 demo'});
-    await expect(link).toHaveAttribute('href', 'v4/');
-    await expect(page.getByRole('link', {name: 'v4 Demo', exact: true})).toHaveAttribute('href', 'v4/');
+    await expect(page.getByRole('link', {name: 'v4 Demo'})).toHaveCount(0);
+    await expect(page.getByRole('link', {name: 'Open interactive v4 demo'})).toHaveCount(0);
 });
 
-test('docs does not offer a v4 page pretending to use Taiga UI 4', async ({page}) => {
+test('v4 inventory shows 26 verified entries and 97 TODO', async ({page}) => {
+    await page.goto('/');
+    await page.getByRole('button', {name: 'View v4 matrix'}).click();
+    await expect(page.getByTestId('coverage-total')).toHaveText('123');
+    await expect(page.getByTestId('coverage-done')).toHaveText('26');
+    await expect(page.getByTestId('coverage-todo')).toHaveText('97');
+    await expect(page.locator('tr[data-status="done"]')).toHaveCount(26);
+    await expect(page.locator('tr[data-status="todo"]')).toHaveCount(97);
+    await expect(page.locator('tr[data-harness="v4/kit/input-password"]')).toContainText('TODO');
+    await expect(page.locator('tr[data-harness="v4/kit/avatar"]')).toContainText('Verified');
+    const link = page.locator('tr[data-harness="v4/kit/avatar"]').getByRole('link', {name: /tuiAvatar/});
+    await expect(link).toHaveAttribute('href', /#\/harness\/kit\/avatar\?version=v4$/);
+    await link.click();
+    await expect(page.getByRole('button', {name: 'Taiga UI 4'})).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('harness-detail tui-doc-code').first()).toContainText('@taiga-ui-labs/playwright/v4');
+});
+
+test('harness pages switch the import and describe v4 DOM adapters', async ({page}) => {
+    await page.goto('/#/harness/kit/avatar');
+    await expect(page.locator('harness-detail tui-doc-code').first()).toContainText("from '@taiga-ui-labs/playwright'");
+    await page.getByRole('button', {name: 'Taiga UI 4'}).click();
+    await expect(page).toHaveURL(/version=v4/);
+    await expect(page.locator('harness-detail tui-doc-code').first()).toContainText('@taiga-ui-labs/playwright/v4');
+    await expect(page.locator('harness-detail')).toContainText('data-type');
+    await expect(page.getByRole('link', {name: /View v4 adapter/})).toHaveAttribute('href', /v4\/src\/avatar.ts/);
+
+    await page.goto('/#/harness/portals/dialog?version=v4');
+    await expect(page.locator('harness-detail')).toContainText('close-button locator');
+    await expect(page.locator('harness-detail tui-doc-code').first()).toContainText('@taiga-ui-labs/playwright/v4');
+
+    await page.goto('/#/harness/kit/tree?version=v4');
+    await expect(page.locator('harness-detail')).toContainText('has not been browser-verified');
+    await page.getByRole('button', {name: 'Taiga UI 5'}).click();
+    await expect(page.locator('harness-detail tui-doc-code').first()).not.toContainText('@taiga-ui-labs/playwright/v4');
+});
+
+test('guide keeps the v4 fixture CI-only', async ({page}) => {
     await page.goto('/#/guide');
-    await expect(page.getByRole('link', {name: 'interactive v4 demo'})).toHaveAttribute('href', 'v4/');
-    await page.goto('/#/v4');
-    await expect(page.locator('tui-doc-main')).toBeVisible();
-    await expect(page.getByRole('link', {name: 'v4 Demo', exact: true})).toHaveAttribute('href', 'v4/');
-    await expect(page.locator('v4-compatibility')).toHaveCount(0);
+    await expect(page.locator('getting-started')).toContainText('used only for Playwright tests in CI');
+    await expect(page.getByRole('link', {name: 'interactive v4 demo'})).toHaveCount(0);
 });

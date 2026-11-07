@@ -36,12 +36,11 @@ jobs:
         run: npm run test:pack
       - run: npm run build:fixture
       - run: npm run build:docs:pages
-      - name: Verify GitHub Pages includes the actual Taiga UI 4 Angular app
+      - name: Verify only the documentation app is published
         shell: bash
         run: |
-          test -f dist/docs/browser/v4/index.html
-          grep -Fq '<app-demo-v4' dist/docs/browser/v4/index.html
-          grep -Fq '/taiga-ui-playwright/v4/' dist/docs/browser/v4/index.html
+          test -f dist/docs/browser/index.html
+          test ! -e dist/docs/browser/v4/index.html
       - name: Exercise npm prepublish for stable and prerelease versions
         shell: bash
         run: |
@@ -115,6 +114,8 @@ jobs:
         run: npm run test:pack
       - name: Run Playwright against Taiga UI 4 and Taiga UI 5 workspaces
         run: npm run test:compat
+      - name: Stress v4 ComboBox filtered selection without retries
+        run: npm run test:compat -- --project=taiga-v4 --grep "ComboBox updates FormControl" --repeat-each=8 --retries=0
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

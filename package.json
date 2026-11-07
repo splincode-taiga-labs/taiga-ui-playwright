@@ -33,7 +33,7 @@
     "test:smoke": "playwright test --config playwright.smoke.config.ts",
     "start:docs": "ng serve docs --host 127.0.0.1 --port 4202",
     "build:docs": "ng build docs --configuration production",
-    "build:docs:pages": "ng build docs --configuration production --base-href=/taiga-ui-playwright/ && npm run build:pages -w @taiga-ui-labs/demo-v4",
+    "build:docs:pages": "ng build docs --configuration production --base-href=/taiga-ui-playwright/",
     "test:docs": "playwright test --config playwright.docs.config.ts",
     "test:compat": "playwright test --config playwright.compat.config.ts"
   },
