@@ -20,8 +20,18 @@ The [live v4 demo](https://splincode-taiga-labs.github.io/taiga-ui-playwright/v4
 | Pagination | `tuiPagination` | Change page updates Angular index |
 | Stepper | `tuiStepper` | Activate step updates Angular index |
 | InputNumber | `tuiInputNumber` | Fill updates numeric FormControl |
+| Link | `tuiLink` | Follow native anchor |
+| Badge | `tuiBadge` | Check appearance and size |
+| Chip | `tuiChip` | Check appearance |
+| BadgeNotification | `tuiBadgeNotification` | Check count and size |
+| Like | `tuiLike` | Toggle FormControl |
+| Progress | `tuiProgress` | Check native progress and Angular state |
+| Loader | `tuiLoader` | Loading and idle states |
+| Expand | `tuiExpand` | Open/close content |
+| Avatar | `tuiAvatar` | v4-specific round class, size and content fallback |
+| Textfield | `tuiTextfield` | Focus native v4 input |
 
-**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 121 catalog harnesses and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
+**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 111 catalog harnesses and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
 
 ## v4 component inventory
 

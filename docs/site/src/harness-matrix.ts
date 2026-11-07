@@ -41,7 +41,7 @@ type GroupFilter = 'All' | HarnessCategory;
                     <div class="version-choice">
                         <span class="version-choice__eyebrow">COMPATIBILITY</span>
                         <h3>Taiga UI 4 <small>v4.106.0</small></h3>
-                        <p>Explore the actual Angular demo using Taiga UI 4.106.0. Twelve real controls are exercised through the /v4 npm entrypoint. Other harnesses are not yet browser-verified.</p>
+                        <p>Explore the actual Angular demo using Taiga UI 4.106.0. 22 real controls are exercised through the /v4 npm entrypoint. Other harnesses are not yet browser-verified.</p>
                         <a tuiLink href="v4/">Open interactive v4 demo</a>
                     </div>
                 </div>

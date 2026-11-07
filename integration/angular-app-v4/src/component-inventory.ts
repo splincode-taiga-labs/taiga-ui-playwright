@@ -55,7 +55,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "expand",
         "path": "projects/core/components/expand",
         "helper": "tuiExpand",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Core",
@@ -83,14 +83,14 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "link",
         "path": "projects/core/components/link",
         "helper": "tuiLink",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Core",
         "name": "loader",
         "path": "projects/core/components/loader",
         "helper": "tuiLoader",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Core",
@@ -125,7 +125,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "textfield",
         "path": "projects/core/components/textfield",
         "helper": "tuiTextfield",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -146,21 +146,21 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "avatar",
         "path": "projects/kit/components/avatar",
         "helper": "tuiAvatar",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
         "name": "badge",
         "path": "projects/kit/components/badge",
         "helper": "tuiBadge",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
         "name": "badge-notification",
         "path": "projects/kit/components/badge-notification",
         "helper": "tuiBadgeNotification",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -223,7 +223,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "chip",
         "path": "projects/kit/components/chip",
         "helper": "tuiChip",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -440,7 +440,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "like",
         "path": "projects/kit/components/like",
         "helper": "tuiLike",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -510,7 +510,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "progress",
         "path": "projects/kit/components/progress",
         "helper": "tuiProgress",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
