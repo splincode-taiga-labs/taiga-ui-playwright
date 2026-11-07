@@ -71,34 +71,10 @@ tui-doc-code .t-code-actions { display: none !important; }
     margin-block-end: .375rem;
 }
 .copyable-code tui-doc-code { margin: 0; }
-/* More specific than TuiScrollbar's component host rule (max-block-size: 100%). */
-.source-details tui-scrollbar.harness-source-scroll {
-    display: flex;
-    inline-size: 100%;
-    max-block-size: 31.25rem;
-    border: 1px solid var(--tui-border-normal);
-    border-radius: var(--tui-radius-m);
-}
-.harness-source-scroll tui-doc-code {
-    display: block;
-    min-inline-size: max-content;
-}
-.harness-source-scroll tui-doc-code .t-code {
-    inline-size: max-content;
-    min-inline-size: 100%;
-}
-.harness-source-scroll tui-doc-code .hljs {
-    overflow: visible;
-    white-space: pre;
-}
 tui-doc-code .hljs { white-space: pre; overflow-wrap: normal; overflow-x: auto; }
 .harness-page .page-lead { font-size: 1rem; line-height: 1.6; color: var(--tui-text-secondary); margin-block: 0 1.25rem; }
 .harness-page h2 { margin-block: 2rem .75rem; font-size: 1.3rem; }
 .reference-links { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; margin-block: 1rem 2rem; }
-.harness-page .source-details { margin-block: 2rem; border-block-start: 1px solid var(--tui-border-normal); padding-block: 1.25rem; }
-.harness-page .source-details summary { cursor: pointer; font-weight: 650; }
-.harness-page .source-details > p { color: var(--tui-text-secondary); font-size: .875rem; }
-/* The Taiga scrollbar owns both axes for the source block. */
 .guide-page tui-doc-code .hljs { overflow-x: auto; overflow-wrap: normal; white-space: pre; }
 .guide-page h2 { margin-top: 2rem; }
 @media(max-width:750px) {
