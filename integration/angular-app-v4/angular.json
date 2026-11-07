@@ -25,6 +25,11 @@
             "development": {
               "optimization": false,
               "sourceMap": true
+            },
+            "pages": {
+              "optimization": true,
+              "outputHashing": "all",
+              "baseHref": "/taiga-ui-playwright/v4/"
             }
           },
           "defaultConfiguration": "development"

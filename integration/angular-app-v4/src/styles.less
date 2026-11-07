@@ -2,8 +2,29 @@
 @import '@taiga-ui/core/styles/taiga-ui-fonts.less';
 @import '@taiga-ui/styles/taiga-ui-global.less';
 
-body { margin: 0; font-family: sans-serif; }
-main { padding: 2rem; max-width: 650px; }
-section { margin-block: 2rem; }
-tui-textfield { margin-block: 1.25rem; }
-output { display: block; margin-block: 0.5rem; }
+:root { color-scheme: light; }
+body { margin: 0; font-family: system-ui, sans-serif; color: var(--tui-text-primary, #20242c); background: var(--tui-background-base, #fff); }
+a { color: var(--tui-text-action, #245bcd); }
+.demo-header {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 1rem clamp(1rem, 4vw, 3rem);
+    border-bottom: 1px solid var(--tui-border-normal, #d6d9e0);
+    background: var(--tui-background-base-alt, #f6f7f9);
+}
+.demo-header span { font-size: .875rem; color: var(--tui-text-secondary, #586171); }
+main { margin-inline: auto; max-width: 720px; padding: 2rem clamp(1rem, 3vw, 2rem) 4rem; }
+.eyebrow { font-size: .75rem; letter-spacing: .16em; font-weight: 750; color: var(--tui-text-secondary, #586171); }
+h1 { font-size: clamp(2rem, 4vw, 3rem); line-height: 1.15; margin: .75rem 0; }
+h2 { font-size: 1.25rem; margin-block: 1rem; }
+.intro { line-height: 1.6; color: var(--tui-text-secondary, #586171); }
+.notice { padding: 1rem 1.25rem; margin-block: 1.5rem; border-inline-start: 3px solid var(--tui-text-action, #245bcd); background: var(--tui-background-base-alt, #f6f7f9); line-height: 1.6; }
+.notice strong { display: block; }
+pre { border: 1px solid var(--tui-border-normal, #d6d9e0); border-radius: 8px; padding: 1rem; overflow-x: auto; background: var(--tui-background-base-alt, #f6f7f9); }
+code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .85rem; }
+section { padding-block: .75rem 1.25rem; }
+tui-textfield { display: block; margin-block: 1.25rem; }
+output { display: block; margin-block: .75rem; color: var(--tui-text-secondary, #586171); }
+.footnote { border-top: 1px solid var(--tui-border-normal, #d6d9e0); padding-top: 1.5rem; color: var(--tui-text-secondary, #586171); font-size: .875rem; }
+@media (max-width: 600px) {
+    .demo-header { align-items: flex-start; flex-direction: column; }
+}

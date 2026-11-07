@@ -41,8 +41,8 @@ type GroupFilter = 'All' | HarnessCategory;
                     <div class="version-choice">
                         <span class="version-choice__eyebrow">COMPATIBILITY</span>
                         <h3>Taiga UI 4 <small>v4.106.0</small></h3>
-                        <p>Separate <code>/v4</code> entrypoint in the repository (requires a release newer than v1.0.1). Button, Select and ComboBox verified against a real Angular demo.</p>
-                        <a tuiLink routerLink="/v4">Explore v4 compatibility</a>
+                        <p>Explore the actual Angular demo using Taiga UI 4.106.0. Button, Select and ComboBox are covered by Playwright.</p>
+                        <a tuiLink href="v4/">Open interactive v4 demo</a>
                     </div>
                 </div>
 

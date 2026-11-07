@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "ng serve --host 127.0.0.1 --port 4204"
+    "start": "ng serve --host 127.0.0.1 --port 4204",
+    "build:pages": "ng build demo-v4 --configuration pages && mkdir -p ../../dist/docs/browser/v4 && cp -R ../../dist/demo-v4/browser/. ../../dist/docs/browser/v4/"
   },
   "dependencies": {
     "@angular/animations": "20.3.0",

@@ -33,3 +33,10 @@ test('ComboBox updates FormControl via a v4 dropdown', async ({page}) => {
     await combo.selectOption('Tallinn');
     await expect(page.getByTestId('city-model')).toHaveText('Tallinn');
 });
+
+test('the same v4 demo documents its verified scope and versioned import', async ({page}) => {
+    await page.goto('/');
+    await expect(page.getByText('Targeted compatibility, not full v4 coverage.')).toBeVisible();
+    await expect(page.locator('pre code')).toContainText('@taiga-ui-labs/playwright/v4');
+    await expect(page.getByRole('link', {name: /Back to Taiga UI 5 docs/})).toHaveAttribute('href', '../');
+});
