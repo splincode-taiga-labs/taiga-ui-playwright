@@ -1,9 +1,8 @@
-import {DOCUMENT} from '@angular/common';
-import {Component, computed, effect, inject, signal} from '@angular/core';
+import {Component, computed, inject} from '@angular/core';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {TuiDocCode, TuiDocPage} from '@taiga-ui/addon-doc';
-import {TuiLink, TuiScrollbar} from '@taiga-ui/core';
+import {TuiLink} from '@taiga-ui/core';
 
 import {DocsCopyButton} from './copy-button';
 import {HARNESS_REFERENCES, makeExample} from './harness-reference';
@@ -11,7 +10,7 @@ import {V4_CATALOG} from './v4-catalog';
 
 @Component({
     selector: 'harness-detail',
-    imports: [TuiDocCode, TuiDocPage, TuiLink, TuiScrollbar, RouterLink, DocsCopyButton],
+    imports: [TuiDocCode, TuiDocPage, TuiLink, RouterLink, DocsCopyButton],
     template: `
 @if (reference(); as item) {
   <tui-doc-page [header]="item.api" [package]="item.category" [tags]="['Playwright', version() === 'v4' ? (v4Coverage() === 'verified' ? 'Verified' : 'TODO') : 'Done']">
@@ -46,34 +45,12 @@ import {V4_CATALOG} from './v4-catalog';
           <a tuiLink [href]="'https://github.com/taiga-family/taiga-ui/tree/' + (version() === 'v4' ? 'v4.x/' : 'main/') + upstreamPath()" target="_blank" rel="noopener noreferrer">Taiga UI source ↗</a>
         }
       </p>
-      <h2>Import</h2>
-      <div class="copyable-code">
-        <div class="copyable-code__toolbar"><docs-copy-button label="import" [code]="importCode()" /></div>
-        <tui-doc-code filename="import.ts" [lineNumbers]="false" [code]="importCode()" />
-      </div>
       <h2>Playwright example</h2>
       <p>Replace the example test-id with your application locator. Choose the installed Taiga UI major version above. Only browser-verified v4 behaviors are confirmed by the v4 test suite.</p>
       <div class="copyable-code">
         <div class="copyable-code__toolbar"><docs-copy-button label="example" [code]="example()" /></div>
-        <tui-doc-code filename="playwright.spec.ts" [lineNumbers]="false" [code]="example()" />
+        <tui-doc-code filename="test.pw.spec.ts" [lineNumbers]="false" [code]="example()" />
       </div>
-      <details class="source-details">
-        <summary>{{ version() === 'v4' ? 'Shared base harness source' : 'Full harness source' }} ({{ item.sourceFile }})</summary>
-        <p>The source file may contain other related harnesses. For v4 Avatar and Dialog, also use the adapter linked above.</p>
-        @if (source()) {
-          <div class="copyable-code">
-            <div class="copyable-code__toolbar">
-              <docs-copy-button label="implementation" [code]="source()" />
-              <a tuiLink [href]="'https://github.com/splincode-taiga-labs/taiga-ui-playwright/blob/main/src/' + item.sourceFile" target="_blank" rel="noopener noreferrer">View on GitHub ↗</a>
-            </div>
-            <tui-scrollbar class="harness-source-scroll">
-              <tui-doc-code [lineNumbers]="false" [code]="source()" />
-            </tui-scrollbar>
-          </div>
-        } @else {
-          <p role="status">Loading the tested implementation…</p>
-        }
-      </details>
     </article>
   </tui-doc-page>
 } @else {
@@ -86,7 +63,6 @@ import {V4_CATALOG} from './v4-catalog';
 export class HarnessDetailPage {
     private readonly route = inject(ActivatedRoute);
     private readonly router = inject(Router);
-    private readonly doc = inject(DOCUMENT);
     private readonly params = toSignal(this.route.paramMap, {
         initialValue: this.route.snapshot.paramMap,
     });
@@ -103,10 +79,6 @@ export class HarnessDetailPage {
         V4_CATALOG.find((item) => item.api === this.reference()?.api));
     protected readonly v4Coverage = computed(() =>
         this.v4Entry() ? (this.v4Entry()!.status === 'done' ? 'verified' : 'todo') : 'unmapped');
-    protected readonly source = signal('');
-    protected readonly importCode = computed(() =>
-        this.reference() ? "import {" + this.reference()!.api + "} from '@taiga-ui-labs/playwright" + (this.version() === 'v4' ? '/v4' : '') + "';" : '',
-    );
     protected readonly example = computed(() =>
         this.reference() ? makeExample(this.reference()!, this.version()) : '',
     );
@@ -138,32 +110,4 @@ export class HarnessDetailPage {
         });
     }
 
-    constructor() {
-        effect(() => {
-            const item = this.reference();
-            this.source.set('');
-            if (!item) {
-                return;
-            }
-
-            const url = new URL('assets/harness-sources/' + item.sourceFile, this.doc.baseURI);
-            void fetch(url)
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error('Source could not be loaded.');
-                    }
-                    return response.text();
-                })
-                .then((code) => {
-                    if (this.reference()?.id === item.id) {
-                        this.source.set(code);
-                    }
-                })
-                .catch(() => {
-                    if (this.reference()?.id === item.id) {
-                        this.source.set('// Unable to load the source file. Open GitHub source instead.');
-                    }
-                });
-        });
-    }
 }
