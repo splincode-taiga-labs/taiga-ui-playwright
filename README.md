@@ -9,7 +9,7 @@
 - **Easy to read:** `selectOption('Estonia')`, `fill('Tall')`, `select('Details')`.
 - **Ready to explore:** [Browse the component harnesses and examples](https://splincode-taiga-labs.github.io/taiga-ui-playwright/).
 
-> Community-maintained and **unofficial**. The **1.0 public API** preserves 266 named exports. Tested with Angular 20.3 / Taiga UI 5.28; targeted tests for 22 controls also pass with Taiga UI 4.106.0. Other components and versions require validation.
+> Community-maintained and **unofficial**. The **1.0 public API** preserves 266 named exports. Tested with Angular 20.3 / Taiga UI 5.28; targeted tests for 26 controls also pass with Taiga UI 4.106.0. Other components and versions require validation.
 
 ## Install
 
@@ -58,10 +58,10 @@ For **Taiga UI 4.x**, use the versioned secondary entrypoint **after installing 
 import {tuiSelect, tuiComboBox} from '@taiga-ui-labs/playwright/v4';
 ```
 
-The demo includes a [source-based v4 component inventory](docs/taiga-v4-inventory.md), separating verified controls from untested and unmapped components. See the [interactive Taiga UI 4 demo](https://splincode-taiga-labs.github.io/taiga-ui-playwright/v4/), built from the same Angular workspace used by the v4 Playwright tests. It demonstrates 22 tested controls; it is not a claim of complete v4 coverage. See the [v4 test matrix](docs/taiga-v4-coverage.md).
+The demo includes a [source-based v4 component inventory](docs/taiga-v4-inventory.md), separating verified controls from untested and unmapped components. See the [interactive Taiga UI 4 demo](https://splincode-taiga-labs.github.io/taiga-ui-playwright/v4/), built from the same Angular workspace used by the v4 Playwright tests. It demonstrates 26 tested controls; it is not a claim of complete v4 coverage. See the [v4 test matrix](docs/taiga-v4-coverage.md).
 
 For **Taiga UI 5.x**, continue using the root import `@taiga-ui-labs/playwright`.
-Both entrypoints share the same Locator-first API. The v4 demo workspace tests 22 controls on **Angular 20.3 / Taiga UI 4.106.0**. The `/v4` entrypoint exposes all 266 public API exports, but the remaining harnesses and other 4.x versions are **not yet browser-verified**. Read the [compatibility policy](docs/api-upstream-compatibility.md).
+Both entrypoints share the same Locator-first API. The v4 demo workspace tests 26 controls on **Angular 20.3 / Taiga UI 4.106.0**. The `/v4` entrypoint exposes all 266 public API exports, but the remaining harnesses and other 4.x versions are **not yet browser-verified**. Read the [compatibility policy](docs/api-upstream-compatibility.md).
 
 ## Build and packaging
 

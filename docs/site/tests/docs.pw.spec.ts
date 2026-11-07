@@ -413,7 +413,7 @@ test('landing links to the interactive v4 Angular demo and keeps v5 coverage sep
     await expect(versions).toBeVisible();
     await expect(versions.getByRole('heading', {name: /Taiga UI 5/})).toBeVisible();
     await expect(versions.getByRole('heading', {name: /Taiga UI 4/})).toBeVisible();
-    await expect(versions).toContainText('22 real controls');
+    await expect(versions).toContainText('26 real controls');
     await expect(page.getByTestId('coverage-total')).toHaveText('133');
 
     // This link navigates to the independently built Taiga 4 application on Pages,

@@ -27,7 +27,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "calendar",
         "path": "projects/core/components/calendar",
         "helper": "tuiCalendar",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Core",
@@ -41,7 +41,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "dialog",
         "path": "projects/core/components/dialog",
         "helper": "tuiDialog",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Core",
@@ -321,7 +321,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "input-date",
         "path": "projects/kit/components/input-date",
         "helper": "tuiInputDate",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -461,7 +461,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "multi-select",
         "path": "projects/kit/components/multi-select",
         "helper": "tuiMultiSelect",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",

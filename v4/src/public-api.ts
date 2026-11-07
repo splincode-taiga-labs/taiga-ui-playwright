@@ -2,3 +2,4 @@
 export * from '@taiga-ui-labs/playwright';
 // The explicit exports override the v5 Avatar DOM contract for v4.
 export {TuiAvatarHarness, tuiAvatar} from './avatar';
+export {TuiDialog, tuiDialog} from './dialog';

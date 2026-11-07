@@ -6,7 +6,7 @@ const {
     tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch,
     tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber,
     tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress,
-    tuiLoader, tuiExpand, tuiAvatar, tuiTextfield,
+    tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog,
 } = await packageApi('./v4');
 
 test('v4 entrypoint exposes the same runtime API as the package root', async () => {
@@ -160,14 +160,53 @@ test('Textfield harness focuses the real v4 input', async ({page}) => {
     await expect(field.input).toHaveAttribute('tuiInputNumber', '');
 });
 
+
+test('Calendar updates TuiDay through the packaged v4 harness', async ({page}) => {
+    const calendar = tuiCalendar(page.getByTestId('v4-calendar'));
+    await calendar.selectDay(20);
+    await expect(page.getByTestId('v4-calendar-model')).toHaveText('2026-0-20');
+});
+
+test('InputDate selects an owned calendar day in v4', async ({page}) => {
+    const field = tuiInputDate(page.getByTestId('v4-date-field'));
+    await field.selectDay(22);
+    await expect(page.getByTestId('v4-date-model')).toHaveText('2026-0-22');
+    await expect(field.input).not.toHaveValue('');
+});
+
+test('MultiSelect selects two options in a real v4 form', async ({page}) => {
+    const multi = tuiMultiSelect(page.getByTestId('v4-multi-field'));
+    await multi.selectOption('Estonia');
+    await expect(page.getByTestId('v4-multi-model')).toHaveText('Estonia');
+    await multi.selectOption('Latvia');
+    await expect(page.getByTestId('v4-multi-model')).toHaveText('Estonia,Latvia');
+    expect((await multi.selectedLabels()).map((x) => x.trim())).toEqual(['Estonia', 'Latvia']);
+});
+
+test('Dialog confirms a real v4 portal', async ({page}) => {
+    await page.getByRole('button', {name: 'Open v4 dialog'}).click();
+    const dialog = tuiDialog(page.locator('tui-dialog'));
+    await expect(dialog.title).toHaveText('V4 confirmation');
+    await dialog.clickButton('Confirm');
+    await expect(dialog.host).toBeHidden();
+    await expect(page.getByTestId('v4-dialog-model')).toHaveText('closed');
+});
+
+test('Dialog closes through its v4-specific close control', async ({page}) => {
+    await page.getByRole('button', {name: 'Open v4 dialog'}).click();
+    const dialog = tuiDialog(page.locator('tui-dialog'));
+    await dialog.close();
+    await expect(page.getByTestId('v4-dialog-model')).toHaveText('closed');
+});
+
 test('the same v4 demo documents its verified scope and versioned import', async ({page}) => {
     await page.goto('/');
     await expect(page.getByText('Tested controls, not blanket v4 compatibility.')).toBeVisible();
     await expect(page.locator('pre code')).toContainText('@taiga-ui-labs/playwright/v4');
-    await expect(page.getByRole('heading', {level: 2})).toHaveCount(23);
+    await expect(page.getByRole('heading', {level: 2})).toHaveCount(27);
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
-    await expect(page.locator('[data-verified="true"]')).toHaveCount(22);
+    await expect(page.locator('[data-verified="true"]')).toHaveCount(26);
     await expect(page.locator('[data-v4-component="Kit/checkbox"]')).toContainText('tuiCheckbox');
     await expect(page.getByRole('link', {name: /Back to Taiga UI 5 docs/})).toHaveAttribute('href', '../');
 });

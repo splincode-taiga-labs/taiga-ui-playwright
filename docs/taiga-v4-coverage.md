@@ -30,8 +30,12 @@ The [live v4 demo](https://splincode-taiga-labs.github.io/taiga-ui-playwright/v4
 | Expand | `tuiExpand` | Open/close content |
 | Avatar | `tuiAvatar` | v4-specific round class, size and content fallback |
 | Textfield | `tuiTextfield` | Focus native v4 input |
+| Calendar | `tuiCalendar` | Select a day in a real v4 calendar |
+| InputDate | `tuiInputDate` | Select a date from the owned v4 dropdown |
+| MultiSelect | `tuiMultiSelect` | Select multiple items through a real v4 portal |
+| Dialog | `tuiDialog` | Confirm and close a real v4 dialog via version-specific locators |
 
-**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 111 catalog harnesses and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
+**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 107 catalog harnesses and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
 
 ## v4 component inventory
 
