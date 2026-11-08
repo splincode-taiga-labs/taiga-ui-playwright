@@ -21,7 +21,7 @@ export class TuiAccordionHarness extends BaseAccordionHarness {
         }
 
         await expect(trigger).toHaveClass(/t-header_open/);
-        const panel = this.host.locator('tui-accordion-item').filter({has: trigger}).locator('tui-expand');
+        const panel = trigger.locator('xpath=ancestor::tui-accordion-item').locator('tui-expand');
         await expect(panel.locator('[automation-id="tui-accordion__item-content"]')).toBeVisible();
         return panel;
     }
