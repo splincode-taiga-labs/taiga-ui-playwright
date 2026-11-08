@@ -28,6 +28,9 @@ import {V4_CATALOG} from './v4-catalog';
         } @else {
           <p class="compatibility-note">No matching v4 component in the upstream v4 inventory. This /v4 import is exposed but compatibility is unknown.</p>
         }
+        @if (item.api === 'tuiAccordion') {
+          <p class="compatibility-note">v4 Accordion uses <code>tui-accordion-item</code> headers and the <code>t-header_open</code> class instead of v5 aria-expanded attributes. The /v4 adapter handles those differences. <a tuiLink href="https://github.com/splincode-taiga-labs/taiga-ui-playwright/blob/main/v4/src/accordion.ts" target="_blank" rel="noopener noreferrer">View v4 adapter ↗</a></p>
+        }
         @if (item.api === 'tuiAvatar') {
           <p class="compatibility-note">v4 Avatar uses the <code>_round</code> class and <code>data-type</code> instead of the v5 DOM attributes. The /v4 adapter handles these differences. <a tuiLink href="https://github.com/splincode-taiga-labs/taiga-ui-playwright/blob/main/v4/src/avatar.ts" target="_blank" rel="noopener noreferrer">View v4 adapter ↗</a></p>
         }

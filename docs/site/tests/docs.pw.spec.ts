@@ -380,6 +380,10 @@ test('harness pages switch the import and describe v4 DOM adapters', async ({pag
     await expect(page.locator('harness-detail')).toContainText('close-button locator');
     await expect(page.locator('harness-detail tui-doc-code').first()).toContainText('@taiga-ui-labs/playwright/v4');
 
+    await page.goto('/#/harness/kit/accordion?version=v4');
+    await expect(page.locator('harness-detail')).toContainText('t-header_open');
+    await expect(page.getByRole('link', {name: /View v4 adapter/})).toHaveAttribute('href', /v4\/src\/accordion.ts/);
+
     await page.goto('/#/harness/kit/tree?version=v4');
     await expect(page.locator('harness-detail')).toContainText('has not been browser-verified');
     await page.getByRole('button', {name: 'Taiga UI 5'}).click();
