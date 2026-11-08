@@ -83,7 +83,7 @@ test('Current harnesses uses highlighted TypeScript in native addon-doc code com
     const code = page.locator('getting-started tui-doc-code');
 
     await expect(code).toBeVisible();
-    await expect(code.getByText('playwright.spec.ts')).toBeVisible();
+    await expect(code.getByText('test.pw.spec.ts')).toBeVisible();
     await expect(code.locator('code.hljs')).toContainText('tuiSelect');
     await expect(code.locator('.hljs-keyword').first()).toBeVisible();
     await expect(code.locator('.hljs-string').first()).toBeVisible();
@@ -118,30 +118,26 @@ test('matrix links to harness docs and the extra inner text padding is gone', as
     await expect(page.locator('harness-detail')).toBeVisible();
 });
 
-test('copy action copies real example code and import into browser clipboard', async ({page, context}) => {
+test('single Playwright example includes the versioned import and can be copied', async ({page, context}) => {
     await context.grantPermissions(['clipboard-read', 'clipboard-write']);
     await page.goto('/#/harness/kit/select');
 
-    await page.getByRole('button', {name: 'Copy import'}).click();
-    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText()))
-        .toBe("import {tuiSelect} from '@taiga-ui-labs/playwright';");
-    await expect(page.getByRole('button', {name: 'Copied import'})).toBeVisible();
+    const reference = page.locator('harness-detail');
+    await expect(reference.getByRole('heading', {name: 'Import'})).toHaveCount(0);
+    await expect(reference.locator('details.source-details')).toHaveCount(0);
+    await expect(reference.getByRole('button', {name: 'Copy import'})).toHaveCount(0);
+    await expect(reference.getByRole('button', {name: 'Copy implementation'})).toHaveCount(0);
+    await expect(reference.locator('tui-doc-code')).toHaveCount(1);
+    await expect(reference.locator('tui-doc-code')).toContainText("import {tuiSelect} from '@taiga-ui-labs/playwright'");
+    await expect(reference.locator('tui-doc-code')).toContainText('test.pw.spec.ts');
+    await expect(reference.getByRole('link', {name: /Source on GitHub/}))
+        .toHaveAttribute('href', /\/src\/select\.ts$/);
 
-    await page.getByRole('button', {name: 'Copy example'}).click();
+    await reference.getByRole('button', {name: 'Copy example'}).click();
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText()))
+        .toContain("import {tuiSelect} from '@taiga-ui-labs/playwright'");
     await expect.poll(() => page.evaluate(() => navigator.clipboard.readText()))
         .toContain("await harness.selectOption('Estonia');");
-});
-
-test('copy implementation reads real checked-in TypeScript source and copies it', async ({page, context}) => {
-    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
-    await page.goto('/#/harness/kit/select');
-    await page.locator('details.source-details summary').click();
-    const source = page.locator('details.source-details tui-doc-code');
-    await expect(source).toContainText('export class TuiSelect');
-
-    await page.getByRole('button', {name: 'Copy implementation'}).click();
-    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText()))
-        .toContain('export class TuiSelect');
 });
 
 test('copy button also works in the Getting started code sample', async ({page, context}) => {
@@ -157,7 +153,7 @@ test('new multi-value harnesses expose dedicated addon-doc pages', async ({page}
     for (const name of ['multi-select', 'input-date-multi', 'input-range']) {
         await page.goto('/#/harness/kit/' + name);
         await expect(page.locator('harness-detail h1')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
+        await expect(page.getByRole('link', {name: /Source on GitHub/})).toBeVisible();
         await expect(page.getByRole('button', {name: 'Copy example'})).toBeEnabled();
     }
 });
@@ -167,42 +163,30 @@ test('semantic harness docs have source and example links', async ({page}) => {
     for (const route of ['core/spin-button', 'kit/pincode', 'kit/button-loading', 'kit/pager', 'core/link', 'kit/chip', 'kit/badge', 'kit/pin', 'kit/meter']) {
         await page.goto('/#/harness/' + route);
         await expect(page.locator('harness-detail h1')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
+        await expect(page.getByRole('link', {name: /Source on GitHub/})).toBeVisible();
         await expect(page.getByRole('button', {name: 'Copy example'})).toBeEnabled();
     }
 });
 
-test('copy controls stay outside code overlays and work from the visible toolbar', async ({page, context}) => {
+test('copy example control remains outside the code overlay', async ({page, context}) => {
     await context.grantPermissions(['clipboard-read', 'clipboard-write']);
     await page.goto('/#/harness/kit/select');
-
-    const copy = page.getByRole('button', {name: 'Copy import'});
+    const copy = page.getByRole('button', {name: 'Copy example'});
     await expect(copy).toBeVisible();
     await expect(copy.locator('xpath=ancestor::div[contains(@class, "copyable-code__toolbar")]')).toBeVisible();
     await expect(page.locator('tui-doc-code .t-code-actions button:visible')).toHaveCount(0);
     await copy.click();
-
-    await expect(page.getByRole('button', {name: 'Copied import'})).toBeVisible();
+    await expect(page.getByRole('button', {name: 'Copied example'})).toBeVisible();
     await expect.poll(() => page.evaluate(() => navigator.clipboard.readText()))
-        .toBe("import {tuiSelect} from '@taiga-ui-labs/playwright';");
+        .toContain("import {tuiSelect} from '@taiga-ui-labs/playwright'");
 });
 
-test('full harness source has a single Taiga scrollbar with bounded height', async ({page}) => {
+test('harness pages link to implementation without embedding the full source', async ({page}) => {
     await page.goto('/#/harness/kit/multi-select');
-    await page.locator('details.source-details summary').click();
-
-    const scrollbar = page.locator('details.source-details tui-scrollbar.harness-source-scroll');
-    await expect(scrollbar).toBeVisible();
-    await expect(scrollbar.locator('tui-doc-code')).toContainText('export class TuiMultiSelect');
-    await expect.poll(() => scrollbar.evaluate((element) => element.scrollHeight > element.clientHeight))
-        .toBe(true);
-    expect(await scrollbar.evaluate((element) => getComputedStyle(element).maxBlockSize))
-        .toBe('500px');
-    expect(await scrollbar.evaluate((element) => Math.round(element.getBoundingClientRect().height)))
-        .toBeLessThanOrEqual(503);
-    expect(await scrollbar.locator('code.hljs').first().evaluate((element) =>
-        getComputedStyle(element).overflowX
-    )).toBe('visible');
+    await expect(page.getByRole('link', {name: /Source on GitHub/})).toHaveAttribute('href', /\/src\/multi-fields\.ts$/);
+    await expect(page.locator('details.source-details')).toHaveCount(0);
+    await expect(page.locator('tui-scrollbar.harness-source-scroll')).toHaveCount(0);
+    await expect(page.locator('harness-detail tui-doc-code')).toHaveCount(1);
 });
 
 test('new visual harnesses have navigable addon-doc pages with copyable source', async ({page}) => {
@@ -212,15 +196,9 @@ test('new visual harnesses have navigable addon-doc pages with copyable source',
     ]) {
         await page.goto('/#/harness/' + route);
         await expect(page.locator('harness-detail h1')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
+        await expect(page.getByRole('link', {name: /Source on GitHub/})).toBeVisible();
         await expect(page.getByRole('button', {name: 'Copy example'})).toBeEnabled();
-        const details = page.locator('details.source-details');
-        if (!(await details.evaluate((node: HTMLDetailsElement) => node.open))) {
-            await details.locator('summary').click();
-        }
-        await expect(details).toHaveAttribute('open', '');
-        await expect(details.locator('tui-scrollbar')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy implementation'})).toBeEnabled();
+        await expect(page.locator('details.source-details')).toHaveCount(0);
     }
 });
 
@@ -228,20 +206,15 @@ test('core behavior harnesses have dedicated docs with real checked-in source', 
     for (const name of ['error', 'data-list', 'textfield', 'scrollbar', 'carousel']) {
         await page.goto('/#/harness/core/' + name);
         await expect(page.locator('harness-detail h1')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
-        const details = page.locator('details.source-details');
-        if (!(await details.evaluate((node: HTMLDetailsElement) => node.open))) {
-            await details.locator('summary').click();
-        }
-        await expect(details.locator('tui-scrollbar')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy implementation'})).toBeEnabled();
+        await expect(page.getByRole('link', {name: /Source on GitHub/})).toBeVisible();
+        await expect(page.locator('details.source-details')).toHaveCount(0);
     }
 });
 
 test('Taiga UI icon assets load on documentation pages and follow the base URL', async ({page}) => {
     await page.goto('/#/harness/kit/select');
 
-    const copyButton = page.getByRole('button', {name: 'Copy import'});
+    const copyButton = page.getByRole('button', {name: 'Copy example'});
     await expect(copyButton).toBeVisible();
     await expect.poll(() => copyButton.evaluate((button) =>
         getComputedStyle(button).getPropertyValue('--t-icon-start'),
@@ -260,14 +233,9 @@ test('new Kit interaction harnesses expose imports, source and examples', async 
     for (const name of ['data-list-wrapper', 'line-clamp', 'block', 'timeline', 'input-month-range']) {
         await page.goto('/#/harness/kit/' + name);
         await expect(page.locator('harness-detail h1')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
+        await expect(page.getByRole('link', {name: /Source on GitHub/})).toBeVisible();
         await expect(page.getByRole('button', {name: 'Copy example'})).toBeEnabled();
-        const details = page.locator('details.source-details');
-        if (!(await details.evaluate((node: HTMLDetailsElement) => node.open))) {
-            await details.locator('summary').click();
-        }
-        await expect(details.locator('tui-scrollbar')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy implementation'})).toBeEnabled();
+        await expect(page.locator('details.source-details')).toHaveCount(0);
     }
 });
 
@@ -275,14 +243,9 @@ test('visual and action harness pages expose tested source and examples', async 
     for (const route of ['core/icon', 'kit/filter', 'kit/action-bar', 'kit/pulse', 'kit/compass']) {
         await page.goto('/#/harness/' + route);
         await expect(page.locator('harness-detail h1')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
+        await expect(page.getByRole('link', {name: /Source on GitHub/})).toBeVisible();
         await expect(page.getByRole('button', {name: 'Copy example'})).toBeEnabled();
-        const source = page.locator('details.source-details');
-        if (!(await source.evaluate((element: HTMLDetailsElement) => element.open))) {
-            await source.locator('summary').click();
-        }
-        await expect(source.locator('tui-scrollbar')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy implementation'})).toBeEnabled();
+        await expect(page.locator('details.source-details')).toHaveCount(0);
     }
 });
 
@@ -290,14 +253,9 @@ test('new layout and overflow harnesses have source-backed reference pages', asy
     for (const route of ['core/cell', 'core/label', 'core/title', 'kit/items-with-more', 'kit/tiles']) {
         await page.goto('/#/harness/' + route);
         await expect(page.locator('harness-detail h1')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
+        await expect(page.getByRole('link', {name: /Source on GitHub/})).toBeVisible();
         await expect(page.getByRole('button', {name: 'Copy example'})).toBeEnabled();
-        const source = page.locator('details.source-details');
-        if (!(await source.evaluate((node: HTMLDetailsElement) => node.open))) {
-            await source.locator('summary').click();
-        }
-        await expect(source.locator('tui-scrollbar')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy implementation'})).toBeEnabled();
+        await expect(page.locator('details.source-details')).toHaveCount(0);
     }
 });
 
@@ -305,14 +263,9 @@ test('new notification and layout harnesses expose tested source-backed pages', 
     for (const route of ['core/notification', 'kit/badged-content', 'layout/block-status', 'layout/card', 'layout/input-search']) {
         await page.goto('/#/harness/' + route);
         await expect(page.locator('harness-detail h1')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
+        await expect(page.getByRole('link', {name: /Source on GitHub/})).toBeVisible();
         await expect(page.getByRole('button', {name: 'Copy example'})).toBeEnabled();
-        const source = page.locator('details.source-details');
-        if (!(await source.evaluate((element: HTMLDetailsElement) => element.open))) {
-            await source.locator('summary').click();
-        }
-        await expect(source.locator('tui-scrollbar')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy implementation'})).toBeEnabled();
+        await expect(page.locator('details.source-details')).toHaveCount(0);
     }
 });
 
@@ -320,14 +273,9 @@ test('Confirm, Toast and layout harnesses expose the source-backed docs', async 
     for (const route of ['kit/confirm', 'kit/toast', 'layout/form', 'layout/item-group', 'kit/shrink-wrap']) {
         await page.goto('/#/harness/' + route);
         await expect(page.locator('harness-detail h1')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
+        await expect(page.getByRole('link', {name: /Source on GitHub/})).toBeVisible();
         await expect(page.getByRole('button', {name: 'Copy example'})).toBeEnabled();
-        const source = page.locator('details.source-details');
-        if (!(await source.evaluate((element: HTMLDetailsElement) => element.open))) {
-            await source.locator('summary').click();
-        }
-        await expect(source.locator('tui-scrollbar')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy implementation'})).toBeEnabled();
+        await expect(page.locator('details.source-details')).toHaveCount(0);
     }
 });
 
@@ -335,14 +283,9 @@ test('responsive layout and close harnesses link to real tested implementations'
     for (const route of ['layout/list', 'layout/slides', 'layout/elastic-container', 'layout/floating-container', 'portals/close']) {
         await page.goto('/#/harness/' + route);
         await expect(page.locator('harness-detail h1')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
+        await expect(page.getByRole('link', {name: /Source on GitHub/})).toBeVisible();
         await expect(page.getByRole('button', {name: 'Copy example'})).toBeEnabled();
-        const source = page.locator('details.source-details');
-        if (!(await source.evaluate((node: HTMLDetailsElement) => node.open))) {
-            await source.locator('summary').click();
-        }
-        await expect(source.locator('tui-scrollbar')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy implementation'})).toBeEnabled();
+        await expect(page.locator('details.source-details')).toHaveCount(0);
     }
 });
 
@@ -350,7 +293,7 @@ test('remaining Core, Kit, and Layout harnesses have real source references', as
     for (const id of ["core/root","kit/comment","kit/message","kit/drawer","layout/header","layout/block-details","layout/surface","layout/search","layout/app-bar","layout/progressive-blur"]) {
         await page.goto('/#/harness/' + id);
         await expect(page.locator('harness-detail h1')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
+        await expect(page.getByRole('link', {name: /Source on GitHub/})).toBeVisible();
         await expect(page.getByRole('button', {name: 'Copy example'})).toBeEnabled();
     }
 });
@@ -359,7 +302,7 @@ test('mobile components link to real Angular-backed harness source', async ({pag
     for (const id of ["mobile/bottom-sheet","mobile/keypad","mobile/mobile-calendar","mobile/mobile-calendar-sheet","mobile/search-bar","mobile/swipe-actions","mobile/tab-bar"]) {
         await page.goto('/#/harness/' + id);
         await expect(page.locator('harness-detail h1')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
+        await expect(page.getByRole('link', {name: /Source on GitHub/})).toBeVisible();
     }
 });
 
@@ -367,7 +310,7 @@ test('commerce and table harness pages include live source references', async ({
     for (const id of ["commerce/input-card","commerce/input-card-group","commerce/thumbnail-card","table/reorder","table/table","table/table-pagination"]) {
         await page.goto('/#/harness/' + id);
         await expect(page.locator('harness-detail h1')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
+        await expect(page.getByRole('link', {name: /Source on GitHub/})).toBeVisible();
     }
 });
 
@@ -375,7 +318,7 @@ test('complex Kit harnesses have tested source reference pages', async ({page}) 
     for (const id of ["kit/files","kit/tree","kit/input-phone-international","kit/notification-middle","kit/preview","kit/push"]) {
         await page.goto('/#/harness/' + id);
         await expect(page.locator('harness-detail h1')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
+        await expect(page.getByRole('link', {name: /Source on GitHub/})).toBeVisible();
     }
 });
 
@@ -383,7 +326,7 @@ test('real alert dropdown hint modal and popup docs pages work', async ({page}) 
     for (const id of ["portals/alert","portals/dropdown","portals/hint","portals/modal","portals/popup"]) {
         await page.goto('/#/harness/' + id);
         await expect(page.locator('harness-detail h1')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
+        await expect(page.getByRole('link', {name: /Source on GitHub/})).toBeVisible();
     }
 });
 
@@ -391,20 +334,8 @@ test('final platform and mobile portal pages map to real source', async ({page})
     for (const id of ["kit/fullscreen","kit/routable-dialog","layout/dynamic-header","layout/navigation","layout/pdf-viewer","mobile/mobile-calendar-dropdown","mobile/pull-to-refresh","mobile/sheet-dialog"]) {
         await page.goto('/#/harness/' + id);
         await expect(page.locator('harness-detail h1')).toBeVisible();
-        await expect(page.getByRole('button', {name: 'Copy import'})).toBeEnabled();
+        await expect(page.getByRole('link', {name: /Source on GitHub/})).toBeVisible();
     }
-});
-
-test('full harness source shows the filename once and omits redundant class comments', async ({page}) => {
-    await page.goto('/#/harness/core/spin-button');
-    const details = page.locator('details.source-details');
-    await details.locator('summary').click();
-
-    await expect(details.locator('summary')).toContainText('semantic-harnesses.ts');
-    const source = details.locator('tui-doc-code');
-    await expect(source).toContainText('export class TuiSpinButtonHarness');
-    await expect(source.getByText('semantic-harnesses.ts', {exact: true})).toHaveCount(0);
-    await expect(source).not.toContainText('Real spin arrows reflect bounds');
 });
 
 test('landing separates v5 coverage and v4 TODO without a demo link', async ({page}) => {
