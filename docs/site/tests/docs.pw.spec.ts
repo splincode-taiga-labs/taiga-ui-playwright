@@ -344,20 +344,20 @@ test('landing separates v5 coverage and v4 TODO without a demo link', async ({pa
     await expect(versions.getByRole('heading', {name: /Taiga UI 5/})).toBeVisible();
     await expect(versions.getByRole('heading', {name: /Taiga UI 4/})).toBeVisible();
     await expect(page.getByTestId('v5-todo')).toHaveText('0 TODO');
-    await expect(page.getByTestId('v4-todo')).toHaveText('97 TODO');
+    await expect(page.getByTestId('v4-todo')).toHaveText('94 TODO');
     await expect(page.getByTestId('coverage-total')).toHaveText('133');
     await expect(page.getByRole('link', {name: 'v4 Demo'})).toHaveCount(0);
     await expect(page.getByRole('link', {name: 'Open interactive v4 demo'})).toHaveCount(0);
 });
 
-test('v4 inventory shows 26 verified entries and 97 TODO', async ({page}) => {
+test('v4 inventory shows 29 verified entries and 94 TODO', async ({page}) => {
     await page.goto('/');
     await page.getByRole('button', {name: 'View v4 matrix'}).click();
     await expect(page.getByTestId('coverage-total')).toHaveText('123');
-    await expect(page.getByTestId('coverage-done')).toHaveText('26');
-    await expect(page.getByTestId('coverage-todo')).toHaveText('97');
-    await expect(page.locator('tr[data-status="done"]')).toHaveCount(26);
-    await expect(page.locator('tr[data-status="todo"]')).toHaveCount(97);
+    await expect(page.getByTestId('coverage-done')).toHaveText('29');
+    await expect(page.getByTestId('coverage-todo')).toHaveText('94');
+    await expect(page.locator('tr[data-status="done"]')).toHaveCount(29);
+    await expect(page.locator('tr[data-status="todo"]')).toHaveCount(94);
     await expect(page.locator('tr[data-harness="v4/kit/input-password"]')).toContainText('TODO');
     await expect(page.locator('tr[data-harness="v4/kit/avatar"]')).toContainText('Verified');
     const link = page.locator('tr[data-harness="v4/kit/avatar"]').getByRole('link', {name: /tuiAvatar/});
