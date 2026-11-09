@@ -2,7 +2,7 @@
 
 Derived from the [upstream `v4.x` branch](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects), not from the current v5 catalog. This is a snapshot of **123 component directories** in Core, Kit, Mobile, Layout, Table and Commerce. It excludes standalone directives, pipes, legacy and experimental packages. Source directory availability may differ between early and late 4.x releases.
 
-Only **29 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **94** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
+Only **32 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **91** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
 
 A mapped harness indicates a name-based link to the package's public API, **not** that the corresponding v4 DOM contract works. A dash means no unambiguous direct mapping was found.
 
@@ -61,12 +61,12 @@ A mapped harness indicates a name-based link to the package's public API, **not*
 | Kit | [`input-month-range`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-month-range) | `tuiInputMonthRange` | Not verified |
 | Kit | [`input-number`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-number) | `tuiInputNumber` | Verified on 4.106 |
 | Kit | [`input-password`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-password) | — | Not verified |
-| Kit | [`input-phone`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-phone) | `tuiInputPhone` | Not verified |
+| Kit | [`input-phone`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-phone) | `tuiInputPhone` | Verified on 4.106 |
 | Kit | [`input-phone-international`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-phone-international) | `tuiInternationalPhone` | Not verified |
 | Kit | [`input-pin`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-pin) | `tuiInputPin` | Not verified |
 | Kit | [`input-range`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-range) | `tuiInputRange` | Not verified |
-| Kit | [`input-slider`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-slider) | `tuiInputSlider` | Not verified |
-| Kit | [`input-time`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-time) | `tuiInputTime` | Not verified |
+| Kit | [`input-slider`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-slider) | `tuiInputSlider` | Verified on 4.106 |
+| Kit | [`input-time`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-time) | `tuiInputTime` | Verified on 4.106 |
 | Kit | [`input-year`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-year) | `tuiInputYear` | Not verified |
 | Kit | [`items-with-more`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/items-with-more) | `tuiItemsWithMore` | Not verified |
 | Kit | [`like`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/like) | `tuiLike` | Verified on 4.106 |

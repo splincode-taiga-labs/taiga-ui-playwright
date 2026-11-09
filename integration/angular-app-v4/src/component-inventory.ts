@@ -384,7 +384,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "input-phone",
         "path": "projects/kit/components/input-phone",
         "helper": "tuiInputPhone",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -412,14 +412,14 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "input-slider",
         "path": "projects/kit/components/input-slider",
         "helper": "tuiInputSlider",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
         "name": "input-time",
         "path": "projects/kit/components/input-time",
         "helper": "tuiInputTime",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",

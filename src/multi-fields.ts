@@ -16,8 +16,14 @@ async function ownedPortal(input: Locator): Promise<{readonly id: string; readon
         throw new Error('Input has no unambiguous aria-controls relationship with its popup.');
     }
     const page = input.page();
-    const portal = page.locator('tui-dropdown:visible').and(page.locator('[id=' + JSON.stringify(id) + ']'));
+    // The outgoing portal can retain the same id while Taiga UI animates the replacement.
+    // Only interact with the new portal once its enter animation has completed.
+    const portal = page.locator('tui-dropdown:visible:not(.tui-leave)')
+        .and(page.locator('[id=' + JSON.stringify(id) + ']'));
+
+    await expect(portal).toHaveCount(1);
     await expect(portal).toBeVisible();
+    await expect(portal).not.toHaveClass(/(?:^|\s)tui-enter(?:\s|$)/);
     return {id, portal};
 }
 
