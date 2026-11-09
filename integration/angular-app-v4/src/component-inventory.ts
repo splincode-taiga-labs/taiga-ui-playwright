@@ -132,7 +132,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "accordion",
         "path": "projects/kit/components/accordion",
         "helper": "tuiAccordion",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -181,7 +181,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "breadcrumbs",
         "path": "projects/kit/components/breadcrumbs",
         "helper": "tuiBreadcrumbs",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -552,7 +552,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "rating",
         "path": "projects/kit/components/rating",
         "helper": "tuiRating",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",

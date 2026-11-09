@@ -7,6 +7,7 @@ const {
     tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber,
     tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress,
     tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog,
+    tuiAccordion, tuiRating, tuiBreadcrumbs,
 } = await packageApi('./v4');
 
 test('v4 entrypoint exposes the same runtime API as the package root', async () => {
@@ -200,14 +201,43 @@ test('Dialog closes through its v4-specific close control', async ({page}) => {
     await expect(page.getByTestId('v4-dialog-model')).toHaveText('closed');
 });
 
+test('Accordion opens, closes and coordinates real v4 panels', async ({page}) => {
+    const accordion = tuiAccordion(page.getByTestId('v4-accordion'));
+    const delivery = await accordion.expand('Delivery');
+    await expect(delivery).toContainText('Delivery details');
+    await expect(page.getByTestId('v4-accordion-model')).toHaveText('true / false');
+
+    const payment = await accordion.expand('Payment');
+    await expect(payment).toContainText('Payment details');
+    await expect(page.getByTestId('v4-accordion-model')).toHaveText('false / true');
+
+    await accordion.collapse('Payment');
+    await expect(page.getByTestId('v4-accordion-model')).toHaveText('false / false');
+});
+
+test('Rating updates a v4 numeric FormControl with keyboard navigation', async ({page}) => {
+    const rating = tuiRating(page.getByTestId('v4-rating'));
+    await rating.rate(4);
+    expect(await rating.value()).toBe(4);
+    await expect(page.getByTestId('v4-rating-model')).toHaveText('4');
+});
+
+test('Breadcrumbs renders links and follows one on v4', async ({page}) => {
+    const breadcrumbs = tuiBreadcrumbs(page.getByTestId('v4-breadcrumbs'));
+    await breadcrumbs.expectSize('m');
+    await expect(breadcrumbs.links).toHaveCount(2);
+    await breadcrumbs.follow('Preferences');
+    await expect(page).toHaveURL(/#v4-breadcrumb-target$/);
+});
+
 test('the same v4 demo documents its verified scope and versioned import', async ({page}) => {
     await page.goto('/');
     await expect(page.getByText('Tested controls, not blanket v4 compatibility.')).toBeVisible();
     await expect(page.locator('pre code')).toContainText('@taiga-ui-labs/playwright/v4');
-    await expect(page.getByRole('heading', {level: 2})).toHaveCount(27);
+    await expect(page.getByRole('heading', {level: 2})).toHaveCount(30);
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
-    await expect(page.locator('[data-verified="true"]')).toHaveCount(26);
+    await expect(page.locator('[data-verified="true"]')).toHaveCount(29);
     await expect(page.locator('[data-v4-component="Kit/checkbox"]')).toContainText('tuiCheckbox');
     await expect(page.getByRole('link', {name: /Back to Taiga UI 5 docs/})).toHaveAttribute('href', '../');
 });

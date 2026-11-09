@@ -2,7 +2,7 @@ import {Component, inject, signal} from '@angular/core';
 
 import {V4_COMPONENTS} from './component-inventory';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {TuiDay} from '@taiga-ui/cdk';
+import {TuiDay, TuiItem} from '@taiga-ui/cdk';
 import {
     TuiButton,
     TuiCalendar,
@@ -16,8 +16,10 @@ import {
     TuiTextfieldDropdownDirective,
 } from '@taiga-ui/core';
 import {
+    TuiAccordion,
     TuiAvatar,
     TuiBadge,
+    TuiBreadcrumbs,
     TuiBadgeNotification,
     TuiCheckbox,
     TuiChip,
@@ -32,6 +34,7 @@ import {
     TuiLike,
     TuiPagination,
     TuiProgressBar,
+    TuiRating,
     TuiRadioComponent,
     TuiSegmented,
     TuiSelect,
@@ -59,10 +62,13 @@ import {
         TuiLink,
         TuiLoader,
         TuiExpandComponent,
+        TuiAccordion,
         TuiAvatar,
         TuiBadge,
+        TuiBreadcrumbs,
         TuiBadgeNotification,
         TuiChip,
+        TuiItem,
         TuiLike,
         TuiProgressBar,
         TuiChevron,
@@ -71,6 +77,7 @@ import {
         TuiComboBox,
         TuiFilterByInputPipe,
         TuiCheckbox,
+        TuiRating,
         TuiRadioComponent,
         TuiSwitch,
         TuiTab,
@@ -97,7 +104,7 @@ import {
                 </p>
                 <p class="notice">
                     <strong>Tested controls, not blanket v4 compatibility.</strong>
-                    This demo exercises 26 real Taiga UI controls with the packaged /v4 API
+                    This demo exercises 29 real Taiga UI controls with the packaged /v4 API
                     in Chromium on 4.106.0. Other components and earlier 4.x versions
                     still need their own integration tests.
                 </p>
@@ -282,6 +289,33 @@ import {
                     <button tuiButton type="button" (click)="showConfirmation()">Open v4 dialog</button>
                     <output data-testid="v4-dialog-model">{{ dialogResult() }}</output>
                 </section>
+                <section>
+                    <h2>Accordion</h2>
+                    <tui-accordion data-testid="v4-accordion">
+                        <tui-accordion-item [(open)]="deliveryOpen">
+                            Delivery
+                            <ng-template tuiAccordionItemContent>Delivery details</ng-template>
+                        </tui-accordion-item>
+                        <tui-accordion-item [(open)]="paymentOpen">
+                            Payment
+                            <ng-template tuiAccordionItemContent>Payment details</ng-template>
+                        </tui-accordion-item>
+                    </tui-accordion>
+                    <output data-testid="v4-accordion-model">{{ deliveryOpen }} / {{ paymentOpen }}</output>
+                </section>
+                <section>
+                    <h2>Rating</h2>
+                    <tui-rating aria-label="Service rating" data-testid="v4-rating" [formControl]="rating" />
+                    <output data-testid="v4-rating-model">{{ rating.value }}</output>
+                </section>
+                <section>
+                    <h2>Breadcrumbs</h2>
+                    <tui-breadcrumbs size="m" data-testid="v4-breadcrumbs">
+                        <ng-container *tuiItem><a tuiLink href="#v4-breadcrumb-start">Home</a></ng-container>
+                        <ng-container *tuiItem><a tuiLink href="#v4-breadcrumb-target">Preferences</a></ng-container>
+                    </tui-breadcrumbs>
+                    <p id="v4-breadcrumb-target">Preferences target</p>
+                </section>
                 <p class="footnote">
                     Open source · <a href="https://github.com/splincode-taiga-labs/taiga-ui-playwright/blob/main/compatibility/v4.spec.ts"
                         target="_blank" rel="noopener noreferrer">Playwright tests ↗</a>
@@ -294,7 +328,7 @@ import {
 })
 export class DemoV4 {
     private readonly dialog = inject(TuiDialogService);
-    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog} from '@taiga-ui-labs/playwright/v4';";
+    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog, tuiAccordion, tuiRating, tuiBreadcrumbs} from '@taiga-ui-labs/playwright/v4';";
     protected readonly componentInventory = V4_COMPONENTS;
     protected readonly verifiedCount = V4_COMPONENTS.filter((component) => component.verified).length;
     protected readonly countries = ['Austria', 'Estonia'];
@@ -316,6 +350,9 @@ export class DemoV4 {
     protected readonly multiCountriesOptions = ['Austria', 'Estonia', 'Latvia'];
     protected readonly selectedCountries = new FormControl<string[]>([], {nonNullable: true});
     protected readonly dialogResult = signal('pending');
+    protected readonly rating = new FormControl(0, {nonNullable: true});
+    protected deliveryOpen = false;
+    protected paymentOpen = false;
     protected activeTab = 0;
     protected activeSegment = 0;
     protected pageIndex = 0;

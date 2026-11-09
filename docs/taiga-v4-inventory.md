@@ -2,7 +2,7 @@
 
 Derived from the [upstream `v4.x` branch](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects), not from the current v5 catalog. This is a snapshot of **123 component directories** in Core, Kit, Mobile, Layout, Table and Commerce. It excludes standalone directives, pipes, legacy and experimental packages. Source directory availability may differ between early and late 4.x releases.
 
-Only **26 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **97** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
+Only **29 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **94** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
 
 A mapped harness indicates a name-based link to the package's public API, **not** that the corresponding v4 DOM contract works. A dash means no unambiguous direct mapping was found.
 
@@ -25,14 +25,14 @@ A mapped harness indicates a name-based link to the package's public API, **not*
 | Core | [`scrollbar`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/scrollbar) | `tuiScrollbar` | Not verified |
 | Core | [`spin-button`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/spin-button) | `tuiSpinButton` | Not verified |
 | Core | [`textfield`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/textfield) | `tuiTextfield` | Verified on 4.106 |
-| Kit | [`accordion`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/accordion) | `tuiAccordion` | Not verified |
+| Kit | [`accordion`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/accordion) | `tuiAccordion` | Verified on 4.106 |
 | Kit | [`action-bar`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/action-bar) | `tuiActionBar` | Not verified |
 | Kit | [`avatar`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/avatar) | `tuiAvatar` | Verified on 4.106 |
 | Kit | [`badge`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/badge) | `tuiBadge` | Verified on 4.106 |
 | Kit | [`badge-notification`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/badge-notification) | `tuiBadgeNotification` | Verified on 4.106 |
 | Kit | [`badged-content`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/badged-content) | `tuiBadgedContent` | Not verified |
 | Kit | [`block`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/block) | `tuiBlock` | Not verified |
-| Kit | [`breadcrumbs`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/breadcrumbs) | `tuiBreadcrumbs` | Not verified |
+| Kit | [`breadcrumbs`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/breadcrumbs) | `tuiBreadcrumbs` | Verified on 4.106 |
 | Kit | [`button-loading`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/button-loading) | `tuiButtonLoading` | Not verified |
 | Kit | [`calendar-month`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/calendar-month) | `tuiCalendarMonth` | Not verified |
 | Kit | [`calendar-range`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/calendar-range) | `tuiCalendarRange` | Not verified |
@@ -85,7 +85,7 @@ A mapped harness indicates a name-based link to the package's public API, **not*
 | Kit | [`radio`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/radio) | `tuiRadio` | Verified on 4.106 |
 | Kit | [`radio-list`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/radio-list) | `tuiRadioList` | Not verified |
 | Kit | [`range`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/range) | `tuiRange` | Not verified |
-| Kit | [`rating`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/rating) | `tuiRating` | Not verified |
+| Kit | [`rating`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/rating) | `tuiRating` | Verified on 4.106 |
 | Kit | [`routable-dialog`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/routable-dialog) | `tuiRoutableDialog` | Not verified |
 | Kit | [`segmented`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/segmented) | `tuiSegmented` | Verified on 4.106 |
 | Kit | [`select`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/select) | `tuiSelect` | Verified on 4.106 |
