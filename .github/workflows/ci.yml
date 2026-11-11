@@ -116,6 +116,8 @@ jobs:
         run: npm run test:compat
       - name: Stress v4 ComboBox filtered selection without retries
         run: npm run test:compat -- --project=taiga-v4 --grep "ComboBox updates FormControl" --repeat-each=8 --retries=0
+      - name: Stress v4 MultiSelect portal animations without retries
+        run: npm run test:compat -- --project=taiga-v4 --grep "MultiSelect selects two options" --repeat-each=8 --retries=0
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

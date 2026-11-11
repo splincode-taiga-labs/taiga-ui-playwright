@@ -37,8 +37,11 @@ The local v4 Angular fixture runs real Taiga UI v4 controls in CI, and `compatib
 | Accordion | `tuiAccordion` | Expand/collapse real v4 panels using its version-specific header and open state |
 | Rating | `tuiRating` | Keyboard rating updates a FormControl |
 | Breadcrumbs | `tuiBreadcrumbs` | Render and follow projected links; check size |
+| InputTime | `tuiInputTime` | Enter HH:MM and validate the TuiTime FormControl |
+| InputPhone | `tuiInputPhone` | Enter a masked phone number and check the normalized FormControl |
+| InputSlider | `tuiInputSlider` | Synchronize the typed number, slider and FormControl |
 
-**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 104 catalog harnesses and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
+**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 101 catalog harnesses and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
 
 ## v4 component inventory
 

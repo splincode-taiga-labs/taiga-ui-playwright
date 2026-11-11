@@ -7,7 +7,7 @@ const {
     tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber,
     tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress,
     tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog,
-    tuiAccordion, tuiRating, tuiBreadcrumbs,
+    tuiAccordion, tuiRating, tuiBreadcrumbs, tuiInputTime, tuiInputPhone, tuiInputSlider,
 } = await packageApi('./v4');
 
 test('v4 entrypoint exposes the same runtime API as the package root', async () => {
@@ -230,14 +230,34 @@ test('Breadcrumbs renders links and follows one on v4', async ({page}) => {
     await expect(page).toHaveURL(/#v4-breadcrumb-target$/);
 });
 
+test('InputTime writes a real TuiTime to the Angular FormControl', async ({page}) => {
+    const time = tuiInputTime(page.getByTestId('v4-time-field'));
+    await time.fillTime('13:45');
+    await expect(page.getByTestId('v4-time-model')).toHaveText('13:45');
+});
+
+test('InputPhone normalizes a full number into its Angular FormControl', async ({page}) => {
+    const phone = tuiInputPhone(page.getByTestId('v4-phone-field'));
+    await phone.fill('+1 212 555-0123');
+    await expect(page.getByTestId('v4-phone-model')).toHaveText('+12125550123');
+});
+
+test('InputSlider synchronizes the textfield, slider and Angular FormControl', async ({page}) => {
+    const slider = tuiInputSlider(page.getByTestId('v4-slider-field'));
+    await slider.fill('42');
+    await slider.input.press('Tab');
+    await expect(page.getByTestId('v4-slider-model')).toHaveText('42');
+    await expect(page.getByTestId('v4-slider-field').locator('input[tuiSlider]')).toHaveValue('42');
+});
+
 test('the same v4 demo documents its verified scope and versioned import', async ({page}) => {
     await page.goto('/');
     await expect(page.getByText('Tested controls, not blanket v4 compatibility.')).toBeVisible();
     await expect(page.locator('pre code')).toContainText('@taiga-ui-labs/playwright/v4');
-    await expect(page.getByRole('heading', {level: 2})).toHaveCount(30);
+    await expect(page.getByRole('heading', {level: 2})).toHaveCount(33);
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
-    await expect(page.locator('[data-verified="true"]')).toHaveCount(29);
+    await expect(page.locator('[data-verified="true"]')).toHaveCount(32);
     await expect(page.locator('[data-v4-component="Kit/checkbox"]')).toContainText('tuiCheckbox');
     await expect(page.getByRole('link', {name: /Back to Taiga UI 5 docs/})).toHaveAttribute('href', '../');
 });

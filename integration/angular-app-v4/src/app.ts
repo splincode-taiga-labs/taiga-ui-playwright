@@ -2,7 +2,7 @@ import {Component, inject, signal} from '@angular/core';
 
 import {V4_COMPONENTS} from './component-inventory';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {TuiDay, TuiItem} from '@taiga-ui/cdk';
+import {TuiDay, TuiItem, TuiTime} from '@taiga-ui/cdk';
 import {
     TuiButton,
     TuiCalendar,
@@ -31,6 +31,9 @@ import {
     TuiDataListWrapper,
     TuiFilterByInputPipe,
     TuiInputNumberDirective,
+    TuiInputPhone,
+    TuiInputSlider,
+    TuiInputTime,
     TuiLike,
     TuiPagination,
     TuiProgressBar,
@@ -88,6 +91,9 @@ import {
         TuiStepperComponent,
         TuiStep,
         TuiInputNumberDirective,
+        TuiInputPhone,
+        TuiInputSlider,
+        TuiInputTime,
     ],
     template: `
         <tui-root>
@@ -104,7 +110,7 @@ import {
                 </p>
                 <p class="notice">
                     <strong>Tested controls, not blanket v4 compatibility.</strong>
-                    This demo exercises 29 real Taiga UI controls with the packaged /v4 API
+                    This demo exercises 32 real Taiga UI controls with the packaged /v4 API
                     in Chromium on 4.106.0. Other components and earlier 4.x versions
                     still need their own integration tests.
                 </p>
@@ -316,6 +322,28 @@ import {
                     </tui-breadcrumbs>
                     <p id="v4-breadcrumb-target">Preferences target</p>
                 </section>
+                <section>
+                    <h2>InputTime</h2>
+                    <tui-textfield data-testid="v4-time-field">
+                        <input tuiInputTime aria-label="Meeting time" [formControl]="meetingTime" />
+                    </tui-textfield>
+                    <output data-testid="v4-time-model">{{ meetingTime.value?.toString() ?? 'null' }}</output>
+                </section>
+                <section>
+                    <h2>InputPhone</h2>
+                    <tui-textfield data-testid="v4-phone-field">
+                        <input tuiInputPhone aria-label="Contact phone" [formControl]="contactPhone" />
+                    </tui-textfield>
+                    <output data-testid="v4-phone-model">{{ contactPhone.value ?? 'null' }}</output>
+                </section>
+                <section>
+                    <h2>InputSlider</h2>
+                    <tui-textfield data-testid="v4-slider-field">
+                        <input tuiInputSlider aria-label="Budget" [formControl]="budget" [min]="0" [max]="100" />
+                        <input tuiSlider type="range" aria-label="Budget slider" />
+                    </tui-textfield>
+                    <output data-testid="v4-slider-model">{{ budget.value }}</output>
+                </section>
                 <p class="footnote">
                     Open source · <a href="https://github.com/splincode-taiga-labs/taiga-ui-playwright/blob/main/compatibility/v4.spec.ts"
                         target="_blank" rel="noopener noreferrer">Playwright tests ↗</a>
@@ -328,7 +356,7 @@ import {
 })
 export class DemoV4 {
     private readonly dialog = inject(TuiDialogService);
-    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog, tuiAccordion, tuiRating, tuiBreadcrumbs} from '@taiga-ui-labs/playwright/v4';";
+    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog, tuiAccordion, tuiRating, tuiBreadcrumbs, tuiInputTime, tuiInputPhone, tuiInputSlider} from '@taiga-ui-labs/playwright/v4';";
     protected readonly componentInventory = V4_COMPONENTS;
     protected readonly verifiedCount = V4_COMPONENTS.filter((component) => component.verified).length;
     protected readonly countries = ['Austria', 'Estonia'];
@@ -351,6 +379,9 @@ export class DemoV4 {
     protected readonly selectedCountries = new FormControl<string[]>([], {nonNullable: true});
     protected readonly dialogResult = signal('pending');
     protected readonly rating = new FormControl(0, {nonNullable: true});
+    protected readonly meetingTime = new FormControl<TuiTime | null>(null);
+    protected readonly contactPhone = new FormControl<string | null>(null);
+    protected readonly budget = new FormControl(20, {nonNullable: true});
     protected deliveryOpen = false;
     protected paymentOpen = false;
     protected activeTab = 0;
