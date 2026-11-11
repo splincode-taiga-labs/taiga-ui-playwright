@@ -40,8 +40,11 @@ The local v4 Angular fixture runs real Taiga UI v4 controls in CI, and `compatib
 | InputTime | `tuiInputTime` | Enter HH:MM and validate the TuiTime FormControl |
 | InputPhone | `tuiInputPhone` | Enter a masked phone number and check the normalized FormControl |
 | InputSlider | `tuiInputSlider` | Synchronize the typed number, slider and FormControl |
+| InputDateRange | `tuiInputDateRange` | Select start/end days and assert the TuiDayRange FormControl |
+| InputDateMulti | `tuiInputDateMulti` | Toggle a day and assert the TuiDay array FormControl |
+| InputMonth | `tuiInputMonth` | Select a month and assert the TuiMonth FormControl |
 
-**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 101 catalog harnesses and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
+**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 88 v4 inventory components and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
 
 ## v4 component inventory
 
