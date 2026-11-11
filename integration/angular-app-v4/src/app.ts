@@ -357,6 +357,7 @@ import {
                     <h2>InputChip</h2>
                     <tui-textfield multi data-testid="v4-input-chip-field">
                         <input tuiInputChip aria-label="Tags" [formControl]="tags" />
+                        <tui-input-chip *tuiItem />
                     </tui-textfield>
                     <output data-testid="v4-input-chip-model">{{ tags.value.join(',') }}</output>
                 </section>
