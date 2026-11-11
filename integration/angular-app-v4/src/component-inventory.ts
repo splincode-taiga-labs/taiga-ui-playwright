@@ -307,7 +307,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "input-chip",
         "path": "projects/kit/components/input-chip",
         "helper": "tuiInputChip",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -398,14 +398,14 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "input-pin",
         "path": "projects/kit/components/input-pin",
         "helper": "tuiInputPin",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
         "name": "input-range",
         "path": "projects/kit/components/input-range",
         "helper": "tuiInputRange",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",

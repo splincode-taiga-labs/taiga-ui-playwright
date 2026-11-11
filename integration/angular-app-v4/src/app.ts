@@ -26,6 +26,8 @@ import {
     TuiChevron,
     TuiComboBox,
     TuiInputChip,
+    TuiInputPin,
+    TuiInputRange,
     TuiInputDate,
     TuiInputDateMulti,
     TuiInputDateRange,
@@ -73,6 +75,8 @@ import {
         TuiInputMonthRange,
         TuiInputYear,
         TuiInputChip,
+        TuiInputPin,
+        TuiInputRange,
         TuiMultiSelect,
         TuiLink,
         TuiLoader,
@@ -122,7 +126,7 @@ import {
                 </p>
                 <p class="notice">
                     <strong>Tested controls, not blanket v4 compatibility.</strong>
-                    This demo exercises 38 real Taiga UI controls with the packaged /v4 API
+                    This demo exercises 41 real Taiga UI controls with the packaged /v4 API
                     in Chromium on 4.106.0. Other components and earlier 4.x versions
                     still need their own integration tests.
                 </p>
@@ -343,6 +347,28 @@ import {
                     <output data-testid="v4-year-model">{{ fiscalYear.value ?? 'null' }}</output>
                 </section>
                 <section>
+                    <h2>InputRange</h2>
+                    <tui-input-range data-testid="v4-input-range" [min]="0" [max]="100" [formControl]="priceRange">
+                        <label tuiLabel>Price range</label>
+                    </tui-input-range>
+                    <output data-testid="v4-input-range-model">{{ priceRange.value[0] }}-{{ priceRange.value[1] }}</output>
+                </section>
+                <section>
+                    <h2>InputChip</h2>
+                    <tui-textfield multi data-testid="v4-input-chip-field">
+                        <input tuiInputChip aria-label="Tags" [formControl]="tags" />
+                        <tui-input-chip *tuiItem />
+                    </tui-textfield>
+                    <output data-testid="v4-input-chip-model">{{ tags.value.join(',') }}</output>
+                </section>
+                <section>
+                    <h2>InputPin</h2>
+                    <tui-textfield data-testid="v4-input-pin-field">
+                        <input tuiInputPin maxlength="4" placeholder="••••" aria-label="Access PIN" [formControl]="pin" />
+                    </tui-textfield>
+                    <output data-testid="v4-input-pin-model">{{ pin.value }}</output>
+                </section>
+                <section>
                     <h2>MultiSelect</h2>
                     <tui-textfield multi tuiChevron data-testid="v4-multi-field">
                         <input tuiInputChip tuiSelectLike aria-label="Countries" [formControl]="selectedCountries" />
@@ -416,7 +442,7 @@ import {
 })
 export class DemoV4 {
     private readonly dialog = inject(TuiDialogService);
-    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog, tuiAccordion, tuiRating, tuiBreadcrumbs, tuiInputTime, tuiInputPhone, tuiInputSlider, tuiInputDateRange, tuiInputDateMulti, tuiInputMonth, tuiInputMonthRange, tuiInputDateTime, tuiInputYear} from '@taiga-ui-labs/playwright/v4';";
+    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog, tuiAccordion, tuiRating, tuiBreadcrumbs, tuiInputTime, tuiInputPhone, tuiInputSlider, tuiInputDateRange, tuiInputDateMulti, tuiInputMonth, tuiInputMonthRange, tuiInputDateTime, tuiInputYear, tuiInputRange, tuiInputChip, tuiInputPin} from '@taiga-ui-labs/playwright/v4';";
     protected readonly componentInventory = V4_COMPONENTS;
     protected readonly verifiedCount = V4_COMPONENTS.filter((component) => component.verified).length;
     protected readonly countries = ['Austria', 'Estonia'];
@@ -446,6 +472,9 @@ export class DemoV4 {
         [new TuiDay(2026, 0, 15), new TuiTime(13, 45)],
     );
     protected readonly fiscalYear = new FormControl<number | null>(null);
+    protected readonly priceRange = new FormControl<readonly [number, number]>([10, 90], {nonNullable: true});
+    protected readonly tags = new FormControl<string[]>(['Angular'], {nonNullable: true});
+    protected readonly pin = new FormControl('', {nonNullable: true});
 
     protected get availableDayNumbers(): string {
         return this.availableDays.value.map(({day}) => day).join(',');
