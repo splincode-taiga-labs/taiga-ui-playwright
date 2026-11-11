@@ -342,7 +342,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "input-date-time",
         "path": "projects/kit/components/input-date-time",
         "helper": "tuiInputDateTime",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -363,7 +363,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "input-month-range",
         "path": "projects/kit/components/input-month-range",
         "helper": "tuiInputMonthRange",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -426,7 +426,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "input-year",
         "path": "projects/kit/components/input-year",
         "helper": "tuiInputYear",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
