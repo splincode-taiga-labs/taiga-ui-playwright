@@ -17,10 +17,14 @@ export async function ownedCalendarPortal(input: Locator, field: string): Promis
     }
 
     const page = input.page();
-    const portal = page.locator('tui-dropdown:visible')
+    // Dropdown animations can briefly leave the outgoing and incoming portals
+    // mounted under the same aria-controls ID. Target only the active one.
+    const portal = page.locator('tui-dropdown:visible:not(.tui-leave)')
         .and(page.locator('[id=' + JSON.stringify(id) + ']'));
 
+    await expect(portal).toHaveCount(1);
     await expect(portal).toBeVisible();
+    await expect(portal).not.toHaveClass(/(?:^|\s)tui-enter(?:\s|$)/);
 
     return {id, portal};
 }

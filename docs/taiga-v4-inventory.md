@@ -2,7 +2,7 @@
 
 Derived from the [upstream `v4.x` branch](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects), not from the current v5 catalog. This is a snapshot of **123 component directories** in Core, Kit, Mobile, Layout, Table and Commerce. It excludes standalone directives, pipes, legacy and experimental packages. Source directory availability may differ between early and late 4.x releases.
 
-Only **32 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **91** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
+Only **35 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **88** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
 
 A mapped harness indicates a name-based link to the package's public API, **not** that the corresponding v4 DOM contract works. A dash means no unambiguous direct mapping was found.
 
@@ -53,11 +53,11 @@ A mapped harness indicates a name-based link to the package's public API, **not*
 | Kit | [`input-chip`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-chip) | `tuiInputChip` | Not verified |
 | Kit | [`input-color`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-color) | `tuiInputColor` | Not verified |
 | Kit | [`input-date`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-date) | `tuiInputDate` | Verified on 4.106 |
-| Kit | [`input-date-multi`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-date-multi) | `tuiInputDateMulti` | Not verified |
-| Kit | [`input-date-range`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-date-range) | `tuiInputDateRange` | Not verified |
+| Kit | [`input-date-multi`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-date-multi) | `tuiInputDateMulti` | Verified on 4.106 |
+| Kit | [`input-date-range`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-date-range) | `tuiInputDateRange` | Verified on 4.106 |
 | Kit | [`input-date-time`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-date-time) | `tuiInputDateTime` | Not verified |
 | Kit | [`input-inline`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-inline) | `tuiInputInline` | Not verified |
-| Kit | [`input-month`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-month) | `tuiInputMonth` | Not verified |
+| Kit | [`input-month`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-month) | `tuiInputMonth` | Verified on 4.106 |
 | Kit | [`input-month-range`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-month-range) | `tuiInputMonthRange` | Not verified |
 | Kit | [`input-number`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-number) | `tuiInputNumber` | Verified on 4.106 |
 | Kit | [`input-password`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-password) | — | Not verified |
