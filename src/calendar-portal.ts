@@ -24,7 +24,7 @@ export async function ownedCalendarPortal(input: Locator, field: string): Promis
 
     await expect(portal).toHaveCount(1);
     await expect(portal).toBeVisible();
-    await expect(portal).not.toHaveClass(/(?:^|\\s)tui-enter(?:\\s|$)/);
+    await expect(portal).not.toHaveClass(/(?:^|\s)tui-enter(?:\s|$)/);
 
     return {id, portal};
 }
