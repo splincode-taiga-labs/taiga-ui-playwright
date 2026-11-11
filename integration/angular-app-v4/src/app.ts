@@ -2,7 +2,7 @@ import {Component, inject, signal} from '@angular/core';
 
 import {V4_COMPONENTS} from './component-inventory';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {TuiDay, TuiDayRange, TuiItem, TuiMonth, TuiTime, TuiYear} from '@taiga-ui/cdk';
+import {TuiDay, TuiDayRange, TuiItem, TuiMonth, TuiMonthRange, TuiTime, TuiYear} from '@taiga-ui/cdk';
 import {
     TuiButton,
     TuiCalendar,
@@ -29,7 +29,10 @@ import {
     TuiInputDate,
     TuiInputDateMulti,
     TuiInputDateRange,
+    TuiInputDateTime,
     TuiInputMonth,
+    TuiInputMonthRange,
+    TuiInputYear,
     TuiMultiSelect,
     TuiDataListWrapper,
     TuiFilterByInputPipe,
@@ -65,7 +68,10 @@ import {
         TuiInputDate,
         TuiInputDateMulti,
         TuiInputDateRange,
+        TuiInputDateTime,
         TuiInputMonth,
+        TuiInputMonthRange,
+        TuiInputYear,
         TuiInputChip,
         TuiMultiSelect,
         TuiLink,
@@ -116,7 +122,7 @@ import {
                 </p>
                 <p class="notice">
                     <strong>Tested controls, not blanket v4 compatibility.</strong>
-                    This demo exercises 35 real Taiga UI controls with the packaged /v4 API
+                    This demo exercises 38 real Taiga UI controls with the packaged /v4 API
                     in Chromium on 4.106.0. Other components and earlier 4.x versions
                     still need their own integration tests.
                 </p>
@@ -313,6 +319,30 @@ import {
                     <output data-testid="v4-month-model">{{ vacationMonth.value?.year }}-{{ vacationMonth.value?.month }}</output>
                 </section>
                 <section>
+                    <h2>InputMonthRange</h2>
+                    <tui-textfield data-testid="v4-month-range-field">
+                        <input tuiInputMonthRange aria-label="Vacation months" [formControl]="vacationMonths" />
+                        <tui-calendar-month *tuiTextfieldDropdown [year]="monthYear" />
+                    </tui-textfield>
+                    <output data-testid="v4-month-range-model">{{ vacationMonths.value?.from?.month }}-{{ vacationMonths.value?.to?.month }}</output>
+                </section>
+                <section>
+                    <h2>InputDateTime</h2>
+                    <tui-textfield data-testid="v4-date-time-field">
+                        <input tuiInputDateTime aria-label="Appointment date and time" [formControl]="appointmentDateTime" />
+                        <tui-calendar *tuiTextfieldDropdown />
+                    </tui-textfield>
+                    <output data-testid="v4-date-time-model">{{ appointmentDateTime.value?.[0]?.year }}-{{ appointmentDateTime.value?.[0]?.month }}-{{ appointmentDateTime.value?.[0]?.day }} {{ appointmentDateTime.value?.[1]?.toString() ?? 'null' }}</output>
+                </section>
+                <section>
+                    <h2>InputYear</h2>
+                    <tui-textfield data-testid="v4-year-field">
+                        <input tuiInputYear aria-label="Fiscal year" [formControl]="fiscalYear" />
+                        <tui-calendar-year *tuiTextfieldDropdown />
+                    </tui-textfield>
+                    <output data-testid="v4-year-model">{{ fiscalYear.value ?? 'null' }}</output>
+                </section>
+                <section>
                     <h2>MultiSelect</h2>
                     <tui-textfield multi tuiChevron data-testid="v4-multi-field">
                         <input tuiInputChip tuiSelectLike aria-label="Countries" [formControl]="selectedCountries" />
@@ -386,7 +416,7 @@ import {
 })
 export class DemoV4 {
     private readonly dialog = inject(TuiDialogService);
-    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog, tuiAccordion, tuiRating, tuiBreadcrumbs, tuiInputTime, tuiInputPhone, tuiInputSlider, tuiInputDateRange, tuiInputDateMulti, tuiInputMonth} from '@taiga-ui-labs/playwright/v4';";
+    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog, tuiAccordion, tuiRating, tuiBreadcrumbs, tuiInputTime, tuiInputPhone, tuiInputSlider, tuiInputDateRange, tuiInputDateMulti, tuiInputMonth, tuiInputMonthRange, tuiInputDateTime, tuiInputYear} from '@taiga-ui-labs/playwright/v4';";
     protected readonly componentInventory = V4_COMPONENTS;
     protected readonly verifiedCount = V4_COMPONENTS.filter((component) => component.verified).length;
     protected readonly countries = ['Austria', 'Estonia'];
@@ -411,6 +441,11 @@ export class DemoV4 {
     protected readonly availableDays = new FormControl<TuiDay[]>([new TuiDay(2026, 0, 15)], {nonNullable: true});
     protected readonly vacationMonth = new FormControl<TuiMonth | null>(new TuiMonth(2026, 0));
     protected readonly monthYear = new TuiYear(2026);
+    protected readonly vacationMonths = new FormControl<TuiMonthRange | null>(null);
+    protected readonly appointmentDateTime = new FormControl<readonly [TuiDay, TuiTime | null] | null>(
+        [new TuiDay(2026, 0, 15), new TuiTime(13, 45)],
+    );
+    protected readonly fiscalYear = new FormControl<number | null>(null);
 
     protected get availableDayNumbers(): string {
         return this.availableDays.value.map(({day}) => day).join(',');
