@@ -10,6 +10,7 @@ const {
     tuiAccordion, tuiRating, tuiBreadcrumbs, tuiInputTime, tuiInputPhone, tuiInputSlider,
     tuiInputDateRange, tuiInputDateMulti, tuiInputMonth,
     tuiInputMonthRange, tuiInputDateTime, tuiInputYear,
+    tuiInputRange, tuiInputChip, tuiInputPin,
 } = await packageApi('./v4');
 
 test('v4 entrypoint exposes the same runtime API as the package root', async () => {
@@ -294,14 +295,39 @@ test('InputYear fills a four-digit year into the v4 FormControl', async ({page})
     await expect(page.getByTestId('v4-year-model')).toHaveText('2028');
 });
 
+test('InputRange updates both numbers and the real v4 FormControl', async ({page}) => {
+    const range = tuiInputRange(page.getByTestId('v4-input-range'));
+    await expect(range.range).toBeVisible();
+    await range.setStart(25);
+    await expect(page.getByTestId('v4-input-range-model')).toHaveText('25-90');
+    await range.setEnd(75);
+    await expect(page.getByTestId('v4-input-range-model')).toHaveText('25-75');
+});
+
+test('InputChip adds and removes a real v4 chip in the FormControl', async ({page}) => {
+    const chips = tuiInputChip(page.getByTestId('v4-input-chip-field'));
+    await chips.add('Playwright');
+    await expect(page.getByTestId('v4-input-chip-model')).toHaveText('Angular,Playwright');
+    await chips.remove('Playwright');
+    await expect(page.getByTestId('v4-input-chip-model')).toHaveText('Angular');
+});
+
+test('InputPin enters four digits and updates the real v4 FormControl', async ({page}) => {
+    const pin = tuiInputPin(page.getByTestId('v4-input-pin-field'));
+    await pin.fill('1234');
+    await expect(pin.input).toHaveValue('1234');
+    await expect(page.getByTestId('v4-input-pin-model')).toHaveText('1234');
+    await expect(page.getByTestId('v4-input-pin-field').locator('.t-value_filled')).toHaveCount(4);
+});
+
 test('the same v4 demo documents its verified scope and versioned import', async ({page}) => {
     await page.goto('/');
     await expect(page.getByText('Tested controls, not blanket v4 compatibility.')).toBeVisible();
     await expect(page.locator('pre code')).toContainText('@taiga-ui-labs/playwright/v4');
-    await expect(page.getByRole('heading', {level: 2})).toHaveCount(39);
+    await expect(page.getByRole('heading', {level: 2})).toHaveCount(42);
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
-    await expect(page.locator('[data-verified="true"]')).toHaveCount(38);
+    await expect(page.locator('[data-verified="true"]')).toHaveCount(41);
     await expect(page.locator('[data-v4-component="Kit/checkbox"]')).toContainText('tuiCheckbox');
     await expect(page.getByRole('link', {name: /Back to Taiga UI 5 docs/})).toHaveAttribute('href', '../');
 });

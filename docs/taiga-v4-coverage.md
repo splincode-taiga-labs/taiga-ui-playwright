@@ -46,8 +46,11 @@ The local v4 Angular fixture runs real Taiga UI v4 controls in CI, and `compatib
 | InputMonthRange | `tuiInputMonthRange` | Select the start/end months and assert the TuiMonthRange FormControl |
 | InputDateTime | `tuiInputDateTime` | Change the date and preserve the existing TuiTime in the FormControl |
 | InputYear | `tuiInputYear` | Fill a four-digit year and assert the numeric FormControl |
+| InputRange | `tuiInputRange` | Update two numeric textfields and assert the tuple FormControl |
+| InputChip | `tuiInputChip` | Add and remove a chip and assert the string[] FormControl |
+| InputPin | `tuiInputPin` | Fill a four-digit PIN and assert the form value and four filled visual slots |
 
-**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 85 v4 inventory components and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
+**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 82 v4 inventory components and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
 
 ## v4 component inventory
 
