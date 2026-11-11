@@ -294,7 +294,7 @@ import {
                         <input tuiInputDateRange aria-label="Travel dates" [formControl]="travelDates" />
                         <tui-calendar-range *tuiTextfieldDropdown />
                     </tui-textfield>
-                    <output data-testid="v4-date-range-model">{{ travelDates.value?.from.day }}-{{ travelDates.value?.to.day }}</output>
+                    <output data-testid="v4-date-range-model">{{ travelDates.value?.from?.day }}-{{ travelDates.value?.to?.day }}</output>
                 </section>
                 <section>
                     <h2>InputDateMulti</h2>
