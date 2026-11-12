@@ -21,11 +21,14 @@ import {
     TuiBadge,
     TuiBreadcrumbs,
     TuiBadgeNotification,
+    TuiCalendarMonth,
     TuiCheckbox,
     TuiChip,
     TuiChevron,
     TuiComboBox,
     TuiInputChip,
+    TuiInputColor,
+    TuiInputInline,
     TuiInputPin,
     TuiInputRange,
     TuiInputDate,
@@ -75,6 +78,8 @@ import {
         TuiInputMonthRange,
         TuiInputYear,
         TuiInputChip,
+        TuiInputColor,
+        TuiInputInline,
         TuiInputPin,
         TuiInputRange,
         TuiMultiSelect,
@@ -96,6 +101,7 @@ import {
         TuiComboBox,
         TuiFilterByInputPipe,
         TuiCheckbox,
+        TuiCalendarMonth,
         TuiRating,
         TuiRadioComponent,
         TuiSwitch,
@@ -126,7 +132,7 @@ import {
                 </p>
                 <p class="notice">
                     <strong>Tested controls, not blanket v4 compatibility.</strong>
-                    This demo exercises 41 real Taiga UI controls with the packaged /v4 API
+                    This demo exercises 44 real Taiga UI controls with the packaged /v4 API
                     in Chromium on 4.106.0. Other components and earlier 4.x versions
                     still need their own integration tests.
                 </p>
@@ -369,6 +375,30 @@ import {
                     <output data-testid="v4-input-pin-model">{{ pin.value }}</output>
                 </section>
                 <section>
+                    <h2>CalendarMonth</h2>
+                    <tui-calendar-month
+                        data-testid="v4-calendar-month"
+                        [year]="monthYear"
+                        [value]="selectedCalendarMonth()"
+                        (monthClick)="selectedCalendarMonth.set($event)"
+                    />
+                    <output data-testid="v4-calendar-month-model">{{ selectedCalendarMonth()?.year }}-{{ selectedCalendarMonth()?.month }}</output>
+                </section>
+                <section>
+                    <h2>InputColor</h2>
+                    <tui-textfield data-testid="v4-color-field" iconStart=" ">
+                        <input tuiInputColor aria-label="Theme color" [formControl]="themeColor" />
+                    </tui-textfield>
+                    <output data-testid="v4-color-model">{{ themeColor.value }}</output>
+                </section>
+                <section>
+                    <h2>InputInline</h2>
+                    <tui-input-inline data-testid="v4-inline-field">
+                        <input aria-label="Inline title" [formControl]="inlineTitle" />
+                    </tui-input-inline>
+                    <output data-testid="v4-inline-model">{{ inlineTitle.value }}</output>
+                </section>
+                <section>
                     <h2>MultiSelect</h2>
                     <tui-textfield multi tuiChevron data-testid="v4-multi-field">
                         <input tuiInputChip tuiSelectLike aria-label="Countries" [formControl]="selectedCountries" />
@@ -442,7 +472,7 @@ import {
 })
 export class DemoV4 {
     private readonly dialog = inject(TuiDialogService);
-    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog, tuiAccordion, tuiRating, tuiBreadcrumbs, tuiInputTime, tuiInputPhone, tuiInputSlider, tuiInputDateRange, tuiInputDateMulti, tuiInputMonth, tuiInputMonthRange, tuiInputDateTime, tuiInputYear, tuiInputRange, tuiInputChip, tuiInputPin} from '@taiga-ui-labs/playwright/v4';";
+    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog, tuiAccordion, tuiRating, tuiBreadcrumbs, tuiInputTime, tuiInputPhone, tuiInputSlider, tuiInputDateRange, tuiInputDateMulti, tuiInputMonth, tuiInputMonthRange, tuiInputDateTime, tuiInputYear, tuiInputRange, tuiInputChip, tuiInputPin, tuiInputColor, tuiInputInline, tuiCalendarMonth} from '@taiga-ui-labs/playwright/v4';";
     protected readonly componentInventory = V4_COMPONENTS;
     protected readonly verifiedCount = V4_COMPONENTS.filter((component) => component.verified).length;
     protected readonly countries = ['Austria', 'Estonia'];
@@ -475,6 +505,9 @@ export class DemoV4 {
     protected readonly priceRange = new FormControl<readonly [number, number]>([10, 90], {nonNullable: true});
     protected readonly tags = new FormControl<string[]>(['Angular'], {nonNullable: true});
     protected readonly pin = new FormControl('', {nonNullable: true});
+    protected readonly themeColor = new FormControl('', {nonNullable: true});
+    protected readonly inlineTitle = new FormControl('Before', {nonNullable: true});
+    protected readonly selectedCalendarMonth = signal<TuiMonth | null>(null);
 
     protected get availableDayNumbers(): string {
         return this.availableDays.value.map(({day}) => day).join(',');

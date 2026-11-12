@@ -195,7 +195,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "calendar-month",
         "path": "projects/kit/components/calendar-month",
         "helper": "tuiCalendarMonth",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -314,7 +314,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "input-color",
         "path": "projects/kit/components/input-color",
         "helper": "tuiInputColor",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -349,7 +349,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "input-inline",
         "path": "projects/kit/components/input-inline",
         "helper": "tuiInputInline",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
