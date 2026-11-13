@@ -13,6 +13,7 @@ const {
     tuiInputRange, tuiInputChip, tuiInputPin,
     tuiInputColor, tuiInputInline, tuiCalendarMonth,
     tuiCounter, tuiRadioList, tuiSlider, tuiRange,
+    tuiCalendarRange, tuiSpinButton, tuiPager, tuiDataListWrapper,
 } = await packageApi('./v4');
 
 test('v4 entrypoint exposes the same runtime API as the package root', async () => {
@@ -378,14 +379,51 @@ test('Range adjusts both thumbs and writes the tuple v4 FormControl', async ({pa
     await expect(range.end).toHaveValue('7');
 });
 
+test('CalendarRange selects a real v4 date range and emits the selected days', async ({page}) => {
+    const calendar = tuiCalendarRange(page.getByTestId('v4-standalone-calendar-range'));
+    await calendar.selectRange(10, 12);
+    await expect(page.getByTestId('v4-standalone-calendar-range-model')).toHaveText('10-12');
+});
+
+test('SpinButton handles arrow navigation, clicks and disabled bounds on v4', async ({page}) => {
+    const spin = tuiSpinButton(page.getByTestId('v4-spin-button'));
+    await expect(spin.previous).toHaveClass(/t-button_hidden/);
+    await spin.increase();
+    await expect(page.getByTestId('v4-spin-button-model')).toHaveText('1');
+    await spin.arrowRight();
+    await expect(page.getByTestId('v4-spin-button-model')).toHaveText('2');
+    await expect(spin.next).toHaveClass(/t-button_hidden/);
+    await spin.decrease();
+    await expect(page.getByTestId('v4-spin-button-model')).toHaveText('1');
+});
+
+test('Pager tracks the Angular index and its active visual marker', async ({page}) => {
+    const pager = tuiPager(page.getByTestId('v4-pager'));
+    await pager.expectIndex(0);
+    await page.getByRole('button', {name: 'Next v4 pager page'}).click();
+    await pager.expectIndex(1);
+    await expect(page.getByTestId('v4-pager-model')).toHaveText('1');
+    await page.getByRole('button', {name: 'Previous v4 pager page'}).click();
+    await pager.expectIndex(0);
+});
+
+test('DataListWrapper selects a real v4 option and renders its loading state', async ({page}) => {
+    const list = tuiDataListWrapper(page.getByTestId('v4-data-list-wrapper'));
+    await expect(list.options).toHaveCount(3);
+    await list.selectOption('Blue');
+    await expect(page.getByTestId('v4-data-list-wrapper-model')).toHaveText('Blue');
+    await page.getByRole('button', {name: 'Show v4 wrapper loading'}).click();
+    await list.expectLoading();
+});
+
 test('the same v4 demo documents its verified scope and versioned import', async ({page}) => {
     await page.goto('/');
     await expect(page.getByText('Tested controls, not blanket v4 compatibility.')).toBeVisible();
     await expect(page.locator('pre code')).toContainText('@taiga-ui-labs/playwright/v4');
-    await expect(page.getByRole('heading', {level: 2})).toHaveCount(49);
+    await expect(page.getByRole('heading', {level: 2})).toHaveCount(53);
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
-    await expect(page.locator('[data-verified="true"]')).toHaveCount(48);
+    await expect(page.locator('[data-verified="true"]')).toHaveCount(52);
     await expect(page.locator('[data-v4-component="Kit/checkbox"]')).toContainText('tuiCheckbox');
     await expect(page.getByRole('link', {name: /Back to Taiga UI 5 docs/})).toHaveAttribute('href', '../');
 });

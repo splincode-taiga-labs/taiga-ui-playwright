@@ -118,7 +118,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "spin-button",
         "path": "projects/core/components/spin-button",
         "helper": "tuiSpinButton",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Core",
@@ -202,7 +202,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "calendar-range",
         "path": "projects/kit/components/calendar-range",
         "helper": "tuiCalendarRange",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -265,7 +265,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "data-list-wrapper",
         "path": "projects/kit/components/data-list-wrapper",
         "helper": "tuiDataListWrapper",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -475,7 +475,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "pager",
         "path": "projects/kit/components/pager",
         "helper": "tuiPager",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
