@@ -258,7 +258,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "counter",
         "path": "projects/kit/components/counter",
         "helper": "tuiCounter",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -538,14 +538,14 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "radio-list",
         "path": "projects/kit/components/radio-list",
         "helper": "tuiRadioList",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
         "name": "range",
         "path": "projects/kit/components/range",
         "helper": "tuiRange",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -587,7 +587,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "slider",
         "path": "projects/kit/components/slider",
         "helper": "tuiSlider",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",

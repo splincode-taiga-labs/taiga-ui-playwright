@@ -12,6 +12,7 @@ const {
     tuiInputMonthRange, tuiInputDateTime, tuiInputYear,
     tuiInputRange, tuiInputChip, tuiInputPin,
     tuiInputColor, tuiInputInline, tuiCalendarMonth,
+    tuiCounter, tuiRadioList, tuiSlider, tuiRange,
 } = await packageApi('./v4');
 
 test('v4 entrypoint exposes the same runtime API as the package root', async () => {
@@ -341,14 +342,50 @@ test('CalendarMonth selects a real v4 month and emits monthClick', async ({page}
     await expect(calendar.month(3)).toHaveAttribute('data-range', 'active');
 });
 
+test('Counter increments, disables at max and decrements the v4 FormControl', async ({page}) => {
+    const counter = tuiCounter(page.getByTestId('v4-counter'));
+    await counter.increase();
+    await expect(page.getByTestId('v4-counter-model')).toHaveText('3');
+    await expect(counter.increment).toBeDisabled();
+    await counter.decrease();
+    await expect(page.getByTestId('v4-counter-model')).toHaveText('2');
+    expect(await counter.value()).toBe(2);
+});
+
+test('RadioList selects an option in the v4 Angular FormControl', async ({page}) => {
+    const radioList = tuiRadioList(page.getByTestId('v4-radio-list'));
+    await radioList.select('Express');
+    await expect(page.getByTestId('v4-radio-list-model')).toHaveText('Express');
+    await expect(radioList.option('Standard')).not.toBeChecked();
+});
+
+test('Slider changes the v4 FormControl with keyboard arrows', async ({page}) => {
+    const slider = tuiSlider(page.getByTestId('v4-slider'));
+    await slider.stepRight();
+    await expect(page.getByTestId('v4-slider-model')).toHaveText('5');
+    expect(await slider.value()).toBe(5);
+    await slider.stepLeft();
+    await expect(page.getByTestId('v4-slider-model')).toHaveText('4');
+});
+
+test('Range adjusts both thumbs and writes the tuple v4 FormControl', async ({page}) => {
+    const range = tuiRange(page.getByTestId('v4-range'));
+    await range.stepStartRight();
+    await expect(page.getByTestId('v4-range-model')).toHaveText('3-8');
+    await range.stepEndLeft();
+    await expect(page.getByTestId('v4-range-model')).toHaveText('3-7');
+    await expect(range.start).toHaveValue('3');
+    await expect(range.end).toHaveValue('7');
+});
+
 test('the same v4 demo documents its verified scope and versioned import', async ({page}) => {
     await page.goto('/');
     await expect(page.getByText('Tested controls, not blanket v4 compatibility.')).toBeVisible();
     await expect(page.locator('pre code')).toContainText('@taiga-ui-labs/playwright/v4');
-    await expect(page.getByRole('heading', {level: 2})).toHaveCount(45);
+    await expect(page.getByRole('heading', {level: 2})).toHaveCount(49);
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
-    await expect(page.locator('[data-verified="true"]')).toHaveCount(44);
+    await expect(page.locator('[data-verified="true"]')).toHaveCount(48);
     await expect(page.locator('[data-v4-component="Kit/checkbox"]')).toContainText('tuiCheckbox');
     await expect(page.getByRole('link', {name: /Back to Taiga UI 5 docs/})).toHaveAttribute('href', '../');
 });

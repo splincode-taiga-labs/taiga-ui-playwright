@@ -9,7 +9,7 @@
 - **Easy to read:** `selectOption('Estonia')`, `fill('Tall')`, `select('Details')`.
 - **Ready to explore:** [Browse the component harnesses and examples](https://splincode-taiga-labs.github.io/taiga-ui-playwright/).
 
-> Community-maintained and **unofficial**. The **1.0 public API** preserves 266 named exports. Tested with Angular 20.3 / Taiga UI 5.28; targeted tests for 44 controls also pass with Taiga UI 4.106.0. Other components and versions require validation.
+> Community-maintained and **unofficial**. The **1.0 public API** preserves 266 named exports. Tested with Angular 20.3 / Taiga UI 5.28; targeted tests for 48 controls also pass with Taiga UI 4.106.0. Other components and versions require validation.
 
 ## Install
 
@@ -61,7 +61,7 @@ import {tuiSelect, tuiComboBox} from '@taiga-ui-labs/playwright/v4';
 The demo includes a [source-based v4 component inventory](docs/taiga-v4-inventory.md), separating verified controls from untested and unmapped components. The [single documentation site](https://splincode-taiga-labs.github.io/taiga-ui-playwright/) shows separate v4 TODO coverage and version-specific imports/examples for every mapped harness. The v4 Angular fixture runs in CI only and is not published. See the [v4 test matrix](docs/taiga-v4-coverage.md).
 
 For **Taiga UI 5.x**, continue using the root import `@taiga-ui-labs/playwright`.
-Both entrypoints share the same Locator-first API. The v4 demo workspace tests 44 controls on **Angular 20.3 / Taiga UI 4.106.0**. The `/v4` entrypoint exposes all 266 public API exports, but the remaining harnesses and other 4.x versions are **not yet browser-verified**. Read the [compatibility policy](docs/api-upstream-compatibility.md).
+Both entrypoints share the same Locator-first API. The v4 demo workspace tests 48 controls on **Angular 20.3 / Taiga UI 4.106.0**. The `/v4` entrypoint exposes all 266 public API exports, but the remaining harnesses and other 4.x versions are **not yet browser-verified**. Read the [compatibility policy](docs/api-upstream-compatibility.md).
 
 ## Build and packaging
 
