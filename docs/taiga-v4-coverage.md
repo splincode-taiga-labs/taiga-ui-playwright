@@ -52,8 +52,12 @@ The local v4 Angular fixture runs real Taiga UI v4 controls in CI, and `compatib
 | InputColor | `tuiInputColor` | Enter a HEX color and assert the Angular FormControl |
 | InputInline | `tuiInputInline` | Enter text and assert the FormControl and DOM mirror |
 | CalendarMonth | `tuiCalendarMonth` | Select a month and assert monthClick, rendered selection and Angular signal |
+| Counter | `tuiCounter` | Increase, enforce max and decrease a real numeric FormControl |
+| RadioList | `tuiRadioList` | Select a radio option and assert the string FormControl |
+| Slider | `tuiSlider` | Use keyboard arrows to change a real numeric FormControl |
+| Range | `tuiRange` | Adjust both thumbs by keyboard and assert the tuple FormControl |
 
-**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 79 v4 inventory components and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
+**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 75 v4 inventory components and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
 
 ## v4 component inventory
 

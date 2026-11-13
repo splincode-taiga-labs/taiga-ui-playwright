@@ -22,7 +22,7 @@ export class TuiCounterHarness {
     }
 
     public async value(): Promise<number> {
-        return Number((await this.host.locator('output.t-content').innerText()).trim());
+        return Number((await this.host.locator('.t-content').innerText()).trim());
     }
 }
 
