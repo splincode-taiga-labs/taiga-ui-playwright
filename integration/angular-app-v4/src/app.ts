@@ -6,6 +6,7 @@ import {TuiDay, TuiDayRange, TuiItem, TuiMonth, TuiMonthRange, TuiTime, TuiYear}
 import {
     TuiButton,
     TuiCalendar,
+    TuiSpinButton,
     TuiDialogService,
     TuiExpandComponent,
     TuiLink,
@@ -22,11 +23,13 @@ import {
     TuiBreadcrumbs,
     TuiBadgeNotification,
     TuiCalendarMonth,
+    TuiCalendarRange,
     TuiCheckbox,
     TuiChip,
     TuiChevron,
     TuiComboBox,
     TuiCounter,
+    TuiPager,
     TuiRadioList,
     TuiRange,
     TuiSliderComponent,
@@ -73,6 +76,7 @@ import {
         TuiTextfieldDropdownDirective,
         TuiButton,
         TuiCalendar,
+        TuiSpinButton,
         TuiSelectLike,
         TuiInputDate,
         TuiInputDateMulti,
@@ -82,6 +86,7 @@ import {
         TuiInputMonthRange,
         TuiInputYear,
         TuiCounter,
+        TuiPager,
         TuiRadioList,
         TuiRange,
         TuiSliderComponent,
@@ -110,6 +115,7 @@ import {
         TuiFilterByInputPipe,
         TuiCheckbox,
         TuiCalendarMonth,
+        TuiCalendarRange,
         TuiRating,
         TuiRadioComponent,
         TuiSwitch,
@@ -140,7 +146,7 @@ import {
                 </p>
                 <p class="notice">
                     <strong>Tested controls, not blanket v4 compatibility.</strong>
-                    This demo exercises 48 real Taiga UI controls with the packaged /v4 API
+                    This demo exercises 52 real Taiga UI controls with the packaged /v4 API
                     in Chromium on 4.106.0. Other components and earlier 4.x versions
                     still need their own integration tests.
                 </p>
@@ -446,6 +452,45 @@ import {
                     <output data-testid="v4-range-model">{{ rangeValues.value[0] }}-{{ rangeValues.value[1] }}</output>
                 </section>
                 <section>
+                    <h2>CalendarRange</h2>
+                    <tui-calendar-range
+                        data-testid="v4-standalone-calendar-range"
+                        [defaultViewedMonth]="monthYearForRange"
+                        [value]="standaloneRange()"
+                        (valueChange)="standaloneRange.set($event)"
+                    />
+                    <output data-testid="v4-standalone-calendar-range-model">{{ standaloneRange()?.from?.day }}-{{ standaloneRange()?.to?.day }}</output>
+                </section>
+                <section>
+                    <h2>SpinButton</h2>
+                    <tui-spin-button
+                        data-testid="v4-spin-button"
+                        [leftDisabled]="spinIndex() === 0"
+                        [rightDisabled]="spinIndex() === 2"
+                        (leftClick)="spinIndex.update(value => value - 1)"
+                        (rightClick)="spinIndex.update(value => value + 1)"
+                    >Step {{ spinIndex() }}</tui-spin-button>
+                    <output data-testid="v4-spin-button-model">{{ spinIndex() }}</output>
+                </section>
+                <section>
+                    <h2>Pager</h2>
+                    <tui-pager data-testid="v4-pager" [count]="5" [index]="pagerIndex()" />
+                    <button tuiButton type="button" (click)="pagerIndex.update(value => value + 1)">Next v4 pager page</button>
+                    <button tuiButton type="button" (click)="pagerIndex.update(value => value - 1)">Previous v4 pager page</button>
+                    <output data-testid="v4-pager-model">{{ pagerIndex() }}</output>
+                </section>
+                <section>
+                    <h2>DataListWrapper</h2>
+                    <tui-data-list-wrapper
+                        new
+                        data-testid="v4-data-list-wrapper"
+                        [items]="wrapperItems()"
+                        (itemClick)="chosenWrapperItem.set($event)"
+                    />
+                    <button tuiButton type="button" (click)="wrapperItems.set(null)">Show v4 wrapper loading</button>
+                    <output data-testid="v4-data-list-wrapper-model">{{ chosenWrapperItem() }}</output>
+                </section>
+                <section>
                     <h2>MultiSelect</h2>
                     <tui-textfield multi tuiChevron data-testid="v4-multi-field">
                         <input tuiInputChip tuiSelectLike aria-label="Countries" [formControl]="selectedCountries" />
@@ -519,7 +564,7 @@ import {
 })
 export class DemoV4 {
     private readonly dialog = inject(TuiDialogService);
-    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog, tuiAccordion, tuiRating, tuiBreadcrumbs, tuiInputTime, tuiInputPhone, tuiInputSlider, tuiInputDateRange, tuiInputDateMulti, tuiInputMonth, tuiInputMonthRange, tuiInputDateTime, tuiInputYear, tuiInputRange, tuiInputChip, tuiInputPin, tuiInputColor, tuiInputInline, tuiCalendarMonth, tuiCounter, tuiRadioList, tuiSlider, tuiRange} from '@taiga-ui-labs/playwright/v4';";
+    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog, tuiAccordion, tuiRating, tuiBreadcrumbs, tuiInputTime, tuiInputPhone, tuiInputSlider, tuiInputDateRange, tuiInputDateMulti, tuiInputMonth, tuiInputMonthRange, tuiInputDateTime, tuiInputYear, tuiInputRange, tuiInputChip, tuiInputPin, tuiInputColor, tuiInputInline, tuiCalendarMonth, tuiCounter, tuiRadioList, tuiSlider, tuiRange, tuiCalendarRange, tuiSpinButton, tuiPager, tuiDataListWrapper} from '@taiga-ui-labs/playwright/v4';";
     protected readonly componentInventory = V4_COMPONENTS;
     protected readonly verifiedCount = V4_COMPONENTS.filter((component) => component.verified).length;
     protected readonly countries = ['Austria', 'Estonia'];
@@ -560,6 +605,12 @@ export class DemoV4 {
     protected readonly deliveryOption = new FormControl('Standard', {nonNullable: true});
     protected readonly volume = new FormControl(4, {nonNullable: true});
     protected readonly rangeValues = new FormControl<[number, number]>([2, 8], {nonNullable: true});
+    protected readonly monthYearForRange = new TuiMonth(2026, 0);
+    protected readonly standaloneRange = signal<TuiDayRange | null>(null);
+    protected readonly spinIndex = signal(0);
+    protected readonly pagerIndex = signal(0);
+    protected readonly wrapperItems = signal<readonly string[] | null>(['Red', 'Blue', 'Green']);
+    protected readonly chosenWrapperItem = signal('none');
 
     protected get availableDayNumbers(): string {
         return this.availableDays.value.map(({day}) => day).join(',');

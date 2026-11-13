@@ -56,8 +56,12 @@ The local v4 Angular fixture runs real Taiga UI v4 controls in CI, and `compatib
 | RadioList | `tuiRadioList` | Select a radio option and assert the string FormControl |
 | Slider | `tuiSlider` | Use keyboard arrows to change a real numeric FormControl |
 | Range | `tuiRange` | Adjust both thumbs by keyboard and assert the tuple FormControl |
+| CalendarRange | `tuiCalendarRange` | Select two dates in the standalone range and assert valueChange and DOM selection |
+| SpinButton | `tuiSpinButton` | Navigate by arrows and buttons; assert disabled bounds and Angular signal |
+| Pager | `tuiPager` | Update the active page index and assert the DOM marker |
+| DataListWrapper | `tuiDataListWrapper` | Select an option and verify loading with no options |
 
-**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 75 v4 inventory components and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
+**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 71 v4 inventory components and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
 
 ## v4 component inventory
 
