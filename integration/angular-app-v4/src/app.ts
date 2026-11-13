@@ -467,16 +467,16 @@ import {
                         data-testid="v4-spin-button"
                         [leftDisabled]="spinIndex() === 0"
                         [rightDisabled]="spinIndex() === 2"
-                        (leftClick)="spinIndex.update(value => value - 1)"
-                        (rightClick)="spinIndex.update(value => value + 1)"
+                        (leftClick)="spinIndex.set(spinIndex() - 1)"
+                        (rightClick)="spinIndex.set(spinIndex() + 1)"
                     >Step {{ spinIndex() }}</tui-spin-button>
                     <output data-testid="v4-spin-button-model">{{ spinIndex() }}</output>
                 </section>
                 <section>
                     <h2>Pager</h2>
                     <tui-pager data-testid="v4-pager" [count]="5" [index]="pagerIndex()" />
-                    <button tuiButton type="button" (click)="pagerIndex.update(value => value + 1)">Next v4 pager page</button>
-                    <button tuiButton type="button" (click)="pagerIndex.update(value => value - 1)">Previous v4 pager page</button>
+                    <button tuiButton type="button" (click)="pagerIndex.set(pagerIndex() + 1)">Next v4 pager page</button>
+                    <button tuiButton type="button" (click)="pagerIndex.set(pagerIndex() - 1)">Previous v4 pager page</button>
                     <output data-testid="v4-pager-model">{{ pagerIndex() }}</output>
                 </section>
                 <section>
