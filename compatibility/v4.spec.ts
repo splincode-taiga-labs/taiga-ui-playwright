@@ -362,10 +362,10 @@ test('RadioList selects an option in the v4 Angular FormControl', async ({page})
 test('Slider changes the v4 FormControl with keyboard arrows', async ({page}) => {
     const slider = tuiSlider(page.getByTestId('v4-slider'));
     await slider.stepRight();
-    await expect(page.getByTestId('v4-slider-model')).toHaveText('5');
+    await expect(page.getByTestId('v4-native-slider-model')).toHaveText('5');
     expect(await slider.value()).toBe(5);
     await slider.stepLeft();
-    await expect(page.getByTestId('v4-slider-model')).toHaveText('4');
+    await expect(page.getByTestId('v4-native-slider-model')).toHaveText('4');
 });
 
 test('Range adjusts both thumbs and writes the tuple v4 FormControl', async ({page}) => {

@@ -432,7 +432,7 @@ import {
                         aria-label="Volume slider"
                         [formControl]="volume"
                     />
-                    <output data-testid="v4-slider-model">{{ volume.value }}</output>
+                    <output data-testid="v4-native-slider-model">{{ volume.value }}</output>
                 </section>
                 <section>
                     <h2>Range</h2>
