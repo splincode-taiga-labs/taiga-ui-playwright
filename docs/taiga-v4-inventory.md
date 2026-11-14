@@ -2,7 +2,7 @@
 
 Derived from the [upstream `v4.x` branch](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects), not from the current v5 catalog. This is a snapshot of **123 component directories** in Core, Kit, Mobile, Layout, Table and Commerce. It excludes standalone directives, pipes, legacy and experimental packages. Source directory availability may differ between early and late 4.x releases.
 
-Only **52 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **71** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
+Only **56 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **67** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
 
 A mapped harness indicates a name-based link to the package's public API, **not** that the corresponding v4 DOM contract works. A dash means no unambiguous direct mapping was found.
 
@@ -11,7 +11,7 @@ A mapped harness indicates a name-based link to the package's public API, **not*
 | Core | [`alert`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/alert) | `tuiAlert` | Not verified |
 | Core | [`button`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/button) | `tuiButton` | Verified on 4.106 |
 | Core | [`calendar`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/calendar) | `tuiCalendar` | Verified on 4.106 |
-| Core | [`data-list`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/data-list) | `tuiDataList` | Not verified |
+| Core | [`data-list`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/data-list) | `tuiDataList` | Verified on 4.106 |
 | Core | [`dialog`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/dialog) | `tuiDialog` | Verified on 4.106 |
 | Core | [`error`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/error) | `tuiError` | Not verified |
 | Core | [`expand`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/expand) | `tuiExpand` | Verified on 4.106 |
@@ -22,7 +22,7 @@ A mapped harness indicates a name-based link to the package's public API, **not*
 | Core | [`loader`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/loader) | `tuiLoader` | Verified on 4.106 |
 | Core | [`notification`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/notification) | `tuiNotification` | Not verified |
 | Core | [`root`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/root) | `tuiRoot` | Not verified |
-| Core | [`scrollbar`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/scrollbar) | `tuiScrollbar` | Not verified |
+| Core | [`scrollbar`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/scrollbar) | `tuiScrollbar` | Verified on 4.106 |
 | Core | [`spin-button`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/spin-button) | `tuiSpinButton` | Verified on 4.106 |
 | Core | [`textfield`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/textfield) | `tuiTextfield` | Verified on 4.106 |
 | Kit | [`accordion`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/accordion) | `tuiAccordion` | Verified on 4.106 |
@@ -36,7 +36,7 @@ A mapped harness indicates a name-based link to the package's public API, **not*
 | Kit | [`button-loading`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/button-loading) | `tuiButtonLoading` | Not verified |
 | Kit | [`calendar-month`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/calendar-month) | `tuiCalendarMonth` | Verified on 4.106 |
 | Kit | [`calendar-range`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/calendar-range) | `tuiCalendarRange` | Verified on 4.106 |
-| Kit | [`carousel`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/carousel) | `tuiCarousel` | Not verified |
+| Kit | [`carousel`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/carousel) | `tuiCarousel` | Verified on 4.106 |
 | Kit | [`checkbox`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/checkbox) | `tuiCheckbox` | Verified on 4.106 |
 | Kit | [`chip`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/chip) | `tuiChip` | Verified on 4.106 |
 | Kit | [`combo-box`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/combo-box) | `tuiComboBox` | Verified on 4.106 |
@@ -70,7 +70,7 @@ A mapped harness indicates a name-based link to the package's public API, **not*
 | Kit | [`input-year`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-year) | `tuiInputYear` | Verified on 4.106 |
 | Kit | [`items-with-more`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/items-with-more) | `tuiItemsWithMore` | Not verified |
 | Kit | [`like`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/like) | `tuiLike` | Verified on 4.106 |
-| Kit | [`line-clamp`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/line-clamp) | `tuiLineClamp` | Not verified |
+| Kit | [`line-clamp`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/line-clamp) | `tuiLineClamp` | Verified on 4.106 |
 | Kit | [`message`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/message) | `tuiMessage` | Not verified |
 | Kit | [`multi-select`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/multi-select) | `tuiMultiSelect` | Verified on 4.106 |
 | Kit | [`notification-middle`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/notification-middle) | `tuiNotificationMiddle` | Not verified |

@@ -104,6 +104,13 @@ export class TuiCarouselHarness {
 
     public async moveNext(): Promise<void> {
         await expect(this.host).toBeVisible();
+        const v4Scroller = this.host.locator('.t-scroller');
+        if (await v4Scroller.count()) {
+            // v4 carousel navigates by horizontal wheel rather than native host scroll.
+            await v4Scroller.hover();
+            await this.host.page().mouse.wheel(100, 0);
+            return;
+        }
         await this.host.evaluate((element) =>
             element.scrollTo({left: element.scrollWidth, behavior: 'instant'}),
         );
@@ -121,6 +128,12 @@ export class TuiCarouselHarness {
 
     public async movePrevious(): Promise<void> {
         await expect(this.host).toBeVisible();
+        const v4Scroller = this.host.locator('.t-scroller');
+        if (await v4Scroller.count()) {
+            await v4Scroller.hover();
+            await this.host.page().mouse.wheel(-100, 0);
+            return;
+        }
         await this.host.evaluate((element) => element.scrollTo({left: 0, behavior: 'instant'}));
     }
 }

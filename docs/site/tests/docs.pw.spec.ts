@@ -344,26 +344,28 @@ test('landing separates v5 coverage and v4 TODO without a demo link', async ({pa
     await expect(versions.getByRole('heading', {name: /Taiga UI 5/})).toBeVisible();
     await expect(versions.getByRole('heading', {name: /Taiga UI 4/})).toBeVisible();
     await expect(page.getByTestId('v5-todo')).toHaveText('0 TODO');
-    await expect(page.getByTestId('v4-todo')).toHaveText('71 TODO');
+    await expect(page.getByTestId('v4-todo')).toHaveText('67 TODO');
     await expect(page.getByTestId('coverage-total')).toHaveText('133');
     await expect(page.getByRole('link', {name: 'v4 Demo'})).toHaveCount(0);
     await expect(page.getByRole('link', {name: 'Open interactive v4 demo'})).toHaveCount(0);
 });
 
-test('v4 inventory shows 52 verified entries and 71 TODO', async ({page}) => {
+test('v4 inventory shows 56 verified entries and 67 TODO', async ({page}) => {
     await page.goto('/');
     await page.getByRole('button', {name: 'View v4 matrix'}).click();
     await expect(page.getByTestId('coverage-total')).toHaveText('123');
-    await expect(page.getByTestId('coverage-done')).toHaveText('52');
-    await expect(page.getByTestId('coverage-todo')).toHaveText('71');
-    await expect(page.locator('tr[data-status="done"]')).toHaveCount(52);
-    await expect(page.locator('tr[data-status="todo"]')).toHaveCount(71);
+    await expect(page.getByTestId('coverage-done')).toHaveText('56');
+    await expect(page.getByTestId('coverage-todo')).toHaveText('67');
+    await expect(page.locator('tr[data-status="done"]')).toHaveCount(56);
+    await expect(page.locator('tr[data-status="todo"]')).toHaveCount(67);
     await expect(page.locator('tr[data-harness="v4/kit/input-password"]')).toContainText('TODO');
     await expect(page.locator('tr[data-harness="v4/kit/avatar"]')).toContainText('Verified');
-    for (const name of ['input-date-range', 'input-date-multi', 'input-month', 'input-month-range', 'input-date-time', 'input-year', 'input-range', 'input-chip', 'input-pin', 'input-color', 'input-inline', 'calendar-month', 'counter', 'radio-list', 'slider', 'range', 'calendar-range', 'pager', 'data-list-wrapper']) {
+    for (const name of ['input-date-range', 'input-date-multi', 'input-month', 'input-month-range', 'input-date-time', 'input-year', 'input-range', 'input-chip', 'input-pin', 'input-color', 'input-inline', 'calendar-month', 'counter', 'radio-list', 'slider', 'range', 'calendar-range', 'pager', 'data-list-wrapper', 'carousel', 'line-clamp']) {
         await expect(page.locator('tr[data-harness="v4/kit/' + name + '"]')).toContainText('Verified');
     }
-    await expect(page.locator('tr[data-harness="v4/core/spin-button"]')).toContainText('Verified');
+    for (const name of ['spin-button', 'data-list', 'scrollbar']) {
+        await expect(page.locator('tr[data-harness="v4/core/' + name + '"]')).toContainText('Verified');
+    }
     const link = page.locator('tr[data-harness="v4/kit/avatar"]').getByRole('link', {name: /tuiAvatar/});
     await expect(link).toHaveAttribute('href', /#\/harness\/kit\/avatar\?version=v4$/);
     await link.click();
