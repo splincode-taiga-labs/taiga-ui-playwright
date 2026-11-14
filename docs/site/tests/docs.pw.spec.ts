@@ -344,7 +344,7 @@ test('landing separates v5 coverage and v4 TODO without a demo link', async ({pa
     await expect(versions.getByRole('heading', {name: /Taiga UI 5/})).toBeVisible();
     await expect(versions.getByRole('heading', {name: /Taiga UI 4/})).toBeVisible();
     await expect(page.getByTestId('v5-todo')).toHaveText('0 TODO');
-    await expect(page.getByTestId('v4-todo')).toHaveText('67 TODO');
+    await expect(page.getByTestId('v4-todo')).toHaveText('63 TODO');
     await expect(page.getByTestId('coverage-total')).toHaveText('133');
     await expect(page.getByRole('link', {name: 'v4 Demo'})).toHaveCount(0);
     await expect(page.getByRole('link', {name: 'Open interactive v4 demo'})).toHaveCount(0);
