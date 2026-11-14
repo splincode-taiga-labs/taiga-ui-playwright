@@ -34,7 +34,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "data-list",
         "path": "projects/core/components/data-list",
         "helper": "tuiDataList",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Core",
@@ -111,7 +111,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "scrollbar",
         "path": "projects/core/components/scrollbar",
         "helper": "tuiScrollbar",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Core",
@@ -209,7 +209,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "carousel",
         "path": "projects/kit/components/carousel",
         "helper": "tuiCarousel",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -447,7 +447,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "line-clamp",
         "path": "projects/kit/components/line-clamp",
         "helper": "tuiLineClamp",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",

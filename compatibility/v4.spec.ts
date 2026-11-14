@@ -14,6 +14,7 @@ const {
     tuiInputColor, tuiInputInline, tuiCalendarMonth,
     tuiCounter, tuiRadioList, tuiSlider, tuiRange,
     tuiCalendarRange, tuiSpinButton, tuiPager, tuiDataListWrapper,
+    tuiDataList, tuiScrollbar, tuiCarousel, tuiLineClamp,
 } = await packageApi('./v4');
 
 test('v4 entrypoint exposes the same runtime API as the package root', async () => {
@@ -416,14 +417,54 @@ test('DataListWrapper selects a real v4 option and renders its loading state', a
     await list.expectLoading();
 });
 
+test('DataList navigates by keyboard and selects a real v4 option', async ({page}) => {
+    const list = tuiDataList(page.getByTestId('v4-data-list'));
+    await expect(list.options).toHaveCount(4);
+    await list.focusNext('Alpha', 'Beta');
+    await list.select('Beta');
+    await expect(page.getByTestId('v4-data-list-model')).toHaveText('Beta');
+    await expect(list.option('Disabled')).toBeDisabled();
+});
+
+test('Scrollbar scrolls its actual v4 host to both ends', async ({page}) => {
+    const scrollbar = tuiScrollbar(page.getByTestId('v4-scrollbar'));
+    expect(await scrollbar.scrollOffset()).toBe(0);
+    await scrollbar.scrollToBottom();
+    await expect(page.getByTestId('v4-scrollbar-bottom')).toBeInViewport();
+    expect(await scrollbar.scrollOffset()).toBeGreaterThan(0);
+    await scrollbar.scrollToTop();
+    expect(await scrollbar.scrollOffset()).toBe(0);
+});
+
+test('Carousel changes the v4 Angular index on horizontal wheel navigation', async ({page}) => {
+    const carousel = tuiCarousel(page.getByTestId('v4-carousel'));
+    await expect(carousel.slide('Alpha slide')).toBeEnabled();
+    await carousel.moveNext();
+    await expect(page.getByTestId('v4-carousel-model')).toHaveText('1');
+    await expect(carousel.slide('Beta slide')).toBeEnabled();
+    await carousel.movePrevious();
+    await expect(page.getByTestId('v4-carousel-model')).toHaveText('0');
+});
+
+test('LineClamp changes visible height while retaining real v4 text', async ({page}) => {
+    const clamp = tuiLineClamp(page.getByTestId('v4-line-clamp'));
+    await clamp.expectLines(1);
+    const before = await clamp.maxHeight();
+    await page.getByRole('button', {name: 'Expand v4 line clamp to 3 lines'}).click();
+    await clamp.expectLines(3);
+    expect(await clamp.maxHeight()).toBeGreaterThan(before);
+    await expect(clamp.content).toContainText('The full text remains present');
+    await expect(page.getByTestId('v4-line-clamp-model')).toHaveText('3');
+});
+
 test('the same v4 demo documents its verified scope and versioned import', async ({page}) => {
     await page.goto('/');
     await expect(page.getByText('Tested controls, not blanket v4 compatibility.')).toBeVisible();
     await expect(page.locator('pre code')).toContainText('@taiga-ui-labs/playwright/v4');
-    await expect(page.getByRole('heading', {level: 2})).toHaveCount(53);
+    await expect(page.getByRole('heading', {level: 2})).toHaveCount(57);
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
-    await expect(page.locator('[data-verified="true"]')).toHaveCount(52);
+    await expect(page.locator('[data-verified="true"]')).toHaveCount(56);
     await expect(page.locator('[data-v4-component="Kit/checkbox"]')).toContainText('tuiCheckbox');
     await expect(page.getByRole('link', {name: /Back to Taiga UI 5 docs/})).toHaveAttribute('href', '../');
 });

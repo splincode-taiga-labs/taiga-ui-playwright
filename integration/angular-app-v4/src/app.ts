@@ -6,6 +6,8 @@ import {TuiDay, TuiDayRange, TuiItem, TuiMonth, TuiMonthRange, TuiTime, TuiYear}
 import {
     TuiButton,
     TuiCalendar,
+    TuiDataList,
+    TuiScrollbar,
     TuiSpinButton,
     TuiDialogService,
     TuiExpandComponent,
@@ -23,6 +25,8 @@ import {
     TuiBreadcrumbs,
     TuiBadgeNotification,
     TuiCalendarMonth,
+    TuiCarousel,
+    TuiLineClamp,
     TuiCalendarRange,
     TuiCheckbox,
     TuiChip,
@@ -76,6 +80,8 @@ import {
         TuiTextfieldDropdownDirective,
         TuiButton,
         TuiCalendar,
+        TuiDataList,
+        TuiScrollbar,
         TuiSpinButton,
         TuiSelectLike,
         TuiInputDate,
@@ -115,6 +121,8 @@ import {
         TuiFilterByInputPipe,
         TuiCheckbox,
         TuiCalendarMonth,
+        TuiCarousel,
+        TuiLineClamp,
         TuiCalendarRange,
         TuiRating,
         TuiRadioComponent,
@@ -146,7 +154,7 @@ import {
                 </p>
                 <p class="notice">
                     <strong>Tested controls, not blanket v4 compatibility.</strong>
-                    This demo exercises 52 real Taiga UI controls with the packaged /v4 API
+                    This demo exercises 56 real Taiga UI controls with the packaged /v4 API
                     in Chromium on 4.106.0. Other components and earlier 4.x versions
                     still need their own integration tests.
                 </p>
@@ -491,6 +499,53 @@ import {
                     <output data-testid="v4-data-list-wrapper-model">{{ chosenWrapperItem() }}</output>
                 </section>
                 <section>
+                    <h2>DataList</h2>
+                    <tui-data-list data-testid="v4-data-list" size="s">
+                        <button tuiOption type="button" (click)="chosenDataListItem.set('Alpha')">Alpha</button>
+                        <button tuiOption type="button" (click)="chosenDataListItem.set('Beta')">Beta</button>
+                        <button tuiOption type="button" [disabled]="true">Disabled</button>
+                        <button tuiOption type="button" (click)="chosenDataListItem.set('Gamma')">Gamma</button>
+                    </tui-data-list>
+                    <output data-testid="v4-data-list-model">{{ chosenDataListItem() }}</output>
+                </section>
+                <section>
+                    <h2>Scrollbar</h2>
+                    <tui-scrollbar data-testid="v4-scrollbar" style="display:flex;height:120px;width:280px;border:1px solid #ccc">
+                        <div style="min-height:540px">
+                            <p>Scrollable beginning</p>
+                            <div style="height:430px"></div>
+                            <p data-testid="v4-scrollbar-bottom">Scrollable end</p>
+                        </div>
+                    </tui-scrollbar>
+                </section>
+                <section>
+                    <h2>Carousel</h2>
+                    <div style="width:280px">
+                        <tui-carousel
+                            data-testid="v4-carousel"
+                            [duration]="100000"
+                            [index]="carouselSlide()"
+                            (indexChange)="carouselSlide.set($event)"
+                        >
+                            <div *tuiItem style="height:110px">Alpha slide</div>
+                            <div *tuiItem style="height:110px">Beta slide</div>
+                            <div *tuiItem style="height:110px">Gamma slide</div>
+                        </tui-carousel>
+                    </div>
+                    <output data-testid="v4-carousel-model">{{ carouselSlide() }}</output>
+                </section>
+                <section>
+                    <h2>LineClamp</h2>
+                    <tui-line-clamp
+                        data-testid="v4-line-clamp"
+                        [content]="clampedText"
+                        [lineHeight]="20"
+                        [linesLimit]="clampLines()"
+                    />
+                    <button tuiButton type="button" (click)="clampLines.set(3)">Expand v4 line clamp to 3 lines</button>
+                    <output data-testid="v4-line-clamp-model">{{ clampLines() }}</output>
+                </section>
+                <section>
                     <h2>MultiSelect</h2>
                     <tui-textfield multi tuiChevron data-testid="v4-multi-field">
                         <input tuiInputChip tuiSelectLike aria-label="Countries" [formControl]="selectedCountries" />
@@ -564,7 +619,7 @@ import {
 })
 export class DemoV4 {
     private readonly dialog = inject(TuiDialogService);
-    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog, tuiAccordion, tuiRating, tuiBreadcrumbs, tuiInputTime, tuiInputPhone, tuiInputSlider, tuiInputDateRange, tuiInputDateMulti, tuiInputMonth, tuiInputMonthRange, tuiInputDateTime, tuiInputYear, tuiInputRange, tuiInputChip, tuiInputPin, tuiInputColor, tuiInputInline, tuiCalendarMonth, tuiCounter, tuiRadioList, tuiSlider, tuiRange, tuiCalendarRange, tuiSpinButton, tuiPager, tuiDataListWrapper} from '@taiga-ui-labs/playwright/v4';";
+    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog, tuiAccordion, tuiRating, tuiBreadcrumbs, tuiInputTime, tuiInputPhone, tuiInputSlider, tuiInputDateRange, tuiInputDateMulti, tuiInputMonth, tuiInputMonthRange, tuiInputDateTime, tuiInputYear, tuiInputRange, tuiInputChip, tuiInputPin, tuiInputColor, tuiInputInline, tuiCalendarMonth, tuiCounter, tuiRadioList, tuiSlider, tuiRange, tuiCalendarRange, tuiSpinButton, tuiPager, tuiDataListWrapper, tuiDataList, tuiScrollbar, tuiCarousel, tuiLineClamp} from '@taiga-ui-labs/playwright/v4';";
     protected readonly componentInventory = V4_COMPONENTS;
     protected readonly verifiedCount = V4_COMPONENTS.filter((component) => component.verified).length;
     protected readonly countries = ['Austria', 'Estonia'];
@@ -611,6 +666,10 @@ export class DemoV4 {
     protected readonly pagerIndex = signal(0);
     protected readonly wrapperItems = signal<readonly string[] | null>(['Red', 'Blue', 'Green']);
     protected readonly chosenWrapperItem = signal('none');
+    protected readonly chosenDataListItem = signal('none');
+    protected readonly carouselSlide = signal(0);
+    protected readonly clampLines = signal(1);
+    protected readonly clampedText = 'The full text remains present even when it is visually clamped. '.repeat(8);
 
     protected get availableDayNumbers(): string {
         return this.availableDays.value.map(({day}) => day).join(',');

@@ -102,8 +102,36 @@ export class TuiCarouselHarness {
         return this.host.locator('.t-item').filter({hasText: label});
     }
 
+    /** v4 throttles horizontal wheel by 500ms; retry only until the active slide changes. */
+    private async moveV4(direction: -1 | 1): Promise<void> {
+        const slides = this.host.locator('fieldset.t-item');
+        const active = async (): Promise<number> => slides.evaluateAll((nodes) =>
+            nodes.findIndex((node) => !(node as HTMLFieldSetElement).disabled),
+        );
+        const initial = await active();
+        const target = Math.max(0, Math.min(initial + direction, await slides.count() - 1));
+
+        if (target === initial) {
+            return;
+        }
+
+        await this.host.locator('.t-scroller').hover();
+        await expect.poll(async () => {
+            const current = await active();
+            if (current !== target) {
+                await this.host.page().mouse.wheel(direction * 100, 0);
+            }
+            return current;
+        }, {intervals: [150, 250, 400], timeout: 5000}).toBe(target);
+    }
+
     public async moveNext(): Promise<void> {
         await expect(this.host).toBeVisible();
+        const v4Scroller = this.host.locator('.t-scroller');
+        if (await v4Scroller.count()) {
+            await this.moveV4(1);
+            return;
+        }
         await this.host.evaluate((element) =>
             element.scrollTo({left: element.scrollWidth, behavior: 'instant'}),
         );
@@ -121,6 +149,11 @@ export class TuiCarouselHarness {
 
     public async movePrevious(): Promise<void> {
         await expect(this.host).toBeVisible();
+        const v4Scroller = this.host.locator('.t-scroller');
+        if (await v4Scroller.count()) {
+            await this.moveV4(-1);
+            return;
+        }
         await this.host.evaluate((element) => element.scrollTo({left: 0, behavior: 'instant'}));
     }
 }
