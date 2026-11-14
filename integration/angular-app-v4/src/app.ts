@@ -10,6 +10,7 @@ import {
     TuiScrollbar,
     TuiSpinButton,
     TuiDialogService,
+    TuiError,
     TuiExpandComponent,
     TuiLink,
     TuiLoader,
@@ -22,6 +23,9 @@ import {
     TuiAccordion,
     TuiAvatar,
     TuiBadge,
+    TuiBlock,
+    TuiFilter,
+    TuiPulse,
     TuiBreadcrumbs,
     TuiBadgeNotification,
     TuiCalendarMonth,
@@ -79,6 +83,7 @@ import {
         TuiTextfield,
         TuiTextfieldDropdownDirective,
         TuiButton,
+        TuiError,
         TuiCalendar,
         TuiDataList,
         TuiScrollbar,
@@ -108,6 +113,9 @@ import {
         TuiAccordion,
         TuiAvatar,
         TuiBadge,
+        TuiBlock,
+        TuiFilter,
+        TuiPulse,
         TuiBreadcrumbs,
         TuiBadgeNotification,
         TuiChip,
@@ -154,7 +162,7 @@ import {
                 </p>
                 <p class="notice">
                     <strong>Tested controls, not blanket v4 compatibility.</strong>
-                    This demo exercises 56 real Taiga UI controls with the packaged /v4 API
+                    This demo exercises 60 real Taiga UI controls with the packaged /v4 API
                     in Chromium on 4.106.0. Other components and earlier 4.x versions
                     still need their own integration tests.
                 </p>
@@ -546,6 +554,39 @@ import {
                     <output data-testid="v4-line-clamp-model">{{ clampLines() }}</output>
                 </section>
                 <section>
+                    <h2>Error</h2>
+                    <tui-error data-testid="v4-error" [error]="errorMessage()" />
+                    <button tuiButton type="button" (click)="errorMessage.set('Required field')">Show v4 error</button>
+                    <button tuiButton type="button" (click)="errorMessage.set(null)">Clear v4 error</button>
+                    <output data-testid="v4-error-model">{{ errorMessage() ?? 'none' }}</output>
+                </section>
+                <section>
+                    <h2>Filter</h2>
+                    <tui-filter
+                        data-testid="v4-filter"
+                        size="s"
+                        [items]="filterOptions"
+                        [disabledItemHandler]="filterDisabled"
+                        [formControl]="activeFilters"
+                    />
+                    <output data-testid="v4-filter-model">{{ activeFilters.value.join(',') }}</output>
+                </section>
+                <section>
+                    <h2>Block</h2>
+                    <label tuiBlock="m" data-testid="v4-block">
+                        <input tuiCheckbox type="checkbox" [formControl]="blockChecked" />
+                        Receive updates
+                    </label>
+                    <button tuiButton type="button" (click)="blockChecked.disable()">Disable v4 block</button>
+                    <output data-testid="v4-block-model">{{ blockChecked.value }}</output>
+                </section>
+                <section>
+                    <h2>Pulse</h2>
+                    <tui-pulse data-testid="v4-pulse" [playing]="pulsePlaying()" />
+                    <button tuiButton type="button" (click)="pulsePlaying.set(!pulsePlaying())">Toggle v4 pulse</button>
+                    <output data-testid="v4-pulse-model">{{ pulsePlaying() }}</output>
+                </section>
+                <section>
                     <h2>MultiSelect</h2>
                     <tui-textfield multi tuiChevron data-testid="v4-multi-field">
                         <input tuiInputChip tuiSelectLike aria-label="Countries" [formControl]="selectedCountries" />
@@ -619,7 +660,7 @@ import {
 })
 export class DemoV4 {
     private readonly dialog = inject(TuiDialogService);
-    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog, tuiAccordion, tuiRating, tuiBreadcrumbs, tuiInputTime, tuiInputPhone, tuiInputSlider, tuiInputDateRange, tuiInputDateMulti, tuiInputMonth, tuiInputMonthRange, tuiInputDateTime, tuiInputYear, tuiInputRange, tuiInputChip, tuiInputPin, tuiInputColor, tuiInputInline, tuiCalendarMonth, tuiCounter, tuiRadioList, tuiSlider, tuiRange, tuiCalendarRange, tuiSpinButton, tuiPager, tuiDataListWrapper, tuiDataList, tuiScrollbar, tuiCarousel, tuiLineClamp} from '@taiga-ui-labs/playwright/v4';";
+    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog, tuiAccordion, tuiRating, tuiBreadcrumbs, tuiInputTime, tuiInputPhone, tuiInputSlider, tuiInputDateRange, tuiInputDateMulti, tuiInputMonth, tuiInputMonthRange, tuiInputDateTime, tuiInputYear, tuiInputRange, tuiInputChip, tuiInputPin, tuiInputColor, tuiInputInline, tuiCalendarMonth, tuiCounter, tuiRadioList, tuiSlider, tuiRange, tuiCalendarRange, tuiSpinButton, tuiPager, tuiDataListWrapper, tuiDataList, tuiScrollbar, tuiCarousel, tuiLineClamp, tuiError, tuiFilter, tuiBlock, tuiPulse} from '@taiga-ui-labs/playwright/v4';";
     protected readonly componentInventory = V4_COMPONENTS;
     protected readonly verifiedCount = V4_COMPONENTS.filter((component) => component.verified).length;
     protected readonly countries = ['Austria', 'Estonia'];
@@ -670,6 +711,12 @@ export class DemoV4 {
     protected readonly carouselSlide = signal(0);
     protected readonly clampLines = signal(1);
     protected readonly clampedText = 'The full text remains present even when it is visually clamped. '.repeat(8);
+    protected readonly errorMessage = signal<string | null>(null);
+    protected readonly filterOptions = ['News', 'Tech', 'Furniture'];
+    protected readonly filterDisabled = (item: string): boolean => item === 'Furniture';
+    protected readonly activeFilters = new FormControl<string[]>(['News'], {nonNullable: true});
+    protected readonly blockChecked = new FormControl(false, {nonNullable: true});
+    protected readonly pulsePlaying = signal(true);
 
     protected get availableDayNumbers(): string {
         return this.availableDays.value.map(({day}) => day).join(',');

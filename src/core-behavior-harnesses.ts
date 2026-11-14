@@ -4,7 +4,7 @@ export class TuiErrorHarness {
     public constructor(public readonly host: Locator) {}
 
     public get message(): Locator {
-        return this.host.locator('.t-content');
+        return this.host.locator('.t-content, .t-message-text');
     }
 
     public async expectError(message: string): Promise<void> {

@@ -15,6 +15,7 @@ const {
     tuiCounter, tuiRadioList, tuiSlider, tuiRange,
     tuiCalendarRange, tuiSpinButton, tuiPager, tuiDataListWrapper,
     tuiDataList, tuiScrollbar, tuiCarousel, tuiLineClamp,
+    tuiError, tuiFilter, tuiBlock, tuiPulse,
 } = await packageApi('./v4');
 
 test('v4 entrypoint exposes the same runtime API as the package root', async () => {
@@ -457,14 +458,55 @@ test('LineClamp changes visible height while retaining real v4 text', async ({pa
     await expect(page.getByTestId('v4-line-clamp-model')).toHaveText('3');
 });
 
+test('Error shows and clears the v4 validation message and Angular signal', async ({page}) => {
+    const error = tuiError(page.getByTestId('v4-error'));
+    await error.expectCleared();
+    await page.getByRole('button', {name: 'Show v4 error'}).click();
+    await error.expectError('Required field');
+    await expect(page.getByTestId('v4-error-model')).toHaveText('Required field');
+    await page.getByRole('button', {name: 'Clear v4 error'}).click();
+    await error.expectCleared();
+    await expect(page.getByTestId('v4-error-model')).toHaveText('none');
+});
+
+test('Filter changes real v4 selection and respects disabled options', async ({page}) => {
+    const filter = tuiFilter(page.getByTestId('v4-filter'));
+    await filter.expectSize('s');
+    await expect(filter.checkbox('News')).toBeChecked();
+    await filter.setChecked('Tech', true);
+    await expect(page.getByTestId('v4-filter-model')).toHaveText('News,Tech');
+    await filter.setChecked('News', false);
+    await expect(page.getByTestId('v4-filter-model')).toHaveText('Tech');
+    await expect(filter.checkbox('Furniture')).toBeDisabled();
+});
+
+test('Block checks real v4 form value and reflects disabled state', async ({page}) => {
+    const block = tuiBlock(page.getByTestId('v4-block'));
+    await block.expectSize('m');
+    await block.setChecked(true);
+    await expect(page.getByTestId('v4-block-model')).toHaveText('true');
+    await page.getByRole('button', {name: 'Disable v4 block'}).click();
+    await block.expectDisabled();
+});
+
+test('Pulse updates playing state in the real v4 component', async ({page}) => {
+    const pulse = tuiPulse(page.getByTestId('v4-pulse'));
+    await pulse.expectPlaying(true);
+    await page.getByRole('button', {name: 'Toggle v4 pulse'}).click();
+    await pulse.expectPlaying(false);
+    await expect(page.getByTestId('v4-pulse-model')).toHaveText('false');
+    await page.getByRole('button', {name: 'Toggle v4 pulse'}).click();
+    await pulse.expectPlaying(true);
+});
+
 test('the same v4 demo documents its verified scope and versioned import', async ({page}) => {
     await page.goto('/');
     await expect(page.getByText('Tested controls, not blanket v4 compatibility.')).toBeVisible();
     await expect(page.locator('pre code')).toContainText('@taiga-ui-labs/playwright/v4');
-    await expect(page.getByRole('heading', {level: 2})).toHaveCount(57);
+    await expect(page.getByRole('heading', {level: 2})).toHaveCount(61);
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
-    await expect(page.locator('[data-verified="true"]')).toHaveCount(56);
+    await expect(page.locator('[data-verified="true"]')).toHaveCount(60);
     await expect(page.locator('[data-v4-component="Kit/checkbox"]')).toContainText('tuiCheckbox');
     await expect(page.getByRole('link', {name: /Back to Taiga UI 5 docs/})).toHaveAttribute('href', '../');
 });
