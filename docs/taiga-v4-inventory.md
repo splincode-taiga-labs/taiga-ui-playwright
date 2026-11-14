@@ -2,7 +2,7 @@
 
 Derived from the [upstream `v4.x` branch](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects), not from the current v5 catalog. This is a snapshot of **123 component directories** in Core, Kit, Mobile, Layout, Table and Commerce. It excludes standalone directives, pipes, legacy and experimental packages. Source directory availability may differ between early and late 4.x releases.
 
-Only **56 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **67** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
+Only **60 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **63** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
 
 A mapped harness indicates a name-based link to the package's public API, **not** that the corresponding v4 DOM contract works. A dash means no unambiguous direct mapping was found.
 
@@ -13,7 +13,7 @@ A mapped harness indicates a name-based link to the package's public API, **not*
 | Core | [`calendar`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/calendar) | `tuiCalendar` | Verified on 4.106 |
 | Core | [`data-list`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/data-list) | `tuiDataList` | Verified on 4.106 |
 | Core | [`dialog`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/dialog) | `tuiDialog` | Verified on 4.106 |
-| Core | [`error`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/error) | `tuiError` | Not verified |
+| Core | [`error`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/error) | `tuiError` | Verified on 4.106 |
 | Core | [`expand`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/expand) | `tuiExpand` | Verified on 4.106 |
 | Core | [`fullscreen`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/fullscreen) | `tuiFullscreen` | Not verified |
 | Core | [`icon`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/icon) | `tuiIcon` | Not verified |
@@ -31,7 +31,7 @@ A mapped harness indicates a name-based link to the package's public API, **not*
 | Kit | [`badge`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/badge) | `tuiBadge` | Verified on 4.106 |
 | Kit | [`badge-notification`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/badge-notification) | `tuiBadgeNotification` | Verified on 4.106 |
 | Kit | [`badged-content`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/badged-content) | `tuiBadgedContent` | Not verified |
-| Kit | [`block`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/block) | `tuiBlock` | Not verified |
+| Kit | [`block`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/block) | `tuiBlock` | Verified on 4.106 |
 | Kit | [`breadcrumbs`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/breadcrumbs) | `tuiBreadcrumbs` | Verified on 4.106 |
 | Kit | [`button-loading`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/button-loading) | `tuiButtonLoading` | Not verified |
 | Kit | [`calendar-month`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/calendar-month) | `tuiCalendarMonth` | Verified on 4.106 |
@@ -48,7 +48,7 @@ A mapped harness indicates a name-based link to the package's public API, **not*
 | Kit | [`drawer`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/drawer) | `tuiDrawer` | Not verified |
 | Kit | [`elastic-container`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/elastic-container) | `tuiElasticContainer` | Not verified |
 | Kit | [`files`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/files) | `tuiFiles` | Not verified |
-| Kit | [`filter`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/filter) | `tuiFilter` | Not verified |
+| Kit | [`filter`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/filter) | `tuiFilter` | Verified on 4.106 |
 | Kit | [`floating-container`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/floating-container) | `tuiFloatingContainer` | Not verified |
 | Kit | [`input-chip`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-chip) | `tuiInputChip` | Verified on 4.106 |
 | Kit | [`input-color`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/input-color) | `tuiInputColor` | Verified on 4.106 |
@@ -80,7 +80,7 @@ A mapped harness indicates a name-based link to the package's public API, **not*
 | Kit | [`pin`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/pin) | `tuiPin` | Not verified |
 | Kit | [`preview`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/preview) | `tuiPreview` | Not verified |
 | Kit | [`progress`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/progress) | `tuiProgress` | Verified on 4.106 |
-| Kit | [`pulse`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/pulse) | `tuiPulse` | Not verified |
+| Kit | [`pulse`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/pulse) | `tuiPulse` | Verified on 4.106 |
 | Kit | [`push`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/push) | `tuiPush` | Not verified |
 | Kit | [`radio`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/radio) | `tuiRadio` | Verified on 4.106 |
 | Kit | [`radio-list`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/radio-list) | `tuiRadioList` | Verified on 4.106 |

@@ -48,7 +48,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "error",
         "path": "projects/core/components/error",
         "helper": "tuiError",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Core",
@@ -174,7 +174,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "block",
         "path": "projects/kit/components/block",
         "helper": "tuiBlock",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -293,7 +293,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "filter",
         "path": "projects/kit/components/filter",
         "helper": "tuiFilter",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -517,7 +517,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "pulse",
         "path": "projects/kit/components/pulse",
         "helper": "tuiPulse",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
