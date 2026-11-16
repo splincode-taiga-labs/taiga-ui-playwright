@@ -51,6 +51,8 @@ import {
     TuiPin,
     TuiSlides,
     TuiShrinkWrap,
+    TuiElasticContainer,
+    TuiFloatingContainer,
     TuiPager,
     TuiRadioList,
     TuiRange,
@@ -119,6 +121,8 @@ import {
         TuiPin,
         TuiSlides,
         TuiShrinkWrap,
+        TuiElasticContainer,
+        TuiFloatingContainer,
         TuiPager,
         TuiRadioList,
         TuiRange,
@@ -670,6 +674,22 @@ import {
                     <div tuiComment="top" data-testid="v4-comment">A note from the author</div>
                 </section>
                 <section>
+                    <h2>ElasticContainer</h2>
+                    <tui-elastic-container data-testid="v4-elastic-container">
+                        <div [style.height.px]="v4ElasticHeight()" style="width: 100%">Resizable content</div>
+                    </tui-elastic-container>
+                    <button tuiButton type="button" (click)="v4ElasticHeight.set(120)">Grow v4 elastic container</button>
+                    <output data-testid="v4-elastic-model">{{ v4ElasticHeight() }}</output>
+                </section>
+                <section>
+                    <h2>FloatingContainer</h2>
+                    <div data-testid="v4-floating-container" [tuiFloatingContainer]="v4FloatingBackground()">
+                        Floating content
+                    </div>
+                    <button tuiButton type="button" (click)="v4FloatingBackground.set('rgb(0, 128, 0)')">Change v4 floating background</button>
+                    <output data-testid="v4-floating-model">{{ v4FloatingBackground() }}</output>
+                </section>
+                <section>
                     <h2>ShrinkWrap</h2>
                     <div [style.width.px]="v4WrapWidth()">
                         <div [tuiShrinkWrap]="v4WrapWidth() + 'px'" data-testid="v4-shrink-wrap">Constrained content</div>
@@ -875,6 +895,8 @@ export class DemoV4 {
     protected readonly v4SlideDirection = signal(0);
     protected readonly v4SlideTitle = signal('First slide');
     protected readonly v4WrapWidth = signal(200);
+    protected readonly v4ElasticHeight = signal(40);
+    protected readonly v4FloatingBackground = signal('rgb(128, 0, 0)');
 
     protected get availableDayNumbers(): string {
         return this.availableDays.value.map(({day}) => day).join(',');
