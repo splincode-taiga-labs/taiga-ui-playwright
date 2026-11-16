@@ -69,14 +69,14 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "icon",
         "path": "projects/core/components/icon",
         "helper": "tuiIcon",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Core",
         "name": "label",
         "path": "projects/core/components/label",
         "helper": "tuiLabel",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Core",
@@ -286,7 +286,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "files",
         "path": "projects/kit/components/files",
         "helper": "tuiFiles",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -650,7 +650,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "tree",
         "path": "projects/kit/components/tree",
         "helper": "tuiTree",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Mobile",

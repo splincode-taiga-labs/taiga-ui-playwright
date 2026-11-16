@@ -10,13 +10,13 @@ export class TuiIconHarness {
         }
         await expect(this.host).toBeVisible();
         await expect.poll(() => this.host.evaluate((node) =>
-            getComputedStyle(node).getPropertyValue('--t-icon-start').trim(),
+            (getComputedStyle(node).getPropertyValue('--t-icon').trim() || getComputedStyle(node).getPropertyValue('--t-icon-start').trim()),
         )).toContain('/' + name + '.svg');
     }
 
     public async iconUrl(): Promise<string> {
         const value = await this.host.evaluate((node) =>
-            getComputedStyle(node).getPropertyValue('--t-icon-start').trim(),
+            (getComputedStyle(node).getPropertyValue('--t-icon').trim() || getComputedStyle(node).getPropertyValue('--t-icon-start').trim()),
         );
         const match = value.match(/^url\(["']?([^"')]+)["']?\)$/);
         if (!match?.[1]) {
