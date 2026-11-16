@@ -672,7 +672,7 @@ import {
                 <section>
                     <h2>ShrinkWrap</h2>
                     <div [style.width.px]="v4WrapWidth()">
-                        <div tuiShrinkWrap data-testid="v4-shrink-wrap">Constrained content</div>
+                        <div [tuiShrinkWrap]="v4WrapWidth() + 'px'" data-testid="v4-shrink-wrap">Constrained content</div>
                     </div>
                     <button tuiButton type="button" (click)="v4WrapWidth.set(300)">Expand v4 shrink wrap parent</button>
                     <output data-testid="v4-shrink-wrap-model">{{ v4WrapWidth() }}</output>
