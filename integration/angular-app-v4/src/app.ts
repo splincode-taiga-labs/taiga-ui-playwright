@@ -665,7 +665,7 @@ import {
                 </section>
                 <section>
                     <h2>Comment</h2>
-                    <div tuiComment data-testid="v4-comment">A note from the author</div>
+                    <div tuiComment="top" data-testid="v4-comment">A note from the author</div>
                 </section>
                 <section>
                     <h2>Pin</h2>
