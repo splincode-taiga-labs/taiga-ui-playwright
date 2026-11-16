@@ -43,6 +43,17 @@ test('Select updates FormControl via a v4 dropdown', async ({page}) => {
     await expect(page.getByTestId('country-model')).toHaveText('Estonia');
 });
 
+test('Select can change the selected option without retaining stale v4 form state', async ({page}) => {
+    const select = tuiSelect(page.getByTestId('country-field'));
+
+    await select.selectOption('Estonia');
+    await expect(page.getByTestId('country-model')).toHaveText('Estonia');
+
+    await select.selectOption('Austria');
+    await expect(page.getByTestId('country-model')).toHaveText('Austria');
+    await expect(select.input).toHaveValue('Austria');
+});
+
 test('ComboBox updates FormControl via a v4 dropdown', async ({page}) => {
     const combo = tuiComboBox(page.getByTestId('city-field'));
     await combo.fill('Tall');
@@ -57,6 +68,16 @@ test('Checkbox updates a real v4 Angular form control', async ({page}) => {
     await checkbox.check();
     await expect(page.getByTestId('checkbox-model')).toHaveText('true');
     await checkbox.uncheck();
+    await expect(page.getByTestId('checkbox-model')).toHaveText('false');
+});
+
+test('Checkbox supports keyboard toggling while keeping the v4 form value in sync', async ({page}) => {
+    const checkbox = tuiCheckbox(page.getByTestId('checkbox'));
+    await checkbox.host.focus();
+    await page.keyboard.press('Space');
+    await expect(page.getByTestId('checkbox-model')).toHaveText('true');
+
+    await page.keyboard.press('Space');
     await expect(page.getByTestId('checkbox-model')).toHaveText('false');
 });
 
@@ -208,6 +229,24 @@ test('Dialog closes through its v4-specific close control', async ({page}) => {
     await page.getByRole('button', {name: 'Open v4 dialog'}).click();
     const dialog = tuiDialog(page.locator('tui-dialog'));
     await dialog.close();
+    await expect(page.getByTestId('v4-dialog-model')).toHaveText('closed');
+});
+
+test('Dialog can reopen after being closed in the same v4 Angular session', async ({page}) => {
+    const open = page.getByRole('button', {name: 'Open v4 dialog'});
+    const dialog = tuiDialog(page.locator('tui-dialog'));
+
+    await open.click();
+    await dialog.clickButton('Confirm');
+    await expect(dialog.host).toBeHidden();
+    await expect(page.getByTestId('v4-dialog-model')).toHaveText('closed');
+
+    await open.click();
+    await expect(dialog.title).toHaveText('V4 confirmation');
+    await expect(page.getByTestId('v4-dialog-model')).toHaveText('pending');
+
+    await dialog.close();
+    await expect(dialog.host).toBeHidden();
     await expect(page.getByTestId('v4-dialog-model')).toHaveText('closed');
 });
 
