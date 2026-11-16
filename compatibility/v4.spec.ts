@@ -18,6 +18,7 @@ const {
     tuiError, tuiFilter, tuiBlock, tuiPulse,
     tuiNotification, tuiBadgedContent, tuiButtonLoading, tuiStatus,
     tuiIcon, tuiLabel, tuiFiles, tuiTree, tuiComment, tuiMessage, tuiRoot, tuiCompass,
+    tuiPin, tuiSlides,
 } = await packageApi('./v4');
 
 test('v4 entrypoint exposes the same runtime API as the package root', async () => {
@@ -569,6 +570,26 @@ test('Comment renders its default direction on the real v4 directive', async ({p
     await expect(comment.host).toContainText('A note from the author');
 });
 
+test('Pin toggles its real v4 open class through Angular state', async ({page}) => {
+    const pin = tuiPin(page.getByTestId('v4-pin'));
+    await pin.expectOpen(false);
+    await page.getByRole('button', {name: 'Toggle v4 pin'}).click();
+    await pin.expectOpen(true);
+    await expect(page.getByTestId('v4-pin-model')).toHaveText('true');
+    await page.getByRole('button', {name: 'Toggle v4 pin'}).click();
+    await pin.expectOpen(false);
+});
+
+test('Slides responds to its v4 direction input and projected slide text', async ({page}) => {
+    const slides = tuiSlides(page.getByTestId('v4-slides'));
+    await slides.expectDirection(0);
+    await slides.expectSlide('First slide');
+    await page.getByRole('button', {name: 'Next v4 slide'}).click();
+    await slides.expectDirection(1);
+    await slides.expectSlide('Second slide');
+    await expect(page.getByTestId('v4-slides-model')).toHaveText('Second slide');
+});
+
 test('Compass responds to Angular signal input on real v4 component', async ({page}) => {
     const compass = tuiCompass(page.getByTestId('v4-compass'));
     await compass.expectDegrees(45);
@@ -607,7 +628,7 @@ test('the same v4 demo documents its verified scope and versioned import', async
     await page.goto('/');
     await expect(page.getByText('Tested controls, not blanket v4 compatibility.')).toBeVisible();
     await expect(page.locator('pre code')).toContainText('@taiga-ui-labs/playwright/v4');
-    await expect(page.getByRole('heading', {level: 2})).toHaveCount(72);
+    await expect(page.getByRole('heading', {level: 2})).toHaveCount(74);
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
     await expect(page.locator('[data-verified="true"]')).toHaveCount(68);
