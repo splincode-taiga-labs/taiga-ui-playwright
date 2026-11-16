@@ -50,6 +50,7 @@ import {
     TuiCompass,
     TuiPin,
     TuiSlides,
+    TuiShrinkWrap,
     TuiPager,
     TuiRadioList,
     TuiRange,
@@ -117,6 +118,7 @@ import {
         TuiCompass,
         TuiPin,
         TuiSlides,
+        TuiShrinkWrap,
         TuiPager,
         TuiRadioList,
         TuiRange,
@@ -668,6 +670,14 @@ import {
                     <div tuiComment="top" data-testid="v4-comment">A note from the author</div>
                 </section>
                 <section>
+                    <h2>ShrinkWrap</h2>
+                    <div [style.width.px]="v4WrapWidth()">
+                        <div tuiShrinkWrap data-testid="v4-shrink-wrap">Constrained content</div>
+                    </div>
+                    <button tuiButton type="button" (click)="v4WrapWidth.set(300)">Expand v4 shrink wrap parent</button>
+                    <output data-testid="v4-shrink-wrap-model">{{ v4WrapWidth() }}</output>
+                </section>
+                <section>
                     <h2>Pin</h2>
                     <tui-pin data-testid="v4-pin" [open]="v4PinOpen()" />
                     <button tuiButton type="button" (click)="v4PinOpen.set(!v4PinOpen())">Toggle v4 pin</button>
@@ -864,6 +874,7 @@ export class DemoV4 {
     protected readonly v4PinOpen = signal(false);
     protected readonly v4SlideDirection = signal(0);
     protected readonly v4SlideTitle = signal('First slide');
+    protected readonly v4WrapWidth = signal(200);
 
     protected get availableDayNumbers(): string {
         return this.availableDays.value.map(({day}) => day).join(',');
