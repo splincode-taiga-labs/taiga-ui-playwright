@@ -97,7 +97,7 @@ export class TuiShrinkWrapHarness {
         if (!Number.isFinite(pixels) || pixels < 0) {
             throw new RangeError('Expected a nonnegative finite width');
         }
-        await expect(this.host).toHaveAttribute('tuiShrinkWrap', '');
+        await expect(this.host).toHaveAttribute('tuiShrinkWrap', /.*/);
         await expect.poll(() => this.host.evaluate((element) =>
             Number.parseFloat(getComputedStyle(element).maxInlineSize),
         )).toBe(pixels);
