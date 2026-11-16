@@ -17,7 +17,7 @@ const {
     tuiDataList, tuiScrollbar, tuiCarousel, tuiLineClamp,
     tuiError, tuiFilter, tuiBlock, tuiPulse,
     tuiNotification, tuiBadgedContent, tuiButtonLoading, tuiStatus,
-    tuiIcon, tuiLabel, tuiFiles, tuiTree, tuiComment, tuiMessage, tuiRoot,
+    tuiIcon, tuiLabel, tuiFiles, tuiTree, tuiComment, tuiMessage, tuiRoot, tuiCompass,
 } = await packageApi('./v4');
 
 test('v4 entrypoint exposes the same runtime API as the package root', async () => {
@@ -569,6 +569,14 @@ test('Comment renders its default direction on the real v4 directive', async ({p
     await expect(comment.host).toContainText('A note from the author');
 });
 
+test('Compass responds to Angular signal input on real v4 component', async ({page}) => {
+    const compass = tuiCompass(page.getByTestId('v4-compass'));
+    await compass.expectDegrees(45);
+    await page.getByRole('button', {name: 'Rotate v4 compass'}).click();
+    await compass.expectDegrees(180);
+    await expect(page.getByTestId('v4-compass-model')).toHaveText('180');
+});
+
 test('Message updates projected text on the real v4 directive', async ({page}) => {
     const message = tuiMessage(page.getByTestId('v4-message'));
     await message.expectMessage('First message');
@@ -599,7 +607,7 @@ test('the same v4 demo documents its verified scope and versioned import', async
     await page.goto('/');
     await expect(page.getByText('Tested controls, not blanket v4 compatibility.')).toBeVisible();
     await expect(page.locator('pre code')).toContainText('@taiga-ui-labs/playwright/v4');
-    await expect(page.getByRole('heading', {level: 2})).toHaveCount(71);
+    await expect(page.getByRole('heading', {level: 2})).toHaveCount(72);
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
     await expect(page.locator('[data-verified="true"]')).toHaveCount(68);
