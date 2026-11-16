@@ -19,6 +19,7 @@ const {
     tuiNotification, tuiBadgedContent, tuiButtonLoading, tuiStatus,
     tuiIcon, tuiLabel, tuiFiles, tuiTree, tuiComment, tuiMessage, tuiRoot, tuiCompass,
     tuiPin, tuiSlides, tuiShrinkWrap, tuiElasticContainer, tuiFloatingContainer,
+    tuiActionBar,
 } = await packageApi('./v4');
 
 test('v4 entrypoint exposes the same runtime API as the package root', async () => {
@@ -609,6 +610,18 @@ test('Comment renders its default direction on the real v4 directive', async ({p
     await expect(comment.host).toContainText('A note from the author');
 });
 
+test('ActionBar toggles its real v4 expand panel and executes projected actions', async ({page}) => {
+    const bar = tuiActionBar(page.getByTestId('v4-action-bar'));
+    await bar.expectSize('m');
+    await bar.expectExpanded(false);
+    await bar.clickAction('Approve v4 selection');
+    await expect(page.getByTestId('v4-action-bar-model')).toHaveText('1');
+    await page.getByRole('button', {name: 'Toggle v4 action bar'}).click();
+    await bar.expectExpanded(true);
+    await page.getByRole('button', {name: 'Toggle v4 action bar'}).click();
+    await bar.expectExpanded(false);
+});
+
 test('ElasticContainer expands when its real v4 projected content grows', async ({page}) => {
     const elastic = tuiElasticContainer(page.getByTestId('v4-elastic-container'));
     const initial = await elastic.getHeight();
@@ -692,7 +705,7 @@ test('the same v4 demo documents its verified scope and versioned import', async
     await page.goto('/');
     await expect(page.getByText('Tested controls, not blanket v4 compatibility.')).toBeVisible();
     await expect(page.locator('pre code')).toContainText('@taiga-ui-labs/playwright/v4');
-    await expect(page.getByRole('heading', {level: 2})).toHaveCount(77);
+    await expect(page.getByRole('heading', {level: 2})).toHaveCount(78);
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
     await expect(page.locator('[data-verified="true"]')).toHaveCount(68);
