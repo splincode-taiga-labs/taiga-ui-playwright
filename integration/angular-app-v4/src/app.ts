@@ -765,7 +765,7 @@ export class DemoV4 {
     protected readonly blockChecked = new FormControl(false, {nonNullable: true});
     protected readonly pulsePlaying = signal(true);
     protected readonly notificationAppearance = signal('info');
-    protected readonly notificationSize = signal('s');
+    protected readonly notificationSize = signal<'s' | 'm' | 'l'>('s');
     protected readonly topBadgeCount = signal(2);
     protected readonly bottomBadgeVisible = signal(true);
     protected readonly buttonLoading = signal(true);
