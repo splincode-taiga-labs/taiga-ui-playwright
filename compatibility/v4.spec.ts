@@ -16,6 +16,7 @@ const {
     tuiCalendarRange, tuiSpinButton, tuiPager, tuiDataListWrapper,
     tuiDataList, tuiScrollbar, tuiCarousel, tuiLineClamp,
     tuiError, tuiFilter, tuiBlock, tuiPulse,
+    tuiNotification, tuiBadgedContent, tuiButtonLoading, tuiStatus,
 } = await packageApi('./v4');
 
 test('v4 entrypoint exposes the same runtime API as the package root', async () => {
@@ -499,14 +500,51 @@ test('Pulse updates playing state in the real v4 component', async ({page}) => {
     await pulse.expectPlaying(true);
 });
 
+test('Notification changes real v4 appearance and size', async ({page}) => {
+    const notification = tuiNotification(page.getByTestId('v4-notification'));
+    await notification.expectState('info', 's');
+    await page.getByRole('button', {name: 'Change v4 notification'}).click();
+    await notification.expectState('warning', 'l');
+    await expect(notification.host).toContainText('Updates are available');
+});
+
+test('BadgedContent updates its top badge and removes the bottom slot on v4', async ({page}) => {
+    const badged = tuiBadgedContent(page.getByTestId('v4-badged-content'));
+    await badged.expectBadge('top', '2');
+    await badged.expectBadge('bottom', '5');
+    await page.getByRole('button', {name: 'Update v4 top badge'}).click();
+    await badged.expectBadge('top', '7');
+    await page.getByRole('button', {name: 'Hide v4 bottom badge'}).click();
+    await badged.expectBadgeAbsent('bottom');
+    await badged.expectBadge('top', '7');
+});
+
+test('ButtonLoading blocks v4 clicks while loading, then allows a click', async ({page}) => {
+    const button = tuiButtonLoading(page.getByTestId('v4-button-loading'));
+    await button.expectLoading();
+    await button.host.click({force: true});
+    await expect(page.getByTestId('v4-button-loading-model')).toHaveText('0');
+    await page.getByRole('button', {name: 'Finish v4 loading'}).click();
+    await button.click();
+    await expect(page.getByTestId('v4-button-loading-model')).toHaveText('1');
+});
+
+test('Status updates the real v4 CSS custom property from an Angular signal', async ({page}) => {
+    const status = tuiStatus(page.getByTestId('v4-status'));
+    await status.expectColor('#007a00');
+    await page.getByRole('button', {name: 'Set v4 status red'}).click();
+    await status.expectColor('#aa0000');
+    await expect(page.getByTestId('v4-status-model')).toHaveText('#aa0000');
+});
+
 test('the same v4 demo documents its verified scope and versioned import', async ({page}) => {
     await page.goto('/');
     await expect(page.getByText('Tested controls, not blanket v4 compatibility.')).toBeVisible();
     await expect(page.locator('pre code')).toContainText('@taiga-ui-labs/playwright/v4');
-    await expect(page.getByRole('heading', {level: 2})).toHaveCount(61);
+    await expect(page.getByRole('heading', {level: 2})).toHaveCount(65);
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
-    await expect(page.locator('[data-verified="true"]')).toHaveCount(60);
+    await expect(page.locator('[data-verified="true"]')).toHaveCount(64);
     await expect(page.locator('[data-v4-component="Kit/checkbox"]')).toContainText('tuiCheckbox');
     await expect(page.getByRole('link', {name: /Back to Taiga UI 5 docs/})).toHaveAttribute('href', '../');
 });

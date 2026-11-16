@@ -2,7 +2,7 @@
 
 Derived from the [upstream `v4.x` branch](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects), not from the current v5 catalog. This is a snapshot of **123 component directories** in Core, Kit, Mobile, Layout, Table and Commerce. It excludes standalone directives, pipes, legacy and experimental packages. Source directory availability may differ between early and late 4.x releases.
 
-Only **60 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **63** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
+Only **64 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **59** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
 
 A mapped harness indicates a name-based link to the package's public API, **not** that the corresponding v4 DOM contract works. A dash means no unambiguous direct mapping was found.
 
@@ -20,7 +20,7 @@ A mapped harness indicates a name-based link to the package's public API, **not*
 | Core | [`label`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/label) | `tuiLabel` | Not verified |
 | Core | [`link`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/link) | `tuiLink` | Verified on 4.106 |
 | Core | [`loader`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/loader) | `tuiLoader` | Verified on 4.106 |
-| Core | [`notification`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/notification) | `tuiNotification` | Not verified |
+| Core | [`notification`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/notification) | `tuiNotification` | Verified on 4.106 |
 | Core | [`root`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/root) | `tuiRoot` | Not verified |
 | Core | [`scrollbar`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/scrollbar) | `tuiScrollbar` | Verified on 4.106 |
 | Core | [`spin-button`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/spin-button) | `tuiSpinButton` | Verified on 4.106 |
@@ -30,10 +30,10 @@ A mapped harness indicates a name-based link to the package's public API, **not*
 | Kit | [`avatar`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/avatar) | `tuiAvatar` | Verified on 4.106 |
 | Kit | [`badge`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/badge) | `tuiBadge` | Verified on 4.106 |
 | Kit | [`badge-notification`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/badge-notification) | `tuiBadgeNotification` | Verified on 4.106 |
-| Kit | [`badged-content`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/badged-content) | `tuiBadgedContent` | Not verified |
+| Kit | [`badged-content`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/badged-content) | `tuiBadgedContent` | Verified on 4.106 |
 | Kit | [`block`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/block) | `tuiBlock` | Verified on 4.106 |
 | Kit | [`breadcrumbs`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/breadcrumbs) | `tuiBreadcrumbs` | Verified on 4.106 |
-| Kit | [`button-loading`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/button-loading) | `tuiButtonLoading` | Not verified |
+| Kit | [`button-loading`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/button-loading) | `tuiButtonLoading` | Verified on 4.106 |
 | Kit | [`calendar-month`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/calendar-month) | `tuiCalendarMonth` | Verified on 4.106 |
 | Kit | [`calendar-range`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/calendar-range) | `tuiCalendarRange` | Verified on 4.106 |
 | Kit | [`carousel`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/carousel) | `tuiCarousel` | Verified on 4.106 |
@@ -92,7 +92,7 @@ A mapped harness indicates a name-based link to the package's public API, **not*
 | Kit | [`shrink-wrap`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/shrink-wrap) | `tuiShrinkWrap` | Not verified |
 | Kit | [`slider`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/slider) | `tuiSlider` | Verified on 4.106 |
 | Kit | [`slides`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/slides) | `tuiSlides` | Not verified |
-| Kit | [`status`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/status) | `tuiStatus` | Not verified |
+| Kit | [`status`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/status) | `tuiStatus` | Verified on 4.106 |
 | Kit | [`stepper`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/stepper) | `tuiStepper` | Verified on 4.106 |
 | Kit | [`switch`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/switch) | `tuiSwitch` | Verified on 4.106 |
 | Kit | [`tabs`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/tabs) | `tuiTabs` | Verified on 4.106 |
