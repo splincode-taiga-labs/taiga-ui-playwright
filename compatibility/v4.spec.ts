@@ -17,7 +17,8 @@ const {
     tuiDataList, tuiScrollbar, tuiCarousel, tuiLineClamp,
     tuiError, tuiFilter, tuiBlock, tuiPulse,
     tuiNotification, tuiBadgedContent, tuiButtonLoading, tuiStatus,
-    tuiIcon, tuiLabel, tuiFiles, tuiTree,
+    tuiIcon, tuiLabel, tuiFiles, tuiTree, tuiComment, tuiMessage, tuiRoot, tuiCompass,
+    tuiPin, tuiSlides, tuiShrinkWrap, tuiElasticContainer, tuiFloatingContainer,
 } = await packageApi('./v4');
 
 test('v4 entrypoint exposes the same runtime API as the package root', async () => {
@@ -596,6 +597,78 @@ test('Label associates the native input and updates its v4 Angular form', async 
     await expect(page.getByTestId('v4-label-model')).toHaveText('Ada');
 });
 
+test('Root bootstraps content and popup portals in the real v4 Angular fixture', async ({page}) => {
+    const root = tuiRoot(page.locator('tui-root'));
+    await root.expectBootstrapped();
+    await expect(root.host).toHaveAttribute('tuiRootV', /^4\./);
+});
+
+test('Comment renders its default direction on the real v4 directive', async ({page}) => {
+    const comment = tuiComment(page.getByTestId('v4-comment'));
+    await comment.expectDirection('top');
+    await expect(comment.host).toContainText('A note from the author');
+});
+
+test('ElasticContainer expands when its real v4 projected content grows', async ({page}) => {
+    const elastic = tuiElasticContainer(page.getByTestId('v4-elastic-container'));
+    const initial = await elastic.getHeight();
+    expect(initial).toBeGreaterThan(0);
+    await page.getByRole('button', {name: 'Grow v4 elastic container'}).click();
+    await elastic.expectHeightGreaterThan(initial);
+    await expect(page.getByTestId('v4-elastic-model')).toHaveText('120');
+});
+
+test('FloatingContainer updates its real v4 CSS background input', async ({page}) => {
+    const floating = tuiFloatingContainer(page.getByTestId('v4-floating-container'));
+    await floating.expectBackground('rgb(128, 0, 0)');
+    await page.getByRole('button', {name: 'Change v4 floating background'}).click();
+    await floating.expectBackground('rgb(0, 128, 0)');
+    await expect(page.getByTestId('v4-floating-model')).toHaveText('rgb(0, 128, 0)');
+});
+
+test('ShrinkWrap responds to the real v4 containing block width', async ({page}) => {
+    const wrap = tuiShrinkWrap(page.getByTestId('v4-shrink-wrap'));
+    await wrap.expectMaxInlineSize(200);
+    await page.getByRole('button', {name: 'Expand v4 shrink wrap parent'}).click();
+    await wrap.expectMaxInlineSize(300);
+    await expect(page.getByTestId('v4-shrink-wrap-model')).toHaveText('300');
+});
+
+test('Pin toggles its real v4 open class through Angular state', async ({page}) => {
+    const pin = tuiPin(page.getByTestId('v4-pin'));
+    await pin.expectOpen(false);
+    await page.getByRole('button', {name: 'Toggle v4 pin'}).click();
+    await pin.expectOpen(true);
+    await expect(page.getByTestId('v4-pin-model')).toHaveText('true');
+    await page.getByRole('button', {name: 'Toggle v4 pin'}).click();
+    await pin.expectOpen(false);
+});
+
+test('Slides responds to its v4 direction input and projected slide text', async ({page}) => {
+    const slides = tuiSlides(page.getByTestId('v4-slides'));
+    await slides.expectDirection(0);
+    await slides.expectSlide('First slide');
+    await page.getByRole('button', {name: 'Next v4 slide'}).click();
+    await slides.expectDirection(1);
+    await slides.expectSlide('Second slide');
+    await expect(page.getByTestId('v4-slides-model')).toHaveText('Second slide');
+});
+
+test('Compass responds to Angular signal input on real v4 component', async ({page}) => {
+    const compass = tuiCompass(page.getByTestId('v4-compass'));
+    await compass.expectDegrees(45);
+    await page.getByRole('button', {name: 'Rotate v4 compass'}).click();
+    await compass.expectDegrees(180);
+    await expect(page.getByTestId('v4-compass-model')).toHaveText('180');
+});
+
+test('Message updates projected text on the real v4 directive', async ({page}) => {
+    const message = tuiMessage(page.getByTestId('v4-message'));
+    await message.expectMessage('First message');
+    await page.getByRole('button', {name: 'Update v4 message'}).click();
+    await message.expectMessage('Updated message');
+});
+
 test('Files reveals additional real v4 file components', async ({page}) => {
     const files = tuiFiles(page.getByTestId('v4-files'));
     await files.expectFile('Alpha');
@@ -619,7 +692,7 @@ test('the same v4 demo documents its verified scope and versioned import', async
     await page.goto('/');
     await expect(page.getByText('Tested controls, not blanket v4 compatibility.')).toBeVisible();
     await expect(page.locator('pre code')).toContainText('@taiga-ui-labs/playwright/v4');
-    await expect(page.getByRole('heading', {level: 2})).toHaveCount(69);
+    await expect(page.getByRole('heading', {level: 2})).toHaveCount(77);
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
     await expect(page.locator('[data-verified="true"]')).toHaveCount(68);

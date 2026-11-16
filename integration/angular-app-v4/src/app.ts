@@ -45,6 +45,14 @@ import {
     TuiChevron,
     TuiComboBox,
     TuiCounter,
+    TuiComment,
+    TuiMessage,
+    TuiCompass,
+    TuiPin,
+    TuiSlides,
+    TuiShrinkWrap,
+    TuiElasticContainer,
+    TuiFloatingContainer,
     TuiPager,
     TuiRadioList,
     TuiRange,
@@ -107,6 +115,14 @@ import {
         TuiInputMonthRange,
         TuiInputYear,
         TuiCounter,
+        TuiComment,
+        TuiMessage,
+        TuiCompass,
+        TuiPin,
+        TuiSlides,
+        TuiShrinkWrap,
+        TuiElasticContainer,
+        TuiFloatingContainer,
         TuiPager,
         TuiRadioList,
         TuiRange,
@@ -654,6 +670,59 @@ import {
                     <output data-testid="v4-label-model">{{ v4LabelValue.value }}</output>
                 </section>
                 <section>
+                    <h2>Comment</h2>
+                    <div tuiComment="top" data-testid="v4-comment">A note from the author</div>
+                </section>
+                <section>
+                    <h2>ElasticContainer</h2>
+                    <tui-elastic-container data-testid="v4-elastic-container">
+                        <div [style.height.px]="v4ElasticHeight()" style="width: 100%">Resizable content</div>
+                    </tui-elastic-container>
+                    <button tuiButton type="button" (click)="v4ElasticHeight.set(120)">Grow v4 elastic container</button>
+                    <output data-testid="v4-elastic-model">{{ v4ElasticHeight() }}</output>
+                </section>
+                <section>
+                    <h2>FloatingContainer</h2>
+                    <div data-testid="v4-floating-container" [tuiFloatingContainer]="v4FloatingBackground()">
+                        Floating content
+                    </div>
+                    <button tuiButton type="button" (click)="v4FloatingBackground.set('rgb(0, 128, 0)')">Change v4 floating background</button>
+                    <output data-testid="v4-floating-model">{{ v4FloatingBackground() }}</output>
+                </section>
+                <section>
+                    <h2>ShrinkWrap</h2>
+                    <div [style.width.px]="v4WrapWidth()">
+                        <div [tuiShrinkWrap]="v4WrapWidth() + 'px'" data-testid="v4-shrink-wrap">Constrained content</div>
+                    </div>
+                    <button tuiButton type="button" (click)="v4WrapWidth.set(300)">Expand v4 shrink wrap parent</button>
+                    <output data-testid="v4-shrink-wrap-model">{{ v4WrapWidth() }}</output>
+                </section>
+                <section>
+                    <h2>Pin</h2>
+                    <tui-pin data-testid="v4-pin" [open]="v4PinOpen()" />
+                    <button tuiButton type="button" (click)="v4PinOpen.set(!v4PinOpen())">Toggle v4 pin</button>
+                    <output data-testid="v4-pin-model">{{ v4PinOpen() }}</output>
+                </section>
+                <section>
+                    <h2>Slides</h2>
+                    <div data-testid="v4-slides" [tuiSlides]="v4SlideDirection()">
+                        <span>{{ v4SlideTitle() }}</span>
+                    </div>
+                    <button tuiButton type="button" (click)="nextV4Slide()">Next v4 slide</button>
+                    <output data-testid="v4-slides-model">{{ v4SlideTitle() }}</output>
+                </section>
+                <section>
+                    <h2>Compass</h2>
+                    <tui-compass data-testid="v4-compass" [degrees]="v4CompassDegrees()" />
+                    <button tuiButton type="button" (click)="v4CompassDegrees.set(180)">Rotate v4 compass</button>
+                    <output data-testid="v4-compass-model">{{ v4CompassDegrees() }}</output>
+                </section>
+                <section>
+                    <h2>Message</h2>
+                    <div tuiMessage data-testid="v4-message">{{ v4Message() }}</div>
+                    <button tuiButton type="button" (click)="v4Message.set('Updated message')">Update v4 message</button>
+                </section>
+                <section>
                     <h2>Files</h2>
                     <tui-files data-testid="v4-files" [max]="1">
                         <tui-file *tuiItem [file]="fileAlpha" />
@@ -820,6 +889,14 @@ export class DemoV4 {
     protected readonly fileBeta = {name: 'Beta'};
     protected readonly fileGamma = {name: 'Gamma'};
     protected readonly v4TreeShowDocs = signal(true);
+    protected readonly v4Message = signal('First message');
+    protected readonly v4CompassDegrees = signal(45);
+    protected readonly v4PinOpen = signal(false);
+    protected readonly v4SlideDirection = signal(0);
+    protected readonly v4SlideTitle = signal('First slide');
+    protected readonly v4WrapWidth = signal(200);
+    protected readonly v4ElasticHeight = signal(40);
+    protected readonly v4FloatingBackground = signal('rgb(128, 0, 0)');
 
     protected get availableDayNumbers(): string {
         return this.availableDays.value.map(({day}) => day).join(',');
@@ -844,6 +921,11 @@ export class DemoV4 {
             label: 'V4 confirmation',
             data: {button: 'Confirm'},
         }).subscribe({complete: () => this.dialogResult.set('closed')});
+    }
+
+    protected nextV4Slide(): void {
+        this.v4SlideTitle.set('Second slide');
+        this.v4SlideDirection.set(1);
     }
 
     protected save(): void {

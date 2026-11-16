@@ -12,7 +12,8 @@ export class TuiRootHarness {
 export class TuiCommentHarness {
     public constructor(public readonly host: Locator) {}
     public async expectDirection(direction: string): Promise<void> {
-        await expect(this.host).toHaveAttribute('tuiComment', '');
+        const input = await this.host.getAttribute('tuiComment');
+        expect([direction, '']).toContain(input);
         await expect(this.host).toHaveAttribute('data-direction', direction);
     }
 }
