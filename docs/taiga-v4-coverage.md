@@ -68,8 +68,12 @@ The local v4 Angular fixture runs real Taiga UI v4 controls in CI, and `compatib
 | Filter | `tuiFilter` | Toggle checkboxes, verify the FormControl array and disabled item |
 | Block | `tuiBlock` | Toggle a checkbox, assert Angular FormControl, size and disabled state |
 | Pulse | `tuiPulse` | Toggle playing state and assert the real v4 CSS class and signal |
+| Notification | `tuiNotification` | Change appearance and size on a real notification element |
+| BadgedContent | `tuiBadgedContent` | Update top and remove bottom badge through Angular signals |
+| ButtonLoading | `tuiButtonLoading` | Prevent click while loading and accept click after loading ends |
+| Status | `tuiStatus` | Update the status custom CSS property from an Angular signal |
 
-**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 63 v4 inventory components and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
+**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 59 v4 inventory components and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
 
 ## v4 component inventory
 

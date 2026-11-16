@@ -97,7 +97,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "notification",
         "path": "projects/core/components/notification",
         "helper": "tuiNotification",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Core",
@@ -167,7 +167,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "badged-content",
         "path": "projects/kit/components/badged-content",
         "helper": "tuiBadgedContent",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -188,7 +188,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "button-loading",
         "path": "projects/kit/components/button-loading",
         "helper": "tuiButtonLoading",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -601,7 +601,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "status",
         "path": "projects/kit/components/status",
         "helper": "tuiStatus",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",

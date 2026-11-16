@@ -5,7 +5,11 @@ export class TuiNotificationHarness {
 
     public async expectState(appearance: string, size: string): Promise<void> {
         await expect(this.host).toBeVisible();
-        await expect(this.host).toHaveAttribute('tuiNotification', '');
+        const tagName = await this.host.evaluate((element) => element.tagName.toLowerCase());
+        // v4 exposes a <tui-notification> element; v5 uses the tuiNotification directive.
+        if (tagName !== 'tui-notification') {
+            await expect(this.host).toHaveAttribute('tuiNotification', '');
+        }
         await expect(this.host).toHaveAttribute('data-appearance', appearance);
         await expect(this.host).toHaveAttribute('data-size', size);
     }

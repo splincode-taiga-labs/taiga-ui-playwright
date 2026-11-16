@@ -14,6 +14,7 @@ import {
     TuiExpandComponent,
     TuiLink,
     TuiLoader,
+    TuiNotification,
     TuiRoot,
     TuiSelectLike,
     TuiTextfield,
@@ -28,6 +29,9 @@ import {
     TuiPulse,
     TuiBreadcrumbs,
     TuiBadgeNotification,
+    TuiBadgedContent,
+    TuiButtonLoading,
+    TuiStatus,
     TuiCalendarMonth,
     TuiCarousel,
     TuiLineClamp,
@@ -109,6 +113,7 @@ import {
         TuiMultiSelect,
         TuiLink,
         TuiLoader,
+        TuiNotification,
         TuiExpandComponent,
         TuiAccordion,
         TuiAvatar,
@@ -118,6 +123,9 @@ import {
         TuiPulse,
         TuiBreadcrumbs,
         TuiBadgeNotification,
+        TuiBadgedContent,
+        TuiButtonLoading,
+        TuiStatus,
         TuiChip,
         TuiItem,
         TuiLike,
@@ -162,7 +170,7 @@ import {
                 </p>
                 <p class="notice">
                     <strong>Tested controls, not blanket v4 compatibility.</strong>
-                    This demo exercises 60 real Taiga UI controls with the packaged /v4 API
+                    This demo exercises 64 real Taiga UI controls with the packaged /v4 API
                     in Chromium on 4.106.0. Other components and earlier 4.x versions
                     still need their own integration tests.
                 </p>
@@ -587,6 +595,45 @@ import {
                     <output data-testid="v4-pulse-model">{{ pulsePlaying() }}</output>
                 </section>
                 <section>
+                    <h2>Notification</h2>
+                    <tui-notification
+                        data-testid="v4-notification"
+                        [appearance]="notificationAppearance()"
+                        [size]="notificationSize()"
+                    >Updates are available</tui-notification>
+                    <button tuiButton type="button" (click)="notificationAppearance.set('warning'); notificationSize.set('l')">Change v4 notification</button>
+                </section>
+                <section>
+                    <h2>BadgedContent</h2>
+                    <tui-badged-content data-testid="v4-badged-content">
+                        <tui-badge-notification tuiSlot="top">{{ topBadgeCount() }}</tui-badge-notification>
+                        <tui-avatar size="s" src="AB" />
+                        @if (bottomBadgeVisible()) {
+                            <tui-badge-notification tuiSlot="bottom">5</tui-badge-notification>
+                        }
+                    </tui-badged-content>
+                    <button tuiButton type="button" (click)="topBadgeCount.set(7)">Update v4 top badge</button>
+                    <button tuiButton type="button" (click)="bottomBadgeVisible.set(false)">Hide v4 bottom badge</button>
+                </section>
+                <section>
+                    <h2>ButtonLoading</h2>
+                    <button
+                        tuiButton
+                        type="button"
+                        data-testid="v4-button-loading"
+                        [loading]="buttonLoading()"
+                        (click)="buttonClicked.set(buttonClicked() + 1)"
+                    >Save changes</button>
+                    <button tuiButton type="button" (click)="buttonLoading.set(false)">Finish v4 loading</button>
+                    <output data-testid="v4-button-loading-model">{{ buttonClicked() }}</output>
+                </section>
+                <section>
+                    <h2>Status</h2>
+                    <span tuiStatus data-testid="v4-status" [tuiStatus]="statusColor()">Healthy service</span>
+                    <button tuiButton type="button" (click)="statusColor.set('#aa0000')">Set v4 status red</button>
+                    <output data-testid="v4-status-model">{{ statusColor() }}</output>
+                </section>
+                <section>
                     <h2>MultiSelect</h2>
                     <tui-textfield multi tuiChevron data-testid="v4-multi-field">
                         <input tuiInputChip tuiSelectLike aria-label="Countries" [formControl]="selectedCountries" />
@@ -660,7 +707,7 @@ import {
 })
 export class DemoV4 {
     private readonly dialog = inject(TuiDialogService);
-    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog, tuiAccordion, tuiRating, tuiBreadcrumbs, tuiInputTime, tuiInputPhone, tuiInputSlider, tuiInputDateRange, tuiInputDateMulti, tuiInputMonth, tuiInputMonthRange, tuiInputDateTime, tuiInputYear, tuiInputRange, tuiInputChip, tuiInputPin, tuiInputColor, tuiInputInline, tuiCalendarMonth, tuiCounter, tuiRadioList, tuiSlider, tuiRange, tuiCalendarRange, tuiSpinButton, tuiPager, tuiDataListWrapper, tuiDataList, tuiScrollbar, tuiCarousel, tuiLineClamp, tuiError, tuiFilter, tuiBlock, tuiPulse} from '@taiga-ui-labs/playwright/v4';";
+    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog, tuiAccordion, tuiRating, tuiBreadcrumbs, tuiInputTime, tuiInputPhone, tuiInputSlider, tuiInputDateRange, tuiInputDateMulti, tuiInputMonth, tuiInputMonthRange, tuiInputDateTime, tuiInputYear, tuiInputRange, tuiInputChip, tuiInputPin, tuiInputColor, tuiInputInline, tuiCalendarMonth, tuiCounter, tuiRadioList, tuiSlider, tuiRange, tuiCalendarRange, tuiSpinButton, tuiPager, tuiDataListWrapper, tuiDataList, tuiScrollbar, tuiCarousel, tuiLineClamp, tuiError, tuiFilter, tuiBlock, tuiPulse, tuiNotification, tuiBadgedContent, tuiButtonLoading, tuiStatus} from '@taiga-ui-labs/playwright/v4';";
     protected readonly componentInventory = V4_COMPONENTS;
     protected readonly verifiedCount = V4_COMPONENTS.filter((component) => component.verified).length;
     protected readonly countries = ['Austria', 'Estonia'];
@@ -717,6 +764,13 @@ export class DemoV4 {
     protected readonly activeFilters = new FormControl<string[]>(['News'], {nonNullable: true});
     protected readonly blockChecked = new FormControl(false, {nonNullable: true});
     protected readonly pulsePlaying = signal(true);
+    protected readonly notificationAppearance = signal('info');
+    protected readonly notificationSize = signal<'s' | 'm' | 'l'>('s');
+    protected readonly topBadgeCount = signal(2);
+    protected readonly bottomBadgeVisible = signal(true);
+    protected readonly buttonLoading = signal(true);
+    protected readonly buttonClicked = signal(0);
+    protected readonly statusColor = signal('#007a00');
 
     protected get availableDayNumbers(): string {
         return this.availableDays.value.map(({day}) => day).join(',');
