@@ -48,6 +48,8 @@ import {
     TuiComment,
     TuiMessage,
     TuiCompass,
+    TuiPin,
+    TuiSlides,
     TuiPager,
     TuiRadioList,
     TuiRange,
@@ -113,6 +115,8 @@ import {
         TuiComment,
         TuiMessage,
         TuiCompass,
+        TuiPin,
+        TuiSlides,
         TuiPager,
         TuiRadioList,
         TuiRange,
@@ -664,6 +668,20 @@ import {
                     <div tuiComment data-testid="v4-comment">A note from the author</div>
                 </section>
                 <section>
+                    <h2>Pin</h2>
+                    <tui-pin data-testid="v4-pin" [open]="v4PinOpen()" />
+                    <button tuiButton type="button" (click)="v4PinOpen.set(!v4PinOpen())">Toggle v4 pin</button>
+                    <output data-testid="v4-pin-model">{{ v4PinOpen() }}</output>
+                </section>
+                <section>
+                    <h2>Slides</h2>
+                    <div data-testid="v4-slides" [tuiSlides]="v4SlideDirection()">
+                        <span>{{ v4SlideTitle() }}</span>
+                    </div>
+                    <button tuiButton type="button" (click)="nextV4Slide()">Next v4 slide</button>
+                    <output data-testid="v4-slides-model">{{ v4SlideTitle() }}</output>
+                </section>
+                <section>
                     <h2>Compass</h2>
                     <tui-compass data-testid="v4-compass" [degrees]="v4CompassDegrees()" />
                     <button tuiButton type="button" (click)="v4CompassDegrees.set(180)">Rotate v4 compass</button>
@@ -843,6 +861,9 @@ export class DemoV4 {
     protected readonly v4TreeShowDocs = signal(true);
     protected readonly v4Message = signal('First message');
     protected readonly v4CompassDegrees = signal(45);
+    protected readonly v4PinOpen = signal(false);
+    protected readonly v4SlideDirection = signal(0);
+    protected readonly v4SlideTitle = signal('First slide');
 
     protected get availableDayNumbers(): string {
         return this.availableDays.value.map(({day}) => day).join(',');
@@ -867,6 +888,11 @@ export class DemoV4 {
             label: 'V4 confirmation',
             data: {button: 'Confirm'},
         }).subscribe({complete: () => this.dialogResult.set('closed')});
+    }
+
+    protected nextV4Slide(): void {
+        this.v4SlideTitle.set('Second slide');
+        this.v4SlideDirection.set(1);
     }
 
     protected save(): void {
