@@ -47,6 +47,7 @@ import {
     TuiCounter,
     TuiComment,
     TuiMessage,
+    TuiCompass,
     TuiPager,
     TuiRadioList,
     TuiRange,
@@ -111,6 +112,7 @@ import {
         TuiCounter,
         TuiComment,
         TuiMessage,
+        TuiCompass,
         TuiPager,
         TuiRadioList,
         TuiRange,
@@ -662,6 +664,12 @@ import {
                     <div tuiComment data-testid="v4-comment">A note from the author</div>
                 </section>
                 <section>
+                    <h2>Compass</h2>
+                    <tui-compass data-testid="v4-compass" [degrees]="v4CompassDegrees()" />
+                    <button tuiButton type="button" (click)="v4CompassDegrees.set(180)">Rotate v4 compass</button>
+                    <output data-testid="v4-compass-model">{{ v4CompassDegrees() }}</output>
+                </section>
+                <section>
                     <h2>Message</h2>
                     <div tuiMessage data-testid="v4-message">{{ v4Message() }}</div>
                     <button tuiButton type="button" (click)="v4Message.set('Updated message')">Update v4 message</button>
@@ -834,6 +842,7 @@ export class DemoV4 {
     protected readonly fileGamma = {name: 'Gamma'};
     protected readonly v4TreeShowDocs = signal(true);
     protected readonly v4Message = signal('First message');
+    protected readonly v4CompassDegrees = signal(45);
 
     protected get availableDayNumbers(): string {
         return this.availableDays.value.map(({day}) => day).join(',');
