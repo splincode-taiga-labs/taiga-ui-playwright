@@ -695,7 +695,7 @@ test('the same v4 demo documents its verified scope and versioned import', async
     await expect(page.getByRole('heading', {level: 2})).toHaveCount(77);
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
-    await expect(page.locator('[data-verified="true"]')).toHaveCount(68);
+    await expect(page.locator('[data-verified="true"]')).toHaveCount(77);
     await expect(page.locator('[data-v4-component="Kit/checkbox"]')).toContainText('tuiCheckbox');
     await expect(page.getByRole('link', {name: /Back to Taiga UI 5 docs/})).toHaveAttribute('href', '../');
 });
