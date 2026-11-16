@@ -72,8 +72,12 @@ The local v4 Angular fixture runs real Taiga UI v4 controls in CI, and `compatib
 | BadgedContent | `tuiBadgedContent` | Update top and remove bottom badge through Angular signals |
 | ButtonLoading | `tuiButtonLoading` | Prevent click while loading and accept click after loading ends |
 | Status | `tuiStatus` | Update the status custom CSS property from an Angular signal |
+| Icon | `tuiIcon` | Resolve v4 SVG icon URL and switch icons via Angular signal |
+| Label | `tuiLabel` | Focus a linked native input and assert FormControl changes |
+| Files | `tuiFiles` | Expand a collapsed group to show three projected file components |
+| Tree | `tuiTree` | Find nested tree nodes and verify a removed Angular node disappears |
 
-**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 59 v4 inventory components and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
+**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 55 v4 inventory components and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
 
 ## v4 component inventory
 

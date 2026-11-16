@@ -17,6 +17,7 @@ const {
     tuiDataList, tuiScrollbar, tuiCarousel, tuiLineClamp,
     tuiError, tuiFilter, tuiBlock, tuiPulse,
     tuiNotification, tuiBadgedContent, tuiButtonLoading, tuiStatus,
+    tuiIcon, tuiLabel, tuiFiles, tuiTree,
 } = await packageApi('./v4');
 
 test('v4 entrypoint exposes the same runtime API as the package root', async () => {
@@ -537,14 +538,52 @@ test('Status updates the real v4 CSS custom property from an Angular signal', as
     await expect(page.getByTestId('v4-status-model')).toHaveText('#aa0000');
 });
 
+test('Icon resolves and changes the actual Taiga UI v4 SVG resource', async ({page}) => {
+    const icon = tuiIcon(page.getByTestId('v4-icon'));
+    await icon.expectIcon('search');
+    expect(await icon.iconUrl()).toContain('search.svg');
+    await page.getByRole('button', {name: 'Change v4 icon'}).click();
+    await icon.expectIcon('check');
+    expect(await icon.iconUrl()).toContain('check.svg');
+    await expect(page.getByTestId('v4-icon-model')).toHaveText('@tui.check');
+});
+
+test('Label associates the native input and updates its v4 Angular form', async ({page}) => {
+    const label = tuiLabel(page.getByTestId('v4-label'));
+    await label.expectOrientation('horizontal');
+    await label.focusInput();
+    const input = await label.expectAssociatedInput();
+    await input.fill('Ada');
+    await expect(page.getByTestId('v4-label-model')).toHaveText('Ada');
+});
+
+test('Files reveals additional real v4 file components', async ({page}) => {
+    const files = tuiFiles(page.getByTestId('v4-files'));
+    await files.expectFile('Alpha');
+    await expect(files.host.locator('tui-file').first()).toBeVisible();
+    await files.expand();
+    await files.expectFile('Beta');
+    await files.expectFile('Gamma');
+    await expect(files.host.locator('tui-file').last()).toBeVisible();
+});
+
+test('Tree exposes nested v4 nodes and updates when Angular removes a node', async ({page}) => {
+    const tree = tuiTree(page.getByTestId('v4-tree'));
+    await tree.expectNode('main.ts');
+    await tree.expectNode('README.md');
+    await page.getByRole('button', {name: 'Remove v4 tree README'}).click();
+    await expect(tree.host.getByRole('treeitem', {name: 'README.md', exact: true})).toHaveCount(0);
+    await tree.expectNode('main.ts');
+});
+
 test('the same v4 demo documents its verified scope and versioned import', async ({page}) => {
     await page.goto('/');
     await expect(page.getByText('Tested controls, not blanket v4 compatibility.')).toBeVisible();
     await expect(page.locator('pre code')).toContainText('@taiga-ui-labs/playwright/v4');
-    await expect(page.getByRole('heading', {level: 2})).toHaveCount(65);
+    await expect(page.getByRole('heading', {level: 2})).toHaveCount(69);
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
-    await expect(page.locator('[data-verified="true"]')).toHaveCount(64);
+    await expect(page.locator('[data-verified="true"]')).toHaveCount(68);
     await expect(page.locator('[data-v4-component="Kit/checkbox"]')).toContainText('tuiCheckbox');
     await expect(page.getByRole('link', {name: /Back to Taiga UI 5 docs/})).toHaveAttribute('href', '../');
 });

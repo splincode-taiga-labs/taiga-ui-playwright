@@ -12,6 +12,8 @@ import {
     TuiDialogService,
     TuiError,
     TuiExpandComponent,
+    TuiIcon,
+    TuiLabel,
     TuiLink,
     TuiLoader,
     TuiNotification,
@@ -32,6 +34,8 @@ import {
     TuiBadgedContent,
     TuiButtonLoading,
     TuiStatus,
+    TuiFiles,
+    TuiTree,
     TuiCalendarMonth,
     TuiCarousel,
     TuiLineClamp,
@@ -88,6 +92,8 @@ import {
         TuiTextfieldDropdownDirective,
         TuiButton,
         TuiError,
+        TuiIcon,
+        TuiLabel,
         TuiCalendar,
         TuiDataList,
         TuiScrollbar,
@@ -121,6 +127,8 @@ import {
         TuiBlock,
         TuiFilter,
         TuiPulse,
+        TuiFiles,
+        TuiTree,
         TuiBreadcrumbs,
         TuiBadgeNotification,
         TuiBadgedContent,
@@ -170,7 +178,7 @@ import {
                 </p>
                 <p class="notice">
                     <strong>Tested controls, not blanket v4 compatibility.</strong>
-                    This demo exercises 64 real Taiga UI controls with the packaged /v4 API
+                    This demo exercises 68 real Taiga UI controls with the packaged /v4 API
                     in Chromium on 4.106.0. Other components and earlier 4.x versions
                     still need their own integration tests.
                 </p>
@@ -634,6 +642,41 @@ import {
                     <output data-testid="v4-status-model">{{ statusColor() }}</output>
                 </section>
                 <section>
+                    <h2>Icon</h2>
+                    <tui-icon data-testid="v4-icon" [icon]="v4Icon()" />
+                    <button tuiButton type="button" (click)="v4Icon.set('@tui.check')">Change v4 icon</button>
+                    <output data-testid="v4-icon-model">{{ v4Icon() }}</output>
+                </section>
+                <section>
+                    <h2>Label</h2>
+                    <label tuiLabel for="v4-label-input" data-testid="v4-label">Display name</label>
+                    <input id="v4-label-input" aria-label="Display name" [formControl]="v4LabelValue" />
+                    <output data-testid="v4-label-model">{{ v4LabelValue.value }}</output>
+                </section>
+                <section>
+                    <h2>Files</h2>
+                    <tui-files data-testid="v4-files" [max]="1">
+                        <tui-file *tuiItem [file]="fileAlpha" />
+                        <tui-file *tuiItem [file]="fileBeta" />
+                        <tui-file *tuiItem [file]="fileGamma" />
+                    </tui-files>
+                </section>
+                <section>
+                    <h2>Tree</h2>
+                    <div role="tree" data-testid="v4-tree" [tuiTreeController]="true">
+                        <tui-tree-item>
+                            Workspace
+                            <tui-tree-item>src
+                                <tui-tree-item>main.ts</tui-tree-item>
+                            </tui-tree-item>
+                            @if (v4TreeShowDocs()) {
+                                <tui-tree-item>README.md</tui-tree-item>
+                            }
+                        </tui-tree-item>
+                    </div>
+                    <button tuiButton type="button" (click)="v4TreeShowDocs.set(false)">Remove v4 tree README</button>
+                </section>
+                <section>
                     <h2>MultiSelect</h2>
                     <tui-textfield multi tuiChevron data-testid="v4-multi-field">
                         <input tuiInputChip tuiSelectLike aria-label="Countries" [formControl]="selectedCountries" />
@@ -707,7 +750,7 @@ import {
 })
 export class DemoV4 {
     private readonly dialog = inject(TuiDialogService);
-    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog, tuiAccordion, tuiRating, tuiBreadcrumbs, tuiInputTime, tuiInputPhone, tuiInputSlider, tuiInputDateRange, tuiInputDateMulti, tuiInputMonth, tuiInputMonthRange, tuiInputDateTime, tuiInputYear, tuiInputRange, tuiInputChip, tuiInputPin, tuiInputColor, tuiInputInline, tuiCalendarMonth, tuiCounter, tuiRadioList, tuiSlider, tuiRange, tuiCalendarRange, tuiSpinButton, tuiPager, tuiDataListWrapper, tuiDataList, tuiScrollbar, tuiCarousel, tuiLineClamp, tuiError, tuiFilter, tuiBlock, tuiPulse, tuiNotification, tuiBadgedContent, tuiButtonLoading, tuiStatus} from '@taiga-ui-labs/playwright/v4';";
+    protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog, tuiAccordion, tuiRating, tuiBreadcrumbs, tuiInputTime, tuiInputPhone, tuiInputSlider, tuiInputDateRange, tuiInputDateMulti, tuiInputMonth, tuiInputMonthRange, tuiInputDateTime, tuiInputYear, tuiInputRange, tuiInputChip, tuiInputPin, tuiInputColor, tuiInputInline, tuiCalendarMonth, tuiCounter, tuiRadioList, tuiSlider, tuiRange, tuiCalendarRange, tuiSpinButton, tuiPager, tuiDataListWrapper, tuiDataList, tuiScrollbar, tuiCarousel, tuiLineClamp, tuiError, tuiFilter, tuiBlock, tuiPulse, tuiNotification, tuiBadgedContent, tuiButtonLoading, tuiStatus, tuiIcon, tuiLabel, tuiFiles, tuiTree} from '@taiga-ui-labs/playwright/v4';";
     protected readonly componentInventory = V4_COMPONENTS;
     protected readonly verifiedCount = V4_COMPONENTS.filter((component) => component.verified).length;
     protected readonly countries = ['Austria', 'Estonia'];
@@ -771,6 +814,12 @@ export class DemoV4 {
     protected readonly buttonLoading = signal(true);
     protected readonly buttonClicked = signal(0);
     protected readonly statusColor = signal('#007a00');
+    protected readonly v4Icon = signal('@tui.search');
+    protected readonly v4LabelValue = new FormControl('', {nonNullable: true});
+    protected readonly fileAlpha = {name: 'Alpha'};
+    protected readonly fileBeta = {name: 'Beta'};
+    protected readonly fileGamma = {name: 'Gamma'};
+    protected readonly v4TreeShowDocs = signal(true);
 
     protected get availableDayNumbers(): string {
         return this.availableDays.value.map(({day}) => day).join(',');
