@@ -17,7 +17,7 @@ const {
     tuiDataList, tuiScrollbar, tuiCarousel, tuiLineClamp,
     tuiError, tuiFilter, tuiBlock, tuiPulse,
     tuiNotification, tuiBadgedContent, tuiButtonLoading, tuiStatus,
-    tuiIcon, tuiLabel, tuiFiles, tuiTree,
+    tuiIcon, tuiLabel, tuiFiles, tuiTree, tuiComment, tuiMessage,
 } = await packageApi('./v4');
 
 test('v4 entrypoint exposes the same runtime API as the package root', async () => {
@@ -555,6 +555,19 @@ test('Label associates the native input and updates its v4 Angular form', async 
     const input = await label.expectAssociatedInput();
     await input.fill('Ada');
     await expect(page.getByTestId('v4-label-model')).toHaveText('Ada');
+});
+
+test('Comment renders its default direction on the real v4 directive', async ({page}) => {
+    const comment = tuiComment(page.getByTestId('v4-comment'));
+    await comment.expectDirection('top');
+    await expect(comment.host).toContainText('A note from the author');
+});
+
+test('Message updates projected text on the real v4 directive', async ({page}) => {
+    const message = tuiMessage(page.getByTestId('v4-message'));
+    await message.expectMessage('First message');
+    await page.getByRole('button', {name: 'Update v4 message'}).click();
+    await message.expectMessage('Updated message');
 });
 
 test('Files reveals additional real v4 file components', async ({page}) => {
