@@ -45,6 +45,8 @@ import {
     TuiChevron,
     TuiComboBox,
     TuiCounter,
+    TuiComment,
+    TuiMessage,
     TuiPager,
     TuiRadioList,
     TuiRange,
@@ -107,6 +109,8 @@ import {
         TuiInputMonthRange,
         TuiInputYear,
         TuiCounter,
+        TuiComment,
+        TuiMessage,
         TuiPager,
         TuiRadioList,
         TuiRange,
@@ -654,6 +658,15 @@ import {
                     <output data-testid="v4-label-model">{{ v4LabelValue.value }}</output>
                 </section>
                 <section>
+                    <h2>Comment</h2>
+                    <div tuiComment data-testid="v4-comment">A note from the author</div>
+                </section>
+                <section>
+                    <h2>Message</h2>
+                    <div tuiMessage data-testid="v4-message">{{ v4Message() }}</div>
+                    <button tuiButton type="button" (click)="v4Message.set('Updated message')">Update v4 message</button>
+                </section>
+                <section>
                     <h2>Files</h2>
                     <tui-files data-testid="v4-files" [max]="1">
                         <tui-file *tuiItem [file]="fileAlpha" />
@@ -820,6 +833,7 @@ export class DemoV4 {
     protected readonly fileBeta = {name: 'Beta'};
     protected readonly fileGamma = {name: 'Gamma'};
     protected readonly v4TreeShowDocs = signal(true);
+    protected readonly v4Message = signal('First message');
 
     protected get availableDayNumbers(): string {
         return this.availableDays.value.map(({day}) => day).join(',');
