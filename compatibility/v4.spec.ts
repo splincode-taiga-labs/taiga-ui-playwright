@@ -633,6 +633,17 @@ test('ItemsWithMore respects the v4 item limit and restores all items when expan
     await expect(page.getByTestId('v4-items-limit-model')).toHaveText('5');
 });
 
+test('InputPassword toggles actual v4 input visibility without clearing its FormControl', async ({page}) => {
+    const field = tuiTextfield(page.getByTestId('v4-password-field'));
+    await field.focus();
+    await field.input.fill('demo-secret');
+    await expect(page.getByTestId('v4-password-model')).toHaveText('demo-secret');
+    await expect(field.input).toHaveAttribute('type', 'password');
+    await field.host.locator('tui-icon').click();
+    await expect(field.input).toHaveAttribute('type', 'text');
+    await expect(field.input).toHaveValue('demo-secret');
+});
+
 test('ElasticContainer expands when its real v4 projected content grows', async ({page}) => {
     const elastic = tuiElasticContainer(page.getByTestId('v4-elastic-container'));
     const initial = await elastic.getHeight();
@@ -719,7 +730,7 @@ test('the same v4 demo documents its verified scope and versioned import', async
     const headings = (await page.getByRole('heading', {level: 2}).allTextContents())
         .map((heading) => heading.trim());
     // New fixture sections should not require editing a brittle exact count.
-    expect(headings.length).toBeGreaterThanOrEqual(79);
+    expect(headings.length).toBeGreaterThanOrEqual(80);
     expect(new Set(headings).size).toBe(headings.length);
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
