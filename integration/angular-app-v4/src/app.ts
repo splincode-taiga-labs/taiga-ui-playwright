@@ -1,4 +1,6 @@
 import {Component, inject, signal} from '@angular/core';
+import phoneMetadata from 'libphonenumber-js/metadata.min.json';
+import {of} from 'rxjs';
 
 import {V4_COMPONENTS} from './component-inventory';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
@@ -53,6 +55,8 @@ import {
     TuiShrinkWrap,
     TuiElasticContainer,
     TuiFloatingContainer,
+    TuiInputPhoneInternational,
+    tuiInputPhoneInternationalOptionsProvider,
     TuiDrawer,
     TuiPush,
     TuiInputPassword,
@@ -128,6 +132,7 @@ import {
         TuiShrinkWrap,
         TuiElasticContainer,
         TuiFloatingContainer,
+    TuiInputPhoneInternational,
     TuiDrawer,
     TuiPush,
     TuiInputPassword,
@@ -188,6 +193,13 @@ import {
         TuiInputPhone,
         TuiInputSlider,
         TuiInputTime,
+    ],
+    providers: [
+        tuiInputPhoneInternationalOptionsProvider({
+            countries: ['US', 'GB'],
+            countryIsoCode: 'US',
+            metadata: of(phoneMetadata),
+        }),
     ],
     template: `
         <tui-root>
@@ -735,6 +747,16 @@ import {
                     <output data-testid="v4-push-model">{{ v4PushShown() }}</output>
                 </section>
                 <section>
+                    <h2>InputPhoneInternational</h2>
+                    <button tuiButton type="button" (click)="v4InternationalPhoneShown.set(true)">Mount v4 international phone</button>
+                    @if (v4InternationalPhoneShown()) {
+                        <tui-input-phone-international countryIsoCode="US" data-testid="v4-international-phone" [formControl]="v4InternationalPhone">
+                            International contact
+                        </tui-input-phone-international>
+                    }
+                    <output data-testid="v4-international-phone-model">{{ v4InternationalPhone.value }}</output>
+                </section>
+                <section>
                     <h2>ElasticContainer</h2>
                     <tui-elastic-container data-testid="v4-elastic-container">
                         <div [style.height.px]="v4ElasticHeight()" style="width: 100%">Resizable content</div>
@@ -959,6 +981,8 @@ export class DemoV4 {
     protected readonly v4ActionBarExpanded = signal(false);
     protected readonly v4ActionBarClickCount = signal(0);
     protected readonly v4ElasticHeight = signal(40);
+    protected readonly v4InternationalPhone = new FormControl('', {nonNullable: true});
+    protected readonly v4InternationalPhoneShown = signal(false);
     protected readonly v4DrawerVisible = signal(false);
     protected readonly v4DrawerDirection = signal<'left' | 'right'>('right');
     protected readonly v4DrawerOverlay = signal(false);

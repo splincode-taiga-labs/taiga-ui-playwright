@@ -19,6 +19,7 @@ const {
     tuiNotification, tuiBadgedContent, tuiButtonLoading, tuiStatus,
     tuiIcon, tuiLabel, tuiFiles, tuiTree, tuiComment, tuiMessage, tuiRoot, tuiCompass,
     tuiPin, tuiSlides, tuiShrinkWrap, tuiElasticContainer, tuiFloatingContainer,
+    tuiInternationalPhone,
     tuiDrawer, tuiPush,
     tuiItemsWithMore,
     tuiActionBar,
@@ -665,6 +666,16 @@ test('Push notification emits its v4 close output and disappears', async ({page}
     await expect(page.getByTestId('v4-push-model')).toHaveText('false');
 });
 
+test('InternationalPhone updates the Angular v4 form using the real masked input', async ({page}) => {
+    await page.getByRole('button', {name: 'Mount v4 international phone'}).click();
+    const phone = tuiInternationalPhone(page.getByTestId('v4-international-phone'));
+    await phone.input.click();
+    // Maskito relies on beforeinput/key events, which Locator.fill does not model.
+    await phone.input.pressSequentially('2025550183');
+    await expect(page.getByTestId('v4-international-phone-model')).toContainText('2025550183');
+    await expect(phone.input).toHaveValue(/202/);
+});
+
 test('ElasticContainer expands when its real v4 projected content grows', async ({page}) => {
     const elastic = tuiElasticContainer(page.getByTestId('v4-elastic-container'));
     const initial = await elastic.getHeight();
@@ -751,7 +762,7 @@ test('the same v4 demo documents its verified scope and versioned import', async
     const headings = (await page.getByRole('heading', {level: 2}).allTextContents())
         .map((heading) => heading.trim());
     // New fixture sections should not require editing a brittle exact count.
-    expect(headings.length).toBeGreaterThanOrEqual(82);
+    expect(headings.length).toBeGreaterThanOrEqual(83);
     expect(new Set(headings).size).toBe(headings.length);
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
