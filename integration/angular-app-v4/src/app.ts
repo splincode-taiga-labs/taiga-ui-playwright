@@ -53,6 +53,7 @@ import {
     TuiShrinkWrap,
     TuiElasticContainer,
     TuiFloatingContainer,
+    TuiActionBar,
     TuiPager,
     TuiRadioList,
     TuiRange,
@@ -123,6 +124,7 @@ import {
         TuiShrinkWrap,
         TuiElasticContainer,
         TuiFloatingContainer,
+        TuiActionBar,
         TuiPager,
         TuiRadioList,
         TuiRange,
@@ -674,6 +676,15 @@ import {
                     <div tuiComment="top" data-testid="v4-comment">A note from the author</div>
                 </section>
                 <section>
+                    <h2>ActionBar</h2>
+                    <tui-action-bar data-testid="v4-action-bar" [expanded]="v4ActionBarExpanded()" size="m">
+                        <span>Selection actions</span>
+                        <button tuiButton type="button" (click)="v4ActionBarClickCount.set(v4ActionBarClickCount() + 1)">Approve v4 selection</button>
+                    </tui-action-bar>
+                    <button tuiButton type="button" (click)="v4ActionBarExpanded.set(!v4ActionBarExpanded())">Toggle v4 action bar</button>
+                    <output data-testid="v4-action-bar-model">{{ v4ActionBarClickCount() }}</output>
+                </section>
+                <section>
                     <h2>ElasticContainer</h2>
                     <tui-elastic-container data-testid="v4-elastic-container">
                         <div [style.height.px]="v4ElasticHeight()" style="width: 100%">Resizable content</div>
@@ -895,6 +906,8 @@ export class DemoV4 {
     protected readonly v4SlideDirection = signal(0);
     protected readonly v4SlideTitle = signal('First slide');
     protected readonly v4WrapWidth = signal(200);
+    protected readonly v4ActionBarExpanded = signal(false);
+    protected readonly v4ActionBarClickCount = signal(0);
     protected readonly v4ElasticHeight = signal(40);
     protected readonly v4FloatingBackground = signal('rgb(128, 0, 0)');
 
