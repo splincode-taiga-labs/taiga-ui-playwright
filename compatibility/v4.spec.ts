@@ -19,6 +19,7 @@ const {
     tuiNotification, tuiBadgedContent, tuiButtonLoading, tuiStatus,
     tuiIcon, tuiLabel, tuiFiles, tuiTree, tuiComment, tuiMessage, tuiRoot, tuiCompass,
     tuiPin, tuiSlides, tuiShrinkWrap, tuiElasticContainer, tuiFloatingContainer,
+    tuiInternationalPhone,
 } = await packageApi('./v4');
 
 test('v4 entrypoint exposes the same runtime API as the package root', async () => {
@@ -609,6 +610,13 @@ test('Comment renders its default direction on the real v4 directive', async ({p
     await expect(comment.host).toContainText('A note from the author');
 });
 
+test('InternationalPhone updates the Angular v4 form using the real masked input', async ({page}) => {
+    const phone = tuiInternationalPhone(page.getByTestId('v4-international-phone'));
+    await phone.fill('+12025550183');
+    await expect(page.getByTestId('v4-international-phone-model')).toContainText('2025550183');
+    await expect(phone.input).toHaveValue(/202/);
+});
+
 test('ElasticContainer expands when its real v4 projected content grows', async ({page}) => {
     const elastic = tuiElasticContainer(page.getByTestId('v4-elastic-container'));
     const initial = await elastic.getHeight();
@@ -692,7 +700,7 @@ test('the same v4 demo documents its verified scope and versioned import', async
     await page.goto('/');
     await expect(page.getByText('Tested controls, not blanket v4 compatibility.')).toBeVisible();
     await expect(page.locator('pre code')).toContainText('@taiga-ui-labs/playwright/v4');
-    await expect(page.getByRole('heading', {level: 2})).toHaveCount(77);
+    await expect(page.getByRole('heading', {level: 2})).toHaveCount(78);
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
     await expect(page.locator('[data-verified="true"]')).toHaveCount(77);
