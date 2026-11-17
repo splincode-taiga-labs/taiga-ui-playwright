@@ -8,6 +8,15 @@ The local v4 Angular fixture runs real Taiga UI v4 controls in CI, and `compatib
 
 | Component | Export | Verification |
 | --- | --- | --- |
+| Root | `tuiRoot` | Real v4 Angular fixture and Chromium browser behavior in PR #117 |
+| Comment | `tuiComment` | Real v4 Angular fixture and Chromium browser behavior in PR #117 |
+| Compass | `tuiCompass` | Real v4 Angular fixture and Chromium browser behavior in PR #117 |
+| ElasticContainer | `tuiElasticContainer` | Real v4 Angular fixture and Chromium browser behavior in PR #117 |
+| FloatingContainer | `tuiFloatingContainer` | Real v4 Angular fixture and Chromium browser behavior in PR #117 |
+| Message | `tuiMessage` | Real v4 Angular fixture and Chromium browser behavior in PR #117 |
+| Pin | `tuiPin` | Real v4 Angular fixture and Chromium browser behavior in PR #117 |
+| ShrinkWrap | `tuiShrinkWrap` | Real v4 Angular fixture and Chromium browser behavior in PR #117 |
+| Slides | `tuiSlides` | Real v4 Angular fixture and Chromium browser behavior in PR #117 |
 | Button | `tuiButton` | Click increments signal |
 | Select | `tuiSelect` | Select option updates FormControl |
 | ComboBox | `tuiComboBox` | Fill and select update FormControl; one filtered option uses the native v4 Enter handler to avoid strict-mode blur clearing |
@@ -77,7 +86,7 @@ The local v4 Angular fixture runs real Taiga UI v4 controls in CI, and `compatib
 | Files | `tuiFiles` | Expand a collapsed group to show three projected file components |
 | Tree | `tuiTree` | Find nested tree nodes and verify a removed Angular node disappears |
 
-**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 55 v4 inventory components and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
+**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 46 v4 inventory components and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
 
 ## v4 component inventory
 

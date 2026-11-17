@@ -104,7 +104,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "root",
         "path": "projects/core/components/root",
         "helper": "tuiRoot",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Core",
@@ -237,14 +237,14 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "comment",
         "path": "projects/kit/components/comment",
         "helper": "tuiComment",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
         "name": "compass",
         "path": "projects/kit/components/compass",
         "helper": "tuiCompass",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -279,7 +279,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "elastic-container",
         "path": "projects/kit/components/elastic-container",
         "helper": "tuiElasticContainer",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -300,7 +300,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "floating-container",
         "path": "projects/kit/components/floating-container",
         "helper": "tuiFloatingContainer",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -454,7 +454,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "message",
         "path": "projects/kit/components/message",
         "helper": "tuiMessage",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -496,7 +496,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "pin",
         "path": "projects/kit/components/pin",
         "helper": "tuiPin",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -580,7 +580,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "shrink-wrap",
         "path": "projects/kit/components/shrink-wrap",
         "helper": "tuiShrinkWrap",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -594,7 +594,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "slides",
         "path": "projects/kit/components/slides",
         "helper": "tuiSlides",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
