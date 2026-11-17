@@ -57,6 +57,7 @@ import {
     TuiFloatingContainer,
     TuiInputPhoneInternational,
     tuiInputPhoneInternationalOptionsProvider,
+    TuiInputPassword,
     TuiItemsWithMore,
     TuiActionBar,
     TuiPager,
@@ -130,6 +131,7 @@ import {
         TuiElasticContainer,
         TuiFloatingContainer,
     TuiInputPhoneInternational,
+    TuiInputPassword,
     TuiItemsWithMore,
         TuiActionBar,
         TuiPager,
@@ -711,6 +713,13 @@ import {
                     <output data-testid="v4-items-limit-model">{{ v4ItemsLimit() }}</output>
                 </section>
                 <section>
+                    <h2>InputPassword</h2>
+                    <tui-textfield data-testid="v4-password-field">
+                        <input tuiInputPassword aria-label="Private password" [formControl]="v4Password" />
+                    </tui-textfield>
+                    <output data-testid="v4-password-model">{{ v4Password.value }}</output>
+                </section>
+                <section>
                     <h2>InputPhoneInternational</h2>
                     <button tuiButton type="button" (click)="v4InternationalPhoneShown.set(true)">Mount v4 international phone</button>
                     @if (v4InternationalPhoneShown()) {
@@ -947,6 +956,7 @@ export class DemoV4 {
     protected readonly v4ElasticHeight = signal(40);
     protected readonly v4InternationalPhone = new FormControl('', {nonNullable: true});
     protected readonly v4InternationalPhoneShown = signal(false);
+    protected readonly v4Password = new FormControl('', {nonNullable: true});
     protected readonly v4ItemsLimit = signal(2);
     protected readonly v4FloatingBackground = signal('rgb(128, 0, 0)');
 
