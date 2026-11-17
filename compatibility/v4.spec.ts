@@ -20,6 +20,7 @@ const {
     tuiIcon, tuiLabel, tuiFiles, tuiTree, tuiComment, tuiMessage, tuiRoot, tuiCompass,
     tuiPin, tuiSlides, tuiShrinkWrap, tuiElasticContainer, tuiFloatingContainer,
     tuiInternationalPhone,
+    tuiDrawer, tuiPush,
     tuiItemsWithMore,
     tuiActionBar,
 } = await packageApi('./v4');
@@ -645,6 +646,26 @@ test('InputPassword toggles actual v4 input visibility without clearing its Form
     await expect(field.input).toHaveValue('demo-secret');
 });
 
+test('Drawer changes its v4 direction and overlay state', async ({page}) => {
+    await page.getByRole('button', {name: 'Open v4 drawer'}).click();
+    const drawer = tuiDrawer(page.getByTestId('v4-drawer'));
+    await drawer.expectState('right', false);
+    await drawer.host.getByRole('button', {name: 'Move v4 drawer left'}).click();
+    await drawer.expectState('left', true);
+    await expect(page.getByTestId('v4-drawer-model')).toHaveText('left / true');
+    await drawer.host.getByRole('button', {name: 'Close v4 drawer'}).click();
+    await expect(drawer.host).toHaveCount(0);
+});
+
+test('Push notification emits its v4 close output and disappears', async ({page}) => {
+    await page.getByRole('button', {name: 'Open v4 push'}).click();
+    const push = tuiPush(page.getByTestId('v4-push'));
+    await push.expectHeading('Build completed');
+    await expect(push.host).toContainText('Changes are ready for review');
+    await push.close();
+    await expect(page.getByTestId('v4-push-model')).toHaveText('false');
+});
+
 test('InternationalPhone updates the Angular v4 form using the real masked input', async ({page}) => {
     await page.getByRole('button', {name: 'Mount v4 international phone'}).click();
     const phone = tuiInternationalPhone(page.getByTestId('v4-international-phone'));
@@ -741,7 +762,7 @@ test('the same v4 demo documents its verified scope and versioned import', async
     const headings = (await page.getByRole('heading', {level: 2}).allTextContents())
         .map((heading) => heading.trim());
     // New fixture sections should not require editing a brittle exact count.
-    expect(headings.length).toBeGreaterThanOrEqual(81);
+    expect(headings.length).toBeGreaterThanOrEqual(83);
     expect(new Set(headings).size).toBe(headings.length);
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
