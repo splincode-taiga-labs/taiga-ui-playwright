@@ -139,7 +139,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "action-bar",
         "path": "projects/kit/components/action-bar",
         "helper": "tuiActionBar",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -272,7 +272,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "drawer",
         "path": "projects/kit/components/drawer",
         "helper": "tuiDrawer",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -377,7 +377,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "input-password",
         "path": "projects/kit/components/input-password",
         "helper": null,
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -391,7 +391,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "input-phone-international",
         "path": "projects/kit/components/input-phone-international",
         "helper": "tuiInternationalPhone",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -433,7 +433,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "items-with-more",
         "path": "projects/kit/components/items-with-more",
         "helper": "tuiItemsWithMore",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -524,7 +524,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "push",
         "path": "projects/kit/components/push",
         "helper": "tuiPush",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
