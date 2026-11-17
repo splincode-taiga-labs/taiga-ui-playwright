@@ -53,6 +53,7 @@ import {
     TuiShrinkWrap,
     TuiElasticContainer,
     TuiFloatingContainer,
+    TuiItemsWithMore,
     TuiActionBar,
     TuiPager,
     TuiRadioList,
@@ -124,6 +125,7 @@ import {
         TuiShrinkWrap,
         TuiElasticContainer,
         TuiFloatingContainer,
+    TuiItemsWithMore,
         TuiActionBar,
         TuiPager,
         TuiRadioList,
@@ -685,6 +687,18 @@ import {
                     <output data-testid="v4-action-bar-model">{{ v4ActionBarClickCount() }}</output>
                 </section>
                 <section>
+                    <h2>ItemsWithMore</h2>
+                    <tui-items-with-more data-testid="v4-items-with-more" style="width: 800px; flex: none" [itemsLimit]="v4ItemsLimit()">
+                        <ng-template tuiItem><span>Alpha</span></ng-template>
+                        <ng-template tuiItem><span>Beta</span></ng-template>
+                        <ng-template tuiItem><span>Gamma</span></ng-template>
+                        <ng-template tuiItem><span>Delta</span></ng-template>
+                        <ng-template tuiMore let-lastIndex><span>More items</span></ng-template>
+                    </tui-items-with-more>
+                    <button tuiButton type="button" (click)="v4ItemsLimit.set(5)">Expand v4 items with more</button>
+                    <output data-testid="v4-items-limit-model">{{ v4ItemsLimit() }}</output>
+                </section>
+                <section>
                     <h2>ElasticContainer</h2>
                     <tui-elastic-container data-testid="v4-elastic-container">
                         <div [style.height.px]="v4ElasticHeight()" style="width: 100%">Resizable content</div>
@@ -909,6 +923,7 @@ export class DemoV4 {
     protected readonly v4ActionBarExpanded = signal(false);
     protected readonly v4ActionBarClickCount = signal(0);
     protected readonly v4ElasticHeight = signal(40);
+    protected readonly v4ItemsLimit = signal(2);
     protected readonly v4FloatingBackground = signal('rgb(128, 0, 0)');
 
     protected get availableDayNumbers(): string {
