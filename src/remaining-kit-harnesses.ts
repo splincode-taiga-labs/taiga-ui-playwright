@@ -29,7 +29,7 @@ export class TuiTreeHarness {
 
 export class TuiInternationalPhoneHarness {
     public constructor(public readonly host: Locator) {}
-    public get input(): Locator { return this.host.locator('input[tuiInputPhoneInternational]'); }
+    public get input(): Locator { return this.host.locator('input[tuiInputPhoneInternational], tui-textfield input[tuiTextfield]'); }
     public async fill(value: string): Promise<void> {
         await this.input.fill(value);
         await expect(this.input).toHaveValue(/\d/);
