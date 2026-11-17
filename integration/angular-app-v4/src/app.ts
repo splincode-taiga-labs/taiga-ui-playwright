@@ -1,4 +1,6 @@
 import {Component, inject, signal} from '@angular/core';
+import phoneMetadata from 'libphonenumber-js/metadata.min.json';
+import {of} from 'rxjs';
 
 import {V4_COMPONENTS} from './component-inventory';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
@@ -54,6 +56,7 @@ import {
     TuiElasticContainer,
     TuiFloatingContainer,
     TuiInputPhoneInternational,
+    tuiInputPhoneInternationalOptionsProvider,
     TuiItemsWithMore,
     TuiActionBar,
     TuiPager,
@@ -184,6 +187,13 @@ import {
         TuiInputPhone,
         TuiInputSlider,
         TuiInputTime,
+    ],
+    providers: [
+        tuiInputPhoneInternationalOptionsProvider({
+            countries: ['US', 'GB'],
+            countryIsoCode: 'US',
+            metadata: of(phoneMetadata),
+        }),
     ],
     template: `
         <tui-root>
