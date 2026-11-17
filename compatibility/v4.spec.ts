@@ -611,8 +611,11 @@ test('Comment renders its default direction on the real v4 directive', async ({p
 });
 
 test('InternationalPhone updates the Angular v4 form using the real masked input', async ({page}) => {
+    await page.getByRole('button', {name: 'Mount v4 international phone'}).click();
     const phone = tuiInternationalPhone(page.getByTestId('v4-international-phone'));
-    await phone.fill('+12025550183');
+    await phone.input.click();
+    // Maskito relies on beforeinput/key events, which Locator.fill does not model.
+    await phone.input.pressSequentially('2025550183');
     await expect(page.getByTestId('v4-international-phone-model')).toContainText('2025550183');
     await expect(phone.input).toHaveValue(/202/);
 });
