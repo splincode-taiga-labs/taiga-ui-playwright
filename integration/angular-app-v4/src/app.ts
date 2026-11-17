@@ -53,6 +53,8 @@ import {
     TuiShrinkWrap,
     TuiElasticContainer,
     TuiFloatingContainer,
+    TuiDrawer,
+    TuiPush,
     TuiPager,
     TuiRadioList,
     TuiRange,
@@ -123,6 +125,8 @@ import {
         TuiShrinkWrap,
         TuiElasticContainer,
         TuiFloatingContainer,
+        TuiDrawer,
+        TuiPush,
         TuiPager,
         TuiRadioList,
         TuiRange,
@@ -674,6 +678,29 @@ import {
                     <div tuiComment="top" data-testid="v4-comment">A note from the author</div>
                 </section>
                 <section>
+                    <h2>Drawer</h2>
+                    <button tuiButton type="button" (click)="v4DrawerVisible.set(true)">Open v4 drawer</button>
+                    @if (v4DrawerVisible()) {
+                        <tui-drawer data-testid="v4-drawer" [direction]="v4DrawerDirection()" [overlay]="v4DrawerOverlay()">
+                            <header>Drawer header</header>
+                            <p>Drawer body</p>
+                            <button tuiButton type="button" (click)="v4DrawerDirection.set('left'); v4DrawerOverlay.set(true)">Move v4 drawer left</button>
+                            <button tuiButton type="button" (click)="v4DrawerVisible.set(false)">Close v4 drawer</button>
+                        </tui-drawer>
+                    }
+                    <output data-testid="v4-drawer-model">{{ v4DrawerDirection() }} / {{ v4DrawerOverlay() }}</output>
+                </section>
+                <section>
+                    <h2>Push</h2>
+                    <button tuiButton type="button" (click)="v4PushShown.set(true)">Open v4 push</button>
+                    @if (v4PushShown()) {
+                        <tui-push data-testid="v4-push" heading="Build completed" type="Info" (close)="v4PushShown.set(false)">
+                            Changes are ready for review
+                        </tui-push>
+                    }
+                    <output data-testid="v4-push-model">{{ v4PushShown() }}</output>
+                </section>
+                <section>
                     <h2>ElasticContainer</h2>
                     <tui-elastic-container data-testid="v4-elastic-container">
                         <div [style.height.px]="v4ElasticHeight()" style="width: 100%">Resizable content</div>
@@ -896,6 +923,10 @@ export class DemoV4 {
     protected readonly v4SlideTitle = signal('First slide');
     protected readonly v4WrapWidth = signal(200);
     protected readonly v4ElasticHeight = signal(40);
+    protected readonly v4DrawerVisible = signal(false);
+    protected readonly v4DrawerDirection = signal<'left' | 'right'>('right');
+    protected readonly v4DrawerOverlay = signal(false);
+    protected readonly v4PushShown = signal(false);
     protected readonly v4FloatingBackground = signal('rgb(128, 0, 0)');
 
     protected get availableDayNumbers(): string {
