@@ -19,6 +19,7 @@ const {
     tuiNotification, tuiBadgedContent, tuiButtonLoading, tuiStatus,
     tuiIcon, tuiLabel, tuiFiles, tuiTree, tuiComment, tuiMessage, tuiRoot, tuiCompass,
     tuiPin, tuiSlides, tuiShrinkWrap, tuiElasticContainer, tuiFloatingContainer,
+    tuiDrawer, tuiPush,
 } = await packageApi('./v4');
 
 test('v4 entrypoint exposes the same runtime API as the package root', async () => {
@@ -609,6 +610,26 @@ test('Comment renders its default direction on the real v4 directive', async ({p
     await expect(comment.host).toContainText('A note from the author');
 });
 
+test('Drawer changes its v4 direction and overlay state', async ({page}) => {
+    await page.getByRole('button', {name: 'Open v4 drawer'}).click();
+    const drawer = tuiDrawer(page.getByTestId('v4-drawer'));
+    await drawer.expectState('right', false);
+    await drawer.host.getByRole('button', {name: 'Move v4 drawer left'}).click();
+    await drawer.expectState('left', true);
+    await expect(page.getByTestId('v4-drawer-model')).toHaveText('left / true');
+    await drawer.host.getByRole('button', {name: 'Close v4 drawer'}).click();
+    await expect(drawer.host).toHaveCount(0);
+});
+
+test('Push notification emits its v4 close output and disappears', async ({page}) => {
+    await page.getByRole('button', {name: 'Open v4 push'}).click();
+    const push = tuiPush(page.getByTestId('v4-push'));
+    await push.expectHeading('Build completed');
+    await expect(push.host).toContainText('Changes are ready for review');
+    await push.close();
+    await expect(page.getByTestId('v4-push-model')).toHaveText('false');
+});
+
 test('ElasticContainer expands when its real v4 projected content grows', async ({page}) => {
     const elastic = tuiElasticContainer(page.getByTestId('v4-elastic-container'));
     const initial = await elastic.getHeight();
@@ -692,7 +713,7 @@ test('the same v4 demo documents its verified scope and versioned import', async
     await page.goto('/');
     await expect(page.getByText('Tested controls, not blanket v4 compatibility.')).toBeVisible();
     await expect(page.locator('pre code')).toContainText('@taiga-ui-labs/playwright/v4');
-    await expect(page.getByRole('heading', {level: 2})).toHaveCount(77);
+    await expect(page.getByRole('heading', {level: 2})).toHaveCount(79);
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
     await expect(page.locator('[data-verified="true"]')).toHaveCount(77);
