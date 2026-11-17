@@ -53,6 +53,7 @@ import {
     TuiShrinkWrap,
     TuiElasticContainer,
     TuiFloatingContainer,
+    TuiInputPhoneInternational,
     TuiPager,
     TuiRadioList,
     TuiRange,
@@ -123,6 +124,7 @@ import {
         TuiShrinkWrap,
         TuiElasticContainer,
         TuiFloatingContainer,
+        TuiInputPhoneInternational,
         TuiPager,
         TuiRadioList,
         TuiRange,
@@ -674,6 +676,13 @@ import {
                     <div tuiComment="top" data-testid="v4-comment">A note from the author</div>
                 </section>
                 <section>
+                    <h2>InputPhoneInternational</h2>
+                    <tui-input-phone-international countryIsoCode="US" data-testid="v4-international-phone" [formControl]="v4InternationalPhone">
+                        International contact
+                    </tui-input-phone-international>
+                    <output data-testid="v4-international-phone-model">{{ v4InternationalPhone.value }}</output>
+                </section>
+                <section>
                     <h2>ElasticContainer</h2>
                     <tui-elastic-container data-testid="v4-elastic-container">
                         <div [style.height.px]="v4ElasticHeight()" style="width: 100%">Resizable content</div>
@@ -896,6 +905,7 @@ export class DemoV4 {
     protected readonly v4SlideTitle = signal('First slide');
     protected readonly v4WrapWidth = signal(200);
     protected readonly v4ElasticHeight = signal(40);
+    protected readonly v4InternationalPhone = new FormControl('', {nonNullable: true});
     protected readonly v4FloatingBackground = signal('rgb(128, 0, 0)');
 
     protected get availableDayNumbers(): string {
