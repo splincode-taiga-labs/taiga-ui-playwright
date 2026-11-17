@@ -679,7 +679,7 @@ import {
                     <h2>ActionBar</h2>
                     <tui-action-bar data-testid="v4-action-bar" [expanded]="v4ActionBarExpanded()" size="m">
                         <span>Selection actions</span>
-                        <button tuiButton type="button" (click)="v4ActionBarClickCount.update(count => count + 1)">Approve v4 selection</button>
+                        <button tuiButton type="button" (click)="v4ActionBarClickCount.set(v4ActionBarClickCount() + 1)">Approve v4 selection</button>
                     </tui-action-bar>
                     <button tuiButton type="button" (click)="v4ActionBarExpanded.set(!v4ActionBarExpanded())">Toggle v4 action bar</button>
                     <output data-testid="v4-action-bar-model">{{ v4ActionBarClickCount() }}</output>
