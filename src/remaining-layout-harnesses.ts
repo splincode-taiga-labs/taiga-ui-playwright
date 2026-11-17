@@ -30,7 +30,16 @@ export class TuiMessageHarness {
 export class TuiDrawerHarness {
     public constructor(public readonly host: Locator) {}
     public async expectState(direction: string, overlay: boolean): Promise<void> {
-        await expect(this.host).toHaveAttribute('data-direction', direction);
+        // Taiga UI 4 exposes direction through the slide animation CSS variable;
+        // newer versions can expose the data-direction attribute instead.
+        if (await this.host.getAttribute('data-direction') !== null) {
+            await expect(this.host).toHaveAttribute('data-direction', direction);
+        } else {
+            const offset = direction === 'left' ? 'translateX(-100%)' : 'translateX(100%)';
+            await expect.poll(() => this.host.evaluate((node) =>
+                getComputedStyle(node).getPropertyValue('--tui-from').trim(),
+            )).toBe(offset);
+        }
         if (overlay) {
             await expect(this.host).toHaveClass(/(?:^|\s)_overlay(?:\s|$)/);
         } else {
