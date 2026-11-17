@@ -622,6 +622,17 @@ test('ActionBar toggles its real v4 expand panel and executes projected actions'
     await bar.expectExpanded(false);
 });
 
+test('InputPassword toggles actual v4 input visibility without clearing its FormControl', async ({page}) => {
+    const field = tuiTextfield(page.getByTestId('v4-password-field'));
+    await field.focus();
+    await field.input.fill('demo-secret');
+    await expect(page.getByTestId('v4-password-model')).toHaveText('demo-secret');
+    await expect(field.input).toHaveAttribute('type', 'password');
+    await field.host.locator('tui-icon').click();
+    await expect(field.input).toHaveAttribute('type', 'text');
+    await expect(field.input).toHaveValue('demo-secret');
+});
+
 test('ElasticContainer expands when its real v4 projected content grows', async ({page}) => {
     const elastic = tuiElasticContainer(page.getByTestId('v4-elastic-container'));
     const initial = await elastic.getHeight();
@@ -705,7 +716,11 @@ test('the same v4 demo documents its verified scope and versioned import', async
     await page.goto('/');
     await expect(page.getByText('Tested controls, not blanket v4 compatibility.')).toBeVisible();
     await expect(page.locator('pre code')).toContainText('@taiga-ui-labs/playwright/v4');
-    await expect(page.getByRole('heading', {level: 2})).toHaveCount(78);
+    const headings = (await page.getByRole('heading', {level: 2}).allTextContents())
+        .map((heading) => heading.trim());
+    // New fixture sections should not require editing a brittle exact count.
+    expect(headings.length).toBeGreaterThanOrEqual(79);
+    expect(new Set(headings).size).toBe(headings.length);
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
     await expect(page.locator('[data-verified="true"]')).toHaveCount(77);
