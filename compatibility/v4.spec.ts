@@ -19,6 +19,7 @@ const {
     tuiNotification, tuiBadgedContent, tuiButtonLoading, tuiStatus,
     tuiIcon, tuiLabel, tuiFiles, tuiTree, tuiComment, tuiMessage, tuiRoot, tuiCompass,
     tuiPin, tuiSlides, tuiShrinkWrap, tuiElasticContainer, tuiFloatingContainer,
+    tuiAlert,
     tuiInternationalPhone,
     tuiDrawer, tuiPush,
     tuiItemsWithMore,
@@ -605,6 +606,15 @@ test('Root bootstraps content and popup portals in the real v4 Angular fixture',
     const root = tuiRoot(page.locator('tui-root'));
     await root.expectBootstrapped();
     await expect(root.host).toHaveAttribute('tuiRootV', /^4\./);
+});
+
+test('Alert renders a real v4 popup and dismisses it via its close action', async ({page}) => {
+    await page.getByRole('button', {name: 'Show v4 alert'}).click();
+    const alert = tuiAlert(page.locator('tui-alert').last());
+    await alert.expectAlert('Saved successfully');
+    await expect(alert.host).toContainText('Browser alert');
+    await alert.host.locator('button[tuiIconButton]').click();
+    await expect(page.locator('tui-alert')).toHaveCount(0);
 });
 
 test('Comment renders its default direction on the real v4 directive', async ({page}) => {
