@@ -57,6 +57,37 @@ for (const tag of ['tui-dropdown-mobile', 'tui-sheet-dialog']) {
     });
 }
 
+test('ignores an exiting portal when an entering portal reuses the same aria-controls ID', async ({page}) => {
+    await page.setContent(`
+        <tui-textfield data-testid="field">
+            <input tuiSelect aria-controls="shared-list" aria-expanded="false">
+        </tui-textfield>
+        <tui-dropdown id="shared-list" class="tui-leave">
+            <tui-data-list><button tuiOption type="button">Stale</button></tui-data-list>
+        </tui-dropdown>
+        <tui-dropdown id="shared-list" class="tui-enter" hidden>
+            <tui-data-list><button tuiOption type="button">Estonia</button></tui-data-list>
+        </tui-dropdown>
+        <script>
+            const input = document.querySelector('input');
+            const active = document.querySelector('tui-dropdown.tui-enter');
+            input.addEventListener('click', () => {
+                active.hidden = false;
+                input.setAttribute('aria-expanded', 'true');
+            });
+            active.querySelector('button').addEventListener('click', () => {
+                input.value = 'Estonia';
+                active.hidden = true;
+                input.setAttribute('aria-expanded', 'false');
+            });
+        </script>
+    `);
+
+    const select = tuiSelect(page.getByTestId('field'));
+    await select.selectOption('Estonia');
+    await expect(select.input).toHaveValue('Estonia');
+});
+
 test('waits for an asynchronously mounted portal and follows a changed aria-controls ID', async ({page}) => {
     await page.setContent(`
         <tui-textfield data-testid="field">
