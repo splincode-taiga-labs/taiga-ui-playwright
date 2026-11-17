@@ -677,9 +677,12 @@ import {
                 </section>
                 <section>
                     <h2>InputPhoneInternational</h2>
-                    <tui-input-phone-international countryIsoCode="US" data-testid="v4-international-phone" [formControl]="v4InternationalPhone">
-                        International contact
-                    </tui-input-phone-international>
+                    <button tuiButton type="button" (click)="v4InternationalPhoneShown.set(true)">Mount v4 international phone</button>
+                    @if (v4InternationalPhoneShown()) {
+                        <tui-input-phone-international countryIsoCode="US" data-testid="v4-international-phone" [formControl]="v4InternationalPhone">
+                            International contact
+                        </tui-input-phone-international>
+                    }
                     <output data-testid="v4-international-phone-model">{{ v4InternationalPhone.value }}</output>
                 </section>
                 <section>
@@ -906,6 +909,7 @@ export class DemoV4 {
     protected readonly v4WrapWidth = signal(200);
     protected readonly v4ElasticHeight = signal(40);
     protected readonly v4InternationalPhone = new FormControl('', {nonNullable: true});
+    protected readonly v4InternationalPhoneShown = signal(false);
     protected readonly v4FloatingBackground = signal('rgb(128, 0, 0)');
 
     protected get availableDayNumbers(): string {
