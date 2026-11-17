@@ -11,8 +11,10 @@ export interface TuiOptionsFieldOptions {
     readonly optionSelector?: string;
 }
 
+// During v4 enter/leave animations, the outgoing and incoming portals can
+// temporarily share aria-controls IDs. Only the entering/stable portal owns input.
 const OVERLAY_SELECTOR =
-    'tui-dropdown:visible, tui-dropdown-mobile:visible, tui-sheet-dialog:visible';
+    'tui-dropdown:not(.tui-leave):visible, tui-dropdown-mobile:not(.tui-leave):visible, tui-sheet-dialog:not(.tui-leave):visible';
 // Taiga adds a decorative .t-empty element with tuiOption when no results match.
 // Its own keyboard selector explicitly ignores .t-empty as a non-interactive placeholder.
 const DEFAULT_OPTION_SELECTOR = 'tui-data-list [tuiOption]:not(.t-empty)';

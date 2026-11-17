@@ -55,6 +55,8 @@ import {
     TuiFloatingContainer,
     TuiDrawer,
     TuiPush,
+    TuiItemsWithMore,
+    TuiActionBar,
     TuiPager,
     TuiRadioList,
     TuiRange,
@@ -125,8 +127,10 @@ import {
         TuiShrinkWrap,
         TuiElasticContainer,
         TuiFloatingContainer,
-        TuiDrawer,
-        TuiPush,
+    TuiDrawer,
+    TuiPush,
+    TuiItemsWithMore,
+        TuiActionBar,
         TuiPager,
         TuiRadioList,
         TuiRange,
@@ -678,6 +682,27 @@ import {
                     <div tuiComment="top" data-testid="v4-comment">A note from the author</div>
                 </section>
                 <section>
+                    <h2>ActionBar</h2>
+                    <tui-action-bar data-testid="v4-action-bar" [expanded]="v4ActionBarExpanded()" size="m">
+                        <span>Selection actions</span>
+                        <button tuiButton type="button" (click)="v4ActionBarClickCount.set(v4ActionBarClickCount() + 1)">Approve v4 selection</button>
+                    </tui-action-bar>
+                    <button tuiButton type="button" (click)="v4ActionBarExpanded.set(!v4ActionBarExpanded())">Toggle v4 action bar</button>
+                    <output data-testid="v4-action-bar-model">{{ v4ActionBarClickCount() }}</output>
+                </section>
+                <section>
+                    <h2>ItemsWithMore</h2>
+                    <tui-items-with-more data-testid="v4-items-with-more" style="width: 800px; flex: none" [itemsLimit]="v4ItemsLimit()">
+                        <ng-template tuiItem><span>Alpha</span></ng-template>
+                        <ng-template tuiItem><span>Beta</span></ng-template>
+                        <ng-template tuiItem><span>Gamma</span></ng-template>
+                        <ng-template tuiItem><span>Delta</span></ng-template>
+                        <ng-template tuiMore let-lastIndex><span>More items</span></ng-template>
+                    </tui-items-with-more>
+                    <button tuiButton type="button" (click)="v4ItemsLimit.set(5)">Expand v4 items with more</button>
+                    <output data-testid="v4-items-limit-model">{{ v4ItemsLimit() }}</output>
+                </section>
+                <section>
                     <h2>Drawer</h2>
                     <button tuiButton type="button" (click)="v4DrawerVisible.set(true)">Open v4 drawer</button>
                     @if (v4DrawerVisible()) {
@@ -922,11 +947,14 @@ export class DemoV4 {
     protected readonly v4SlideDirection = signal(0);
     protected readonly v4SlideTitle = signal('First slide');
     protected readonly v4WrapWidth = signal(200);
+    protected readonly v4ActionBarExpanded = signal(false);
+    protected readonly v4ActionBarClickCount = signal(0);
     protected readonly v4ElasticHeight = signal(40);
     protected readonly v4DrawerVisible = signal(false);
     protected readonly v4DrawerDirection = signal<'left' | 'right'>('right');
     protected readonly v4DrawerOverlay = signal(false);
     protected readonly v4PushShown = signal(false);
+    protected readonly v4ItemsLimit = signal(2);
     protected readonly v4FloatingBackground = signal('rgb(128, 0, 0)');
 
     protected get availableDayNumbers(): string {
