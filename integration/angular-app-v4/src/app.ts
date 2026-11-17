@@ -55,6 +55,7 @@ import {
     TuiFloatingContainer,
     TuiDrawer,
     TuiPush,
+    TuiInputPassword,
     TuiItemsWithMore,
     TuiActionBar,
     TuiPager,
@@ -129,6 +130,7 @@ import {
         TuiFloatingContainer,
     TuiDrawer,
     TuiPush,
+    TuiInputPassword,
     TuiItemsWithMore,
         TuiActionBar,
         TuiPager,
@@ -703,6 +705,13 @@ import {
                     <output data-testid="v4-items-limit-model">{{ v4ItemsLimit() }}</output>
                 </section>
                 <section>
+                    <h2>InputPassword</h2>
+                    <tui-textfield data-testid="v4-password-field">
+                        <input tuiInputPassword aria-label="Private password" [formControl]="v4Password" />
+                    </tui-textfield>
+                    <output data-testid="v4-password-model">{{ v4Password.value }}</output>
+                </section>
+                <section>
                     <h2>Drawer</h2>
                     <button tuiButton type="button" (click)="v4DrawerVisible.set(true)">Open v4 drawer</button>
                     @if (v4DrawerVisible()) {
@@ -954,6 +963,7 @@ export class DemoV4 {
     protected readonly v4DrawerDirection = signal<'left' | 'right'>('right');
     protected readonly v4DrawerOverlay = signal(false);
     protected readonly v4PushShown = signal(false);
+    protected readonly v4Password = new FormControl('', {nonNullable: true});
     protected readonly v4ItemsLimit = signal(2);
     protected readonly v4FloatingBackground = signal('rgb(128, 0, 0)');
 
