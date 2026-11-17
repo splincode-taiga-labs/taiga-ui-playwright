@@ -53,6 +53,7 @@ import {
     TuiShrinkWrap,
     TuiElasticContainer,
     TuiFloatingContainer,
+    TuiInputPassword,
     TuiActionBar,
     TuiPager,
     TuiRadioList,
@@ -124,6 +125,7 @@ import {
         TuiShrinkWrap,
         TuiElasticContainer,
         TuiFloatingContainer,
+    TuiInputPassword,
         TuiActionBar,
         TuiPager,
         TuiRadioList,
@@ -685,6 +687,13 @@ import {
                     <output data-testid="v4-action-bar-model">{{ v4ActionBarClickCount() }}</output>
                 </section>
                 <section>
+                    <h2>InputPassword</h2>
+                    <tui-textfield data-testid="v4-password-field">
+                        <input tuiInputPassword aria-label="Private password" [formControl]="v4Password" />
+                    </tui-textfield>
+                    <output data-testid="v4-password-model">{{ v4Password.value }}</output>
+                </section>
+                <section>
                     <h2>ElasticContainer</h2>
                     <tui-elastic-container data-testid="v4-elastic-container">
                         <div [style.height.px]="v4ElasticHeight()" style="width: 100%">Resizable content</div>
@@ -909,6 +918,7 @@ export class DemoV4 {
     protected readonly v4ActionBarExpanded = signal(false);
     protected readonly v4ActionBarClickCount = signal(0);
     protected readonly v4ElasticHeight = signal(40);
+    protected readonly v4Password = new FormControl('', {nonNullable: true});
     protected readonly v4FloatingBackground = signal('rgb(128, 0, 0)');
 
     protected get availableDayNumbers(): string {
