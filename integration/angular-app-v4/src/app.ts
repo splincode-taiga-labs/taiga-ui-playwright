@@ -12,6 +12,7 @@ import {
     TuiScrollbar,
     TuiSpinButton,
     TuiDialogService,
+    TuiAlertService,
     TuiError,
     TuiExpandComponent,
     TuiIcon,
@@ -692,6 +693,10 @@ import {
                     <output data-testid="v4-label-model">{{ v4LabelValue.value }}</output>
                 </section>
                 <section>
+                    <h2>Alert</h2>
+                    <button tuiButton type="button" (click)="showV4Alert()">Show v4 alert</button>
+                </section>
+                <section>
                     <h2>Comment</h2>
                     <div tuiComment="top" data-testid="v4-comment">A note from the author</div>
                 </section>
@@ -902,6 +907,7 @@ import {
 })
 export class DemoV4 {
     private readonly dialog = inject(TuiDialogService);
+    private readonly alerts = inject(TuiAlertService);
     protected readonly importCode = "import {tuiButton, tuiSelect, tuiComboBox, tuiCheckbox, tuiRadio, tuiSwitch, tuiTabs, tuiSegmented, tuiTextarea, tuiPagination, tuiStepper, tuiInputNumber, tuiLink, tuiBadge, tuiChip, tuiBadgeNotification, tuiLike, tuiProgress, tuiLoader, tuiExpand, tuiAvatar, tuiTextfield, tuiCalendar, tuiInputDate, tuiMultiSelect, tuiDialog, tuiAccordion, tuiRating, tuiBreadcrumbs, tuiInputTime, tuiInputPhone, tuiInputSlider, tuiInputDateRange, tuiInputDateMulti, tuiInputMonth, tuiInputMonthRange, tuiInputDateTime, tuiInputYear, tuiInputRange, tuiInputChip, tuiInputPin, tuiInputColor, tuiInputInline, tuiCalendarMonth, tuiCounter, tuiRadioList, tuiSlider, tuiRange, tuiCalendarRange, tuiSpinButton, tuiPager, tuiDataListWrapper, tuiDataList, tuiScrollbar, tuiCarousel, tuiLineClamp, tuiError, tuiFilter, tuiBlock, tuiPulse, tuiNotification, tuiBadgedContent, tuiButtonLoading, tuiStatus, tuiIcon, tuiLabel, tuiFiles, tuiTree} from '@taiga-ui-labs/playwright/v4';";
     protected readonly componentInventory = V4_COMPONENTS;
     protected readonly verifiedCount = V4_COMPONENTS.filter((component) => component.verified).length;
@@ -1007,6 +1013,14 @@ export class DemoV4 {
     protected activeSegment = 0;
     protected pageIndex = 0;
     protected stepIndex = 0;
+
+    protected showV4Alert(): void {
+        this.alerts.open('Saved successfully', {
+            label: 'Browser alert',
+            appearance: 'positive',
+            autoClose: 0,
+        }).subscribe();
+    }
 
     protected showConfirmation(): void {
         this.dialogResult.set('pending');

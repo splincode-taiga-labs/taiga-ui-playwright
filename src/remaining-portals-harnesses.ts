@@ -4,7 +4,13 @@ export class TuiAlertHarness {
     public constructor(public readonly host: Locator) {}
     public async expectAlert(message: string): Promise<void> {
         await expect(this.host).toBeVisible();
-        await expect(this.host).toHaveAttribute('tuiAlert', '');
+        // The v4 alert service mounts a <tui-alert role="alert"> portal,
+        // while directive-based alerts retain the tuiAlert attribute.
+        if (await this.host.evaluate((element) => element.localName === 'tui-alert')) {
+            await expect(this.host).toHaveAttribute('role', 'alert');
+        } else {
+            await expect(this.host).toHaveAttribute('tuiAlert', '');
+        }
         await expect(this.host).toContainText(message);
     }
 }
