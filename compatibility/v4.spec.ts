@@ -1,3 +1,4 @@
+import {readFileSync} from 'node:fs';
 import {expect, test} from '@playwright/test';
 
 import {packageApi} from './api';
@@ -838,6 +839,28 @@ test('Tree exposes nested v4 nodes and updates when Angular removes a node', asy
     await page.getByRole('button', {name: 'Remove v4 tree README'}).click();
     await expect(tree.host.getByRole('treeitem', {name: 'README.md', exact: true})).toHaveCount(0);
     await tree.expectNode('main.ts');
+});
+
+test('v4 source inventory and docs matrices agree on browser-verified coverage', () => {
+    const read = (path: string): string => readFileSync(new URL(path, import.meta.url), 'utf8');
+    const source = read('../integration/angular-app-v4/src/component-inventory.ts');
+    const inventory = read('../docs/taiga-v4-inventory.md');
+    const coverage = read('../docs/taiga-v4-coverage.md');
+    const readme = read('../README.md');
+    const compatibility = read('../docs/api-upstream-compatibility.md');
+    const verified = (source.match(/"verified": true/g) ?? []).length;
+    const total = (source.match(/"name": "/g) ?? []).length;
+    const inventoryVerified = (inventory.match(/\| Verified on 4\.106 \|/g) ?? []).length;
+    const documentedBehaviors = (coverage.match(/^\| [^|\n]+ \| `tui[^`]+` \|.+\|$/gm) ?? []).length;
+
+    expect(total).toBe(123);
+    expect(inventoryVerified).toBe(verified);
+    expect(documentedBehaviors).toBe(verified);
+    expect(inventory).toContain(`Only **${verified} components are browser-verified**`);
+    expect(inventory).toContain(`The other **${total - verified}** source directories`);
+    expect(readme).toContain(`targeted tests for ${verified} controls`);
+    expect(readme).toContain(`workspace tests ${verified} controls`);
+    expect(compatibility).toContain(`${verified} real v4 controls are browser-tested`);
 });
 
 test('the same v4 demo documents its verified scope and versioned import', async ({page}) => {
