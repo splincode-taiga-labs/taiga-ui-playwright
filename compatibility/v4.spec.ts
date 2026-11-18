@@ -26,6 +26,8 @@ const {
     tuiTablePagination,
     tuiReorder,
     tuiTable,
+    tuiConfirm,
+    tuiToast,
     tuiInternationalPhone,
     tuiDrawer, tuiPush,
     tuiItemsWithMore,
@@ -693,6 +695,27 @@ test('Table renders v4 rows, changes table size, and updates reactive row conten
     await expect(page.getByTestId('v4-table-model')).toHaveText('Alice / Bob');
 });
 
+test('Confirm uses real v4 dialog service for accept and reject decisions', async ({page}) => {
+    await page.getByRole('button', {name: 'Open v4 confirmation', exact: true}).click();
+    const confirm = tuiConfirm(page.locator('tui-confirm').last());
+    await confirm.expectContent('Publish this v4 draft?');
+    await confirm.decide(false, 'Cancel');
+    await expect(page.getByTestId('v4-confirm-result')).toHaveText('rejected');
+
+    await page.getByRole('button', {name: 'Open v4 confirmation', exact: true}).click();
+    await confirm.expectContent('Publish this v4 draft?');
+    await confirm.decide(true, 'Proceed');
+    await expect(page.getByTestId('v4-confirm-result')).toHaveText('accepted');
+});
+
+test('Toast displays the real v4 status portal and dismisses through its close button', async ({page}) => {
+    await page.getByRole('button', {name: 'Show v4 toast', exact: true}).click();
+    const toast = tuiToast(page.locator('tui-toast').last());
+    await toast.expectState('Saved v4 settings', 'positive');
+    await toast.close();
+    await expect(page.locator('tui-toast')).toHaveCount(0);
+});
+
 test('Comment renders its default direction on the real v4 directive', async ({page}) => {
     const comment = tuiComment(page.getByTestId('v4-comment'));
     await comment.expectDirection('top');
@@ -870,7 +893,7 @@ test('the same v4 demo documents its verified scope and versioned import', async
     const headings = (await page.getByRole('heading', {level: 2}).allTextContents())
         .map((heading) => heading.trim());
     // New fixture sections should not require editing a brittle exact count.
-    expect(headings.length).toBeGreaterThanOrEqual(89);
+    expect(headings.length).toBeGreaterThanOrEqual(91);
     expect(new Set(headings).size).toBe(headings.length);
     await expect(page.getByText('This demo exercises 89 real Taiga UI controls', {exact: false})).toBeVisible();
     await page.getByText('Browse the Taiga UI 4 component inventory').click();

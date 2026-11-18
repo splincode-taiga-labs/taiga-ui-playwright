@@ -24,7 +24,7 @@ export class TuiToastHarness {
     public constructor(public readonly host: Locator) {}
 
     public get closeButton(): Locator {
-        return this.host.locator('button[tuiButtonX]');
+        return this.host.locator('button[tuiButtonX], button[tuiIconButton]');
     }
 
     public async expectState(message: string, appearance: string): Promise<void> {
