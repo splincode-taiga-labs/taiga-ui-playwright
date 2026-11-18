@@ -3,6 +3,7 @@ import phoneMetadata from 'libphonenumber-js/metadata.min.json';
 import {of} from 'rxjs';
 
 import {V4_COMPONENTS} from './component-inventory';
+import {V4TilesFixture} from './tiles-fixture';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {TuiDay, TuiDayRange, TuiItem, TuiMonth, TuiMonthRange, TuiTime, TuiYear} from '@taiga-ui/cdk';
 import {
@@ -106,6 +107,7 @@ import {
     selector: 'app-demo-v4',
     imports: [
         ReactiveFormsModule,
+        V4TilesFixture,
         TuiRoot,
         TuiFullscreen,
         TuiTextfield,
@@ -714,6 +716,7 @@ import {
                     }
                     <output data-testid="v4-fullscreen-model">{{ v4FullscreenOpen() }}</output>
                 </section>
+                <app-v4-tiles-fixture />
                 <section>
                     <h2>Comment</h2>
                     <div tuiComment="top" data-testid="v4-comment">A note from the author</div>
