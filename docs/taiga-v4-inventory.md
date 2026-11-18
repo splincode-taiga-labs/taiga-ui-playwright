@@ -2,7 +2,7 @@
 
 Derived from the [upstream `v4.x` branch](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects), not from the current v5 catalog. This is a snapshot of **123 component directories** in Core, Kit, Mobile, Layout, Table and Commerce. It excludes standalone directives, pipes, legacy and experimental packages. Source directory availability may differ between early and late 4.x releases.
 
-Only **84 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **39** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
+Only **86 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **37** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
 
 A mapped harness indicates a name-based link to the package's public API, **not** that the corresponding v4 DOM contract works. A dash means no unambiguous direct mapping was found.
 
@@ -15,7 +15,7 @@ A mapped harness indicates a name-based link to the package's public API, **not*
 | Core | [`dialog`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/dialog) | `tuiDialog` | Verified on 4.106 |
 | Core | [`error`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/error) | `tuiError` | Verified on 4.106 |
 | Core | [`expand`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/expand) | `tuiExpand` | Verified on 4.106 |
-| Core | [`fullscreen`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/fullscreen) | `tuiFullscreen` | Not verified |
+| Core | [`fullscreen`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/fullscreen) | `tuiFullscreen` | Verified on 4.106 |
 | Core | [`icon`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/icon) | `tuiIcon` | Verified on 4.106 |
 | Core | [`label`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/label) | `tuiLabel` | Verified on 4.106 |
 | Core | [`link`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/link) | `tuiLink` | Verified on 4.106 |
@@ -97,7 +97,7 @@ A mapped harness indicates a name-based link to the package's public API, **not*
 | Kit | [`switch`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/switch) | `tuiSwitch` | Verified on 4.106 |
 | Kit | [`tabs`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/tabs) | `tuiTabs` | Verified on 4.106 |
 | Kit | [`textarea`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/textarea) | `tuiTextarea` | Verified on 4.106 |
-| Kit | [`tiles`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/tiles) | `tuiTiles` | Not verified |
+| Kit | [`tiles`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/tiles) | `tuiTiles` | Verified on 4.106 |
 | Kit | [`toast`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/toast) | `tuiToast` | Not verified |
 | Kit | [`tree`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/tree) | `tuiTree` | Verified on 4.106 |
 | Mobile | [`bottom-sheet`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/addon-mobile/components/bottom-sheet) | `tuiBottomSheet` | Not verified |
