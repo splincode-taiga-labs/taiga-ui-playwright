@@ -24,6 +24,7 @@ const {
     tuiTiles,
     tuiTablePagination,
     tuiReorder,
+    tuiTable,
     tuiInternationalPhone,
     tuiDrawer, tuiPush,
     tuiItemsWithMore,
@@ -676,6 +677,21 @@ test('Reorder toggles enabled items and moves rows through real v4 drag handles'
     await expect(page.getByTestId('v4-reorder-enabled')).toHaveText('Beta / Gamma');
 });
 
+test('Table renders v4 rows, changes table size, and updates reactive row content', async ({page}) => {
+    await page.getByRole('button', {name: 'Mount v4 table'}).click();
+    const table = tuiTable(page.getByTestId('v4-table'));
+    await table.expectSize('s');
+    await expect(table.rows).toHaveCount(4);
+    await expect(table.rows.nth(1)).toContainText('Alice');
+
+    await page.getByRole('button', {name: 'Expand v4 table size'}).click();
+    await table.expectSize('l');
+    await page.getByRole('button', {name: 'Remove last v4 table row'}).click();
+    await expect(table.rows).toHaveCount(3);
+    await expect(table.host).not.toContainText('Carol');
+    await expect(page.getByTestId('v4-table-model')).toHaveText('Alice / Bob');
+});
+
 test('Comment renders its default direction on the real v4 directive', async ({page}) => {
     const comment = tuiComment(page.getByTestId('v4-comment'));
     await comment.expectDirection('top');
@@ -831,7 +847,7 @@ test('the same v4 demo documents its verified scope and versioned import', async
     const headings = (await page.getByRole('heading', {level: 2}).allTextContents())
         .map((heading) => heading.trim());
     // New fixture sections should not require editing a brittle exact count.
-    expect(headings.length).toBeGreaterThanOrEqual(88);
+    expect(headings.length).toBeGreaterThanOrEqual(89);
     expect(new Set(headings).size).toBe(headings.length);
     await expect(page.getByText('This demo exercises 86 real Taiga UI controls', {exact: false})).toBeVisible();
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
