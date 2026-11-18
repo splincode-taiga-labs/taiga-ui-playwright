@@ -4,6 +4,7 @@ import {of} from 'rxjs';
 
 import {V4_COMPONENTS} from './component-inventory';
 import {V4TilesFixture} from './tiles-fixture';
+import {V4TablePaginationFixture} from './table-pagination-fixture';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {TuiDay, TuiDayRange, TuiItem, TuiMonth, TuiMonthRange, TuiTime, TuiYear} from '@taiga-ui/cdk';
 import {
@@ -108,6 +109,7 @@ import {
     imports: [
         ReactiveFormsModule,
         V4TilesFixture,
+        V4TablePaginationFixture,
         TuiRoot,
         TuiFullscreen,
         TuiTextfield,
@@ -717,6 +719,7 @@ import {
                     <output data-testid="v4-fullscreen-model">{{ v4FullscreenOpen() }}</output>
                 </section>
                 <app-v4-tiles-fixture />
+                <app-v4-table-pagination-fixture />
                 <section>
                     <h2>Comment</h2>
                     <div tuiComment="top" data-testid="v4-comment">A note from the author</div>
