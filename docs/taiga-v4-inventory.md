@@ -2,13 +2,13 @@
 
 Derived from the [upstream `v4.x` branch](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects), not from the current v5 catalog. This is a snapshot of **123 component directories** in Core, Kit, Mobile, Layout, Table and Commerce. It excludes standalone directives, pipes, legacy and experimental packages. Source directory availability may differ between early and late 4.x releases.
 
-Only **83 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **40** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
+Only **84 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **39** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
 
 A mapped harness indicates a name-based link to the package's public API, **not** that the corresponding v4 DOM contract works. A dash means no unambiguous direct mapping was found.
 
 | Package | v4 component | Mapped harness | v4 browser result |
 | --- | --- | --- | --- |
-| Core | [`alert`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/alert) | `tuiAlert` | Not verified |
+| Core | [`alert`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/alert) | `tuiAlert` | Verified on 4.106 |
 | Core | [`button`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/button) | `tuiButton` | Verified on 4.106 |
 | Core | [`calendar`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/calendar) | `tuiCalendar` | Verified on 4.106 |
 | Core | [`data-list`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/core/components/data-list) | `tuiDataList` | Verified on 4.106 |

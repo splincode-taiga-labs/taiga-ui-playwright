@@ -13,7 +13,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "alert",
         "path": "projects/core/components/alert",
         "helper": "tuiAlert",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Core",
