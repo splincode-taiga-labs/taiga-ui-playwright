@@ -22,6 +22,7 @@ const {
     tuiAlert,
     tuiFullscreen,
     tuiTiles,
+    tuiTablePagination,
     tuiInternationalPhone,
     tuiDrawer, tuiPush,
     tuiItemsWithMore,
@@ -641,6 +642,23 @@ test('Tiles reorders real v4 projected tile components by pointer drag', async (
     await expect(page.getByTestId('v4-tiles-model')).toHaveText('2/0/1');
 });
 
+test('TablePagination updates the v4 page and size via native navigation controls', async ({page}) => {
+    await page.getByRole('button', {name: 'Mount v4 table pagination'}).click();
+    const pagination = tuiTablePagination(page.getByTestId('v4-table-pagination'));
+    await pagination.expectRange(1, 10);
+    await expect(page.getByTestId('v4-table-pagination-model')).toHaveText('0 / 10');
+    await pagination.nextPage();
+    await pagination.expectRange(11, 20);
+    await expect(page.getByTestId('v4-table-pagination-model')).toHaveText('1 / 10');
+    await pagination.nextPage();
+    await pagination.expectRange(21, 25);
+    await expect(page.getByTestId('v4-table-pagination-model')).toHaveText('2 / 10');
+    await expect(pagination.host.locator('button.t-button:not(.t-button_back)')).toBeDisabled();
+    await pagination.host.locator('button.t-button_back').click();
+    await pagination.expectRange(11, 20);
+    await expect(page.getByTestId('v4-table-pagination-model')).toHaveText('1 / 10');
+});
+
 test('Comment renders its default direction on the real v4 directive', async ({page}) => {
     const comment = tuiComment(page.getByTestId('v4-comment'));
     await comment.expectDirection('top');
@@ -796,7 +814,7 @@ test('the same v4 demo documents its verified scope and versioned import', async
     const headings = (await page.getByRole('heading', {level: 2}).allTextContents())
         .map((heading) => heading.trim());
     // New fixture sections should not require editing a brittle exact count.
-    expect(headings.length).toBeGreaterThanOrEqual(86);
+    expect(headings.length).toBeGreaterThanOrEqual(87);
     expect(new Set(headings).size).toBe(headings.length);
     await expect(page.getByText('This demo exercises 86 real Taiga UI controls', {exact: false})).toBeVisible();
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
