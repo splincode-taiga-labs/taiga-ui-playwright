@@ -818,21 +818,21 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "reorder",
         "path": "projects/addon-table/components/reorder",
         "helper": "tuiReorder",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Table",
         "name": "table",
         "path": "projects/addon-table/components/table",
         "helper": "tuiTable",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Table",
         "name": "table-pagination",
         "path": "projects/addon-table/components/table-pagination",
         "helper": "tuiTablePagination",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Commerce",
