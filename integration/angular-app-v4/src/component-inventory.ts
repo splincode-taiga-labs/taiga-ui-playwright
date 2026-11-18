@@ -503,7 +503,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "preview",
         "path": "projects/kit/components/preview",
         "helper": "tuiPreview",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",

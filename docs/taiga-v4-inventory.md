@@ -2,7 +2,7 @@
 
 Derived from the [upstream `v4.x` branch](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects), not from the current v5 catalog. This is a snapshot of **123 component directories** in Core, Kit, Mobile, Layout, Table and Commerce. It excludes standalone directives, pipes, legacy and experimental packages. Source directory availability may differ between early and late 4.x releases.
 
-Only **92 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **31** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
+Only **93 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **30** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
 
 A mapped harness indicates a name-based link to the package's public API, **not** that the corresponding v4 DOM contract works. A dash means no unambiguous direct mapping was found.
 
@@ -78,7 +78,7 @@ A mapped harness indicates a name-based link to the package's public API, **not*
 | Kit | [`pagination`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/pagination) | `tuiPagination` | Verified on 4.106 |
 | Kit | [`pdf-viewer`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/pdf-viewer) | `tuiPdfViewer` | Not verified |
 | Kit | [`pin`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/pin) | `tuiPin` | Verified on 4.106 |
-| Kit | [`preview`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/preview) | `tuiPreview` | Not verified |
+| Kit | [`preview`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/preview) | `tuiPreview` | Verified on 4.106 |
 | Kit | [`progress`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/progress) | `tuiProgress` | Verified on 4.106 |
 | Kit | [`pulse`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/pulse) | `tuiPulse` | Verified on 4.106 |
 | Kit | [`push`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/push) | `tuiPush` | Verified on 4.106 |
