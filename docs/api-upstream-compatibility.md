@@ -44,7 +44,7 @@ test('update country and city', async ({page}) => {
 
 | Dimension | Status |
 | --- | --- |
-| Taiga UI | Root: **5.28.0**; `/v4`: **4.106.0**. Permanent demo workspaces exercise the package's built API in Chromium. 83 real v4 controls are browser-tested; other components and versions remain unverified |
+| Taiga UI | Root: **5.28.0**; `/v4`: **4.106.0**. Permanent demo workspaces exercise the package's built API in Chromium. 84 real v4 controls are browser-tested; other components and versions remain unverified |
 | Angular | Fixture tested with **20.3.0** only |
 | Playwright | Peer range **>=1.51 <2** is declared; the current v4/v5 compatibility suite runs on **1.64.1**, not the entire peer range |
 | Node | Package declares **>=20**; current workspace/browser CI runs on **24**. Node 20 verification was performed in the earlier consumer pipeline but is no longer rerun by this PR |

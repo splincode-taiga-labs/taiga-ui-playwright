@@ -772,12 +772,12 @@ test('the same v4 demo documents its verified scope and versioned import', async
     const headings = (await page.getByRole('heading', {level: 2}).allTextContents())
         .map((heading) => heading.trim());
     // New fixture sections should not require editing a brittle exact count.
-    expect(headings.length).toBeGreaterThanOrEqual(83);
+    expect(headings.length).toBeGreaterThanOrEqual(84);
     expect(new Set(headings).size).toBe(headings.length);
-    await expect(page.getByText('This demo exercises 83 real Taiga UI controls', {exact: false})).toBeVisible();
+    await expect(page.getByText('This demo exercises 84 real Taiga UI controls', {exact: false})).toBeVisible();
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
-    await expect(page.locator('[data-verified="true"]')).toHaveCount(83);
+    await expect(page.locator('[data-verified="true"]')).toHaveCount(84);
     await expect(page.locator('[data-v4-component="Kit/checkbox"]')).toContainText('tuiCheckbox');
     await expect(page.getByRole('link', {name: /Back to Taiga UI 5 docs/})).toHaveAttribute('href', '../');
 });
