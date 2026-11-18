@@ -1,3 +1,4 @@
+import {readFileSync} from 'node:fs';
 import {expect, test} from '@playwright/test';
 
 import {packageApi} from './api';
@@ -840,6 +841,28 @@ test('Tree exposes nested v4 nodes and updates when Angular removes a node', asy
     await tree.expectNode('main.ts');
 });
 
+test('v4 source inventory and docs matrices agree on browser-verified coverage', () => {
+    const read = (path: string): string => readFileSync(new URL(path, import.meta.url), 'utf8');
+    const source = read('../integration/angular-app-v4/src/component-inventory.ts');
+    const inventory = read('../docs/taiga-v4-inventory.md');
+    const coverage = read('../docs/taiga-v4-coverage.md');
+    const readme = read('../README.md');
+    const compatibility = read('../docs/api-upstream-compatibility.md');
+    const verified = (source.match(/"verified": true/g) ?? []).length;
+    const total = (source.match(/"name": "/g) ?? []).length;
+    const inventoryVerified = (inventory.match(/\| Verified on 4\.106 \|/g) ?? []).length;
+    const documentedBehaviors = (coverage.match(/^\| [^|\n]+ \| `tui[^`]+` \|.+\|$/gm) ?? []).length;
+
+    expect(total).toBe(123);
+    expect(inventoryVerified).toBe(verified);
+    expect(documentedBehaviors).toBe(verified);
+    expect(inventory).toContain(`Only **${verified} components are browser-verified**`);
+    expect(inventory).toContain(`The other **${total - verified}** source directories`);
+    expect(readme).toContain(`targeted tests for ${verified} controls`);
+    expect(readme).toContain(`workspace tests ${verified} controls`);
+    expect(compatibility).toContain(`${verified} real v4 controls are browser-tested`);
+});
+
 test('the same v4 demo documents its verified scope and versioned import', async ({page}) => {
     await page.goto('/');
     await expect(page.getByText('Tested controls, not blanket v4 compatibility.')).toBeVisible();
@@ -849,10 +872,10 @@ test('the same v4 demo documents its verified scope and versioned import', async
     // New fixture sections should not require editing a brittle exact count.
     expect(headings.length).toBeGreaterThanOrEqual(89);
     expect(new Set(headings).size).toBe(headings.length);
-    await expect(page.getByText('This demo exercises 86 real Taiga UI controls', {exact: false})).toBeVisible();
+    await expect(page.getByText('This demo exercises 89 real Taiga UI controls', {exact: false})).toBeVisible();
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
     await expect(page.locator('[data-v4-component]')).toHaveCount(123);
-    await expect(page.locator('[data-verified="true"]')).toHaveCount(86);
+    await expect(page.locator('[data-verified="true"]')).toHaveCount(89);
     await expect(page.locator('[data-v4-component="Kit/checkbox"]')).toContainText('tuiCheckbox');
     await expect(page.getByRole('link', {name: /Back to Taiga UI 5 docs/})).toHaveAttribute('href', '../');
 });
