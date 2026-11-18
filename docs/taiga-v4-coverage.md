@@ -15,6 +15,8 @@ The local v4 Angular fixture runs real Taiga UI v4 controls in CI, and `compatib
 | ItemsWithMore | `tuiItemsWithMore` | Limit projected items, show overflow, then expand to all items (PR #120) |
 | Push | `tuiPush` | Render notification content and dismiss it through close output (PR #121) |
 | Alert | `tuiAlert` | Open a live v4 alert portal through `TuiAlertService`, verify label/text, then dismiss via close button (PR #125) |
+| Fullscreen | `tuiFullscreen` | Mount a real v4 nested root, enter the browser Fullscreen API and exit while checking the Angular signal (PR #127) |
+| Tiles | `tuiTiles` | Drag the first tile to the last slot, verify CSS order and the Angular order map (PR #128) |
 | Root | `tuiRoot` | Real v4 Angular fixture and Chromium browser behavior in PR #117 |
 | Comment | `tuiComment` | Real v4 Angular fixture and Chromium browser behavior in PR #117 |
 | Compass | `tuiCompass` | Real v4 Angular fixture and Chromium browser behavior in PR #117 |
@@ -93,7 +95,7 @@ The local v4 Angular fixture runs real Taiga UI v4 controls in CI, and `compatib
 | Files | `tuiFiles` | Expand a collapsed group to show three projected file components |
 | Tree | `tuiTree` | Find nested tree nodes and verify a removed Angular node disappears |
 
-**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 39 v4 inventory components and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
+**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 37 v4 inventory components and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
 
 ## v4 component inventory
 

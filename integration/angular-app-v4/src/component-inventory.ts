@@ -62,7 +62,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "fullscreen",
         "path": "projects/core/components/fullscreen",
         "helper": "tuiFullscreen",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Core",
@@ -636,7 +636,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "tiles",
         "path": "projects/kit/components/tiles",
         "helper": "tuiTiles",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
