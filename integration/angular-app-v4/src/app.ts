@@ -7,6 +7,8 @@ import {V4TilesFixture} from './tiles-fixture';
 import {V4TablePaginationFixture} from './table-pagination-fixture';
 import {V4ReorderFixture} from './reorder-fixture';
 import {V4TableFixture} from './table-fixture';
+import {V4ConfirmFixture} from './confirm-fixture';
+import {V4ToastFixture} from './toast-fixture';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {TuiDay, TuiDayRange, TuiItem, TuiMonth, TuiMonthRange, TuiTime, TuiYear} from '@taiga-ui/cdk';
 import {
@@ -114,6 +116,8 @@ import {
         V4TablePaginationFixture,
         V4ReorderFixture,
         V4TableFixture,
+        V4ConfirmFixture,
+        V4ToastFixture,
         TuiRoot,
         TuiFullscreen,
         TuiTextfield,
@@ -726,6 +730,8 @@ import {
                 <app-v4-table-pagination-fixture />
                 <app-v4-reorder-fixture />
                 <app-v4-table-fixture />
+                <app-v4-confirm-fixture />
+                <app-v4-toast-fixture />
                 <section>
                     <h2>Comment</h2>
                     <div tuiComment="top" data-testid="v4-comment">A note from the author</div>
