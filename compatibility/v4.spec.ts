@@ -678,7 +678,7 @@ test('Reorder toggles enabled items and moves rows through real v4 drag handles'
 });
 
 test('Table renders v4 rows, changes table size, and updates reactive row content', async ({page}) => {
-    await page.getByRole('button', {name: 'Mount v4 table'}).click();
+    await page.getByRole('button', {name: 'Mount v4 table', exact: true}).click();
     const table = tuiTable(page.getByTestId('v4-table'));
     await table.expectSize('s');
     await expect(table.rows).toHaveCount(4);
