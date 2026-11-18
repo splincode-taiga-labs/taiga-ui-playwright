@@ -20,6 +20,7 @@ const {
     tuiIcon, tuiLabel, tuiFiles, tuiTree, tuiComment, tuiMessage, tuiRoot, tuiCompass,
     tuiPin, tuiSlides, tuiShrinkWrap, tuiElasticContainer, tuiFloatingContainer,
     tuiAlert,
+    tuiFullscreen,
     tuiInternationalPhone,
     tuiDrawer, tuiPush,
     tuiItemsWithMore,
@@ -617,6 +618,18 @@ test('Alert renders a real v4 popup and dismisses it via its close action', asyn
     await expect(page.locator('tui-alert')).toHaveCount(0);
 });
 
+test('Fullscreen enters and exits the native browser fullscreen state', async ({page}) => {
+    await page.getByRole('button', {name: 'Mount v4 fullscreen'}).click();
+    const fullscreen = tuiFullscreen(page.getByTestId('v4-fullscreen'));
+    await fullscreen.expectRoot();
+    await fullscreen.host.getByRole('button', {name: 'Enter v4 fullscreen'}).click();
+    await expect.poll(() => page.evaluate(() => document.fullscreenElement?.tagName.toLowerCase())).toBe('tui-root');
+    await expect(page.getByTestId('v4-fullscreen-model')).toHaveText('true');
+    await fullscreen.host.getByRole('button', {name: 'Leave v4 fullscreen'}).click();
+    await expect.poll(() => page.evaluate(() => document.fullscreenElement)).toBeNull();
+    await expect(page.getByTestId('v4-fullscreen-model')).toHaveText('false');
+});
+
 test('Comment renders its default direction on the real v4 directive', async ({page}) => {
     const comment = tuiComment(page.getByTestId('v4-comment'));
     await comment.expectDirection('top');
@@ -772,7 +785,7 @@ test('the same v4 demo documents its verified scope and versioned import', async
     const headings = (await page.getByRole('heading', {level: 2}).allTextContents())
         .map((heading) => heading.trim());
     // New fixture sections should not require editing a brittle exact count.
-    expect(headings.length).toBeGreaterThanOrEqual(84);
+    expect(headings.length).toBeGreaterThanOrEqual(85);
     expect(new Set(headings).size).toBe(headings.length);
     await expect(page.getByText('This demo exercises 84 real Taiga UI controls', {exact: false})).toBeVisible();
     await page.getByText('Browse the Taiga UI 4 component inventory').click();

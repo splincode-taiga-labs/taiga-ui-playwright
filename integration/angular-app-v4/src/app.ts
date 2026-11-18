@@ -13,6 +13,7 @@ import {
     TuiSpinButton,
     TuiDialogService,
     TuiAlertService,
+    TuiFullscreen,
     TuiError,
     TuiExpandComponent,
     TuiIcon,
@@ -106,6 +107,7 @@ import {
     imports: [
         ReactiveFormsModule,
         TuiRoot,
+        TuiFullscreen,
         TuiTextfield,
         TuiTextfieldDropdownDirective,
         TuiButton,
@@ -697,6 +699,22 @@ import {
                     <button tuiButton type="button" (click)="showV4Alert()">Show v4 alert</button>
                 </section>
                 <section>
+                    <h2>Fullscreen</h2>
+                    <button tuiButton type="button" (click)="v4FullscreenMounted.set(true)">Mount v4 fullscreen</button>
+                    @if (v4FullscreenMounted()) {
+                        <div
+                            data-testid="v4-fullscreen"
+                            [tuiFullscreen]="v4FullscreenOpen()"
+                            (tuiFullscreenChange)="v4FullscreenOpen.set($event)"
+                        >
+                            <p>Fullscreen sample</p>
+                            <button tuiButton type="button" (click)="v4FullscreenOpen.set(true)">Enter v4 fullscreen</button>
+                            <button tuiButton type="button" (click)="v4FullscreenOpen.set(false)">Leave v4 fullscreen</button>
+                        </div>
+                    }
+                    <output data-testid="v4-fullscreen-model">{{ v4FullscreenOpen() }}</output>
+                </section>
+                <section>
                     <h2>Comment</h2>
                     <div tuiComment="top" data-testid="v4-comment">A note from the author</div>
                 </section>
@@ -989,6 +1007,8 @@ export class DemoV4 {
     protected readonly v4ElasticHeight = signal(40);
     protected readonly v4InternationalPhone = new FormControl('', {nonNullable: true});
     protected readonly v4InternationalPhoneShown = signal(false);
+    protected readonly v4FullscreenMounted = signal(false);
+    protected readonly v4FullscreenOpen = signal(false);
     protected readonly v4DrawerVisible = signal(false);
     protected readonly v4DrawerDirection = signal<'left' | 'right'>('right');
     protected readonly v4DrawerOverlay = signal(false);
