@@ -29,6 +29,7 @@ const {
     tuiConfirm,
     tuiToast,
     tuiNotificationMiddle,
+    tuiPreview,
     tuiInternationalPhone,
     tuiDrawer, tuiPush,
     tuiItemsWithMore,
@@ -725,6 +726,15 @@ test('NotificationMiddle shows the v4 loading portal and closes on Escape', asyn
     await expect(page.getByTestId('v4-middle-notification-state')).toHaveText('closed');
 });
 
+test('Preview rotates real v4 projected content through its toolbar action', async ({page}) => {
+    await page.getByRole('button', {name: 'Mount v4 preview', exact: true}).click();
+    const preview = tuiPreview(page.getByTestId('v4-preview'));
+    await expect(preview.host).toBeVisible();
+    await expect(preview.viewport).toContainText('Preview v4 document');
+    await preview.rotate();
+    await expect(preview.viewport).toHaveCSS('transform', /matrix/);
+});
+
 test('Comment renders its default direction on the real v4 directive', async ({page}) => {
     const comment = tuiComment(page.getByTestId('v4-comment'));
     await comment.expectDirection('top');
@@ -902,7 +912,7 @@ test('the same v4 demo documents its verified scope and versioned import', async
     const headings = (await page.getByRole('heading', {level: 2}).allTextContents())
         .map((heading) => heading.trim());
     // New fixture sections should not require editing a brittle exact count.
-    expect(headings.length).toBeGreaterThanOrEqual(92);
+    expect(headings.length).toBeGreaterThanOrEqual(93);
     expect(new Set(headings).size).toBe(headings.length);
     await expect(page.getByText('This demo exercises 92 real Taiga UI controls', {exact: false})).toBeVisible();
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
