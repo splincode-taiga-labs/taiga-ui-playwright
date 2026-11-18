@@ -23,6 +23,7 @@ const {
     tuiFullscreen,
     tuiTiles,
     tuiTablePagination,
+    tuiReorder,
     tuiInternationalPhone,
     tuiDrawer, tuiPush,
     tuiItemsWithMore,
@@ -659,6 +660,22 @@ test('TablePagination updates the v4 page and size via native navigation control
     await expect(page.getByTestId('v4-table-pagination-model')).toHaveText('1 / 10');
 });
 
+test('Reorder toggles enabled items and moves rows through real v4 drag handles', async ({page}) => {
+    await page.getByRole('button', {name: 'Mount v4 reorder'}).click();
+    const reorder = tuiReorder(page.getByTestId('v4-reorder'));
+    await reorder.expectItems(3);
+    await expect(page.getByTestId('v4-reorder-enabled')).toHaveText('Alpha / Beta / Gamma');
+    await reorder.toggleFirst();
+    await expect(page.getByTestId('v4-reorder-enabled')).toHaveText('Beta / Gamma');
+
+    await reorder.tiles.first().locator('[tuiTileHandle]').dragTo(reorder.tiles.last(), {
+        targetPosition: {x: 32, y: 20},
+        steps: 20,
+    });
+    await expect(page.getByTestId('v4-reorder-model')).toHaveText('Beta / Gamma / Alpha');
+    await expect(page.getByTestId('v4-reorder-enabled')).toHaveText('Beta / Gamma');
+});
+
 test('Comment renders its default direction on the real v4 directive', async ({page}) => {
     const comment = tuiComment(page.getByTestId('v4-comment'));
     await comment.expectDirection('top');
@@ -814,7 +831,7 @@ test('the same v4 demo documents its verified scope and versioned import', async
     const headings = (await page.getByRole('heading', {level: 2}).allTextContents())
         .map((heading) => heading.trim());
     // New fixture sections should not require editing a brittle exact count.
-    expect(headings.length).toBeGreaterThanOrEqual(87);
+    expect(headings.length).toBeGreaterThanOrEqual(88);
     expect(new Set(headings).size).toBe(headings.length);
     await expect(page.getByText('This demo exercises 86 real Taiga UI controls', {exact: false})).toBeVisible();
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
