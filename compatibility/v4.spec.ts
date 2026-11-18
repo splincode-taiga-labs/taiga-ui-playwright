@@ -21,6 +21,7 @@ const {
     tuiPin, tuiSlides, tuiShrinkWrap, tuiElasticContainer, tuiFloatingContainer,
     tuiAlert,
     tuiFullscreen,
+    tuiTiles,
     tuiInternationalPhone,
     tuiDrawer, tuiPush,
     tuiItemsWithMore,
@@ -630,6 +631,16 @@ test('Fullscreen enters and exits the native browser fullscreen state', async ({
     await expect(page.getByTestId('v4-fullscreen-model')).toHaveText('false');
 });
 
+test('Tiles reorders real v4 projected tile components by pointer drag', async ({page}) => {
+    await page.getByRole('button', {name: 'Mount v4 tiles'}).click();
+    const tiles = tuiTiles(page.getByTestId('v4-tiles'));
+    await expect(tiles.tiles).toHaveCount(3);
+    await tiles.expectOrder(0, 0);
+    await tiles.drag(0, 2);
+    await tiles.expectOrder(0, 2);
+    await expect(page.getByTestId('v4-tiles-model')).toHaveText('2/0/1');
+});
+
 test('Comment renders its default direction on the real v4 directive', async ({page}) => {
     const comment = tuiComment(page.getByTestId('v4-comment'));
     await comment.expectDirection('top');
@@ -785,7 +796,7 @@ test('the same v4 demo documents its verified scope and versioned import', async
     const headings = (await page.getByRole('heading', {level: 2}).allTextContents())
         .map((heading) => heading.trim());
     // New fixture sections should not require editing a brittle exact count.
-    expect(headings.length).toBeGreaterThanOrEqual(85);
+    expect(headings.length).toBeGreaterThanOrEqual(86);
     expect(new Set(headings).size).toBe(headings.length);
     await expect(page.getByText('This demo exercises 84 real Taiga UI controls', {exact: false})).toBeVisible();
     await page.getByText('Browse the Taiga UI 4 component inventory').click();
