@@ -251,7 +251,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "confirm",
         "path": "projects/kit/components/confirm",
         "helper": "tuiConfirm",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -468,7 +468,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "notification-middle",
         "path": "projects/kit/components/notification-middle",
         "helper": "tuiNotificationMiddle",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
@@ -643,7 +643,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "toast",
         "path": "projects/kit/components/toast",
         "helper": "tuiToast",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
