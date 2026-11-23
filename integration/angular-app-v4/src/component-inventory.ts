@@ -489,7 +489,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "pdf-viewer",
         "path": "projects/kit/components/pdf-viewer",
         "helper": "tuiPdfViewer",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",
