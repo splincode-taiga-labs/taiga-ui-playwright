@@ -32,6 +32,8 @@ const {
     tuiPreview,
     tuiRoutableDialog,
     tuiPdfViewer,
+    tuiBlockStatus,
+    tuiCard,
     tuiInternationalPhone,
     tuiDrawer, tuiPush,
     tuiItemsWithMore,
@@ -759,6 +761,42 @@ test('PdfViewer opens a real v4 iframe portal and handles close and Escape', asy
     await page.keyboard.press('Escape');
     await expect(pdf.host).toHaveCount(0);
     await expect(page.getByTestId('v4-pdf-viewer-model')).toHaveText('closed');
+});
+
+test('BlockStatus projects v4 slots and reacts to state and action changes', async ({page}) => {
+    await page.getByRole('button', {name: 'Mount v4 layout fixtures'}).click();
+
+    const block = tuiBlockStatus(page.getByTestId('v4-block-status'));
+    await block.expectState('l', false);
+    await expect(block.heading).toHaveText('No results');
+    await expect(block.host.locator('.t-block-image')).toContainText('Empty results graphic');
+
+    await block.clickAction('Restore v4 results');
+    await expect(page.getByTestId('v4-block-status-count')).toHaveText('1');
+
+    await page.getByRole('button', {name: 'Compact v4 block status'}).click();
+    await block.expectState('m', true);
+    await block.clickAction('Restore v4 results');
+    await expect(page.getByTestId('v4-block-status-count')).toHaveText('2');
+});
+
+test('Card responds to real v4 space and collapsed directives', async ({page}) => {
+    await page.getByRole('button', {name: 'Mount v4 layout fixtures'}).click();
+
+    const card = tuiCard(page.getByTestId('v4-card'));
+    await card.expectSpace('normal');
+    await card.expectCollapsed(false);
+    await expect(card.host).toContainText('Expandable card content');
+
+    await page.getByRole('button', {name: 'Compact v4 card'}).click();
+    await card.expectSpace('compact');
+    await page.getByRole('button', {name: 'Toggle v4 card collapse'}).click();
+    await card.expectCollapsed(true);
+    await expect(page.getByTestId('v4-card-model')).toHaveText('compact/true');
+
+    await page.getByRole('button', {name: 'Toggle v4 card collapse'}).click();
+    await card.expectCollapsed(false);
+    await expect(page.getByTestId('v4-card-model')).toHaveText('compact/false');
 });
 
 test('Preview rotates real v4 projected content through its toolbar action', async ({page}) => {
