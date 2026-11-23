@@ -45,7 +45,7 @@ export class TuiPdfViewerHarness {
     public constructor(public readonly host: Locator) {}
     public async expectPdf(title: string): Promise<void> {
         await expect(this.host).toBeVisible();
-        await expect(this.host.locator('[tuiTitle]')).toContainText(title);
+        await expect(this.host.locator('[tuiTitle], .t-title')).toContainText(title);
         await expect(this.host.locator('section.t-content')).toBeVisible();
     }
 }

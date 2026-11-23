@@ -31,6 +31,7 @@ const {
     tuiNotificationMiddle,
     tuiPreview,
     tuiRoutableDialog,
+    tuiPdfViewer,
     tuiInternationalPhone,
     tuiDrawer, tuiPush,
     tuiItemsWithMore,
@@ -740,6 +741,24 @@ test('RoutableDialog opens from the v4 router and navigates back on Escape', asy
     await dialog.close();
     await expect(page).toHaveURL(/\/$/);
     await expect(page.locator('tui-dialog')).toHaveCount(0);
+});
+
+test('PdfViewer opens a real v4 iframe portal and handles close and Escape', async ({page}) => {
+    await page.getByRole('button', {name: 'Open v4 PDF viewer'}).click();
+    const pdf = tuiPdfViewer(page.locator('tui-pdf-viewer'));
+    await pdf.expectPdf('Sample v4.pdf');
+    await expect(pdf.host.locator('iframe[title="pdf"]')).toHaveAttribute('src', 'about:blank');
+    await expect(page.getByTestId('v4-pdf-viewer-model')).toHaveText('open');
+
+    await pdf.host.locator('button.t-close').click();
+    await expect(pdf.host).toHaveCount(0);
+    await expect(page.getByTestId('v4-pdf-viewer-model')).toHaveText('closed');
+
+    await page.getByRole('button', {name: 'Open v4 PDF viewer'}).click();
+    await pdf.expectPdf('Sample v4.pdf');
+    await page.keyboard.press('Escape');
+    await expect(pdf.host).toHaveCount(0);
+    await expect(page.getByTestId('v4-pdf-viewer-model')).toHaveText('closed');
 });
 
 test('Preview rotates real v4 projected content through its toolbar action', async ({page}) => {
