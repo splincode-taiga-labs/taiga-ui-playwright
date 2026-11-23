@@ -24,6 +24,7 @@ The local v4 Angular fixture runs real Taiga UI v4 controls in CI, and `compatib
 | Toast | `tuiToast` | Open a real v4 toast, verify status role, positive appearance and message, dismiss via close action (PR #134) |
 | NotificationMiddle | `tuiNotificationMiddle` | Open the real v4 loading overlay, verify spinner/content, close with Escape and check completion (PR #135) |
 | Preview | `tuiPreview` | Mount a real v4 Preview with projected content and rotate it using the built-in action, checking computed transform (PR #137) |
+| RoutableDialog | `tuiRoutableDialog` | Open a routed v4 dialog using real Angular Router and TuiDialogService; dismiss with Escape and verify return URL (PR #139) |
 | Root | `tuiRoot` | Real v4 Angular fixture and Chromium browser behavior in PR #117 |
 | Comment | `tuiComment` | Real v4 Angular fixture and Chromium browser behavior in PR #117 |
 | Compass | `tuiCompass` | Real v4 Angular fixture and Chromium browser behavior in PR #117 |
@@ -102,7 +103,7 @@ The local v4 Angular fixture runs real Taiga UI v4 controls in CI, and `compatib
 | Files | `tuiFiles` | Expand a collapsed group to show three projected file components |
 | Tree | `tuiTree` | Find nested tree nodes and verify a removed Angular node disappears |
 
-**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 30 v4 inventory components and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
+**Tested stack:** Angular 20.3.0, Taiga UI 4.106.0, Playwright 1.64.1, Node 24, Chromium. All other 29 v4 inventory components and earlier/later Taiga UI 4.x releases require separate browser verification. Some v5-only components may not exist in v4; the 133-item website catalog inventories **v5**, not v4.
 
 ## v4 component inventory
 

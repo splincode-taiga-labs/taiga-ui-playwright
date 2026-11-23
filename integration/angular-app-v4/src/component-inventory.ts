@@ -559,7 +559,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "routable-dialog",
         "path": "projects/kit/components/routable-dialog",
         "helper": "tuiRoutableDialog",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Kit",

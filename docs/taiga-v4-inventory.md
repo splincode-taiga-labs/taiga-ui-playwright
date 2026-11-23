@@ -2,7 +2,7 @@
 
 Derived from the [upstream `v4.x` branch](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects), not from the current v5 catalog. This is a snapshot of **123 component directories** in Core, Kit, Mobile, Layout, Table and Commerce. It excludes standalone directives, pipes, legacy and experimental packages. Source directory availability may differ between early and late 4.x releases.
 
-Only **93 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **30** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
+Only **94 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **29** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
 
 A mapped harness indicates a name-based link to the package's public API, **not** that the corresponding v4 DOM contract works. A dash means no unambiguous direct mapping was found.
 
@@ -86,7 +86,7 @@ A mapped harness indicates a name-based link to the package's public API, **not*
 | Kit | [`radio-list`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/radio-list) | `tuiRadioList` | Verified on 4.106 |
 | Kit | [`range`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/range) | `tuiRange` | Verified on 4.106 |
 | Kit | [`rating`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/rating) | `tuiRating` | Verified on 4.106 |
-| Kit | [`routable-dialog`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/routable-dialog) | `tuiRoutableDialog` | Not verified |
+| Kit | [`routable-dialog`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/routable-dialog) | `tuiRoutableDialog` | Verified on 4.106 |
 | Kit | [`segmented`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/segmented) | `tuiSegmented` | Verified on 4.106 |
 | Kit | [`select`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/select) | `tuiSelect` | Verified on 4.106 |
 | Kit | [`shrink-wrap`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/kit/components/shrink-wrap) | `tuiShrinkWrap` | Verified on 4.106 |
