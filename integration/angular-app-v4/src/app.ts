@@ -11,6 +11,7 @@ import {V4ConfirmFixture} from './confirm-fixture';
 import {V4ToastFixture} from './toast-fixture';
 import {V4NotificationMiddleFixture} from './notification-middle-fixture';
 import {V4PreviewFixture} from './preview-fixture';
+import {V4RoutableDialogFixture} from './routable-dialog-fixture';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {TuiDay, TuiDayRange, TuiItem, TuiMonth, TuiMonthRange, TuiTime, TuiYear} from '@taiga-ui/cdk';
 import {
@@ -122,6 +123,7 @@ import {
         V4ToastFixture,
         V4NotificationMiddleFixture,
         V4PreviewFixture,
+        V4RoutableDialogFixture,
         TuiRoot,
         TuiFullscreen,
         TuiTextfield,
@@ -738,6 +740,7 @@ import {
                 <app-v4-toast-fixture />
                 <app-v4-notification-middle-fixture />
                 <app-v4-preview-fixture />
+                <app-v4-routable-dialog-fixture />
                 <section>
                     <h2>Comment</h2>
                     <div tuiComment="top" data-testid="v4-comment">A note from the author</div>
