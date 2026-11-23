@@ -30,6 +30,7 @@ const {
     tuiToast,
     tuiNotificationMiddle,
     tuiPreview,
+    tuiRoutableDialog,
     tuiInternationalPhone,
     tuiDrawer, tuiPush,
     tuiItemsWithMore,
@@ -724,6 +725,21 @@ test('NotificationMiddle shows the v4 loading portal and closes on Escape', asyn
     await notification.expectOpen('Loading v4 report');
     await notification.dismiss();
     await expect(page.getByTestId('v4-middle-notification-state')).toHaveText('closed');
+});
+
+test('RoutableDialog opens from the v4 router and navigates back on Escape', async ({page}) => {
+    await page.getByRole('button', {name: 'Open v4 routed dialog'}).click();
+    await expect(page).toHaveURL(/\/routed-v4-dialog$/);
+
+    // The route component itself has an empty template: the content is mounted
+    // through TuiDialogService in the root dialog portal.
+    const dialog = tuiRoutableDialog(page.locator('tui-dialog').last());
+    await dialog.expectRouted('Opened from Angular Router');
+    await expect(page.getByTestId('v4-routed-dialog-content')).toBeVisible();
+
+    await dialog.close();
+    await expect(page).toHaveURL(/\/$/);
+    await expect(page.locator('tui-dialog')).toHaveCount(0);
 });
 
 test('Preview rotates real v4 projected content through its toolbar action', async ({page}) => {
