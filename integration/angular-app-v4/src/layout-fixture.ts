@@ -14,7 +14,7 @@ import {TuiBlockStatus, TuiCard} from '@taiga-ui/layout';
                     <span tuiSlot="top">Empty results graphic</span>
                     <h3>No results</h3>
                     Try changing your filters
-                    <button type="button" (click)="restored.update((count) => count + 1)">
+                    <button type="button" (click)="restore()">
                         Restore v4 results
                     </button>
                 </tui-block-status>
@@ -44,6 +44,10 @@ export class V4LayoutFixture {
     protected readonly restored = signal(0);
     protected readonly cardSpace = signal<'normal' | 'compact'>('normal');
     protected readonly cardCollapsed = signal(false);
+
+    protected restore(): void {
+        this.restored.update((count) => count + 1);
+    }
 
     protected compactBlock(): void {
         this.blockSize.set('m');
