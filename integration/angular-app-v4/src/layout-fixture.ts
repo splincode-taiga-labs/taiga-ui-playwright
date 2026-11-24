@@ -1,13 +1,15 @@
 import {Component, signal} from '@angular/core';
-import {TuiBlockStatus, TuiCard} from '@taiga-ui/layout';
+import {TuiBlockStatus, TuiCard, TuiCell, TuiHeader} from '@taiga-ui/layout';
 
 @Component({
     selector: 'app-v4-layout-fixture',
-    imports: [TuiBlockStatus, TuiCard],
+    imports: [TuiBlockStatus, TuiCard, TuiCell, TuiHeader],
     template: `
         <section>
             <h2>BlockStatus</h2>
             <h2>Card</h2>
+            <h2>Cell</h2>
+            <h2>Header</h2>
             <button type="button" (click)="mounted.set(true)">Mount v4 layout fixtures</button>
             @if (mounted()) {
                 <tui-block-status data-testid="v4-block-status" [card]="blockCard()" [size]="blockSize()">
@@ -33,6 +35,19 @@ import {TuiBlockStatus, TuiCard} from '@taiga-ui/layout';
                 <button type="button" (click)="cardSpace.set('compact')">Compact v4 card</button>
                 <button type="button" (click)="cardCollapsed.set(!cardCollapsed())">Toggle v4 card collapse</button>
                 <output data-testid="v4-card-model">{{ cardSpace() }}/{{ cardCollapsed() }}</output>
+
+                <div data-testid="v4-cell" [tuiCell]="cellSize()" [tuiCellHeight]="cellHeight()">
+                    <strong>Account details</strong>
+                    <span>Active account</span>
+                </div>
+                <button type="button" (click)="toggleCell()">Toggle v4 cell layout</button>
+
+                <header data-testid="v4-header" [tuiHeader]="headerSize()">
+                    <h3>Account summary</h3>
+                </header>
+                <button type="button" (click)="headerSize.set(headerSize() === 'h5' ? 'h3' : 'h5')">
+                    Toggle v4 header size
+                </button>
             }
         </section>
     `,
@@ -44,6 +59,17 @@ export class V4LayoutFixture {
     protected readonly restored = signal(0);
     protected readonly cardSpace = signal<'normal' | 'compact'>('normal');
     protected readonly cardCollapsed = signal(false);
+
+    protected readonly cellSize = signal<'l' | 's'>('l');
+    protected readonly cellHeight = signal<'normal' | 'compact'>('normal');
+    protected readonly headerSize = signal<'h5' | 'h3'>('h5');
+
+    protected toggleCell(): void {
+        const compact = this.cellHeight() === 'compact';
+
+        this.cellSize.set(compact ? 'l' : 's');
+        this.cellHeight.set(compact ? 'normal' : 'compact');
+    }
 
     protected restore(): void {
         this.restored.update((count) => count + 1);

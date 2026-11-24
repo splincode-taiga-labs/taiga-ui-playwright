@@ -34,6 +34,8 @@ const {
     tuiPdfViewer,
     tuiBlockStatus,
     tuiCard,
+    tuiCell,
+    tuiHeader,
     tuiInternationalPhone,
     tuiDrawer, tuiPush,
     tuiItemsWithMore,
@@ -797,6 +799,38 @@ test('Card responds to real v4 space and collapsed directives', async ({page}) =
     await page.getByRole('button', {name: 'Toggle v4 card collapse'}).click();
     await card.expectCollapsed(false);
     await expect(page.getByTestId('v4-card-model')).toHaveText('compact/false');
+});
+
+test('Cell updates real v4 size and height and restores its layout', async ({page}) => {
+    await page.getByRole('button', {name: 'Mount v4 layout fixtures'}).click();
+
+    const cell = tuiCell(page.getByTestId('v4-cell'));
+    const toggle = page.getByRole('button', {name: 'Toggle v4 cell layout'});
+    await cell.expectLayout('l', 'normal');
+    await expect(cell.host).toContainText('Active account');
+
+    await toggle.click();
+    await cell.expectLayout('s', 'compact');
+
+    await toggle.click();
+    await cell.expectLayout('l', 'normal');
+    await expect(cell.host).toContainText('Account details');
+});
+
+test('Header responds to its real v4 size input and retains projected heading', async ({page}) => {
+    await page.getByRole('button', {name: 'Mount v4 layout fixtures'}).click();
+
+    const header = tuiHeader(page.getByTestId('v4-header'));
+    const toggle = page.getByRole('button', {name: 'Toggle v4 header size'});
+    await header.expectSize('h5');
+    await expect(header.host.getByRole('heading', {name: 'Account summary'})).toBeVisible();
+
+    await toggle.click();
+    await header.expectSize('h3');
+
+    await toggle.click();
+    await header.expectSize('h5');
+    await expect(header.host.getByRole('heading', {name: 'Account summary'})).toBeVisible();
 });
 
 test('Preview rotates real v4 projected content through its toolbar action', async ({page}) => {
