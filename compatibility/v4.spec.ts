@@ -36,6 +36,11 @@ const {
     tuiCard,
     tuiCell,
     tuiHeader,
+    tuiAppBar,
+    tuiBlockDetails,
+    tuiForm,
+    tuiItemGroup,
+    tuiProgressiveBlur,
     tuiInternationalPhone,
     tuiDrawer, tuiPush,
     tuiItemsWithMore,
@@ -831,6 +836,64 @@ test('Header responds to its real v4 size input and retains projected heading', 
     await toggle.click();
     await header.expectSize('h5');
     await expect(header.host.getByRole('heading', {name: 'Account summary'})).toBeVisible();
+});
+
+test('AppBar projects real v4 left and right actions and changes size', async ({page}) => {
+    await page.getByRole('button', {name: 'Mount v4 layout fixtures'}).click();
+
+    const bar = tuiAppBar(page.getByTestId('v4-app-bar'));
+    await bar.expectSize('m');
+    await expect(bar.host.locator('.t-content')).toHaveText('Account');
+    await expect(bar.host.locator('.t-side').first().getByRole('button', {name: 'Back'})).toBeVisible();
+    await expect(bar.host.locator('.t-side').last().getByRole('button', {name: 'Save account'})).toBeVisible();
+    await bar.clickEndAction('Save account');
+    await expect(page.getByTestId('v4-app-bar-model')).toHaveText('1');
+    await page.getByRole('button', {name: 'Large v4 app bar'}).click();
+    await bar.expectSize('l');
+});
+
+test('BlockDetails renders the real v4 layout and updates its content', async ({page}) => {
+    await page.getByRole('button', {name: 'Mount v4 layout fixtures'}).click();
+
+    const details = tuiBlockDetails(page.getByTestId('v4-block-details'));
+    await details.expectDetails('Account summary');
+    await expect(details.host).toHaveCSS('display', 'flex');
+    await expect(details.host).toHaveCSS('flex-direction', 'column');
+    await page.getByRole('button', {name: 'Update v4 block details'}).click();
+    await details.expectDetails('Updated account');
+});
+
+test('Form preserves inherited v4 button defaults while resizing and submitting', async ({page}) => {
+    await page.getByRole('button', {name: 'Mount v4 layout fixtures'}).click();
+
+    const form = tuiForm(page.getByTestId('v4-layout-form'));
+    await form.expectSize('l');
+    await form.expectInheritedButtonSize('l');
+    await form.submit();
+    await expect(page.getByTestId('v4-layout-form-model')).toHaveText('1');
+
+    await page.getByRole('button', {name: 'Compact v4 form'}).click();
+    await form.expectSize('s');
+    await form.expectInheritedButtonSize('l');
+    await form.submit();
+    await expect(page.getByTestId('v4-layout-form-model')).toHaveText('2');
+});
+
+test('ItemGroup scrolls to its last real v4 item and switches orientation', async ({page}) => {
+    await page.getByRole('button', {name: 'Mount v4 layout fixtures'}).click();
+
+    const group = tuiItemGroup(page.getByTestId('v4-item-group'));
+    await group.expectOrientation(true);
+    await group.clickLastAndExpectScroll();
+    await expect(page.getByTestId('v4-item-group-model')).toHaveText('true');
+    await page.getByRole('button', {name: 'Vertical v4 item group'}).click();
+    await group.expectOrientation(false);
+});
+
+test('ProgressiveBlur renders twenty real v4 gradient steps', async ({page}) => {
+    await page.getByRole('button', {name: 'Mount v4 layout fixtures'}).click();
+
+    await tuiProgressiveBlur(page.getByTestId('v4-progressive-blur')).expectGradientSteps();
 });
 
 test('Preview rotates real v4 projected content through its toolbar action', async ({page}) => {

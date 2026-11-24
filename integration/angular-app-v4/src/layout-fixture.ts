@@ -1,15 +1,27 @@
 import {Component, signal} from '@angular/core';
-import {TuiBlockStatus, TuiCard, TuiCell, TuiHeader} from '@taiga-ui/layout';
+import {TuiButton} from '@taiga-ui/core';
+import {
+    TuiAppBar, TuiBlockDetails, TuiBlockStatus, TuiCard, TuiCell, TuiForm,
+    TuiHeader, TuiItemGroup, TuiProgressiveBlur,
+} from '@taiga-ui/layout';
 
 @Component({
     selector: 'app-v4-layout-fixture',
-    imports: [TuiBlockStatus, TuiCard, TuiCell, TuiHeader],
+    imports: [
+        TuiButton, TuiAppBar, TuiBlockDetails, TuiBlockStatus, TuiCard, TuiCell,
+        TuiForm, TuiHeader, TuiItemGroup, TuiProgressiveBlur,
+    ],
     template: `
         <section>
             <h2>BlockStatus</h2>
             <h2>Card</h2>
             <h2>Cell</h2>
             <h2>Header</h2>
+            <h2>AppBar</h2>
+            <h2>BlockDetails</h2>
+            <h2>Form</h2>
+            <h2>ItemGroup</h2>
+            <h2>ProgressiveBlur</h2>
             <button type="button" (click)="mounted.set(true)">Mount v4 layout fixtures</button>
             @if (mounted()) {
                 <tui-block-status data-testid="v4-block-status" [card]="blockCard()" [size]="blockSize()">
@@ -48,6 +60,39 @@ import {TuiBlockStatus, TuiCard, TuiCell, TuiHeader} from '@taiga-ui/layout';
                 <button type="button" (click)="headerSize.set(headerSize() === 'h5' ? 'h3' : 'h5')">
                     Toggle v4 header size
                 </button>
+
+                <tui-app-bar data-testid="v4-app-bar" [size]="appBarSize()" style="width:320px">
+                    <button tuiSlot="left" type="button">Back</button>
+                    Account
+                    <button tuiSlot="right" type="button" (click)="recordAppAction()">Save account</button>
+                </tui-app-bar>
+                <button type="button" (click)="appBarSize.set('l')">Large v4 app bar</button>
+                <output data-testid="v4-app-bar-model">{{ appActions() }}</output>
+
+                <div tuiBlockDetails data-testid="v4-block-details">
+                    {{ details() }}
+                </div>
+                <button type="button" (click)="details.set('Updated account')">Update v4 block details</button>
+
+                <form [tuiForm]="formSize()" data-testid="v4-layout-form" (submit)="submit($event)">
+                    <button tuiButton type="submit">Save form</button>
+                </form>
+                <button type="button" (click)="formSize.set('s')">Compact v4 form</button>
+                <output data-testid="v4-layout-form-model">{{ submissions() }}</output>
+
+                <div tuiItemGroup data-testid="v4-item-group" [horizontal]="horizontal()" [autoscroll]="true"
+                    style="width:180px">
+                    <button type="button" style="flex:0 0 110px">One</button>
+                    <button type="button" style="flex:0 0 110px">Two</button>
+                    <button type="button" style="flex:0 0 110px">Three</button>
+                    <button type="button" style="flex:0 0 110px" (click)="lastClicked.set(true)">Four</button>
+                </div>
+                <button type="button" (click)="horizontal.set(false)">Vertical v4 item group</button>
+                <output data-testid="v4-item-group-model">{{ lastClicked() }}</output>
+
+                <div style="position:relative;height:48px;width:180px">
+                    <tui-progressive-blur data-testid="v4-progressive-blur" />
+                </div>
             }
         </section>
     `,
@@ -63,6 +108,23 @@ export class V4LayoutFixture {
     protected readonly cellSize = signal<'l' | 's'>('l');
     protected readonly cellHeight = signal<'normal' | 'compact'>('normal');
     protected readonly headerSize = signal<'h5' | 'h3'>('h5');
+
+    protected readonly appBarSize = signal<'m' | 'l'>('m');
+    protected readonly appActions = signal(0);
+    protected readonly details = signal('Account summary');
+    protected readonly formSize = signal<'l' | 's'>('l');
+    protected readonly submissions = signal(0);
+    protected readonly horizontal = signal(true);
+    protected readonly lastClicked = signal(false);
+
+    protected recordAppAction(): void {
+        this.appActions.update((count) => count + 1);
+    }
+
+    protected submit(event: Event): void {
+        event.preventDefault();
+        this.submissions.update((count) => count + 1);
+    }
 
     protected toggleCell(): void {
         const compact = this.cellHeight() === 'compact';
