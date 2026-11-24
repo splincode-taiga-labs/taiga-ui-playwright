@@ -24,6 +24,8 @@ The local v4 Angular fixture runs real Taiga UI v4 controls in CI, and `compatib
 | Toast | `tuiToast` | Open a real v4 toast, verify status role, positive appearance and message, dismiss via close action (PR #134) |
 | NotificationMiddle | `tuiNotificationMiddle` | Open the real v4 loading overlay, verify spinner/content, close with Escape and check completion (PR #135) |
 | PdfViewer | `tuiPdfViewer` | Open the real v4 PDF viewer portal with an isolated iframe; verify title, close button and Escape dismissal, and Angular completion state (PR #141; PDF contents not rendered) |
+| BlockStatus | `tuiBlockStatus` | Verify projected image, heading and action; click action and update size/card state in the real v4 layout (PR #143) |
+| Card | `tuiCard` | Verify real v4 large card spacing, collapsed CSS state, and restoration through Angular inputs (PR #143) |
 | Preview | `tuiPreview` | Mount a real v4 Preview with projected content and rotate it using the built-in action, checking computed transform (PR #137) |
 | RoutableDialog | `tuiRoutableDialog` | Open a routed v4 dialog using real Angular Router and TuiDialogService; dismiss with Escape and verify return URL (PR #139) |
 | Root | `tuiRoot` | Real v4 Angular fixture and Chromium browser behavior in PR #117 |
