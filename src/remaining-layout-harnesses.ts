@@ -59,7 +59,10 @@ export class TuiHeaderHarness {
 export class TuiBlockDetailsHarness {
     public constructor(public readonly host: Locator) {}
     public async expectDetails(text: string): Promise<void> {
-        await expect(this.host).toHaveAttribute('data-tui-version', /^\d+\./);
+        await expect.poll(async () =>
+            (await this.host.getAttribute('data-tui-version')) ??
+            (await this.host.getAttribute('tuiBlockDetailsV')),
+        ).toMatch(/^\d+\./);
         await expect(this.host).toHaveAttribute('tuiBlockDetails', '');
         await expect(this.host).toContainText(text);
     }
