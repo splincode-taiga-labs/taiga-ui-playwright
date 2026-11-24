@@ -2,7 +2,7 @@
 
 Derived from the [upstream `v4.x` branch](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects), not from the current v5 catalog. This is a snapshot of **123 component directories** in Core, Kit, Mobile, Layout, Table and Commerce. It excludes standalone directives, pipes, legacy and experimental packages. Source directory availability may differ between early and late 4.x releases.
 
-Only **97 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **26** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
+Only **99 components are browser-verified** on **Taiga UI 4.106.0**, Angular 20.3.0 and Chromium. The other **24** source directories are not verified by this v4 browser suite. See [tested behaviors](taiga-v4-coverage.md) and the [versioned documentation matrix](https://splincode-taiga-labs.github.io/taiga-ui-playwright/). The real v4 fixture remains in CI only.
 
 A mapped harness indicates a name-based link to the package's public API, **not** that the corresponding v4 DOM contract works. A dash means no unambiguous direct mapping was found.
 
@@ -114,10 +114,10 @@ A mapped harness indicates a name-based link to the package's public API, **not*
 | Layout | [`block-details`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/layout/components/block-details) | `tuiBlockDetails` | Not verified |
 | Layout | [`block-status`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/layout/components/block-status) | `tuiBlockStatus` | Verified on 4.106 |
 | Layout | [`card`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/layout/components/card) | `tuiCard` | Verified on 4.106 |
-| Layout | [`cell`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/layout/components/cell) | `tuiCell` | Not verified |
+| Layout | [`cell`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/layout/components/cell) | `tuiCell` | Verified on 4.106 |
 | Layout | [`dynamic-header`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/layout/components/dynamic-header) | `tuiDynamicHeader` | Not verified |
 | Layout | [`form`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/layout/components/form) | `tuiForm` | Not verified |
-| Layout | [`header`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/layout/components/header) | `tuiHeader` | Not verified |
+| Layout | [`header`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/layout/components/header) | `tuiHeader` | Verified on 4.106 |
 | Layout | [`input-search`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/layout/components/input-search) | `tuiInputSearch` | Not verified |
 | Layout | [`item-group`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/layout/components/item-group) | `tuiItemGroup` | Not verified |
 | Layout | [`navigation`](https://github.com/taiga-family/taiga-ui/tree/v4.x/projects/layout/components/navigation) | `tuiNavigation` | Not verified |

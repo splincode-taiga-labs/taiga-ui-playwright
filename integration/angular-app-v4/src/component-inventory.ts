@@ -755,7 +755,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "cell",
         "path": "projects/layout/components/cell",
         "helper": "tuiCell",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Layout",
@@ -776,7 +776,7 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "header",
         "path": "projects/layout/components/header",
         "helper": "tuiHeader",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Layout",
