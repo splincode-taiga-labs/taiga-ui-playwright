@@ -741,14 +741,14 @@ export const V4_COMPONENTS: readonly V4Component[] = [
         "name": "block-status",
         "path": "projects/layout/components/block-status",
         "helper": "tuiBlockStatus",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Layout",
         "name": "card",
         "path": "projects/layout/components/card",
         "helper": "tuiCard",
-        "verified": false
+        "verified": true
     },
     {
         "group": "Layout",
